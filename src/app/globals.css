@@ -1,26 +1,75 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: #08080A;
+  --color-surface: #111113;
+  --color-surface-light: #1A1A1E;
+  --color-surface-hover: #222226;
+  --color-text-primary: #EDEDEC;
+  --color-text-secondary: #B8B5AD;
+  --color-muted: #706D63;
+  --color-gold: #D4AF37;
+  --color-gold-dim: #A68B2A;
+  --color-gold-bright: #F0D060;
+  --color-crimson: #C0392B;
+  --color-crimson-light: #E74C3C;
+  --color-emerald: #1B9E6B;
+  --color-emerald-light: #2ECC71;
+  --color-rose: #D4828F;
+  --color-rose-light: #E8A0AB;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-gold) 30%, transparent);
+  color: var(--color-text-primary);
+}
+
+/* Ambient noise texture overlay */
+.noise::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Glow utilities */
+.glow-gold {
+  box-shadow:
+    0 0 20px color-mix(in srgb, var(--color-gold) 15%, transparent),
+    0 0 60px color-mix(in srgb, var(--color-gold) 8%, transparent);
+}
+
+.glow-gold-strong {
+  box-shadow:
+    0 0 30px color-mix(in srgb, var(--color-gold) 25%, transparent),
+    0 0 80px color-mix(in srgb, var(--color-gold) 12%, transparent),
+    inset 0 0 30px color-mix(in srgb, var(--color-gold) 5%, transparent);
 }
