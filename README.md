@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KWML Archetype Explorer
+
+An interactive site for exploring the archetypes of the mature masculine from *King, Warrior, Magician, Lover* by Robert Moore & Douglas Gillette (1990).
+
+Starting with Boy and Man Psychology archetypes and their positive/negative poles, with a vision to scale toward archetype maps, tarot decks, and more.
+
+## Overview
+
+The framework maps the masculine psyche into two tiers -- **Boy Psychology** (immature) and **Man Psychology** (mature) -- with 4 archetypes each. Every archetype has a healthy fullness pole and two shadow poles (active/inflated and passive/deflated), forming Moore's bipolar shadow system.
+
+**Boy Psychology &rarr; Man Psychology:**
+
+| Boy | Man | Energy |
+|---|---|---|
+| Divine Child | King | Wonder &rarr; Sovereign ordering & blessing |
+| Precocious Child | Magician | Curiosity &rarr; Deep knowledge & transformation |
+| Oedipal Child | Lover | Warmth &rarr; Passionate embodiment & connection |
+| Hero | Warrior | Courage &rarr; Disciplined, purposeful action |
+
+8 archetypes &times; 3 poles each = **24 psychological positions** to explore.
+
+## Features
+
+- **Radial quadrant map** -- Home page with King (top), Warrior (left), Lover (right), Magician (bottom) arranged around a central "Self" node with animated SVG connecting lines
+- **8 archetype detail pages** -- Full descriptions, key characteristics, access markers, and evolution arrows linking boy/man counterparts
+- **Interactive SVG shadow triangles** -- Click to explore the fullness (apex), active shadow (bottom-left), and passive shadow (bottom-right) for each archetype
+- **Sovereign Gold design system** -- Dark warm-black base, archetype-mapped accent colors (gold, crimson, emerald, rose), film grain texture, ambient glow effects
+- **Fully static** -- All pages pre-rendered at build time via `generateStaticParams`
+
+## Tech Stack
+
+- [Next.js 16](https://nextjs.org/) (App Router, TypeScript)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/) for page transitions and SVG animations
+- [Cormorant Garamond](https://fonts.google.com/specimen/Cormorant+Garamond) + [Inter](https://fonts.google.com/specimen/Inter) via `next/font`
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Production build
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to explore.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  app/
+    page.tsx                    # Home -- radial quadrant map
+    about/page.tsx              # Framework overview
+    archetype/[slug]/page.tsx   # Dynamic archetype detail (8 pages)
+    layout.tsx                  # Root layout, fonts, nav/footer
+    globals.css                 # Tailwind theme, noise texture, glow utilities
+  components/
+    QuadrantMap.tsx             # Radial map with SVG lines and center node
+    ShadowTriangle.tsx          # Interactive SVG triangle (fullness + shadows)
+    EvolutionArrow.tsx          # Boy-to-Man visual connector
+    NavBar.tsx                  # Fixed top nav with blur backdrop
+    Footer.tsx                  # Attribution footer
+    PageTransition.tsx          # Framer Motion fade/slide wrapper
+  data/
+    archetypes.ts               # All 8 archetypes, colors, family groups, lookups
+  types/
+    archetype.ts                # TypeScript type definitions
+  lib/
+    utils.ts                    # Color utilities
+```
 
-## Learn More
+## Routes
 
-To learn more about Next.js, take a look at the following resources:
+| Route | Page |
+|---|---|
+| `/` | Radial quadrant map |
+| `/about` | Framework overview |
+| `/archetype/the-king` | King detail |
+| `/archetype/the-warrior` | Warrior detail |
+| `/archetype/the-magician` | Magician detail |
+| `/archetype/the-lover` | Lover detail |
+| `/archetype/the-divine-child` | Divine Child detail |
+| `/archetype/the-hero` | Hero detail |
+| `/archetype/the-precocious-child` | Precocious Child detail |
+| `/archetype/the-oedipal-child` | Oedipal Child detail |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Design
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Palette** -- Sovereign Gold + Deep Archive
 
-## Deploy on Vercel
+| Role | Color | Hex |
+|---|---|---|
+| Background | Warm black | `#08080A` |
+| Surface | Dark surface | `#111113` |
+| Text | Off-white | `#EDEDEC` |
+| Gold (King) | Sovereign gold | `#D4AF37` |
+| Crimson (Warrior) | Deep red | `#C0392B` |
+| Emerald (Magician) | Forest green | `#1B9E6B` |
+| Rose (Lover) | Warm rose | `#D4828F` |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Typography** -- Cormorant Garamond for serif headlines, Inter for sans body text.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Static export works with any host. For Vercel:
+
+```bash
+npm run build
+# Deploy .next output to Vercel, Netlify, or any static host
+```
+
+## Research
+
+See [KWML-Research.md](./KWML-Research.md) for the comprehensive research document covering all archetypes, shadow systems, Jungian foundations, and structural mappings.
+
+## License
+
+MIT
