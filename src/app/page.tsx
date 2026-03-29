@@ -1,139 +1,262 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FAMILIES } from "@/data/archetypes";
-import { ArchetypeFamily } from "@/types/archetype";
-import BlobHero from "@/components/BlobHero";
-import ArchetypeSymbol from "@/components/ArchetypeSymbol";
-
-/**
- * Each archetype card gets a unique container shape via clip-path,
- * border treatment, and a watermark symbol.
- */
-const CARD_SHAPES: Record<
-  ArchetypeFamily,
-  { clipPath: string; borderExtra: string }
-> = {
-  // King: regal, structured — notched top corners like battlements
-  king: {
-    clipPath:
-      "polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%, 0 8px)",
-    borderExtra: "border-t-2",
-  },
-  // Warrior: angular, aggressive — slashed corner
-  warrior: {
-    clipPath:
-      "polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%)",
-    borderExtra: "border-l-2",
-  },
-  // Magician: faceted, crystalline — diamond-cut corners
-  magician: {
-    clipPath:
-      "polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px)",
-    borderExtra: "border-b-2",
-  },
-  // Lover: soft, organic — fully rounded
-  lover: {
-    clipPath: "none",
-    borderExtra: "border-r-2",
-  },
-};
+import TotemCanvas from "@/components/TotemCanvas";
 
 export default function Home() {
+  const router = useRouter();
+  const [hoveredFamily, setHoveredFamily] = useState<string | null>(null);
+
   return (
-    <div className="min-h-screen px-6 pt-28 pb-20 md:pt-36 md:pb-28">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="mb-12 md:mb-16">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-muted mb-4">
-            Moore &amp; Gillette
-          </p>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-text-primary tracking-tight leading-[1.1] mb-6">
-            Archetypes of the{" "}
-            <span className="text-gold">Mature Masculine</span>
-          </h1>
-          <p className="text-text-secondary text-lg md:text-xl leading-relaxed max-w-2xl">
-            Four primal energy patterns shape the masculine psyche — boy within
-            man, shadow within light.
-          </p>
+    <div className="min-h-screen relative">
+      {/* ─── Content ───────────────────────────────── */}
+      <div className="relative">
+        {/* Hero */}
+        <div className="px-6 pt-24 pb-12 md:pt-32 md:pb-16">
+          <div className="max-w-6xl mx-auto">
+            <div className="animate-slide-up">
+              <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
+                Moore &amp; Gillette — Archetypal Framework
+              </p>
+              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
+                Archetypes of the{" "}
+                <span className="text-gold glow-text-subtle animate-flicker">
+                  Mature Masculine
+                </span>
+              </h1>
+              <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl font-light">
+                Four primal energy patterns shape the masculine psyche. Each
+                holds a fullness and two shadow poles — the inflated and the
+                deflated. Boy becomes man through initiation.
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Blob */}
-        <div className="relative w-full aspect-square max-w-md mx-auto mb-16 md:mb-20">
-          <BlobHero />
-        </div>
-
-        {/* Archetype grid */}
-        <div className="grid sm:grid-cols-2 gap-5">
-          {FAMILIES.map((family) => {
-            const shape = CARD_SHAPES[family.id];
-            return (
-              <Link
-                key={family.id}
-                href={`/archetype/${family.man.slug}`}
-                className={`group relative p-6 md:p-8 overflow-hidden border transition-all duration-500 hover:border-opacity-60 ${shape.borderExtra} ${family.id === "lover" ? "rounded-3xl" : "rounded-lg"}`}
-                style={{
-                  borderColor: `${family.color}20`,
-                  background: `linear-gradient(145deg, ${family.color}08 0%, transparent 60%)`,
-                  clipPath: shape.clipPath !== "none" ? shape.clipPath : undefined,
-                }}
-              >
-                {/* Hover glow line at top */}
-                <div
-                  className="absolute top-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${family.color}40, transparent)`,
-                  }}
-                />
-
-                {/* Watermark symbol — large, subtle, positioned bottom-right */}
-                <div className="absolute -bottom-4 -right-4 w-32 h-32 md:w-40 md:h-40 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none">
-                  <ArchetypeSymbol
-                    archetype={family.id}
-                    color={family.color}
-                    className="w-full h-full"
-                  />
-                </div>
-
-                {/* Archetype icon + title */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                    <ArchetypeSymbol
-                      archetype={family.id}
-                      color={family.color}
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <h2
-                    className="font-serif text-2xl md:text-3xl font-medium tracking-tight"
-                    style={{ color: family.color }}
+        {/* ─── Archetype cards ───────────────────────── */}
+        <div className="px-6 pb-20">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-5">
+            {FAMILIES.map((family, i) => {
+              const isHovered = hoveredFamily === family.id;
+              return (
+                <Link
+                  key={family.id}
+                  href={`/archetype/${family.man.slug}`}
+                  className="group block animate-slide-up"
+                  style={{ animationDelay: `${150 + i * 100}ms` }}
+                  onMouseEnter={() => setHoveredFamily(family.id)}
+                  onMouseLeave={() => setHoveredFamily(null)}
+                >
+                  <div
+                    className="relative overflow-hidden rounded-sm transition-all duration-500"
+                    style={{
+                      background: `linear-gradient(145deg, ${family.color}06 0%, rgba(6,6,10,0.95) 40%, rgba(6,6,10,0.98) 100%)`,
+                      border: `1px solid ${isHovered ? family.color + "30" : family.color + "10"}`,
+                      boxShadow: isHovered
+                        ? `0 0 40px ${family.color}08, 0 0 80px ${family.color}04, inset 0 1px 0 ${family.color}10`
+                        : "none",
+                    }}
                   >
-                    {family.label}
-                  </h2>
-                </div>
+                    {/* Top accent line */}
+                    <div
+                      className="absolute top-0 left-0 right-0 h-px transition-opacity duration-500"
+                      style={{
+                        background: `linear-gradient(90deg, transparent, ${family.color}40, transparent)`,
+                        opacity: isHovered ? 1 : 0,
+                      }}
+                    />
 
-                <p className="text-sm text-text-secondary/70 leading-relaxed mb-6 line-clamp-2 relative z-10">
-                  {family.man.description.split(".")[0]}.
-                </p>
+                    <div className="flex flex-col md:flex-row">
+                      {/* ─── 3D Totem ──────────────────── */}
+                      <div className="relative w-full md:w-56 h-56 md:h-auto shrink-0">
+                        <TotemCanvas
+                          family={family.id}
+                          color={family.color}
+                          isHovered={isHovered}
+                        />
+                        {/* Shadow labels on the totem */}
+                        <div className="absolute bottom-3 left-3 flex items-center gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-crimson" />
+                          <span className="font-mono text-[7px] tracking-wider text-crimson-light/80 uppercase">
+                            {family.man.activeShadow.name}
+                          </span>
+                        </div>
+                        <div className="absolute bottom-3 right-3 flex items-center gap-1">
+                          <span className="font-mono text-[7px] tracking-wider text-muted/80 uppercase">
+                            {family.man.passiveShadow.name}
+                          </span>
+                          <div className="w-1.5 h-1.5 rounded-full bg-muted/80" />
+                        </div>
+                      </div>
 
-                <div className="flex items-center gap-3 text-xs relative z-10">
-                  <span className="text-muted">{family.boy.name}</span>
-                  <span className="flex items-center gap-1 text-muted/40">
-                    <span className="w-4 h-px bg-current" />
-                    <svg width="6" height="8" viewBox="0 0 6 8" fill="none">
-                      <path d="M1 1L5 4L1 7" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                  <span style={{ color: family.color }}>{family.man.name}</span>
-                </div>
+                      {/* ─── Card content ──────────────── */}
+                      <div className="flex-1 p-5 md:p-6 flex flex-col justify-between">
+                        {/* Header */}
+                        <div>
+                          {/* Family + maturity badge */}
+                          <div className="flex items-center gap-3 mb-3">
+                            <span className="font-mono text-[8px] tracking-[0.25em] text-muted uppercase">
+                              Man Psychology
+                            </span>
+                            <div
+                              className="h-px flex-1"
+                              style={{
+                                background: `linear-gradient(90deg, ${family.color}15, transparent)`,
+                              }}
+                            />
+                          </div>
 
-                {/* Arrow on hover */}
-                <div className="absolute top-6 right-6 md:top-8 md:right-8 text-muted/0 group-hover:text-muted/50 transition-all duration-300 group-hover:translate-x-0.5 z-10">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              </Link>
-            );
-          })}
+                          {/* Name */}
+                          <h2
+                            className="font-serif text-3xl md:text-4xl font-medium tracking-tight mb-2 transition-all duration-300"
+                            style={{
+                              color: family.color,
+                              textShadow: isHovered
+                                ? `0 0 20px ${family.color}40`
+                                : "none",
+                            }}
+                          >
+                            {family.man.name}
+                          </h2>
+
+                          {/* Description */}
+                          <p className="text-text-secondary text-xs leading-relaxed mb-4 line-clamp-2">
+                            {family.man.description.split(".")[0]}.
+                          </p>
+
+                          {/* ─── Polarity system ───────── */}
+                          <div className="space-y-2 mb-4">
+                            {/* Fullness */}
+                            <div className="flex items-start gap-2">
+                              <div
+                                className="w-1 h-1 rounded-full mt-1.5 shrink-0"
+                                style={{ background: family.color }}
+                              />
+                              <div>
+                                <span
+                                  className="font-mono text-[8px] tracking-[0.15em] uppercase"
+                                  style={{ color: family.color + "CC" }}
+                                >
+                                  Fullness
+                                </span>
+                                <p className="text-text-secondary text-[10px] leading-snug mt-0.5">
+                                  {family.man.fullness.description
+                                    .split(".")
+                                    .slice(0, 1)
+                                    .join(".")}
+                                  .
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Active shadow */}
+                            <div className="flex items-start gap-2">
+                              <div className="w-1 h-1 rounded-full bg-crimson/60 mt-1.5 shrink-0" />
+                              <div>
+                                <span className="font-mono text-[8px] tracking-[0.15em] text-crimson-light uppercase">
+                                  Active Shadow —{" "}
+                                  {family.man.activeShadow.name}
+                                </span>
+                                <p className="text-text-secondary text-[10px] leading-snug mt-0.5">
+                                  {family.man.activeShadow.traits[0]}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Passive shadow */}
+                            <div className="flex items-start gap-2">
+                              <div className="w-1 h-1 rounded-full bg-muted/40 mt-1.5 shrink-0" />
+                              <div>
+                                <span className="font-mono text-[8px] tracking-[0.15em] text-muted uppercase">
+                                  Passive Shadow —{" "}
+                                  {family.man.passiveShadow.name}
+                                </span>
+                                <p className="text-text-secondary text-[10px] leading-snug mt-0.5">
+                                  {family.man.passiveShadow.traits[0]}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Footer — Boy → Man evolution */}
+                        <div className="flex items-center justify-between pt-3 border-t border-surface-light/30">
+                          <div className="flex items-center gap-2.5">
+                            <span className="font-mono text-[8px] tracking-wider text-muted uppercase">
+                              {family.boy.name}
+                            </span>
+                            <div className="flex items-center gap-1">
+                              <div className="w-5 h-px bg-muted/15" />
+                              <span className="font-mono text-[7px] tracking-[0.15em] text-gold/60 uppercase">
+                                initiation
+                              </span>
+                              <div className="w-5 h-px bg-muted/15" />
+                              <svg
+                                width="6"
+                                height="8"
+                                viewBox="0 0 6 8"
+                                fill="none"
+                                className="text-muted/20"
+                              >
+                                <path
+                                  d="M1 1L5 4L1 7"
+                                  stroke="currentColor"
+                                  strokeWidth="1"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            </div>
+                            <span
+                              className="font-mono text-[8px] tracking-wider uppercase"
+                              style={{ color: family.color + "CC" }}
+                            >
+                              {family.man.name}
+                            </span>
+                          </div>
+
+                          {/* Enter arrow */}
+                          <div
+                            className="text-muted/0 group-hover:text-muted/50 transition-all duration-300 group-hover:translate-x-0.5"
+                          >
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                            >
+                              <path
+                                d="M6 4L10 8L6 12"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* System overview link */}
+          <div className="max-w-6xl mx-auto mt-8 text-center">
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-muted uppercase hover:text-gold transition-colors duration-300"
+            >
+              <span className="w-6 h-px bg-current" />
+              Explore the full quaternary system
+              <span className="w-6 h-px bg-current" />
+            </Link>
+          </div>
         </div>
       </div>
     </div>

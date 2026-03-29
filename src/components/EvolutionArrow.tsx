@@ -28,7 +28,7 @@ function MiniCard({ archetype, side }: { archetype: Archetype; side: "from" | "t
       >
         {archetype.name}
       </h4>
-      <p className="text-xs text-muted mt-1 line-clamp-2">
+      <p className="text-xs text-text-secondary mt-1 line-clamp-2">
         {archetype.description.split(".")[0]}.
       </p>
     </Link>

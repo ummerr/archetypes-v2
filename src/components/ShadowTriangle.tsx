@@ -10,7 +10,7 @@ export default function ShadowTriangle({
   const color = archetype.accentColor;
 
   return (
-    <div className="relative w-full max-w-md mx-auto py-4">
+    <div className="relative w-full max-w-xl mx-auto py-4">
       <svg
         viewBox="0 0 400 280"
         className="w-full"

@@ -9,7 +9,7 @@ export const COLORS = {
   surface: "#141412",
   surfaceLight: "#1E1E1A",
   text: "#E8E4DC",
-  muted: "#8A8578",
+  muted: "#8A8780",
   gold: "#C6A355",
 } as const;
 

@@ -6,8 +6,8 @@
   --color-surface-light: #16161E;
   --color-surface-hover: #1E1E28;
   --color-text-primary: #EDEDEC;
-  --color-text-secondary: #B8B5AD;
-  --color-muted: #5C5A52;
+  --color-text-secondary: #D0CEC8;
+  --color-muted: #8A8780;
   --color-gold: #D4AF37;
   --color-gold-dim: #A68B2A;
   --color-gold-bright: #F0D060;
@@ -19,6 +19,7 @@
   --color-rose-light: #E8A0AB;
   --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "Space Mono", "JetBrains Mono", monospace;
 }
 
 * {
@@ -47,20 +48,116 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-primary);
 }
 
-/* Noise overlay */
+/* ─── Noise overlay ─────────────────────────────────── */
 .noise::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.018;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
 }
 
-/* Animations — used on detail pages */
+/* ─── CRT scanline overlay ──────────────────────────── */
+.crt-overlay::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+}
+
+/* ─── Retro glow text ───────────────────────────────── */
+.glow-text {
+  text-shadow:
+    0 0 10px currentColor,
+    0 0 30px currentColor,
+    0 0 60px currentColor;
+}
+
+.glow-text-subtle {
+  text-shadow:
+    0 0 8px currentColor,
+    0 0 20px currentColor;
+}
+
+/* ─── Retro card styles ─────────────────────────────── */
+.retro-card {
+  background: linear-gradient(
+    145deg,
+    rgba(14, 14, 20, 0.9) 0%,
+    rgba(6, 6, 10, 0.95) 100%
+  );
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.retro-card:hover {
+  border-color: rgba(212, 175, 55, 0.25);
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.05),
+    inset 0 1px 0 rgba(212, 175, 55, 0.08);
+}
+
+/* ─── Retro border glow ─────────────────────────────── */
+.retro-border {
+  position: relative;
+}
+
+.retro-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.2),
+    transparent 40%,
+    transparent 60%,
+    rgba(212, 175, 55, 0.1)
+  );
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Mono label styling ────────────────────────────── */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+/* ─── Horizontal rule with glow ─────────────────────── */
+.retro-hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-gold-dim) 20%,
+    var(--color-gold) 50%,
+    var(--color-gold-dim) 80%,
+    transparent
+  );
+  opacity: 0.2;
+}
+
+/* ─── Animations ────────────────────────────────────── */
 @keyframes breathe-subtle {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 0.7; }
@@ -75,11 +172,51 @@ h1, h2, h3, h4, h5, h6 {
   to { stroke-dashoffset: -20; }
 }
 
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  96% { opacity: 0.9; }
+  97% { opacity: 1; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; filter: blur(8px); }
+  50% { opacity: 0.7; filter: blur(12px); }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
 .animate-breathe { animation: breathe 6s ease-in-out infinite; }
 .animate-breathe-subtle { animation: breathe-subtle 4s ease-in-out infinite; }
 .animate-dash-flow { animation: dash-flow 2s linear infinite; }
+.animate-flicker { animation: flicker 8s steps(1) infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-slide-up { animation: slide-up 0.8s cubic-bezier(0.19, 1, 0.22, 1) both; }
 
-/* Scroll-triggered fade in */
+/* Staggered animation delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* ─── Scroll-triggered fade in ──────────────────────── */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -90,3 +227,11 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ─── Float animation for 3D totems ──────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
