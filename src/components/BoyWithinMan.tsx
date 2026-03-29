@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useMemo } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
+import * as THREE from "three";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 interface Props {
   boyName: string;
@@ -13,11 +17,411 @@ interface Props {
   maturity: "boy" | "man";
 }
 
-/**
- * Concentric visualization: the Boy archetype lives as a luminous core
- * inside the Man archetype's containing ring. Shadows orbit on either side.
- * Shows how mature masculinity holds and integrates the boy within.
- */
+/* ─── Particles drifting between boy core and man ring ── */
+function InitiationParticles({ color, count = 40 }: { color: string; count?: number }) {
+  const ref = useRef<THREE.Points>(null);
+
+  const { positions, speeds, offsets } = useMemo(() => {
+    const positions = new Float32Array(count * 3);
+    const speeds = new Float32Array(count);
+    const offsets = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const r = 0.4 + Math.random() * 0.8;
+      positions[i * 3] = Math.cos(angle) * r;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 0.6;
+      positions[i * 3 + 2] = Math.sin(angle) * r;
+      speeds[i] = 0.2 + Math.random() * 0.4;
+      offsets[i] = Math.random() * Math.PI * 2;
+    }
+    return { positions, speeds, offsets };
+  }, [count]);
+
+  useFrame((state) => {
+    if (!ref.current) return;
+    const t = state.clock.elapsedTime;
+    const pos = ref.current.geometry.attributes.position;
+    for (let i = 0; i < count; i++) {
+      const angle = offsets[i] + t * speeds[i];
+      // Spiral inward and outward
+      const r = 0.35 + Math.sin(t * speeds[i] * 0.5 + offsets[i]) * 0.55 + 0.2;
+      pos.setXYZ(
+        i,
+        Math.cos(angle) * r,
+        Math.sin(t * 0.3 + offsets[i]) * 0.15,
+        Math.sin(angle) * r
+      );
+    }
+    pos.needsUpdate = true;
+  });
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          args={[positions, 3]}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        color={color}
+        size={0.02}
+        transparent
+        opacity={0.6}
+        sizeAttenuation
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+      />
+    </points>
+  );
+}
+
+/* ─── Dashed orbital rings (initiation paths) ── */
+function InitiationRings({ color }: { color: string }) {
+  const group = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (!group.current) return;
+    group.current.rotation.y = state.clock.elapsedTime * 0.08;
+  });
+
+  const rings = useMemo(() => [
+    { r: 0.55, dash: 0.04, gap: 0.08, opacity: 0.15, rotX: 0.3 },
+    { r: 0.7, dash: 0.02, gap: 0.12, opacity: 0.1, rotX: -0.2 },
+    { r: 0.85, dash: 0.06, gap: 0.06, opacity: 0.08, rotX: 0.15 },
+  ], []);
+
+  return (
+    <group ref={group}>
+      {rings.map((ring, i) => (
+        <mesh key={i} rotation={[ring.rotX, 0, i * 0.4]}>
+          <torusGeometry args={[ring.r, 0.003, 4, 64]} />
+          <meshBasicMaterial
+            color={color}
+            transparent
+            opacity={ring.opacity}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+/* ─── Boy core: glowing inner sphere ── */
+function BoyCore({ color, isBoy }: { color: string; isBoy: boolean }) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const glowRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    if (meshRef.current) {
+      meshRef.current.rotation.y = t * 0.4;
+      meshRef.current.rotation.x = t * 0.2;
+    }
+    if (glowRef.current) {
+      const s = 0.38 + Math.sin(t * 1.5) * 0.04;
+      glowRef.current.scale.setScalar(s);
+    }
+  });
+
+  return (
+    <group>
+      {/* Inner glow sphere */}
+      <mesh ref={glowRef}>
+        <sphereGeometry args={[1, 16, 16]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={0.8}
+          transparent
+          opacity={0.08}
+        />
+      </mesh>
+      {/* Boy icosahedron — wireframe */}
+      <mesh ref={meshRef}>
+        <icosahedronGeometry args={[0.3, 1]} />
+        <meshBasicMaterial
+          color={color}
+          wireframe
+          transparent
+          opacity={isBoy ? 0.9 : 0.6}
+        />
+      </mesh>
+      {/* Boy icosahedron — solid */}
+      <mesh rotation={[0, 0.3, 0]}>
+        <icosahedronGeometry args={[0.3, 1]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={isBoy ? 0.6 : 0.3}
+          metalness={0.5}
+          roughness={0.3}
+          transparent
+          opacity={0.15}
+        />
+      </mesh>
+      {/* Bright core point */}
+      <mesh>
+        <sphereGeometry args={[0.06, 8, 8]} />
+        <meshStandardMaterial
+          color="#FFFFFF"
+          emissive={color}
+          emissiveIntensity={2.5}
+        />
+      </mesh>
+      <pointLight color={color} intensity={1.5} distance={3} decay={2} />
+    </group>
+  );
+}
+
+/* ─── Man container: outer wireframe sphere ── */
+function ManContainer({ color, isMan }: { color: string; isMan: boolean }) {
+  const outerRef = useRef<THREE.Mesh>(null);
+  const echoRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    if (outerRef.current) {
+      outerRef.current.rotation.y = t * 0.1;
+      outerRef.current.rotation.x = Math.sin(t * 0.15) * 0.1;
+    }
+    if (echoRef.current) {
+      echoRef.current.rotation.y = -t * 0.05;
+    }
+  });
+
+  return (
+    <group>
+      {/* Main man sphere — wireframe */}
+      <mesh ref={outerRef}>
+        <icosahedronGeometry args={[1.0, 1]} />
+        <meshBasicMaterial
+          color={color}
+          wireframe
+          transparent
+          opacity={isMan ? 0.4 : 0.2}
+        />
+      </mesh>
+      {/* Echo ring */}
+      <mesh ref={echoRef} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[1.15, 0.008, 4, 48]} />
+        <meshBasicMaterial
+          color={color}
+          transparent
+          opacity={0.15}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+/* ─── Shadow orbiters for boy/man ── */
+function ShadowMarkers({
+  manShadowActive,
+  manShadowPassive,
+}: {
+  manShadowActive: string;
+  manShadowPassive: string;
+}) {
+  const activeRef = useRef<THREE.Mesh>(null);
+  const passiveRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    if (activeRef.current) {
+      activeRef.current.position.x = -1.35 + Math.sin(t * 1.2) * 0.06;
+      activeRef.current.position.y = Math.cos(t * 1.8) * 0.05;
+      activeRef.current.rotation.y = t * 2;
+      activeRef.current.rotation.x = t * 1.2;
+    }
+    if (passiveRef.current) {
+      passiveRef.current.position.x = 1.35 + Math.sin(t * 0.4) * 0.03;
+      passiveRef.current.position.y = Math.sin(t * 0.25) * 0.03;
+      passiveRef.current.rotation.y = t * 0.3;
+    }
+  });
+
+  return (
+    <>
+      {/* Active shadow — spiky tetrahedron */}
+      <mesh ref={activeRef} position={[-1.35, 0, 0]}>
+        <tetrahedronGeometry args={[0.08, 0]} />
+        <meshStandardMaterial
+          color="#C0392B"
+          emissive="#C0392B"
+          emissiveIntensity={1.0}
+          transparent
+          opacity={0.7}
+        />
+      </mesh>
+      {/* Passive shadow — flat box */}
+      <mesh ref={passiveRef} position={[1.35, 0, 0]} scale={[1, 0.4, 1]}>
+        <boxGeometry args={[0.1, 0.1, 0.1]} />
+        <meshStandardMaterial
+          color="#5C5A52"
+          emissive="#5C5A52"
+          emissiveIntensity={0.4}
+          transparent
+          opacity={0.5}
+        />
+      </mesh>
+    </>
+  );
+}
+
+/* ─── HTML labels overlaid on the 3D scene ── */
+function Labels({
+  boyName,
+  manName,
+  color,
+  manShadowActive,
+  manShadowPassive,
+  maturity,
+}: {
+  boyName: string;
+  manName: string;
+  color: string;
+  manShadowActive: string;
+  manShadowPassive: string;
+  maturity: "boy" | "man";
+}) {
+  return (
+    <>
+      {/* Man label — top */}
+      <Html position={[0, 1.35, 0]} center>
+        <div className="pointer-events-none select-none text-center whitespace-nowrap">
+          <p
+            className="font-serif text-sm font-medium"
+            style={{
+              color,
+              opacity: maturity === "man" ? 0.9 : 0.5,
+              textShadow: `0 0 12px ${color}60`,
+            }}
+          >
+            {manName}
+          </p>
+          <p
+            className="font-sans text-[7px] tracking-[0.2em] uppercase mt-0.5"
+            style={{ color, opacity: 0.3 }}
+          >
+            Man
+          </p>
+        </div>
+      </Html>
+
+      {/* Boy label — center bottom */}
+      <Html position={[0, -0.45, 0]} center>
+        <div className="pointer-events-none select-none text-center whitespace-nowrap">
+          <p
+            className="font-serif text-xs font-medium"
+            style={{
+              color,
+              opacity: maturity === "boy" ? 0.9 : 0.65,
+              textShadow: `0 0 10px ${color}40`,
+            }}
+          >
+            {boyName}
+          </p>
+          <p
+            className="font-sans text-[6px] tracking-[0.2em] uppercase mt-0.5"
+            style={{ color, opacity: 0.25 }}
+          >
+            Boy
+          </p>
+        </div>
+      </Html>
+
+      {/* Active shadow label */}
+      <Html position={[-1.35, -0.25, 0]} center>
+        <div className="pointer-events-none select-none text-center whitespace-nowrap">
+          <p className="font-sans text-[6px] tracking-[0.15em] uppercase" style={{ color: "#E74C3C", opacity: 0.5 }}>
+            Active
+          </p>
+          <p className="font-serif text-[9px]" style={{ color: "#E74C3C", opacity: 0.45 }}>
+            {manShadowActive}
+          </p>
+        </div>
+      </Html>
+
+      {/* Passive shadow label */}
+      <Html position={[1.35, -0.25, 0]} center>
+        <div className="pointer-events-none select-none text-center whitespace-nowrap">
+          <p className="font-sans text-[6px] tracking-[0.15em] uppercase" style={{ color: "#8A8578", opacity: 0.5 }}>
+            Passive
+          </p>
+          <p className="font-serif text-[9px]" style={{ color: "#8A8578", opacity: 0.45 }}>
+            {manShadowPassive}
+          </p>
+        </div>
+      </Html>
+
+      {/* Bottom annotation */}
+      <Html position={[0, -1.55, 0]} center>
+        <p
+          className="pointer-events-none select-none font-sans text-[7px] tracking-[0.25em] uppercase whitespace-nowrap"
+          style={{ color, opacity: 0.2 }}
+        >
+          {maturity === "boy" ? "The seed within the man" : "The boy he carries within"}
+        </p>
+      </Html>
+    </>
+  );
+}
+
+/* ─── Connecting dashed lines to shadow poles ── */
+function ShadowConnectors() {
+  const leftLine = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    const pts = [];
+    for (let i = 0; i <= 12; i++) {
+      const t = i / 12;
+      pts.push(-1.0 - t * 0.25, Math.sin(t * Math.PI) * 0.02, 0);
+    }
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(pts, 3));
+    const mat = new THREE.LineDashedMaterial({
+      color: "#C0392B",
+      dashSize: 0.03,
+      gapSize: 0.05,
+      transparent: true,
+      opacity: 0.2,
+    });
+    const line = new THREE.Line(geo, mat);
+    line.computeLineDistances();
+    return line;
+  }, []);
+
+  const rightLine = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    const pts = [];
+    for (let i = 0; i <= 12; i++) {
+      const t = i / 12;
+      pts.push(1.0 + t * 0.25, Math.sin(t * Math.PI) * 0.02, 0);
+    }
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(pts, 3));
+    const mat = new THREE.LineDashedMaterial({
+      color: "#5C5A52",
+      dashSize: 0.03,
+      gapSize: 0.05,
+      transparent: true,
+      opacity: 0.15,
+    });
+    const line = new THREE.Line(geo, mat);
+    line.computeLineDistances();
+    return line;
+  }, []);
+
+  return (
+    <>
+      <primitive object={leftLine} />
+      <primitive object={rightLine} />
+    </>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════
+   BoyWithinMan — Main Canvas
+   ═══════════════════════════════════════════════════════ */
+
 export default function BoyWithinMan({
   boyName,
   manName,
@@ -28,497 +432,48 @@ export default function BoyWithinMan({
   manShadowPassive,
   maturity,
 }: Props) {
-  const svgRef = useRef<SVGSVGElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = svgRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold: 0.3 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const cx = 240;
-  const cy = 200;
-  const manR = 130;
-  const boyR = 52;
-  const shadowOrbitR = 170;
-
-  // Muted version of color for secondary elements
-  const dimColor = `${color}40`;
-  const faintColor = `${color}18`;
-  const glowColor = `${color}30`;
+  const isBoy = maturity === "boy";
 
   return (
-    <div className="relative w-full flex justify-center">
-      <svg
-        ref={svgRef}
-        viewBox="0 0 480 400"
-        className="w-full max-w-[480px]"
-        style={{
-          opacity: visible ? 1 : 0,
-          transform: visible ? "scale(1)" : "scale(0.92)",
-          transition: "opacity 1s cubic-bezier(0.19,1,0.22,1), transform 1.2s cubic-bezier(0.19,1,0.22,1)",
-        }}
+    <div className="relative w-full h-[340px] md:h-[400px]">
+      <Canvas
+        camera={{ position: [0, 0.2, 3.5], fov: 36 }}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        style={{ background: "transparent" }}
+        dpr={[1, 1.5]}
       >
-        <defs>
-          {/* Glow filter for boy core */}
-          <radialGradient id="boyGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor={color} stopOpacity="0.25" />
-            <stop offset="60%" stopColor={color} stopOpacity="0.08" />
-            <stop offset="100%" stopColor={color} stopOpacity="0" />
-          </radialGradient>
+        <ambientLight intensity={0.03} />
+        <directionalLight position={[2, 3, 2]} intensity={0.15} color="#F0D060" />
+        <directionalLight position={[-1, -2, 1]} intensity={0.06} color="#4488AA" />
 
-          {/* Subtle ambient glow behind man ring */}
-          <radialGradient id="manAmbient" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor={color} stopOpacity="0" />
-            <stop offset="60%" stopColor={color} stopOpacity="0.04" />
-            <stop offset="100%" stopColor={color} stopOpacity="0" />
-          </radialGradient>
-
-          {/* Pulse animation for boy core */}
-          <filter id="boyBlur">
-            <feGaussianBlur stdDeviation="6" />
-          </filter>
-
-          <filter id="shadowBlur">
-            <feGaussianBlur stdDeviation="3" />
-          </filter>
-        </defs>
-
-        {/* ── Background ambient ── */}
-        <circle cx={cx} cy={cy} r={manR + 40} fill="url(#manAmbient)" />
-
-        {/* ── Initiation zone: the space between boy and man ── */}
-        {/* Dashed rings representing the journey of maturation */}
-        {[72, 90, 110].map((r, i) => (
-          <circle
-            key={r}
-            cx={cx}
-            cy={cy}
-            r={r}
-            fill="none"
-            stroke={dimColor}
-            strokeWidth="0.5"
-            strokeDasharray={i === 1 ? "3 8" : "1 6"}
-            style={{
-              opacity: visible ? [0.5, 0.35, 0.2][i] : 0,
-              transition: `opacity ${1.5 + i * 0.3}s ease ${0.3 + i * 0.15}s`,
-            }}
-          >
-            {/* Slow rotation for the middle ring */}
-            {i === 1 && (
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from={`0 ${cx} ${cy}`}
-                to={`360 ${cx} ${cy}`}
-                dur="90s"
-                repeatCount="indefinite"
-              />
-            )}
-          </circle>
-        ))}
-
-        {/* ── Man archetype: outer containing ring ── */}
-        <circle
-          cx={cx}
-          cy={cy}
-          r={manR}
-          fill="none"
-          stroke={color}
-          strokeWidth={maturity === "man" ? "2" : "1"}
-          style={{
-            opacity: visible ? (maturity === "man" ? 0.7 : 0.35) : 0,
-            transition: "opacity 1.2s ease 0.2s",
-          }}
+        <ManContainer color={color} isMan={!isBoy} />
+        <BoyCore color={color} isBoy={isBoy} />
+        <InitiationRings color={color} />
+        <InitiationParticles color={color} />
+        <ShadowMarkers
+          manShadowActive={manShadowActive}
+          manShadowPassive={manShadowPassive}
         />
-        {/* Second outer ring — faint echo */}
-        <circle
-          cx={cx}
-          cy={cy}
-          r={manR + 14}
-          fill="none"
-          stroke={dimColor}
-          strokeWidth="0.5"
-          strokeDasharray="2 10"
-          style={{
-            opacity: visible ? 0.3 : 0,
-            transition: "opacity 1.5s ease 0.5s",
-          }}
-        >
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from={`0 ${cx} ${cy}`}
-            to={`-360 ${cx} ${cy}`}
-            dur="120s"
-            repeatCount="indefinite"
-          />
-        </circle>
+        <ShadowConnectors />
 
-        {/* ── Man label (top of ring) ── */}
-        <text
-          x={cx}
-          y={cy - manR - 22}
-          textAnchor="middle"
-          className="font-serif"
-          style={{
-            fill: color,
-            fontSize: maturity === "man" ? "15px" : "11px",
-            opacity: visible ? (maturity === "man" ? 0.9 : 0.5) : 0,
-            transition: "opacity 1s ease 0.6s",
-            letterSpacing: "0.06em",
-          }}
-        >
-          {manName}
-        </text>
-        <text
-          x={cx}
-          y={cy - manR - 8}
-          textAnchor="middle"
-          className="font-sans"
-          style={{
-            fill: color,
-            fontSize: "8px",
-            opacity: visible ? 0.25 : 0,
-            transition: "opacity 1s ease 0.8s",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-          }}
-        >
-          Man
-        </text>
-
-        {/* ── Radial lines from boy to man ring (initiation paths) ── */}
-        {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => {
-          const rad = (angle * Math.PI) / 180;
-          const x1 = cx + Math.cos(rad) * (boyR + 8);
-          const y1 = cy + Math.sin(rad) * (boyR + 8);
-          const x2 = cx + Math.cos(rad) * (manR - 8);
-          const y2 = cy + Math.sin(rad) * (manR - 8);
-          return (
-            <line
-              key={angle}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke={faintColor}
-              strokeWidth="0.5"
-              strokeDasharray="2 6"
-              style={{
-                opacity: visible ? 0.6 : 0,
-                transition: `opacity 1.5s ease ${0.5 + (angle / 360) * 0.5}s`,
-              }}
-            />
-          );
-        })}
-
-        {/* ── Boy archetype: inner luminous core ── */}
-        {/* Glow */}
-        <circle
-          cx={cx}
-          cy={cy}
-          r={boyR + 20}
-          fill="url(#boyGlow)"
-          style={{
-            opacity: visible ? 1 : 0,
-            transition: "opacity 1.5s ease 0.4s",
-          }}
-        >
-          <animate
-            attributeName="r"
-            values={`${boyR + 16};${boyR + 24};${boyR + 16}`}
-            dur="5s"
-            repeatCount="indefinite"
-          />
-        </circle>
-
-        {/* Boy ring */}
-        <circle
-          cx={cx}
-          cy={cy}
-          r={boyR}
-          fill={`${color}06`}
-          stroke={color}
-          strokeWidth={maturity === "boy" ? "2" : "1.5"}
-          style={{
-            opacity: visible ? (maturity === "boy" ? 0.9 : 0.7) : 0,
-            transition: "opacity 1s ease 0.3s",
-          }}
+        <Labels
+          boyName={boyName}
+          manName={manName}
+          color={color}
+          manShadowActive={manShadowActive}
+          manShadowPassive={manShadowPassive}
+          maturity={maturity}
         />
 
-        {/* Boy label (center) */}
-        <text
-          x={cx}
-          y={cy - 6}
-          textAnchor="middle"
-          className="font-serif"
-          style={{
-            fill: color,
-            fontSize: maturity === "boy" ? "13px" : "11px",
-            opacity: visible ? (maturity === "boy" ? 0.95 : 0.7) : 0,
-            transition: "opacity 1s ease 0.7s",
-            letterSpacing: "0.04em",
-          }}
-        >
-          {boyName}
-        </text>
-        <text
-          x={cx}
-          y={cy + 8}
-          textAnchor="middle"
-          className="font-sans"
-          style={{
-            fill: color,
-            fontSize: "7px",
-            opacity: visible ? 0.3 : 0,
-            transition: "opacity 1s ease 0.9s",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-          }}
-        >
-          Boy
-        </text>
-
-        {/* ── Center dot: the Self ── */}
-        <circle
-          cx={cx}
-          cy={cy + 22}
-          r="2"
-          fill={color}
-          style={{
-            opacity: visible ? 0.5 : 0,
-            transition: "opacity 1.5s ease 1s",
-          }}
-        >
-          <animate
-            attributeName="opacity"
-            values="0.3;0.7;0.3"
-            dur="4s"
-            repeatCount="indefinite"
+        <EffectComposer>
+          <Bloom
+            intensity={0.7}
+            luminanceThreshold={0.15}
+            luminanceSmoothing={0.9}
+            mipmapBlur
           />
-        </circle>
-
-        {/* ── Shadow poles — orbiting markers on the man ring ── */}
-        {/* Man Active Shadow (left) */}
-        <g
-          style={{
-            opacity: visible ? 1 : 0,
-            transition: "opacity 1.2s ease 0.8s",
-          }}
-        >
-          <circle
-            cx={cx - shadowOrbitR}
-            cy={cy}
-            r="5"
-            fill="#C0392B"
-            opacity="0.15"
-            filter="url(#shadowBlur)"
-          />
-          <circle
-            cx={cx - shadowOrbitR}
-            cy={cy}
-            r="3"
-            fill="none"
-            stroke="#C0392B"
-            strokeWidth="1"
-            opacity="0.5"
-          />
-          <text
-            x={cx - shadowOrbitR}
-            y={cy - 14}
-            textAnchor="middle"
-            className="font-sans"
-            style={{
-              fill: "#E74C3C",
-              fontSize: "7px",
-              opacity: 0.5,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-            }}
-          >
-            Active
-          </text>
-          <text
-            x={cx - shadowOrbitR}
-            y={cy + 18}
-            textAnchor="middle"
-            className="font-serif"
-            style={{
-              fill: "#E74C3C",
-              fontSize: "9px",
-              opacity: 0.45,
-            }}
-          >
-            {manShadowActive}
-          </text>
-        </g>
-
-        {/* Man Passive Shadow (right) */}
-        <g
-          style={{
-            opacity: visible ? 1 : 0,
-            transition: "opacity 1.2s ease 1s",
-          }}
-        >
-          <circle
-            cx={cx + shadowOrbitR}
-            cy={cy}
-            r="5"
-            fill="#5C5A52"
-            opacity="0.15"
-            filter="url(#shadowBlur)"
-          />
-          <circle
-            cx={cx + shadowOrbitR}
-            cy={cy}
-            r="3"
-            fill="none"
-            stroke="#5C5A52"
-            strokeWidth="1"
-            opacity="0.5"
-          />
-          <text
-            x={cx + shadowOrbitR}
-            y={cy - 14}
-            textAnchor="middle"
-            className="font-sans"
-            style={{
-              fill: "#8A8578",
-              fontSize: "7px",
-              opacity: 0.5,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-            }}
-          >
-            Passive
-          </text>
-          <text
-            x={cx + shadowOrbitR}
-            y={cy + 18}
-            textAnchor="middle"
-            className="font-serif"
-            style={{
-              fill: "#8A8578",
-              fontSize: "9px",
-              opacity: 0.45,
-            }}
-          >
-            {manShadowPassive}
-          </text>
-        </g>
-
-        {/* ── Connecting lines from center to shadow poles ── */}
-        <line
-          x1={cx - manR}
-          y1={cy}
-          x2={cx - shadowOrbitR + 8}
-          y2={cy}
-          stroke="#C0392B"
-          strokeWidth="0.5"
-          strokeDasharray="2 5"
-          style={{
-            opacity: visible ? 0.2 : 0,
-            transition: "opacity 1.5s ease 1s",
-          }}
-        />
-        <line
-          x1={cx + manR}
-          y1={cy}
-          x2={cx + shadowOrbitR - 8}
-          y2={cy}
-          stroke="#5C5A52"
-          strokeWidth="0.5"
-          strokeDasharray="2 5"
-          style={{
-            opacity: visible ? 0.2 : 0,
-            transition: "opacity 1.5s ease 1s",
-          }}
-        />
-
-        {/* ── Boy shadow indicators (smaller, inside the transition zone) ── */}
-        {/* Boy Active Shadow (upper-left) */}
-        <g
-          style={{
-            opacity: visible ? 1 : 0,
-            transition: "opacity 1.2s ease 1.1s",
-          }}
-        >
-          <circle
-            cx={cx - 95}
-            cy={cy - 68}
-            r="2"
-            fill="#C0392B"
-            opacity="0.3"
-          />
-          <text
-            x={cx - 95}
-            y={cy - 78}
-            textAnchor="middle"
-            className="font-serif"
-            style={{
-              fill: "#E74C3C",
-              fontSize: "7px",
-              opacity: 0.3,
-            }}
-          >
-            {boyShadowActive}
-          </text>
-        </g>
-
-        {/* Boy Passive Shadow (upper-right) */}
-        <g
-          style={{
-            opacity: visible ? 1 : 0,
-            transition: "opacity 1.2s ease 1.2s",
-          }}
-        >
-          <circle
-            cx={cx + 95}
-            cy={cy - 68}
-            r="2"
-            fill="#5C5A52"
-            opacity="0.3"
-          />
-          <text
-            x={cx + 95}
-            y={cy - 78}
-            textAnchor="middle"
-            className="font-serif"
-            style={{
-              fill: "#8A8578",
-              fontSize: "7px",
-              opacity: 0.3,
-            }}
-          >
-            {boyShadowPassive}
-          </text>
-        </g>
-
-        {/* ── Bottom annotation ── */}
-        <text
-          x={cx}
-          y={cy + manR + 44}
-          textAnchor="middle"
-          className="font-sans"
-          style={{
-            fill: color,
-            fontSize: "8px",
-            opacity: visible ? 0.2 : 0,
-            transition: "opacity 1.5s ease 1.3s",
-            letterSpacing: "0.25em",
-            textTransform: "uppercase",
-          }}
-        >
-          {maturity === "boy" ? "The seed within the man" : "The boy he carries within"}
-        </text>
-      </svg>
+        </EffectComposer>
+      </Canvas>
     </div>
   );
 }
