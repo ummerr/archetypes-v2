@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FAMILIES } from "@/data/archetypes";
 import TotemCanvas from "@/components/TotemCanvas";
+import ShadowPolarityMini from "@/components/ShadowPolarityMini";
 
 export default function Home() {
   const router = useRouter();
@@ -53,7 +54,7 @@ export default function Home() {
                   <div
                     className="relative overflow-hidden rounded-sm transition-all duration-500"
                     style={{
-                      background: `linear-gradient(145deg, ${family.color}06 0%, rgba(6,6,10,0.95) 40%, rgba(6,6,10,0.98) 100%)`,
+                      background: `linear-gradient(145deg, ${family.color}06 0%, var(--color-bg) 40%, var(--color-bg) 100%)`,
                       border: `1px solid ${isHovered ? family.color + "30" : family.color + "10"}`,
                       boxShadow: isHovered
                         ? `0 0 40px ${family.color}08, 0 0 80px ${family.color}04, inset 0 1px 0 ${family.color}10`
@@ -77,19 +78,6 @@ export default function Home() {
                           color={family.color}
                           isHovered={isHovered}
                         />
-                        {/* Shadow labels on the totem */}
-                        <div className="absolute bottom-3 left-3 flex items-center gap-1">
-                          <div className="w-1.5 h-1.5 rounded-full bg-crimson" />
-                          <span className="font-mono text-[7px] tracking-wider text-crimson-light/80 uppercase">
-                            {family.man.activeShadow.name}
-                          </span>
-                        </div>
-                        <div className="absolute bottom-3 right-3 flex items-center gap-1">
-                          <span className="font-mono text-[7px] tracking-wider text-muted/80 uppercase">
-                            {family.man.passiveShadow.name}
-                          </span>
-                          <div className="w-1.5 h-1.5 rounded-full bg-muted/80" />
-                        </div>
                       </div>
 
                       {/* ─── Card content ──────────────── */}
@@ -127,58 +115,14 @@ export default function Home() {
                             {family.man.description.split(".")[0]}.
                           </p>
 
-                          {/* ─── Polarity system ───────── */}
-                          <div className="space-y-2 mb-4">
-                            {/* Fullness */}
-                            <div className="flex items-start gap-2">
-                              <div
-                                className="w-1 h-1 rounded-full mt-1.5 shrink-0"
-                                style={{ background: family.color }}
-                              />
-                              <div>
-                                <span
-                                  className="font-mono text-[8px] tracking-[0.15em] uppercase"
-                                  style={{ color: family.color + "CC" }}
-                                >
-                                  Fullness
-                                </span>
-                                <p className="text-text-secondary text-[10px] leading-snug mt-0.5">
-                                  {family.man.fullness.description
-                                    .split(".")
-                                    .slice(0, 1)
-                                    .join(".")}
-                                  .
-                                </p>
-                              </div>
-                            </div>
-
-                            {/* Active shadow */}
-                            <div className="flex items-start gap-2">
-                              <div className="w-1 h-1 rounded-full bg-crimson/60 mt-1.5 shrink-0" />
-                              <div>
-                                <span className="font-mono text-[8px] tracking-[0.15em] text-crimson-light uppercase">
-                                  Active Shadow —{" "}
-                                  {family.man.activeShadow.name}
-                                </span>
-                                <p className="text-text-secondary text-[10px] leading-snug mt-0.5">
-                                  {family.man.activeShadow.traits[0]}
-                                </p>
-                              </div>
-                            </div>
-
-                            {/* Passive shadow */}
-                            <div className="flex items-start gap-2">
-                              <div className="w-1 h-1 rounded-full bg-muted/40 mt-1.5 shrink-0" />
-                              <div>
-                                <span className="font-mono text-[8px] tracking-[0.15em] text-muted uppercase">
-                                  Passive Shadow —{" "}
-                                  {family.man.passiveShadow.name}
-                                </span>
-                                <p className="text-text-secondary text-[10px] leading-snug mt-0.5">
-                                  {family.man.passiveShadow.traits[0]}
-                                </p>
-                              </div>
-                            </div>
+                          {/* ─── Shadow polarity 3D ───────── */}
+                          <div className="mb-3 -mx-2">
+                            <ShadowPolarityMini
+                              color={family.color}
+                              fullnessName={family.man.name}
+                              activeShadowName={family.man.activeShadow.name}
+                              passiveShadowName={family.man.passiveShadow.name}
+                            />
                           </div>
                         </div>
 

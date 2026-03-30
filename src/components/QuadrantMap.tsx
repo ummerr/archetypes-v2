@@ -315,7 +315,7 @@ export default function QuadrantMap() {
               cx={cx}
               cy={cy}
               r={24}
-              fill="#06060A"
+              fill="var(--color-bg)"
               stroke="#D4AF37"
               strokeWidth={0.8}
               strokeOpacity={0.4}

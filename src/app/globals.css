@@ -22,6 +22,26 @@
   --font-mono: "Space Mono", "JetBrains Mono", monospace;
 }
 
+/* ─── Light mode overrides ─────────────────────────── */
+:root[data-theme="light"] {
+  --color-bg: #F5F3EE;
+  --color-surface: #EDEAE3;
+  --color-surface-light: #E2DFD7;
+  --color-surface-hover: #D8D4CB;
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #4A4740;
+  --color-muted: #8A8780;
+  --color-gold: #9E7C1A;
+  --color-gold-dim: #7A5F10;
+  --color-gold-bright: #C49B20;
+  --color-crimson: #A3302A;
+  --color-crimson-light: #C0392B;
+  --color-emerald: #167A54;
+  --color-emerald-light: #1B9E6B;
+  --color-rose: #B06070;
+  --color-rose-light: #C97B84;
+}
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -36,6 +56,7 @@ body {
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -61,6 +82,10 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 256px 256px;
 }
 
+:root[data-theme="light"] .noise::before {
+  opacity: 0.015;
+}
+
 /* ─── CRT scanline overlay ──────────────────────────── */
 .crt-overlay::after {
   content: "";
@@ -77,6 +102,16 @@ h1, h2, h3, h4, h5, h6 {
   );
 }
 
+:root[data-theme="light"] .crt-overlay::after {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.012) 2px,
+    rgba(0, 0, 0, 0.012) 4px
+  );
+}
+
 /* ─── Retro glow text ───────────────────────────────── */
 .glow-text {
   text-shadow:
@@ -89,6 +124,14 @@ h1, h2, h3, h4, h5, h6 {
   text-shadow:
     0 0 8px currentColor,
     0 0 20px currentColor;
+}
+
+:root[data-theme="light"] .glow-text {
+  text-shadow: none;
+}
+
+:root[data-theme="light"] .glow-text-subtle {
+  text-shadow: none;
 }
 
 /* ─── Retro card styles ─────────────────────────────── */
@@ -108,6 +151,22 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow:
     0 0 20px rgba(212, 175, 55, 0.05),
     inset 0 1px 0 rgba(212, 175, 55, 0.08);
+}
+
+:root[data-theme="light"] .retro-card {
+  background: linear-gradient(
+    145deg,
+    rgba(226, 223, 215, 0.8) 0%,
+    rgba(237, 234, 227, 0.9) 100%
+  );
+  border: 1px solid rgba(158, 124, 26, 0.12);
+}
+
+:root[data-theme="light"] .retro-card:hover {
+  border-color: rgba(158, 124, 26, 0.25);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 /* ─── Retro border glow ─────────────────────────────── */
@@ -131,6 +190,16 @@ h1, h2, h3, h4, h5, h6 {
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   pointer-events: none;
+}
+
+:root[data-theme="light"] .retro-border::before {
+  background: linear-gradient(
+    135deg,
+    rgba(158, 124, 26, 0.15),
+    transparent 40%,
+    transparent 60%,
+    rgba(158, 124, 26, 0.08)
+  );
 }
 
 /* ─── Mono label styling ────────────────────────────── */

@@ -340,7 +340,7 @@ export default function ArchetypeDetailClient({
                 {/* Active shadow */}
                 <div className="relative p-6 rounded-xl overflow-hidden transition-all duration-300 group"
                   style={{
-                    background: "linear-gradient(145deg, rgba(192, 57, 43, 0.06) 0%, rgba(6, 6, 10, 0.4) 100%)",
+                    background: "linear-gradient(145deg, rgba(192, 57, 43, 0.06) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 100%)",
                     border: "1px solid rgba(192, 57, 43, 0.12)",
                   }}
                 >
@@ -377,7 +377,7 @@ export default function ArchetypeDetailClient({
                 {/* Passive shadow */}
                 <div className="relative p-6 rounded-xl overflow-hidden transition-all duration-300 group"
                   style={{
-                    background: "linear-gradient(145deg, rgba(92, 90, 82, 0.06) 0%, rgba(6, 6, 10, 0.4) 100%)",
+                    background: "linear-gradient(145deg, rgba(92, 90, 82, 0.06) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 100%)",
                     border: "1px solid rgba(92, 90, 82, 0.12)",
                   }}
                 >
