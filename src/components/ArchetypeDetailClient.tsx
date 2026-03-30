@@ -6,8 +6,10 @@ import type { Archetype, ArchetypeFamilyGroup } from "@/types/archetype";
 import { FAMILIES } from "@/data/archetypes";
 import TotemCanvas from "@/components/TotemCanvas";
 import ShadowTriangle from "@/components/ShadowTriangle";
+import ShadowSpectrum from "@/components/ShadowSpectrum";
 import EvolutionArrow from "@/components/EvolutionArrow";
 import BoyWithinMan from "@/components/BoyWithinMan";
+import { useTheme } from "@/components/ThemeProvider";
 
 interface Props {
   archetype: Archetype;
@@ -40,6 +42,8 @@ export default function ArchetypeDetailClient({
   manArchetype,
 }: Props) {
   const color = archetype.accentColor;
+  const { theme } = useTheme();
+  const light = theme === "light";
 
   return (
     <>
@@ -48,7 +52,7 @@ export default function ArchetypeDetailClient({
         {/* Background washes */}
         <div className="absolute inset-0 pointer-events-none">
           <div
-            className="absolute top-0 left-1/3 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[200px] opacity-[0.08]"
+            className={`absolute top-0 left-1/3 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[200px] ${light ? "opacity-[0.06]" : "opacity-[0.08]"}`}
             style={{ backgroundColor: color }}
           />
           <div
@@ -94,7 +98,7 @@ export default function ArchetypeDetailClient({
               {/* Mono family label */}
               <p
                 className="font-mono text-[9px] tracking-[0.4em] uppercase mb-4"
-                style={{ color: `${color}B0` }}
+                style={{ color: light ? color : `${color}B0` }}
               >
                 {family.label} Family &mdash;{" "}
                 {archetype.maturity === "boy"
@@ -125,7 +129,7 @@ export default function ArchetypeDetailClient({
                   />
                   <span
                     className="font-mono text-[8px] tracking-[0.15em] uppercase"
-                    style={{ color: `${color}CC` }}
+                    style={{ color: light ? color : `${color}CC` }}
                   >
                     {archetype.name} in Fullness
                   </span>
@@ -191,12 +195,12 @@ export default function ArchetypeDetailClient({
             <div
               className="retro-card retro-border relative p-8 md:p-10 rounded-2xl overflow-hidden"
               style={{
-                borderLeft: `1px dashed ${color}25`,
+                borderLeft: `1px dashed ${color}${light ? "40" : "25"}`,
               }}
             >
               <p
                 className="font-mono text-[9px] tracking-[0.25em] uppercase mb-4"
-                style={{ color: `${color}CC` }}
+                style={{ color: light ? color : `${color}CC` }}
               >
                 Fullness
               </p>
@@ -219,12 +223,12 @@ export default function ArchetypeDetailClient({
             <div
               className="retro-card retro-border relative p-8 md:p-10 rounded-2xl overflow-hidden"
               style={{
-                borderLeft: `1px dashed ${color}25`,
+                borderLeft: `1px dashed ${color}${light ? "40" : "25"}`,
               }}
             >
               <p
                 className="font-mono text-[9px] tracking-[0.25em] uppercase mb-4"
-                style={{ color: `${color}CC` }}
+                style={{ color: light ? color : `${color}CC` }}
               >
                 {archetype.maturity === "boy"
                   ? "Boy \u2192 Man"
@@ -301,116 +305,231 @@ export default function ArchetypeDetailClient({
             <div
               className="retro-card retro-border relative p-8 md:p-10 rounded-2xl overflow-hidden"
               style={{
-                borderLeft: `1px dashed ${color}25`,
+                borderLeft: `1px dashed ${color}${light ? "40" : "25"}`,
               }}
             >
               <p
                 className="font-mono text-[9px] tracking-[0.25em] uppercase mb-4"
-                style={{ color: `${color}CC` }}
+                style={{ color: light ? color : `${color}CC` }}
               >
                 Shadow Polarity
               </p>
               <h2
-                className="font-serif text-2xl md:text-3xl font-medium mb-4 glow-text-subtle"
+                className="font-serif text-2xl md:text-3xl font-medium mb-2 glow-text-subtle"
                 style={{ color }}
               >
                 The Shadow System
               </h2>
+              <p className="font-serif text-base text-text-secondary/70 italic mb-4">
+                Where the energy goes when the ego can&rsquo;t hold the center
+              </p>
               <hr className="retro-hr mb-6" />
-              <p className="text-text-secondary text-base leading-[1.8] max-w-3xl mb-8">
+              <p className="text-text-secondary text-base leading-[1.8] max-w-3xl mb-4">
                 Each archetype holds a fullness at the apex and two shadow poles at
-                the base &mdash; one inflated, one deflated.
+                the base &mdash; one inflated, one deflated. The shadows are not
+                separate pathologies but a <em>single dysfunctional system</em>.
               </p>
 
-              {/* Triangle */}
-              <ShadowTriangle archetype={archetype} />
+              {/* Oscillation spectrum */}
+              <ShadowSpectrum
+                activeName={archetype.activeShadow.name}
+                passiveName={archetype.passiveShadow.name}
+                fullnessName={archetype.name}
+                color={color}
+              />
 
-              {/* Dashed connector */}
-              <div className="hidden md:block my-6 mx-auto max-w-xl">
-                <div
-                  className="h-px"
-                  style={{
-                    background: `linear-gradient(90deg, #C0392B30, ${color}10 50%, #5C5A5230)`,
-                  }}
-                />
+              {/* Triangle */}
+              <div className="mt-4">
+                <ShadowTriangle archetype={archetype} />
               </div>
 
               {/* Shadow detail cards */}
-              <div className="grid md:grid-cols-2 gap-4 mt-8">
+              <div className="grid md:grid-cols-2 gap-4 mt-10">
                 {/* Active shadow */}
-                <div className="relative p-6 rounded-xl overflow-hidden transition-all duration-300 group"
+                <motion.div
+                  className="relative p-6 rounded-xl overflow-hidden transition-all duration-500 group hover:scale-[1.01]"
                   style={{
-                    background: "linear-gradient(145deg, rgba(192, 57, 43, 0.06) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 100%)",
-                    border: "1px solid rgba(192, 57, 43, 0.12)",
+                    background: light
+                      ? "linear-gradient(145deg, rgba(192, 57, 43, 0.06) 0%, rgba(192, 57, 43, 0.02) 100%)"
+                      : "linear-gradient(145deg, rgba(192, 57, 43, 0.08) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 100%)",
+                    border: light
+                      ? "1px solid rgba(192, 57, 43, 0.18)"
+                      : "1px solid rgba(192, 57, 43, 0.15)",
+                  }}
+                  whileHover={{
+                    boxShadow: light
+                      ? "0 4px 24px rgba(192, 57, 43, 0.08)"
+                      : "0 0 40px rgba(192, 57, 43, 0.08), inset 0 0 60px rgba(192, 57, 43, 0.03)",
                   }}
                 >
-                  {/* Crimson glow */}
-                  <div className="absolute -top-10 -left-10 w-[200px] h-[200px] rounded-full blur-[80px] opacity-[0.06] bg-crimson pointer-events-none" />
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-crimson/40 via-crimson/20 to-transparent" />
+                  {/* Crimson glow — intensifies on hover */}
+                  <div className={`absolute -top-10 -left-10 w-[200px] h-[200px] rounded-full blur-[80px] ${light ? "opacity-[0.03] group-hover:opacity-[0.06]" : "opacity-[0.06] group-hover:opacity-[0.12]"} transition-opacity duration-700 bg-crimson pointer-events-none`} />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-crimson/50 via-crimson/25 to-transparent" />
+                  {/* Pulsing corner accent */}
+                  <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-crimson/20 rounded-tl-xl" />
 
-                  <p className="relative font-mono text-[9px] uppercase tracking-[0.25em] text-crimson-light/80 mb-3">
-                    Active Shadow
-                  </p>
-                  <h3
-                    className="relative font-serif text-lg font-medium text-crimson-light mb-2.5"
-                    style={{
-                      textShadow: "0 0 20px rgba(231, 76, 60, 0.3)",
-                    }}
-                  >
-                    {archetype.activeShadow.name}
-                  </h3>
-                  <p className="relative text-sm text-text-secondary mb-4 leading-relaxed">
-                    {archetype.activeShadow.description}
-                  </p>
-                  <ul className="relative space-y-2">
-                    {archetype.activeShadow.traits.map((t) => (
-                      <li key={t} className="text-xs text-text-secondary flex gap-2.5">
-                        <span className="text-crimson/60 mt-px shrink-0">
-                          &#9670;
-                        </span>
-                        <span>{t}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <div className="relative">
+                    <div className="flex items-center gap-2.5 mb-3">
+                      {/* Tetrahedron icon */}
+                      <svg width="14" height="14" viewBox="0 0 14 14" className="text-crimson-light/60">
+                        <path d="M7 1L13 12H1Z" fill="none" stroke="currentColor" strokeWidth="1" />
+                      </svg>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-crimson-light/80">
+                        Active Shadow &mdash; Inflated
+                      </p>
+                    </div>
+                    <h3
+                      className="font-serif text-xl font-medium text-crimson-light mb-3"
+                      style={{
+                        textShadow: light ? "none" : "0 0 20px rgba(231, 76, 60, 0.3)",
+                      }}
+                    >
+                      {archetype.activeShadow.name}
+                    </h3>
+                    <p className="text-sm text-text-secondary mb-5 leading-relaxed">
+                      {archetype.activeShadow.description}
+                    </p>
+
+                    {/* Traits — staggered reveal */}
+                    <div className="space-y-0">
+                      {archetype.activeShadow.traits.map((t, i) => (
+                        <motion.div
+                          key={t}
+                          className="flex items-start gap-3 py-2 border-b border-crimson/[0.06] last:border-0"
+                          initial={{ opacity: 0, x: -8 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{
+                            delay: 0.1 + i * 0.06,
+                            duration: 0.4,
+                            ease: [0.19, 1, 0.22, 1],
+                          }}
+                        >
+                          <span className="font-mono text-[8px] text-crimson/40 mt-1 shrink-0 w-4 text-right">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span className="text-xs text-text-secondary leading-relaxed">
+                            {t}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
 
                 {/* Passive shadow */}
-                <div className="relative p-6 rounded-xl overflow-hidden transition-all duration-300 group"
+                <motion.div
+                  className="relative p-6 rounded-xl overflow-hidden transition-all duration-500 group hover:scale-[1.01]"
                   style={{
-                    background: "linear-gradient(145deg, rgba(92, 90, 82, 0.06) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 100%)",
-                    border: "1px solid rgba(92, 90, 82, 0.12)",
+                    background: light
+                      ? "linear-gradient(145deg, rgba(92, 90, 82, 0.06) 0%, rgba(92, 90, 82, 0.02) 100%)"
+                      : "linear-gradient(145deg, rgba(92, 90, 82, 0.08) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 100%)",
+                    border: light
+                      ? "1px solid rgba(92, 90, 82, 0.18)"
+                      : "1px solid rgba(92, 90, 82, 0.15)",
+                  }}
+                  whileHover={{
+                    boxShadow: light
+                      ? "0 4px 24px rgba(92, 90, 82, 0.06)"
+                      : "0 0 40px rgba(92, 90, 82, 0.06), inset 0 0 60px rgba(92, 90, 82, 0.03)",
                   }}
                 >
                   {/* Muted glow */}
-                  <div className="absolute -top-10 -right-10 w-[200px] h-[200px] rounded-full blur-[80px] opacity-[0.04] bg-slate-400 pointer-events-none" />
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-muted/30 via-muted/15 to-transparent" />
+                  <div className={`absolute -top-10 -right-10 w-[200px] h-[200px] rounded-full blur-[80px] ${light ? "opacity-[0.02] group-hover:opacity-[0.04]" : "opacity-[0.04] group-hover:opacity-[0.09]"} transition-opacity duration-700 bg-slate-400 pointer-events-none`} />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-muted/35 via-muted/18 to-transparent" />
+                  {/* Corner accent */}
+                  <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-muted/15 rounded-tl-xl" />
 
-                  <p className="relative font-mono text-[9px] uppercase tracking-[0.25em] text-muted mb-3">
-                    Passive Shadow
-                  </p>
-                  <h3
-                    className="relative font-serif text-lg font-medium text-muted mb-2.5"
-                    style={{
-                      textShadow: "0 0 20px rgba(92, 90, 82, 0.3)",
-                    }}
-                  >
-                    {archetype.passiveShadow.name}
-                  </h3>
-                  <p className="relative text-sm text-text-secondary mb-4 leading-relaxed">
-                    {archetype.passiveShadow.description}
-                  </p>
-                  <ul className="relative space-y-2">
-                    {archetype.passiveShadow.traits.map((t) => (
-                      <li key={t} className="text-xs text-text-secondary flex gap-2.5">
-                        <span className="opacity-50 mt-px shrink-0">
-                          &#9670;
-                        </span>
-                        <span>{t}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <div className="relative">
+                    <div className="flex items-center gap-2.5 mb-3">
+                      {/* Box/collapsed icon */}
+                      <svg width="14" height="10" viewBox="0 0 14 10" className="text-muted/60">
+                        <rect x="1" y="1" width="12" height="8" rx="1" fill="none" stroke="currentColor" strokeWidth="1" />
+                      </svg>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-muted">
+                        Passive Shadow &mdash; Deflated
+                      </p>
+                    </div>
+                    <h3
+                      className="font-serif text-xl font-medium text-muted mb-3"
+                      style={{
+                        textShadow: light ? "none" : "0 0 20px rgba(92, 90, 82, 0.3)",
+                      }}
+                    >
+                      {archetype.passiveShadow.name}
+                    </h3>
+                    <p className="text-sm text-text-secondary mb-5 leading-relaxed">
+                      {archetype.passiveShadow.description}
+                    </p>
+
+                    {/* Traits — staggered reveal */}
+                    <div className="space-y-0">
+                      {archetype.passiveShadow.traits.map((t, i) => (
+                        <motion.div
+                          key={t}
+                          className="flex items-start gap-3 py-2 border-b border-muted/[0.06] last:border-0"
+                          initial={{ opacity: 0, x: -8 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{
+                            delay: 0.1 + i * 0.06,
+                            duration: 0.4,
+                            ease: [0.19, 1, 0.22, 1],
+                          }}
+                        >
+                          <span className="font-mono text-[8px] text-muted/40 mt-1 shrink-0 w-4 text-right">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span className="text-xs text-text-secondary leading-relaxed">
+                            {t}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
               </div>
+
+              {/* Oscillation callout */}
+              <motion.div
+                className="mt-8 relative p-5 rounded-lg overflow-hidden"
+                style={{
+                  background: light
+                    ? `linear-gradient(135deg, rgba(192, 57, 43, 0.04) 0%, ${color}0C 50%, rgba(92, 90, 82, 0.04) 100%)`
+                    : `linear-gradient(135deg, rgba(192, 57, 43, 0.04) 0%, ${color}08 50%, rgba(92, 90, 82, 0.04) 100%)`,
+                  border: `1px dashed ${color}${light ? "25" : "15"}`,
+                }}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+              >
+                <div className="flex gap-3 items-start">
+                  <span
+                    className="font-mono text-lg mt-0.5 shrink-0"
+                    style={{ color: `${color}80` }}
+                  >
+                    &#8644;
+                  </span>
+                  <div>
+                    <p
+                      className="font-mono text-[9px] uppercase tracking-[0.2em] mb-1.5"
+                      style={{ color: `${color}AA` }}
+                    >
+                      The Oscillation Pattern
+                    </p>
+                    <p className="text-sm text-text-secondary leading-relaxed">
+                      {archetype.activeShadow.name} and{" "}
+                      {archetype.passiveShadow.name} are not opposites &mdash;
+                      they are two faces of the same wound. A man possessed by one
+                      pole inevitably swings to the other. The path to{" "}
+                      <span style={{ color }}>{archetype.fullness.title}</span>{" "}
+                      requires recognizing both shadows as a single system, not
+                      identifying with either.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </motion.section>
 
@@ -447,8 +566,8 @@ export default function ArchetypeDetailClient({
                       key={marker}
                       className="flex items-center gap-3 text-sm text-text-secondary p-4 rounded-xl transition-colors duration-200 hover:bg-surface/50"
                       style={{
-                        border: `1px solid ${color}10`,
-                        background: `linear-gradient(135deg, ${color}04 0%, transparent 60%)`,
+                        border: `1px solid ${color}${light ? "20" : "10"}`,
+                        background: `linear-gradient(135deg, ${color}${light ? "08" : "04"} 0%, transparent 60%)`,
                       }}
                     >
                       <svg
@@ -493,17 +612,19 @@ export default function ArchetypeDetailClient({
                         href={`/archetype/${a.slug}`}
                         className="group relative p-3 rounded-xl border transition-all duration-200 hover:shadow-lg"
                         style={{
-                          borderColor: `${a.accentColor}15`,
+                          borderColor: `${a.accentColor}${light ? "25" : "15"}`,
                           borderTopWidth: "2px",
-                          borderTopColor: `${a.accentColor}40`,
+                          borderTopColor: `${a.accentColor}${light ? "60" : "40"}`,
                         }}
                         onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.boxShadow = `0 0 20px ${a.accentColor}08`;
-                          (e.currentTarget as HTMLElement).style.borderColor = `${a.accentColor}30`;
+                          (e.currentTarget as HTMLElement).style.boxShadow = light
+                            ? `0 4px 16px rgba(0,0,0,0.06)`
+                            : `0 0 20px ${a.accentColor}08`;
+                          (e.currentTarget as HTMLElement).style.borderColor = `${a.accentColor}${light ? "40" : "30"}`;
                         }}
                         onMouseLeave={(e) => {
                           (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                          (e.currentTarget as HTMLElement).style.borderColor = `${a.accentColor}15`;
+                          (e.currentTarget as HTMLElement).style.borderColor = `${a.accentColor}${light ? "25" : "15"}`;
                         }}
                       >
                         <p

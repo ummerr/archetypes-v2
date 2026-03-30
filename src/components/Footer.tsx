@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-gold/5 py-8 px-6">
+    <footer className="border-t border-gold/10 py-8 px-6">
       <div className="max-w-5xl mx-auto flex items-center justify-between">
         <p className="font-mono text-[9px] tracking-[0.1em] text-muted uppercase">
           Based on{" "}

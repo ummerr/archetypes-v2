@@ -567,7 +567,7 @@ function PolarityLabels({
           <p
             className="font-serif text-[9px] font-medium"
             style={{
-              color: "#E74C3C",
+              color: "var(--color-crimson-light)",
               textShadow: "0 0 10px rgba(231,76,60,0.4)",
             }}
           >
@@ -575,7 +575,7 @@ function PolarityLabels({
           </p>
           <p
             className="font-mono text-[5px] tracking-[0.1em] uppercase mt-px"
-            style={{ color: "#C0392B", opacity: 0.5 }}
+            style={{ color: "var(--color-crimson)", opacity: 0.5 }}
           >
             Active Shadow
           </p>
@@ -588,8 +588,8 @@ function PolarityLabels({
           <p
             className="font-serif text-[9px] font-medium"
             style={{
-              color: "#B8B5AD",
-              opacity: 0.6,
+              color: "var(--color-muted)",
+              opacity: 0.8,
               textShadow: "0 0 10px rgba(92,90,82,0.3)",
             }}
           >
@@ -597,7 +597,7 @@ function PolarityLabels({
           </p>
           <p
             className="font-mono text-[5px] tracking-[0.1em] uppercase mt-px"
-            style={{ color: "#5C5A52", opacity: 0.4 }}
+            style={{ color: "var(--color-muted)", opacity: 0.5 }}
           >
             Passive Shadow
           </p>

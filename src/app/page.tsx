@@ -6,10 +6,13 @@ import Link from "next/link";
 import { FAMILIES } from "@/data/archetypes";
 import TotemCanvas from "@/components/TotemCanvas";
 import ShadowPolarityMini from "@/components/ShadowPolarityMini";
+import { useTheme } from "@/components/ThemeProvider";
 
 export default function Home() {
   const router = useRouter();
   const [hoveredFamily, setHoveredFamily] = useState<string | null>(null);
+  const { theme } = useTheme();
+  const light = theme === "light";
 
   return (
     <div className="min-h-screen relative">
@@ -54,11 +57,15 @@ export default function Home() {
                   <div
                     className="relative overflow-hidden rounded-sm transition-all duration-500"
                     style={{
-                      background: `linear-gradient(145deg, ${family.color}06 0%, var(--color-bg) 40%, var(--color-bg) 100%)`,
-                      border: `1px solid ${isHovered ? family.color + "30" : family.color + "10"}`,
+                      background: `linear-gradient(145deg, ${family.color}${light ? "0C" : "06"} 0%, var(--color-bg) 40%, var(--color-bg) 100%)`,
+                      border: `1px solid ${isHovered ? family.color + (light ? "40" : "30") : family.color + (light ? "20" : "10")}`,
                       boxShadow: isHovered
-                        ? `0 0 40px ${family.color}08, 0 0 80px ${family.color}04, inset 0 1px 0 ${family.color}10`
-                        : "none",
+                        ? light
+                          ? `0 4px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.5)`
+                          : `0 0 40px ${family.color}08, 0 0 80px ${family.color}04, inset 0 1px 0 ${family.color}10`
+                        : light
+                          ? `0 1px 4px rgba(0,0,0,0.04)`
+                          : "none",
                     }}
                   >
                     {/* Top accent line */}
@@ -92,7 +99,7 @@ export default function Home() {
                             <div
                               className="h-px flex-1"
                               style={{
-                                background: `linear-gradient(90deg, ${family.color}15, transparent)`,
+                                background: `linear-gradient(90deg, ${family.color}${light ? "30" : "15"}, transparent)`,
                               }}
                             />
                           </div>
@@ -102,7 +109,7 @@ export default function Home() {
                             className="font-serif text-3xl md:text-4xl font-medium tracking-tight mb-2 transition-all duration-300"
                             style={{
                               color: family.color,
-                              textShadow: isHovered
+                              textShadow: isHovered && !light
                                 ? `0 0 20px ${family.color}40`
                                 : "none",
                             }}

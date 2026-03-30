@@ -98,7 +98,7 @@ export default function AboutPage() {
                         >
                           <path
                             d="M2 1L6 4L2 7"
-                            stroke="#D4AF37"
+                            stroke="var(--color-gold)"
                             strokeWidth="1"
                             strokeLinecap="round"
                             opacity="0.5"

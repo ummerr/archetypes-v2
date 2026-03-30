@@ -25,21 +25,21 @@
 /* ─── Light mode overrides ─────────────────────────── */
 :root[data-theme="light"] {
   --color-bg: #F5F3EE;
-  --color-surface: #EDEAE3;
-  --color-surface-light: #E2DFD7;
-  --color-surface-hover: #D8D4CB;
-  --color-text-primary: #1A1A1A;
-  --color-text-secondary: #4A4740;
-  --color-muted: #8A8780;
-  --color-gold: #9E7C1A;
-  --color-gold-dim: #7A5F10;
-  --color-gold-bright: #C49B20;
-  --color-crimson: #A3302A;
-  --color-crimson-light: #C0392B;
-  --color-emerald: #167A54;
-  --color-emerald-light: #1B9E6B;
-  --color-rose: #B06070;
-  --color-rose-light: #C97B84;
+  --color-surface: #EAE7E0;
+  --color-surface-light: #DDD9D0;
+  --color-surface-hover: #D0CBC1;
+  --color-text-primary: #1A1814;
+  --color-text-secondary: #3D3A33;
+  --color-muted: #706D65;
+  --color-gold: #8A6B12;
+  --color-gold-dim: #6B5210;
+  --color-gold-bright: #A67E18;
+  --color-crimson: #9A2D26;
+  --color-crimson-light: #B33428;
+  --color-emerald: #14704C;
+  --color-emerald-light: #188A5C;
+  --color-rose: #A0505E;
+  --color-rose-light: #B86878;
 }
 
 * {
@@ -224,6 +224,25 @@ h1, h2, h3, h4, h5, h6 {
     transparent
   );
   opacity: 0.2;
+}
+
+:root[data-theme="light"] .retro-hr {
+  opacity: 0.35;
+}
+
+/* ─── Light mode: boost faint decorative opacities ─── */
+:root[data-theme="light"] .mono-label {
+  opacity: 0.7;
+}
+
+:root[data-theme="light"] ::selection {
+  background: color-mix(in srgb, var(--color-gold) 20%, transparent);
+  color: var(--color-text-primary);
+}
+
+/* Light mode: Three.js canvases get a subtle background */
+:root[data-theme="light"] canvas {
+  border-radius: inherit;
 }
 
 /* ─── Animations ────────────────────────────────────── */

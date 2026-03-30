@@ -3,20 +3,21 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Archetype } from "@/types/archetype";
+import { useTheme } from "@/components/ThemeProvider";
 
 interface Props {
   from: Archetype;
   to: Archetype;
 }
 
-function MiniCard({ archetype, side }: { archetype: Archetype; side: "from" | "to" }) {
+function MiniCard({ archetype, side, light }: { archetype: Archetype; side: "from" | "to"; light: boolean }) {
   return (
     <Link
       href={`/archetype/${archetype.slug}`}
       className="group flex-1 w-full relative p-5 rounded-2xl border transition-all duration-300 hover:bg-surface-light/30"
       style={{
-        borderColor: `${archetype.accentColor}20`,
-        background: `linear-gradient(135deg, ${archetype.accentColor}06 0%, transparent 60%)`,
+        borderColor: `${archetype.accentColor}${light ? "30" : "20"}`,
+        background: `linear-gradient(135deg, ${archetype.accentColor}${light ? "0A" : "06"} 0%, transparent 60%)`,
       }}
     >
       <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-2">
@@ -36,9 +37,11 @@ function MiniCard({ archetype, side }: { archetype: Archetype; side: "from" | "t
 }
 
 export default function EvolutionArrow({ from, to }: Props) {
+  const { theme } = useTheme();
+  const light = theme === "light";
   return (
     <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4">
-      <MiniCard archetype={from} side="from" />
+      <MiniCard archetype={from} side="from" light={light} />
 
       {/* Arrow connector */}
       <div className="shrink-0 flex flex-col items-center gap-1">
@@ -56,14 +59,14 @@ export default function EvolutionArrow({ from, to }: Props) {
           >
             <line
               x1="0" y1="12" x2="38" y2="12"
-              stroke="#D4AF37"
+              stroke="var(--color-gold)"
               strokeWidth="1"
               strokeDasharray="3 3"
               opacity="0.4"
             />
             <polygon
               points="36,7 46,12 36,17"
-              fill="#D4AF37"
+              fill="var(--color-gold)"
               opacity="0.5"
             />
           </svg>
@@ -76,14 +79,14 @@ export default function EvolutionArrow({ from, to }: Props) {
           >
             <line
               x1="12" y1="0" x2="12" y2="38"
-              stroke="#D4AF37"
+              stroke="var(--color-gold)"
               strokeWidth="1"
               strokeDasharray="3 3"
               opacity="0.4"
             />
             <polygon
               points="7,36 12,46 17,36"
-              fill="#D4AF37"
+              fill="var(--color-gold)"
               opacity="0.5"
             />
           </svg>
@@ -93,7 +96,7 @@ export default function EvolutionArrow({ from, to }: Props) {
         </span>
       </div>
 
-      <MiniCard archetype={to} side="to" />
+      <MiniCard archetype={to} side="to" light={light} />
     </div>
   );
 }

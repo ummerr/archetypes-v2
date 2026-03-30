@@ -140,7 +140,7 @@ function FamilyNode({
         x={pos.x}
         y={pos.y - 10}
         textAnchor="middle"
-        fill="#5C5A52"
+        fill="var(--color-muted)"
         fontSize={8.5}
         letterSpacing="0.14em"
         className="uppercase"
@@ -200,13 +200,13 @@ export default function QuadrantMap() {
         >
           <defs>
             <radialGradient id="sacredGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.06" />
-              <stop offset="40%" stopColor="#D4AF37" stopOpacity="0.02" />
-              <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
+              <stop offset="0%" stopColor="var(--color-gold)" stopOpacity="0.06" />
+              <stop offset="40%" stopColor="var(--color-gold)" stopOpacity="0.02" />
+              <stop offset="100%" stopColor="var(--color-gold)" stopOpacity="0" />
             </radialGradient>
             <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.04" />
-              <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
+              <stop offset="0%" stopColor="var(--color-gold)" stopOpacity="0.04" />
+              <stop offset="100%" stopColor="var(--color-gold)" stopOpacity="0" />
             </radialGradient>
           </defs>
 
@@ -221,7 +221,7 @@ export default function QuadrantMap() {
               cy={cy}
               r={ringR}
               fill="none"
-              stroke="#D4AF37"
+              stroke="var(--color-gold)"
               strokeWidth={i === 2 ? 0.5 : 0.3}
               strokeOpacity={i === 2 ? 0.1 : 0.04}
               strokeDasharray={i === 2 ? "none" : "2 8"}
@@ -239,7 +239,7 @@ export default function QuadrantMap() {
                 cx={dot.cx}
                 cy={dot.cy}
                 r={dot.r}
-                fill="#D4AF37"
+                fill="var(--color-gold)"
                 opacity={dot.opacity}
               />
             ))}
@@ -253,7 +253,7 @@ export default function QuadrantMap() {
                 cx={dot.cx}
                 cy={dot.cy}
                 r={0.8}
-                fill="#D4AF37"
+                fill="var(--color-gold)"
                 opacity={0.15}
               />
             ))}
@@ -267,7 +267,7 @@ export default function QuadrantMap() {
               y1={cy + (pos.y - cy) * 0.18}
               x2={pos.x - (pos.x - cx) * 0.15}
               y2={pos.y - (pos.y - cy) * 0.15}
-              stroke="#D4AF37"
+              stroke="var(--color-gold)"
               strokeWidth={0.4}
               strokeOpacity={0.1}
               strokeDasharray="3 6"
@@ -287,7 +287,7 @@ export default function QuadrantMap() {
                 y1={cy + Math.sin(angle) * innerR}
                 x2={cx + Math.cos(angle) * outerR}
                 y2={cy + Math.sin(angle) * outerR}
-                stroke="#D4AF37"
+                stroke="var(--color-gold)"
                 strokeWidth={0.3}
                 strokeOpacity={0.04}
                 strokeDasharray="1 6"
@@ -307,7 +307,7 @@ export default function QuadrantMap() {
               cx={cx}
               cy={cy}
               r={40}
-              fill="#D4AF37"
+              fill="var(--color-gold)"
               className="animate-breathe"
             />
             {/* Center circle */}
@@ -316,7 +316,7 @@ export default function QuadrantMap() {
               cy={cy}
               r={24}
               fill="var(--color-bg)"
-              stroke="#D4AF37"
+              stroke="var(--color-gold)"
               strokeWidth={0.8}
               strokeOpacity={0.4}
             />
@@ -327,7 +327,7 @@ export default function QuadrantMap() {
               width={8}
               height={8}
               fill="none"
-              stroke="#D4AF37"
+              stroke="var(--color-gold)"
               strokeWidth={0.5}
               strokeOpacity={0.3}
               transform={`rotate(45, ${cx}, ${cy})`}
@@ -336,7 +336,7 @@ export default function QuadrantMap() {
               x={cx}
               y={cy + 4.5}
               textAnchor="middle"
-              fill="#D4AF37"
+              fill="var(--color-gold)"
               fontSize={11}
               letterSpacing="0.2em"
               style={{ fontFamily: "var(--font-serif)" }}
@@ -368,7 +368,7 @@ export default function QuadrantMap() {
               x={x}
               y={y}
               textAnchor="middle"
-              fill="#D4AF37"
+              fill="var(--color-gold)"
               fontSize={7}
               letterSpacing="0.25em"
               opacity={0.2}

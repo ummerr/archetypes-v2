@@ -334,10 +334,10 @@ function Labels({
       {/* Active shadow label */}
       <Html position={[-1.35, -0.25, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
-          <p className="font-sans text-[6px] tracking-[0.15em] uppercase" style={{ color: "#E74C3C", opacity: 0.5 }}>
+          <p className="font-sans text-[6px] tracking-[0.15em] uppercase" style={{ color: "var(--color-crimson-light)", opacity: 0.6 }}>
             Active
           </p>
-          <p className="font-serif text-[9px]" style={{ color: "#E74C3C", opacity: 0.45 }}>
+          <p className="font-serif text-[9px]" style={{ color: "var(--color-crimson-light)", opacity: 0.55 }}>
             {manShadowActive}
           </p>
         </div>
@@ -346,10 +346,10 @@ function Labels({
       {/* Passive shadow label */}
       <Html position={[1.35, -0.25, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
-          <p className="font-sans text-[6px] tracking-[0.15em] uppercase" style={{ color: "#8A8578", opacity: 0.5 }}>
+          <p className="font-sans text-[6px] tracking-[0.15em] uppercase" style={{ color: "var(--color-muted)", opacity: 0.6 }}>
             Passive
           </p>
-          <p className="font-serif text-[9px]" style={{ color: "#8A8578", opacity: 0.45 }}>
+          <p className="font-serif text-[9px]" style={{ color: "var(--color-muted)", opacity: 0.55 }}>
             {manShadowPassive}
           </p>
         </div>
