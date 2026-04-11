@@ -73,6 +73,12 @@ export default function NavBar() {
             </svg>
           </button>
           <Link
+            href="/boy-within-man"
+            className="font-mono text-[9px] tracking-[0.15em] text-muted uppercase hover:text-text-secondary transition-colors duration-200"
+          >
+            Boy Within Man
+          </Link>
+          <Link
             href="/about"
             className="font-mono text-[9px] tracking-[0.15em] text-muted uppercase hover:text-text-secondary transition-colors duration-200"
           >
