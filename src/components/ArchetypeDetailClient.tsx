@@ -304,7 +304,7 @@ export default function ArchetypeDetailClient({
           <motion.section className="mb-28 relative" {...sectionAnim}>
             <SectionIndex n="04" />
             <div
-              className="retro-card retro-border relative p-8 md:p-10 rounded-2xl overflow-hidden"
+              className="retro-card retro-border relative p-8 md:p-10 rounded-2xl overflow-visible"
               style={{
                 borderLeft: `1px dashed ${color}${light ? "40" : "25"}`,
               }}
@@ -315,6 +315,7 @@ export default function ArchetypeDetailClient({
               >
                 Shadow Polarity
               </p>
+
               <h2
                 className="font-serif text-2xl md:text-3xl font-medium mb-2 glow-text-subtle"
                 style={{ color }}

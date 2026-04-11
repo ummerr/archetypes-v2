@@ -623,9 +623,9 @@ export default function ShadowPolarityMini({
   passiveShadowName: string;
 }) {
   return (
-    <div className="relative w-full h-[150px]">
+    <div className="relative w-full h-[190px]">
       <Canvas
-        camera={{ position: [0, 0.05, 2.6], fov: 34 }}
+        camera={{ position: [0, 0.05, 3.0], fov: 34 }}
         gl={{
           antialias: true,
           alpha: true,

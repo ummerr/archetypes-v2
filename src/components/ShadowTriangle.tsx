@@ -418,9 +418,9 @@ export default function ShadowTriangle({
   const color = archetype.accentColor;
 
   return (
-    <div className="relative w-full max-w-xl mx-auto h-[300px] md:h-[340px]">
+    <div className="relative w-full max-w-xl mx-auto h-[360px] md:h-[400px]">
       <Canvas
-        camera={{ position: [0, 0.1, 3.8], fov: 36 }}
+        camera={{ position: [0, 0.1, 4.2], fov: 36 }}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         style={{ background: "transparent" }}
         dpr={[1, 1.5]}
