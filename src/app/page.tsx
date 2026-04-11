@@ -252,7 +252,7 @@ export default function Home() {
                     onMouseLeave={() => setHoveredFamily(null)}
                   >
                     <div
-                      className="relative overflow-hidden rounded-sm transition-all duration-500"
+                      className="relative overflow-visible rounded-sm transition-all duration-500"
                       style={{
                         background: light
                           ? `linear-gradient(145deg, ${family.color}08 0%, var(--color-bg) 40%)`
