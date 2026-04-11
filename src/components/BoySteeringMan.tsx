@@ -121,7 +121,7 @@ function getPhaseData(
 }
 
 /* ═══════════════════════════════════════════════════════
-   Ambient particle canvas — drifting energy field
+   Ambient particle canvas — uses refs to avoid re-mounts
    ═══════════════════════════════════════════════════════ */
 
 function ParticleField({
@@ -135,24 +135,17 @@ function ParticleField({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef<number>(0);
+  const possRef = useRef(possession);
+  const colorRef = useRef(color);
+  const lightRef = useRef(light);
   const particlesRef = useRef<
     { x: number; y: number; vx: number; vy: number; r: number; phase: number }[]
   >([]);
 
-  const init = useCallback(
-    (w: number, h: number) => {
-      const count = 60;
-      particlesRef.current = Array.from({ length: count }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        r: Math.random() * 2 + 0.5,
-        phase: Math.random() * Math.PI * 2,
-      }));
-    },
-    []
-  );
+  // Update refs without re-running the effect
+  possRef.current = possession;
+  colorRef.current = color;
+  lightRef.current = light;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -161,11 +154,21 @@ function ParticleField({
     if (!ctx) return;
 
     const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio, 2);
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * 1.5;
-      canvas.height = rect.height * 1.5;
-      ctx.scale(1.5, 1.5);
-      if (particlesRef.current.length === 0) init(rect.width, rect.height);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (particlesRef.current.length === 0) {
+        particlesRef.current = Array.from({ length: 60 }, () => ({
+          x: Math.random() * rect.width,
+          y: Math.random() * rect.height,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          r: Math.random() * 2 + 0.5,
+          phase: Math.random() * Math.PI * 2,
+        }));
+      }
     };
     resize();
 
@@ -177,33 +180,31 @@ function ParticleField({
       ctx.clearRect(0, 0, w, h);
       t += 0.008;
 
-      // Parse color to RGB
-      const hex = color.replace("#", "");
+      const hex = colorRef.current.replace("#", "");
       const cr = parseInt(hex.substring(0, 2), 16);
       const cg = parseInt(hex.substring(2, 4), 16);
       const cb = parseInt(hex.substring(4, 6), 16);
 
-      // At high possession, particles get agitated and red-tinted
-      const agitation = possession * 1.8;
-      const redBlend = Math.min(1, possession * 0.6);
+      const poss = possRef.current;
+      const isLight = lightRef.current;
+      const agitation = poss * 1.8;
+      const redBlend = Math.min(1, poss * 0.6);
 
       for (const p of particlesRef.current) {
         p.x += p.vx * (1 + agitation) + Math.sin(t + p.phase) * 0.15 * (1 + agitation);
         p.y += p.vy * (1 + agitation) + Math.cos(t * 0.7 + p.phase) * 0.1 * (1 + agitation);
-
-        // Wrap
         if (p.x < -10) p.x = w + 10;
         if (p.x > w + 10) p.x = -10;
         if (p.y < -10) p.y = h + 10;
         if (p.y > h + 10) p.y = -10;
 
-        const alpha = (0.15 + possession * 0.35) * (light ? 0.7 : 1);
+        const alpha = (0.15 + poss * 0.35) * (isLight ? 0.7 : 1);
         const pr = Math.round(cr + (200 - cr) * redBlend);
         const pg = Math.round(cg + (60 - cg) * redBlend);
         const pb = Math.round(cb + (60 - cb) * redBlend);
 
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * (1 + possession * 0.5), 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.r * (1 + poss * 0.5), 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${pr},${pg},${pb},${alpha})`;
         ctx.fill();
       }
@@ -217,7 +218,7 @@ function ParticleField({
       cancelAnimationFrame(frameRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color, possession, light, init]);
+  }, []); // Stable — never re-mounts
 
   return (
     <canvas
@@ -229,108 +230,185 @@ function ParticleField({
 }
 
 /* ═══════════════════════════════════════════════════════
-   SVG — Breathing, distorting nested triangles
+   SVG — Breathing + trembling via rAF refs (no re-renders)
    ═══════════════════════════════════════════════════════ */
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
 
-// Man triangle vertices
+// Man triangle base vertices
 const MA = { x: 300, y: 55 };
 const ML = { x: 70, y: 455 };
 const MR = { x: 530, y: 455 };
+const CX = (MA.x + ML.x + MR.x) / 3;
+const CY = (MA.y + ML.y + MR.y) / 3;
 
 function NestedTriangleSVG({
   family,
   possession,
   light,
-  time,
 }: {
   family: ArchetypeFamilyGroup;
   possession: number;
   light: boolean;
-  time: number;
 }) {
   const color = family.color;
   const man = family.man;
   const boy = family.boy;
+  const possRef = useRef(possession);
+  possRef.current = possession;
 
-  // ─── Boy triangle scales from center ──
-  const scale = lerp(0.28, 0.97, possession);
-  const cx = (MA.x + ML.x + MR.x) / 3;
-  const cy = (MA.y + ML.y + MR.y) / 3;
+  // Refs to SVG elements we animate directly
+  const manPathRef = useRef<SVGPathElement>(null);
+  const manFillRef = useRef<SVGPathElement>(null);
+  const boyPathRef = useRef<SVGPathElement>(null);
+  const boyFillRef = useRef<SVGPathElement>(null);
+  const manApexRef = useRef<SVGCircleElement>(null);
+  const manLeftRef = useRef<SVGPolygonElement>(null);
+  const manRightRef = useRef<SVGRectElement>(null);
+  const boyApexRef = useRef<SVGCircleElement>(null);
+  const boyLeftRef = useRef<SVGPolygonElement>(null);
+  const boyRightRef = useRef<SVGRectElement>(null);
+  const tendril1Ref = useRef<SVGPathElement>(null);
+  const tendril2Ref = useRef<SVGPathElement>(null);
+  const tendril3Ref = useRef<SVGPathElement>(null);
+  const tendrilGroupRef = useRef<SVGGElement>(null);
+  const frameRef = useRef<number>(0);
 
-  const inner = {
-    apex: { x: cx + (MA.x - cx) * scale, y: cy + (MA.y - cy) * scale },
-    left: { x: cx + (ML.x - cx) * scale, y: cy + (ML.y - cy) * scale },
-    right: { x: cx + (MR.x - cx) * scale, y: cy + (MR.y - cy) * scale },
-  };
+  useEffect(() => {
+    let t = 0;
 
-  // ─── Man triangle distortion at high possession ──
-  const tremble = possession > 0.5 ? (possession - 0.5) * 8 : 0;
-  const mApex = {
-    x: MA.x + Math.sin(time * 3.1) * tremble,
-    y: MA.y + Math.cos(time * 2.7) * tremble * 0.6,
-  };
-  const mLeft = {
-    x: ML.x + Math.sin(time * 2.3 + 1) * tremble,
-    y: ML.y + Math.cos(time * 3.5 + 2) * tremble * 0.4,
-  };
-  const mRight = {
-    x: MR.x + Math.sin(time * 2.8 + 3) * tremble,
-    y: MR.y + Math.cos(time * 2.1 + 1) * tremble * 0.5,
-  };
+    const animate = () => {
+      t += 0.016;
+      const poss = possRef.current;
 
-  // ─── Boy triangle breathing ──
-  const breathe = Math.sin(time * (1.5 + possession * 2)) * (2 + possession * 4);
-  const bApex = {
-    x: inner.apex.x,
-    y: inner.apex.y + breathe * -0.6,
-  };
-  const bLeft = {
-    x: inner.left.x + breathe * -0.4,
-    y: inner.left.y + breathe * 0.3,
-  };
-  const bRight = {
-    x: inner.right.x + breathe * 0.4,
-    y: inner.right.y + breathe * 0.3,
-  };
+      // ─── Man triangle trembles ──
+      const tremble = poss > 0.5 ? (poss - 0.5) * 8 : 0;
+      const mAx = MA.x + Math.sin(t * 3.1) * tremble;
+      const mAy = MA.y + Math.cos(t * 2.7) * tremble * 0.6;
+      const mLx = ML.x + Math.sin(t * 2.3 + 1) * tremble;
+      const mLy = ML.y + Math.cos(t * 3.5 + 2) * tremble * 0.4;
+      const mRx = MR.x + Math.sin(t * 2.8 + 3) * tremble;
+      const mRy = MR.y + Math.cos(t * 2.1 + 1) * tremble * 0.5;
 
-  // ─── Visual parameters ──
+      const manD = `M${mAx},${mAy} L${mLx},${mLy} L${mRx},${mRy} Z`;
+      manPathRef.current?.setAttribute("d", manD);
+      manFillRef.current?.setAttribute("d", manD);
+
+      // Man vertex markers
+      manApexRef.current?.setAttribute("cx", String(mAx));
+      manApexRef.current?.setAttribute("cy", String(mAy));
+      manLeftRef.current?.setAttribute(
+        "points",
+        `${mLx},${mLy - 6} ${mLx - 6},${mLy + 5} ${mLx + 6},${mLy + 5}`
+      );
+      manRightRef.current?.setAttribute("x", String(mRx - 5));
+      manRightRef.current?.setAttribute("y", String(mRy - 5));
+
+      // ─── Boy triangle breathes ──
+      const scale = lerp(0.28, 0.97, poss);
+      const breatheAmp = 2 + poss * 4;
+      const breatheFreq = 1.5 + poss * 2;
+      const breathe = Math.sin(t * breatheFreq) * breatheAmp;
+
+      const bAx = CX + (MA.x - CX) * scale;
+      const bAy = CY + (MA.y - CY) * scale + breathe * -0.6;
+      const bLx = CX + (ML.x - CX) * scale + breathe * -0.4;
+      const bLy = CY + (ML.y - CY) * scale + breathe * 0.3;
+      const bRx = CX + (MR.x - CX) * scale + breathe * 0.4;
+      const bRy = CY + (MR.y - CY) * scale + breathe * 0.3;
+
+      const boyD = `M${bAx},${bAy} L${bLx},${bLy} L${bRx},${bRy} Z`;
+      boyPathRef.current?.setAttribute("d", boyD);
+      boyFillRef.current?.setAttribute("d", boyD);
+
+      // Boy vertex markers
+      boyApexRef.current?.setAttribute("cx", String(bAx));
+      boyApexRef.current?.setAttribute("cy", String(bAy));
+      boyLeftRef.current?.setAttribute(
+        "points",
+        `${bLx},${bLy - 5} ${bLx - 5},${bLy + 4} ${bLx + 5},${bLy + 4}`
+      );
+      boyRightRef.current?.setAttribute("x", String(bRx - 4));
+      boyRightRef.current?.setAttribute("y", String(bRy - 4));
+
+      // ─── Energy tendrils ──
+      const connOpacity = Math.max(0, (poss - 0.25) / 0.75);
+      if (tendrilGroupRef.current) {
+        tendrilGroupRef.current.setAttribute(
+          "opacity",
+          String(connOpacity * 0.45)
+        );
+      }
+
+      if (connOpacity > 0.02) {
+        const tendrilPath = (
+          fx: number,
+          fy: number,
+          tx: number,
+          ty: number,
+          seed: number
+        ) => {
+          const pts: string[] = [];
+          for (let i = 0; i <= 12; i++) {
+            const frac = i / 12;
+            const wave =
+              Math.sin(frac * Math.PI * 3 + t * 2 + seed) *
+              (8 + poss * 6) *
+              (1 - frac);
+            const x = fx + (tx - fx) * frac + wave;
+            const y =
+              fy + (ty - fy) * frac +
+              Math.cos(frac * Math.PI * 2 + t + seed) * 3;
+            pts.push(`${i === 0 ? "M" : "L"}${x},${y}`);
+          }
+          return pts.join(" ");
+        };
+
+        tendril1Ref.current?.setAttribute(
+          "d",
+          tendrilPath(bLx, bLy, mLx, mLy, 0)
+        );
+        tendril2Ref.current?.setAttribute(
+          "d",
+          tendrilPath(bRx, bRy, mRx, mRy, 2.5)
+        );
+        if (poss > 0.6) {
+          tendril3Ref.current?.setAttribute(
+            "d",
+            tendrilPath(bAx, bAy, mAx, mAy, 5)
+          );
+          tendril3Ref.current?.setAttribute("opacity", "0.3");
+        } else {
+          tendril3Ref.current?.setAttribute("opacity", "0");
+        }
+      }
+
+      frameRef.current = requestAnimationFrame(animate);
+    };
+
+    frameRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frameRef.current);
+  }, []);  // Stable — reads from possRef
+
+  // ─── These values are driven by slider (React render) for smooth CSS transitions ──
   const manOpacity = lerp(0.9, 0.15, possession);
   const manFullnessOpacity = lerp(1, 0.08, possession);
   const boyOpacity = lerp(0.35, 1, possession);
-  const connectionOpacity = Math.max(0, (possession - 0.25) / 0.75);
   const boyFillOpacity = lerp(0, 0.12, possession);
+  const boyGlowStd = 3 + possession * 8;
 
-  const manPath = `M${mApex.x},${mApex.y} L${mLeft.x},${mLeft.y} L${mRight.x},${mRight.y} Z`;
-  const boyPath = `M${bApex.x},${bApex.y} L${bLeft.x},${bLeft.y} L${bRight.x},${bRight.y} Z`;
-
-  // ─── Energy tendrils (boy shadow → man shadow) ──
-  function tendril(
-    from: { x: number; y: number },
-    to: { x: number; y: number },
-    t: number,
-    seed: number
-  ) {
-    const points: string[] = [];
-    const steps = 12;
-    for (let i = 0; i <= steps; i++) {
-      const frac = i / steps;
-      const wave = Math.sin(frac * Math.PI * 3 + t * 2 + seed) * (8 + possession * 6) * (1 - frac);
-      const x = lerp(from.x, to.x, frac) + wave;
-      const y = lerp(from.y, to.y, frac) + Math.cos(frac * Math.PI * 2 + t + seed) * 3;
-      points.push(`${i === 0 ? "M" : "L"}${x},${y}`);
-    }
-    return points.join(" ");
-  }
+  // Initial boy triangle path (will be overwritten by rAF immediately)
+  const scale0 = lerp(0.28, 0.97, possession);
+  const initBoyPath = `M${CX + (MA.x - CX) * scale0},${CY + (MA.y - CY) * scale0} L${CX + (ML.x - CX) * scale0},${CY + (ML.y - CY) * scale0} L${CX + (MR.x - CX) * scale0},${CY + (MR.y - CY) * scale0} Z`;
+  const manPath0 = `M${MA.x},${MA.y} L${ML.x},${ML.y} L${MR.x},${MR.y} Z`;
 
   return (
     <svg viewBox="0 0 600 540" className="w-full max-w-[600px] mx-auto select-none">
       <defs>
         <filter id={`boy-glow-${family.id}`} x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation={3 + possession * 8} result="blur" />
+          <feGaussianBlur stdDeviation={boyGlowStd} result="blur" />
           <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
         <filter id="tremble-blur" x="-10%" y="-10%" width="120%" height="120%">
@@ -347,156 +425,216 @@ function NestedTriangleSVG({
       </defs>
 
       {/* ── Man triangle ── */}
-      <g filter={tremble > 2 ? "url(#tremble-blur)" : undefined}>
-        <path d={manPath} fill={`url(#man-grad-${family.id})`} opacity={manOpacity} />
+      <g
+        filter={possession > 0.6 ? "url(#tremble-blur)" : undefined}
+        style={{ transition: "filter 0.6s ease" }}
+      >
         <path
-          d={manPath}
+          ref={manFillRef}
+          d={manPath0}
+          fill={`url(#man-grad-${family.id})`}
+          style={{ opacity: manOpacity, transition: "opacity 0.4s ease" }}
+        />
+        <path
+          ref={manPathRef}
+          d={manPath0}
           fill="none"
           stroke={color}
           strokeWidth={light ? 1.5 : 1}
-          opacity={manOpacity * (light ? 0.5 : 0.35)}
+          style={{
+            opacity: manOpacity * (light ? 0.5 : 0.35),
+            transition: "opacity 0.4s ease",
+          }}
         />
       </g>
 
       {/* ── Energy tendrils ── */}
-      {connectionOpacity > 0.05 && (
-        <g opacity={connectionOpacity * 0.45}>
-          <path
-            d={tendril(bLeft, mLeft, time, 0)}
-            fill="none"
-            stroke="#C0392B"
-            strokeWidth={0.8 + possession}
-            strokeDasharray="3 5"
-            opacity={0.6}
-          />
-          <path
-            d={tendril(bRight, mRight, time, 2.5)}
-            fill="none"
-            stroke="var(--color-muted)"
-            strokeWidth={0.6 + possession * 0.6}
-            strokeDasharray="3 5"
-            opacity={0.5}
-          />
-          {possession > 0.6 && (
-            <path
-              d={tendril(bApex, mApex, time, 5)}
-              fill="none"
-              stroke={color}
-              strokeWidth={0.5 + possession * 0.4}
-              strokeDasharray="2 6"
-              opacity={0.3}
-            />
-          )}
-        </g>
-      )}
+      <g ref={tendrilGroupRef} opacity={0}>
+        <path
+          ref={tendril1Ref}
+          d="M0,0"
+          fill="none"
+          stroke="#C0392B"
+          strokeWidth={0.8 + possession}
+          strokeDasharray="3 5"
+          opacity={0.6}
+        />
+        <path
+          ref={tendril2Ref}
+          d="M0,0"
+          fill="none"
+          stroke="var(--color-muted)"
+          strokeWidth={0.6 + possession * 0.6}
+          strokeDasharray="3 5"
+          opacity={0.5}
+        />
+        <path
+          ref={tendril3Ref}
+          d="M0,0"
+          fill="none"
+          stroke={color}
+          strokeWidth={0.5 + possession * 0.4}
+          strokeDasharray="2 6"
+          opacity={0}
+        />
+      </g>
 
       {/* ── Boy triangle ── */}
-      <path d={boyPath} fill={`url(#boy-radial-${family.id})`} />
       <path
-        d={boyPath}
+        ref={boyFillRef}
+        d={initBoyPath}
+        fill={`url(#boy-radial-${family.id})`}
+      />
+      <path
+        ref={boyPathRef}
+        d={initBoyPath}
         fill="none"
         stroke={possession > 0.6 ? "#C0392B" : color}
         strokeWidth={light ? 1.8 : 1.3}
         strokeDasharray={possession > 0.7 ? "none" : "8 5"}
-        opacity={boyOpacity * (light ? 0.85 : 0.75)}
+        style={{
+          opacity: boyOpacity * (light ? 0.85 : 0.75),
+          transition: "opacity 0.4s ease, stroke 0.6s ease, stroke-dasharray 0.6s ease",
+        }}
         filter={possession > 0.4 ? `url(#boy-glow-${family.id})` : undefined}
       />
 
-      {/* ── Vertex markers ── */}
-
-      {/* Man fullness — dims and trembles */}
-      <circle cx={mApex.x} cy={mApex.y} r={6} fill={color} opacity={manFullnessOpacity} />
-      {/* Man active shadow */}
-      <polygon
-        points={`${mLeft.x},${mLeft.y - 6} ${mLeft.x - 6},${mLeft.y + 5} ${mLeft.x + 6},${mLeft.y + 5}`}
-        fill="#C0392B"
-        opacity={manOpacity * 0.6}
-      />
-      {/* Man passive shadow */}
-      <rect x={mRight.x - 5} y={mRight.y - 5} width={10} height={10} fill="var(--color-muted)" opacity={manOpacity * 0.4} />
-
-      {/* Boy fullness */}
+      {/* ── Man vertex markers ── */}
       <circle
-        cx={bApex.x}
-        cy={bApex.y}
+        ref={manApexRef}
+        cx={MA.x}
+        cy={MA.y}
+        r={6}
+        fill={color}
+        style={{ opacity: manFullnessOpacity, transition: "opacity 0.4s ease" }}
+      />
+      <polygon
+        ref={manLeftRef}
+        points={`${ML.x},${ML.y - 6} ${ML.x - 6},${ML.y + 5} ${ML.x + 6},${ML.y + 5}`}
+        fill="#C0392B"
+        style={{ opacity: manOpacity * 0.6, transition: "opacity 0.4s ease" }}
+      />
+      <rect
+        ref={manRightRef}
+        x={MR.x - 5}
+        y={MR.y - 5}
+        width={10}
+        height={10}
+        fill="var(--color-muted)"
+        style={{ opacity: manOpacity * 0.4, transition: "opacity 0.4s ease" }}
+      />
+
+      {/* ── Boy vertex markers ── */}
+      <circle
+        ref={boyApexRef}
+        cx={CX + (MA.x - CX) * scale0}
+        cy={CY + (MA.y - CY) * scale0}
         r={4 + possession * 2}
         fill={color}
-        opacity={boyOpacity}
+        style={{ opacity: boyOpacity, transition: "opacity 0.4s ease, r 0.3s ease" }}
         filter={possession > 0.4 ? `url(#boy-glow-${family.id})` : undefined}
       />
-      {/* Boy active shadow — grows more intense */}
       <polygon
-        points={`${bLeft.x},${bLeft.y - 5} ${bLeft.x - 5},${bLeft.y + 4} ${bLeft.x + 5},${bLeft.y + 4}`}
+        ref={boyLeftRef}
+        points={`${CX + (ML.x - CX) * scale0},${CY + (ML.y - CY) * scale0 - 5} ${CX + (ML.x - CX) * scale0 - 5},${CY + (ML.y - CY) * scale0 + 4} ${CX + (ML.x - CX) * scale0 + 5},${CY + (ML.y - CY) * scale0 + 4}`}
         fill="#C0392B"
-        opacity={boyOpacity * 0.85}
+        style={{ opacity: boyOpacity * 0.85, transition: "opacity 0.4s ease" }}
         filter={possession > 0.5 ? `url(#boy-glow-${family.id})` : undefined}
       />
-      {/* Boy passive shadow */}
       <rect
-        x={bRight.x - 4}
-        y={bRight.y - 4}
+        ref={boyRightRef}
+        x={CX + (MR.x - CX) * scale0 - 4}
+        y={CY + (MR.y - CY) * scale0 - 4}
         width={8}
         height={8}
         fill="var(--color-muted)"
-        opacity={boyOpacity * 0.6}
+        style={{ opacity: boyOpacity * 0.6, transition: "opacity 0.4s ease" }}
       />
 
-      {/* ── Labels ── */}
+      {/* ── Labels (CSS-transitioned, not rAF) ── */}
 
       {/* Man fullness */}
-      <g opacity={manFullnessOpacity}>
-        <text x={mApex.x} y={mApex.y - 22} textAnchor="middle" className="font-serif" style={{ fontSize: 15, fill: color, fontWeight: 500 }}>
+      <g style={{ opacity: manFullnessOpacity, transition: "opacity 0.5s ease" }}>
+        <text x={MA.x} y={MA.y - 22} textAnchor="middle" className="font-serif" style={{ fontSize: 15, fill: color, fontWeight: 500 }}>
           {man.name}
         </text>
-        <text x={mApex.x} y={mApex.y - 38} textAnchor="middle" style={{ fontSize: 7, fill: color, fontFamily: "monospace", letterSpacing: "0.25em", textTransform: "uppercase" as const, opacity: 0.5 }}>
+        <text x={MA.x} y={MA.y - 38} textAnchor="middle" style={{ fontSize: 7, fill: color, fontFamily: "monospace", letterSpacing: "0.25em", textTransform: "uppercase" as const, opacity: 0.5 }}>
           Fullness
         </text>
       </g>
 
       {/* Man active shadow */}
-      <g opacity={manOpacity * 0.65}>
-        <text x={mLeft.x - 8} y={mLeft.y + 28} textAnchor="middle" className="font-serif" style={{ fontSize: 12, fill: "#C0392B" }}>
+      <g style={{ opacity: manOpacity * 0.65, transition: "opacity 0.5s ease" }}>
+        <text x={ML.x - 8} y={ML.y + 28} textAnchor="middle" className="font-serif" style={{ fontSize: 12, fill: "#C0392B" }}>
           {man.activeShadow.name}
         </text>
-        <text x={mLeft.x - 8} y={mLeft.y + 42} textAnchor="middle" style={{ fontSize: 6.5, fill: "#C0392B", fontFamily: "monospace", letterSpacing: "0.15em", textTransform: "uppercase" as const, opacity: 0.5 }}>
+        <text x={ML.x - 8} y={ML.y + 42} textAnchor="middle" style={{ fontSize: 6.5, fill: "#C0392B", fontFamily: "monospace", letterSpacing: "0.15em", textTransform: "uppercase" as const, opacity: 0.5 }}>
           Active Shadow
         </text>
       </g>
 
       {/* Man passive shadow */}
-      <g opacity={manOpacity * 0.55}>
-        <text x={mRight.x + 8} y={mRight.y + 28} textAnchor="middle" className="font-serif" style={{ fontSize: 12, fill: "var(--color-muted)" }}>
+      <g style={{ opacity: manOpacity * 0.55, transition: "opacity 0.5s ease" }}>
+        <text x={MR.x + 8} y={MR.y + 28} textAnchor="middle" className="font-serif" style={{ fontSize: 12, fill: "var(--color-muted)" }}>
           {man.passiveShadow.name}
         </text>
-        <text x={mRight.x + 8} y={mRight.y + 42} textAnchor="middle" style={{ fontSize: 6.5, fill: "var(--color-muted)", fontFamily: "monospace", letterSpacing: "0.15em", textTransform: "uppercase" as const, opacity: 0.5 }}>
+        <text x={MR.x + 8} y={MR.y + 42} textAnchor="middle" style={{ fontSize: 6.5, fill: "var(--color-muted)", fontFamily: "monospace", letterSpacing: "0.15em", textTransform: "uppercase" as const, opacity: 0.5 }}>
           Passive Shadow
         </text>
       </g>
 
-      {/* Boy fullness */}
-      <text x={bApex.x} y={bApex.y - 14} textAnchor="middle" className="font-serif" style={{ fontSize: 12 + possession * 2, fill: color, opacity: boyOpacity * 0.9 }}>
+      {/* Boy fullness — label follows via CSS, position set by rAF on the marker */}
+      <text
+        x={CX + (MA.x - CX) * scale0}
+        y={CY + (MA.y - CY) * scale0 - 14}
+        textAnchor="middle"
+        className="font-serif"
+        style={{ fontSize: 12 + possession * 2, fill: color, opacity: boyOpacity * 0.9, transition: "opacity 0.4s ease, font-size 0.4s ease, x 0.3s ease, y 0.3s ease" }}
+      >
         {boy.name}
       </text>
 
-      {/* Boy active shadow — appears as possession grows */}
+      {/* Boy active shadow label */}
       {possession > 0.15 && (
-        <text x={bLeft.x} y={bLeft.y + 20} textAnchor="middle" className="font-serif" style={{ fontSize: 9 + possession * 2, fill: "#C0392B", opacity: Math.min(1, (possession - 0.15) * 2) }}>
+        <text
+          x={CX + (ML.x - CX) * scale0}
+          y={CY + (ML.y - CY) * scale0 + 20}
+          textAnchor="middle"
+          className="font-serif"
+          style={{
+            fontSize: 9 + possession * 2,
+            fill: "#C0392B",
+            opacity: Math.min(1, (possession - 0.15) * 2),
+            transition: "opacity 0.5s ease, font-size 0.4s ease, x 0.3s ease, y 0.3s ease",
+          }}
+        >
           {boy.activeShadow.name}
         </text>
       )}
 
-      {/* Boy passive shadow */}
+      {/* Boy passive shadow label */}
       {possession > 0.15 && (
-        <text x={bRight.x} y={bRight.y + 20} textAnchor="middle" className="font-serif" style={{ fontSize: 9 + possession * 1.5, fill: "var(--color-muted)", opacity: Math.min(1, (possession - 0.15) * 1.5) }}>
+        <text
+          x={CX + (MR.x - CX) * scale0}
+          y={CY + (MR.y - CY) * scale0 + 20}
+          textAnchor="middle"
+          className="font-serif"
+          style={{
+            fontSize: 9 + possession * 1.5,
+            fill: "var(--color-muted)",
+            opacity: Math.min(1, (possession - 0.15) * 1.5),
+            transition: "opacity 0.5s ease, font-size 0.4s ease, x 0.3s ease, y 0.3s ease",
+          }}
+        >
           {boy.passiveShadow.name}
         </text>
       )}
 
       {/* Structural labels */}
-      <text x={560} y={80} textAnchor="end" style={{ fontSize: 9, fill: color, fontFamily: "monospace", letterSpacing: "0.35em", textTransform: "uppercase" as const, opacity: manOpacity * 0.2 }}>
+      <text x={560} y={80} textAnchor="end" style={{ fontSize: 9, fill: color, fontFamily: "monospace", letterSpacing: "0.35em", textTransform: "uppercase" as const, opacity: manOpacity * 0.2, transition: "opacity 0.5s ease" }}>
         Man
       </text>
-      <text x={560} y={95} textAnchor="end" style={{ fontSize: 9, fill: color, fontFamily: "monospace", letterSpacing: "0.35em", textTransform: "uppercase" as const, opacity: boyOpacity * 0.25 }}>
+      <text x={560} y={95} textAnchor="end" style={{ fontSize: 9, fill: color, fontFamily: "monospace", letterSpacing: "0.35em", textTransform: "uppercase" as const, opacity: boyOpacity * 0.25, transition: "opacity 0.5s ease" }}>
         Boy
       </text>
     </svg>
@@ -504,7 +642,7 @@ function NestedTriangleSVG({
 }
 
 /* ═══════════════════════════════════════════════════════
-   Custom slider with possession-reactive styling
+   Custom slider with smooth tracking
    ═══════════════════════════════════════════════════════ */
 
 function PossessionSlider({
@@ -518,29 +656,27 @@ function PossessionSlider({
   color: string;
   light: boolean;
 }) {
-  const trackColor =
-    value < 0.5
-      ? color
-      : `color-mix(in srgb, ${color}, #C0392B ${Math.round((value - 0.5) * 200)}%)`;
-
   return (
     <div className="relative py-6">
       {/* Track */}
       <div
         className="relative h-[3px] rounded-full overflow-hidden"
-        style={{
-          background: light ? "#e8e4dc" : "#1E1E1A",
-        }}
+        style={{ background: light ? "#e8e4dc" : "#1E1E1A" }}
       >
-        <motion.div
+        <div
           className="absolute inset-y-0 left-0 rounded-full"
-          style={{ background: trackColor }}
-          animate={{ width: `${value * 100}%` }}
-          transition={{ duration: 0.1 }}
+          style={{
+            width: `${value * 100}%`,
+            background:
+              value < 0.5
+                ? color
+                : `linear-gradient(90deg, ${color}, #C0392B)`,
+            transition: "background 0.6s ease",
+          }}
         />
       </div>
 
-      {/* Native input — invisible but functional */}
+      {/* Native input */}
       <input
         type="range"
         min={0}
@@ -552,37 +688,39 @@ function PossessionSlider({
         style={{ height: "100%" }}
       />
 
-      {/* Thumb indicator */}
-      <motion.div
+      {/* Thumb */}
+      <div
         className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 pointer-events-none"
         style={{
+          left: `calc(${value * 100}% - 8px)`,
           borderColor: value < 0.6 ? color : "#C0392B",
           backgroundColor: light ? "#fff" : "#0A0A08",
           boxShadow:
             value > 0.5
               ? `0 0 ${12 + value * 16}px rgba(192,57,43,${value * 0.4})`
               : `0 0 8px ${color}30`,
+          transition: "border-color 0.4s ease, box-shadow 0.4s ease",
         }}
-        animate={{ left: `calc(${value * 100}% - 8px)` }}
-        transition={{ duration: 0.1 }}
       />
 
       {/* Labels */}
       <div className="flex justify-between mt-3">
         <span
-          className="font-mono text-[8px] tracking-[0.2em] uppercase transition-opacity duration-300"
+          className="font-mono text-[8px] tracking-[0.2em] uppercase"
           style={{
             color: value < 0.3 ? color : "var(--color-muted)",
             opacity: value < 0.3 ? 0.9 : 0.3,
+            transition: "color 0.4s ease, opacity 0.4s ease",
           }}
         >
           Integrated
         </span>
         <span
-          className="font-mono text-[8px] tracking-[0.2em] uppercase transition-opacity duration-300"
+          className="font-mono text-[8px] tracking-[0.2em] uppercase"
           style={{
             color: value > 0.7 ? "#C0392B" : "var(--color-muted)",
             opacity: value > 0.7 ? 0.9 : 0.3,
+            transition: "color 0.4s ease, opacity 0.4s ease",
           }}
         >
           Possessing
@@ -602,18 +740,6 @@ export default function BoySteeringMan() {
   const { theme } = useTheme();
   const light = theme === "light";
 
-  // Animation clock for breathing/trembling
-  const [time, setTime] = useState(0);
-  const frameRef = useRef<number>(0);
-  useEffect(() => {
-    const tick = () => {
-      setTime((t) => t + 0.016);
-      frameRef.current = requestAnimationFrame(tick);
-    };
-    frameRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frameRef.current);
-  }, []);
-
   const family = useMemo(
     () => FAMILIES.find((f) => f.id === selectedFamily)!,
     [selectedFamily]
@@ -622,25 +748,25 @@ export default function BoySteeringMan() {
   const phase = getPhaseData(family, possession);
   const voice = SHADOW_VOICES[family.id]?.[phase.voiceKey] ?? "";
 
-  // Background atmosphere shifts
   const atmosphereOpacity = lerp(0, 0.08, possession);
   const vignetteOpacity = lerp(0, 0.5, Math.max(0, (possession - 0.4) / 0.6));
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* ─── Atmospheric background shift ──────────── */}
+      {/* ─── Atmospheric background ────────────────── */}
       <div
-        className="fixed inset-0 pointer-events-none transition-opacity duration-700"
+        className="fixed inset-0 pointer-events-none"
         style={{
           background: `radial-gradient(ellipse at 50% 30%, rgba(192,57,43,${atmosphereOpacity}) 0%, transparent 70%)`,
+          transition: "background 0.8s ease",
         }}
       />
-      {/* Vignette at high possession */}
       <div
-        className="fixed inset-0 pointer-events-none transition-opacity duration-700"
+        className="fixed inset-0 pointer-events-none"
         style={{
           background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)",
           opacity: vignetteOpacity,
+          transition: "opacity 0.8s ease",
         }}
       />
 
@@ -686,13 +812,14 @@ export default function BoySteeringMan() {
                       setSelectedFamily(f.id);
                       setPossession(0);
                     }}
-                    className="group flex-1 py-3 rounded-sm font-mono text-[9px] tracking-[0.2em] uppercase transition-all duration-400 relative overflow-hidden"
+                    className="group flex-1 py-3 rounded-sm font-mono text-[9px] tracking-[0.2em] uppercase relative overflow-hidden"
                     style={{
                       backgroundColor: active
                         ? `${f.color}${light ? "14" : "0E"}`
                         : "transparent",
                       color: active ? f.color : "var(--color-muted)",
                       border: `1px solid ${active ? f.color + (light ? "35" : "20") : light ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.04)"}`,
+                      transition: "all 0.4s ease",
                     }}
                   >
                     {active && (
@@ -702,7 +829,7 @@ export default function BoySteeringMan() {
                         style={{
                           background: `radial-gradient(ellipse at center, ${f.color}10 0%, transparent 70%)`,
                         }}
-                        transition={{ duration: 0.4 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
                       />
                     )}
                     <span className="relative">{f.label}</span>
@@ -717,7 +844,7 @@ export default function BoySteeringMan() {
         <div className="px-6 pb-2">
           <div className="max-w-3xl mx-auto animate-slide-up delay-300">
             <div
-              className="relative rounded-sm overflow-hidden transition-all duration-700"
+              className="relative rounded-sm overflow-hidden"
               style={{
                 background: light
                   ? `linear-gradient(180deg, ${family.color}05 0%, var(--color-bg) 70%)`
@@ -727,15 +854,14 @@ export default function BoySteeringMan() {
                     ? `rgba(192,57,43,${0.1 + possession * 0.1})`
                     : `${family.color}${light ? "12" : "08"}`
                 }`,
+                transition: "border-color 0.6s ease",
               }}
             >
-              {/* Particle field */}
               <ParticleField
                 color={family.color}
                 possession={possession}
                 light={light}
               />
-
               <div className="relative p-2 md:p-6">
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -743,13 +869,12 @@ export default function BoySteeringMan() {
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.35 }}
+                    transition={{ duration: 0.35, ease: [0.19, 1, 0.22, 1] }}
                   >
                     <NestedTriangleSVG
                       family={family}
                       possession={possession}
                       light={light}
-                      time={time}
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -780,7 +905,7 @@ export default function BoySteeringMan() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
                   className="relative py-5 px-6 md:px-8"
                 >
                   <div
@@ -788,25 +913,22 @@ export default function BoySteeringMan() {
                     style={{
                       background:
                         possession > 0.6
-                          ? light
-                            ? "rgba(192,57,43,0.03)"
-                            : "rgba(192,57,43,0.05)"
+                          ? light ? "rgba(192,57,43,0.03)" : "rgba(192,57,43,0.05)"
                           : "transparent",
                       border:
                         possession > 0.6
                           ? "1px solid rgba(192,57,43,0.08)"
                           : "1px solid transparent",
+                      transition: "all 0.6s ease",
                     }}
                   />
                   <div className="relative">
                     <p
                       className="font-mono text-[7px] tracking-[0.25em] uppercase mb-3"
                       style={{
-                        color:
-                          possession > 0.5
-                            ? "var(--color-crimson-light)"
-                            : family.color,
+                        color: possession > 0.5 ? "var(--color-crimson-light)" : family.color,
                         opacity: 0.5,
+                        transition: "color 0.5s ease",
                       }}
                     >
                       {possession < 0.5
@@ -818,15 +940,10 @@ export default function BoySteeringMan() {
                     <blockquote
                       className="font-serif text-base md:text-lg italic leading-relaxed"
                       style={{
-                        color:
-                          possession > 0.6
-                            ? "var(--color-crimson-light)"
-                            : "var(--color-text-secondary)",
+                        color: possession > 0.6 ? "var(--color-crimson-light)" : "var(--color-text-secondary)",
                         opacity: 0.7 + possession * 0.3,
-                        textShadow:
-                          possession > 0.7 && !light
-                            ? "0 0 20px rgba(192,57,43,0.15)"
-                            : "none",
+                        textShadow: possession > 0.7 && !light ? "0 0 20px rgba(192,57,43,0.15)" : "none",
+                        transition: "color 0.5s ease, text-shadow 0.5s ease",
                       }}
                     >
                       &ldquo;{voice}&rdquo;
@@ -841,29 +958,26 @@ export default function BoySteeringMan() {
         {/* ─── Phase insight + behavioral signs ────── */}
         <div className="px-6 pb-8">
           <div className="max-w-3xl mx-auto">
-            <motion.div
-              className="relative rounded-sm overflow-hidden transition-all duration-500"
+            <div
+              className="relative rounded-sm overflow-hidden"
               style={{
                 background: light
                   ? `linear-gradient(135deg, ${family.color}06 0%, transparent 60%)`
                   : `linear-gradient(135deg, ${family.color}04 0%, transparent 60%)`,
                 border: `1px solid ${family.color}${light ? "12" : "08"}`,
+                transition: "all 0.5s ease",
               }}
             >
-              {/* Phase accent bar */}
               <div
-                className="absolute top-0 left-0 w-1 h-full transition-colors duration-500"
+                className="absolute top-0 left-0 w-1 h-full"
                 style={{
-                  backgroundColor:
-                    possession < 0.5
-                      ? family.color
-                      : "#C0392B",
+                  backgroundColor: possession < 0.5 ? family.color : "#C0392B",
                   opacity: 0.4 + possession * 0.4,
+                  transition: "background-color 0.5s ease, opacity 0.5s ease",
                 }}
               />
 
               <div className="p-5 md:p-7 pl-6 md:pl-8">
-                {/* Phase header */}
                 <div className="flex items-center gap-3 mb-4">
                   <AnimatePresence mode="wait">
                     <motion.span
@@ -871,73 +985,56 @@ export default function BoySteeringMan() {
                       initial={{ opacity: 0, x: -8 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 8 }}
+                      transition={{ duration: 0.35, ease: [0.19, 1, 0.22, 1] }}
                       className="font-mono text-[9px] tracking-[0.25em] uppercase font-medium"
-                      style={{
-                        color:
-                          possession < 0.5
-                            ? family.color
-                            : "#C0392B",
-                      }}
+                      style={{ color: possession < 0.5 ? family.color : "#C0392B" }}
                     >
                       {phase.label}
                     </motion.span>
                   </AnimatePresence>
                   <div
                     className="h-px flex-1"
-                    style={{
-                      background: `linear-gradient(90deg, ${family.color}${light ? "18" : "0C"}, transparent)`,
-                    }}
+                    style={{ background: `linear-gradient(90deg, ${family.color}${light ? "18" : "0C"}, transparent)` }}
                   />
-
-                  {/* Phase dots */}
                   <div className="flex gap-1.5">
                     {["seed", "stirring", "hijacking", "possession"].map((p) => (
                       <div
                         key={p}
-                        className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+                        className="w-1.5 h-1.5 rounded-full"
                         style={{
-                          backgroundColor:
-                            p === phase.phase
-                              ? possession < 0.5
-                                ? family.color
-                                : "#C0392B"
-                              : light
-                                ? "#ddd"
-                                : "#282825",
-                          boxShadow:
-                            p === phase.phase
-                              ? `0 0 6px ${possession < 0.5 ? family.color : "#C0392B"}60`
-                              : "none",
+                          backgroundColor: p === phase.phase
+                            ? (possession < 0.5 ? family.color : "#C0392B")
+                            : (light ? "#ddd" : "#282825"),
+                          boxShadow: p === phase.phase
+                            ? `0 0 6px ${possession < 0.5 ? family.color : "#C0392B"}60`
+                            : "none",
+                          transition: "all 0.4s ease",
                         }}
                       />
                     ))}
                   </div>
                 </div>
 
-                {/* Description */}
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={phase.phase + family.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.35 }}
+                    transition={{ duration: 0.4, ease: [0.19, 1, 0.22, 1] }}
                     className="text-text-secondary text-sm md:text-[15px] leading-relaxed font-light mb-5"
                   >
                     {phase.description}
                   </motion.p>
                 </AnimatePresence>
 
-                {/* Behavioral signs */}
                 <div>
                   <p
                     className="font-mono text-[7px] tracking-[0.2em] uppercase mb-3"
                     style={{
-                      color:
-                        possession < 0.5
-                          ? family.color
-                          : "var(--color-crimson-light)",
+                      color: possession < 0.5 ? family.color : "var(--color-crimson-light)",
                       opacity: 0.5,
+                      transition: "color 0.4s ease",
                     }}
                   >
                     Signs to recognize
@@ -948,7 +1045,7 @@ export default function BoySteeringMan() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.35 }}
                       className="space-y-2"
                     >
                       {phase.signs.map((sign, i) => (
@@ -956,17 +1053,15 @@ export default function BoySteeringMan() {
                           key={sign}
                           initial={{ opacity: 0, x: -6 }}
                           animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.08, duration: 0.3 }}
+                          transition={{ delay: i * 0.06, duration: 0.35, ease: [0.19, 1, 0.22, 1] }}
                           className="flex items-start gap-2.5 text-xs md:text-sm text-text-secondary/80 leading-relaxed"
                         >
                           <span
                             className="w-1 h-1 rounded-full mt-1.5 shrink-0"
                             style={{
-                              backgroundColor:
-                                possession < 0.5
-                                  ? family.color
-                                  : "#C0392B",
+                              backgroundColor: possession < 0.5 ? family.color : "#C0392B",
                               opacity: 0.5,
+                              transition: "background-color 0.4s ease",
                             }}
                           />
                           {sign}
@@ -976,33 +1071,29 @@ export default function BoySteeringMan() {
                   </AnimatePresence>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            {/* ─── Shadow bleed-through mapping ── */}
+            {/* Shadow bleed-through */}
             <AnimatePresence>
               {possession > 0.45 && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
                   className="overflow-hidden mt-4"
                 >
                   <div
                     className="p-5 rounded-sm"
                     style={{
-                      background: light
-                        ? "rgba(192,57,43,0.03)"
-                        : "rgba(192,57,43,0.04)",
+                      background: light ? "rgba(192,57,43,0.03)" : "rgba(192,57,43,0.04)",
                       border: "1px solid rgba(192,57,43,0.1)",
                     }}
                   >
                     <p className="font-mono text-[8px] tracking-[0.2em] text-crimson-light/60 uppercase mb-4">
                       How the boy&apos;s shadow becomes the man&apos;s shadow
                     </p>
-
                     <div className="space-y-3">
-                      {/* Active */}
                       <div className="flex items-center gap-3 flex-wrap">
                         <span className="text-xs font-serif" style={{ color: "#C0392B" }}>
                           {family.boy.activeShadow.name}
@@ -1021,8 +1112,6 @@ export default function BoySteeringMan() {
                           {family.man.activeShadow.name}
                         </span>
                       </div>
-
-                      {/* Passive */}
                       <div className="flex items-center gap-3 flex-wrap">
                         <span className="text-xs font-serif text-muted">
                           {family.boy.passiveShadow.name}
@@ -1054,11 +1143,8 @@ export default function BoySteeringMan() {
           <div className="max-w-3xl mx-auto">
             <div
               className="h-px mb-14"
-              style={{
-                background: `linear-gradient(90deg, transparent, var(--color-gold)${light ? "25" : "12"}, transparent)`,
-              }}
+              style={{ background: `linear-gradient(90deg, transparent, var(--color-gold)${light ? "25" : "12"}, transparent)` }}
             />
-
             <div className="text-center mb-12">
               <p className="font-mono text-[9px] tracking-[0.35em] text-gold/50 uppercase mb-3">
                 The Way Through
@@ -1087,24 +1173,21 @@ export default function BoySteeringMan() {
               </div>
             </div>
 
-            {/* Family links */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {FAMILIES.map((f) => (
                 <Link
                   key={f.id}
                   href={`/archetype/${f.man.slug}`}
-                  className="group p-5 rounded-sm text-center transition-all duration-300 hover:scale-[1.02]"
+                  className="group p-5 rounded-sm text-center"
                   style={{
                     border: `1px solid ${f.color}${light ? "15" : "08"}`,
                     background: light
                       ? `linear-gradient(180deg, ${f.color}06 0%, transparent 100%)`
                       : `linear-gradient(180deg, ${f.color}03 0%, transparent 100%)`,
+                    transition: "all 0.3s ease",
                   }}
                 >
-                  <p
-                    className="font-serif text-sm font-medium mb-1.5"
-                    style={{ color: f.color }}
-                  >
+                  <p className="font-serif text-sm font-medium mb-1.5" style={{ color: f.color }}>
                     {f.man.name}
                   </p>
                   <div className="flex items-center justify-center gap-1.5">
