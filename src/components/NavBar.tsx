@@ -7,6 +7,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import { ALL_ARCHETYPES } from "@/data/kwml/archetypes";
 import { ALL_JUNGIAN } from "@/data/jungian/archetypes";
 import { ALL_ENNEAGRAM } from "@/data/enneagram/archetypes";
+import { ALL_HEROSJOURNEY } from "@/data/herosjourney/archetypes";
 
 type NavItem = { label: string; href: string };
 
@@ -19,6 +20,7 @@ export default function NavBar() {
   const inKwml = pathname.startsWith("/kwml");
   const inJungian = pathname.startsWith("/jungian");
   const inEnneagram = pathname.startsWith("/enneagram");
+  const inHerosJourney = pathname.startsWith("/heros-journey");
 
   useEffect(() => {
     setMenuOpen(false);
@@ -57,28 +59,39 @@ export default function NavBar() {
             label: `${a.number}. ${a.name}`,
             href: `/enneagram/archetype/${a.slug}`,
           }))
-        : null;
+        : inHerosJourney
+          ? ALL_HEROSJOURNEY.map((a) => ({
+              label: a.name,
+              href: `/heros-journey/archetype/${a.slug}`,
+            }))
+          : null;
   const systemLabel = inKwml
     ? "KWML"
     : inJungian
       ? "Jungian"
       : inEnneagram
         ? "Enneagram"
-        : null;
+        : inHerosJourney
+          ? "Hero's Journey"
+          : null;
   const systemHref = inKwml
     ? "/kwml"
     : inJungian
       ? "/jungian"
       : inEnneagram
         ? "/enneagram"
-        : "/";
+        : inHerosJourney
+          ? "/heros-journey"
+          : "/";
   const systemAbout = inKwml
     ? "/kwml/about"
     : inJungian
       ? "/jungian/about"
       : inEnneagram
         ? "/enneagram/about"
-        : "/";
+        : inHerosJourney
+          ? "/heros-journey/about"
+          : "/";
 
   return (
     <nav className="fixed top-0 inset-x-0 z-50">
@@ -204,7 +217,7 @@ export default function NavBar() {
               <path d="M13.5 8.5a5.5 5.5 0 1 1-6-6 4.5 4.5 0 0 0 6 6z" />
             </svg>
           </button>
-          {(inKwml || inJungian || inEnneagram) && (
+          {(inKwml || inJungian || inEnneagram || inHerosJourney) && (
             <Link
               href={systemAbout}
               className="font-mono text-[9px] tracking-[0.15em] text-muted uppercase hover:text-text-secondary transition-colors duration-200"
