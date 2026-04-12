@@ -46,7 +46,8 @@ export const SYSTEMS: ArchetypeSystem[] = [
     subtitle: "Nine Personality Types",
     description:
       "Nine interconnected types organized around core fears, desires, and paths of integration.",
-    status: "soon",
+    href: "/enneagram",
+    status: "live",
     accent: "#4A6FA5",
     accentLight: "#274A7A",
     count: 9,

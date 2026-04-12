@@ -10,7 +10,28 @@ export default function NavBar() {
 
   const inKwml = pathname.startsWith("/kwml");
   const inJungian = pathname.startsWith("/jungian");
-  const systemLabel = inKwml ? "KWML" : inJungian ? "Jungian" : null;
+  const inEnneagram = pathname.startsWith("/enneagram");
+  const systemLabel = inKwml
+    ? "KWML"
+    : inJungian
+      ? "Jungian"
+      : inEnneagram
+        ? "Enneagram"
+        : null;
+  const systemHref = inKwml
+    ? "/kwml"
+    : inJungian
+      ? "/jungian"
+      : inEnneagram
+        ? "/enneagram"
+        : "/";
+  const systemAbout = inKwml
+    ? "/kwml/about"
+    : inJungian
+      ? "/jungian/about"
+      : inEnneagram
+        ? "/enneagram/about"
+        : "/";
 
   return (
     <nav className="fixed top-0 inset-x-0 z-50">
@@ -36,7 +57,7 @@ export default function NavBar() {
             <>
               <span className="text-muted/40 font-mono text-[10px]">/</span>
               <Link
-                href={inKwml ? "/kwml" : "/jungian"}
+                href={systemHref}
                 className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-secondary hover:text-gold transition-colors duration-200"
               >
                 {systemLabel}
@@ -86,9 +107,9 @@ export default function NavBar() {
               <path d="M13.5 8.5a5.5 5.5 0 1 1-6-6 4.5 4.5 0 0 0 6 6z" />
             </svg>
           </button>
-          {(inKwml || inJungian) && (
+          {(inKwml || inJungian || inEnneagram) && (
             <Link
-              href={inKwml ? "/kwml/about" : "/jungian/about"}
+              href={systemAbout}
               className="font-mono text-[9px] tracking-[0.15em] text-muted uppercase hover:text-text-secondary transition-colors duration-200"
             >
               About
