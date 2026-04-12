@@ -18,7 +18,7 @@ const SIZE = 620;
 const CENTER = SIZE / 2;
 const STAGE_RADIUS = 228;
 const ARCHETYPE_RADIUS = 282;
-const LABEL_RADIUS = 168;
+const LABEL_RADIUS = 198;
 
 function polar(radius: number, degrees: number) {
   const rad = ((degrees - 90) * Math.PI) / 180;
@@ -150,6 +150,12 @@ export default function HeroJourneyWheel() {
           const isActive =
             hoveredStage === stage.number || activeStages.includes(stage.number);
           const label = polar(LABEL_RADIUS, stage.clockPosition);
+          // Rotate label tangent to the ring so adjacent labels don't collide.
+          // Flip on the lower half so text stays upright/readable.
+          const cp = ((stage.clockPosition % 360) + 360) % 360;
+          const flip = cp > 90 && cp < 270;
+          const baseRot = cp - 90; // tangent to circle
+          const labelRot = flip ? baseRot + 180 : baseRot;
           return (
             <g
               key={stage.number}
@@ -190,6 +196,7 @@ export default function HeroJourneyWheel() {
                       ? "#5a5040"
                       : "#a8a090"
                 }
+                transform={`rotate(${labelRot} ${label.x} ${label.y})`}
                 style={{
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
@@ -197,9 +204,7 @@ export default function HeroJourneyWheel() {
                   transition: "fill 200ms ease",
                 }}
               >
-                {stage.name.length > 18
-                  ? stage.name.split(" ").slice(0, 2).join(" ")
-                  : stage.name}
+                {stage.name}
               </text>
             </g>
           );
