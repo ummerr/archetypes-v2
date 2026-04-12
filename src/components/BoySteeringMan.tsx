@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { FAMILIES } from "@/data/archetypes";
+import { FAMILIES } from "@/data/kwml/archetypes";
 import type { ArchetypeFamilyGroup, ArchetypeFamily } from "@/types/archetype";
 import { useTheme } from "@/components/ThemeProvider";
 
@@ -1177,7 +1177,7 @@ export default function BoySteeringMan() {
               {FAMILIES.map((f) => (
                 <Link
                   key={f.id}
-                  href={`/archetype/${f.man.slug}`}
+                  href={`/kwml/archetype/${f.man.slug}`}
                   className="group p-5 rounded-sm text-center"
                   style={{
                     border: `1px solid ${f.color}${light ? "15" : "08"}`,

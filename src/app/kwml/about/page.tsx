@@ -1,5 +1,5 @@
 import PageTransition from "@/components/PageTransition";
-import { FAMILIES } from "@/data/archetypes";
+import { FAMILIES } from "@/data/kwml/archetypes";
 import Link from "next/link";
 
 export const metadata = {
@@ -83,7 +83,7 @@ export default function AboutPage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-4">
                       <Link
-                        href={`/archetype/${family.boy.slug}`}
+                        href={`/kwml/archetype/${family.boy.slug}`}
                         className="text-text-secondary hover:text-text-primary transition-colors text-sm"
                       >
                         {family.boy.name}
@@ -106,7 +106,7 @@ export default function AboutPage() {
                         </svg>
                       </div>
                       <Link
-                        href={`/archetype/${family.man.slug}`}
+                        href={`/kwml/archetype/${family.man.slug}`}
                         className="font-serif text-lg font-medium transition-colors hover:brightness-110"
                         style={{ color: family.color }}
                       >

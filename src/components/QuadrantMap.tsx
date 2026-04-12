@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { FAMILIES } from "@/data/archetypes";
+import { FAMILIES } from "@/data/kwml/archetypes";
 import { ArchetypeFamilyGroup } from "@/types/archetype";
 
 const cx = 300;
@@ -94,7 +94,7 @@ function FamilyNode({
       transition={{ duration: 1, delay: 0.8 + index * 0.15 }}
       onMouseEnter={() => onHover(family.id)}
       onMouseLeave={() => onHover(null)}
-      onClick={() => router.push(`/archetype/${family.man.slug}`)}
+      onClick={() => router.push(`/kwml/archetype/${family.man.slug}`)}
     >
       {/* Ambient glow — large and soft */}
       <circle
@@ -399,7 +399,7 @@ export default function QuadrantMap() {
         {FAMILIES.map((family, i) => (
           <motion.a
             key={family.id}
-            href={`/archetype/${family.man.slug}`}
+            href={`/kwml/archetype/${family.man.slug}`}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}

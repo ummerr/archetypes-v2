@@ -3,7 +3,7 @@ import {
   ALL_ARCHETYPES,
   getArchetypeBySlug,
   getFamilyByArchetype,
-} from "@/data/archetypes";
+} from "@/data/kwml/archetypes";
 import ArchetypeDetailClient from "@/components/ArchetypeDetailClient";
 
 export function generateStaticParams() {

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Archetype, ArchetypeFamilyGroup } from "@/types/archetype";
-import { FAMILIES } from "@/data/archetypes";
+import { FAMILIES } from "@/data/kwml/archetypes";
 import TotemCanvas from "@/components/TotemCanvas";
 import ShadowTriangle from "@/components/ShadowTriangle";
 import ShadowSpectrum from "@/components/ShadowSpectrum";
@@ -434,7 +434,7 @@ export default function ArchetypeDetailClient({
                     a.slug !== archetype.slug ? (
                       <Link
                         key={a.slug}
-                        href={`/archetype/${a.slug}`}
+                        href={`/kwml/archetype/${a.slug}`}
                         className="group relative p-3 rounded-xl border transition-all duration-200 hover:shadow-lg"
                         style={{
                           borderColor: `${a.accentColor}${light ? "25" : "15"}`,

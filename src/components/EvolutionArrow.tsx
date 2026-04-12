@@ -13,7 +13,7 @@ interface Props {
 function MiniCard({ archetype, side, light }: { archetype: Archetype; side: "from" | "to"; light: boolean }) {
   return (
     <Link
-      href={`/archetype/${archetype.slug}`}
+      href={`/kwml/archetype/${archetype.slug}`}
       className="group flex-1 w-full relative p-5 rounded-2xl border transition-all duration-300 hover:bg-surface-light/30"
       style={{
         borderColor: `${archetype.accentColor}${light ? "30" : "20"}`,
