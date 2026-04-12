@@ -75,6 +75,20 @@ export const reformer: EnneagramArchetype = {
     "Under stress the Reformer slips toward the Individualist's shadow: moody, self-critical, privately convinced they are uniquely flawed. The outer standard curdles inward into melancholy and withdrawal.",
   accentColor: "#D89560",
   symbol: "†",
+  wings: [
+    {
+      number: 9,
+      nickname: "The Idealist",
+      flavor:
+        "The Reformer tempered by the Peacemaker's calm. Stands for what is right from a contemplative remove — principled, detached, and more likely to correct quietly than to confront.",
+    },
+    {
+      number: 2,
+      nickname: "The Advocate",
+      flavor:
+        "The Reformer threaded with the Helper's relational heat. Crusades on behalf of people rather than abstract principles — warmer, more persuasive, willing to bring others along.",
+    },
+  ],
 };
 
 // ─── TYPE 2 ──────────────────────────────────────────────
@@ -109,6 +123,20 @@ export const helper: EnneagramArchetype = {
     "Under stress the Helper absorbs the Challenger's shadow: controlling, demanding, and overtly angry that their sacrifices are not being honored. The soft claim hardens into an ultimatum.",
   accentColor: "#E8A7B3",
   symbol: "❦",
+  wings: [
+    {
+      number: 1,
+      nickname: "The Servant",
+      flavor:
+        "The Helper with the Reformer's conscience. Dutiful and morally serious — gives from a sense of what is right as much as what is warm, and can tip into self-righteous martyrdom.",
+    },
+    {
+      number: 3,
+      nickname: "The Host",
+      flavor:
+        "The Helper with the Achiever's polish. Sociable, ambitious on behalf of loved ones, and gracious in a way that also happens to shine — care as charisma.",
+    },
+  ],
 };
 
 // ─── TYPE 3 ──────────────────────────────────────────────
@@ -143,6 +171,20 @@ export const achiever: EnneagramArchetype = {
     "Under stress the Achiever goes Peacemaker-shadow: disengages, numbs out, and can't locate the drive that used to be reliable. Ambition flattens into avoidance.",
   accentColor: "#E8B041",
   symbol: "✦",
+  wings: [
+    {
+      number: 2,
+      nickname: "The Charmer",
+      flavor:
+        "The Achiever warmed by the Helper. Relational and charismatic — wins rooms through personal connection rather than credential, and measures success in how fully they are loved.",
+    },
+    {
+      number: 4,
+      nickname: "The Professional",
+      flavor:
+        "The Achiever deepened by the Individualist. Self-contained, craft-focused, drawn to excellence more than applause — wants the work itself to carry the proof.",
+    },
+  ],
 };
 
 // ─── TYPE 4 ──────────────────────────────────────────────
@@ -177,6 +219,20 @@ export const individualist: EnneagramArchetype = {
     "Under stress the Individualist absorbs the Helper's shadow: clingy, over-giving, and covertly demanding that someone else resolve the ache. Intimacy curdles into pursuit.",
   accentColor: "#A06BBD",
   symbol: "☾",
+  wings: [
+    {
+      number: 3,
+      nickname: "The Aristocrat",
+      flavor:
+        "The Individualist with the Achiever's pull toward form. Outwardly composed, stylish, socially fluent — turns inner intensity into presentation and prizes being seen as exquisite.",
+    },
+    {
+      number: 5,
+      nickname: "The Bohemian",
+      flavor:
+        "The Individualist with the Investigator's reserve. More withdrawn, more cerebral — content to live inside the mood of a thing rather than perform it, and more at home on the margin.",
+    },
+  ],
 };
 
 // ─── TYPE 5 ──────────────────────────────────────────────
@@ -211,6 +267,20 @@ export const investigator: EnneagramArchetype = {
     "Under stress the Investigator slips toward the Enthusiast's shadow: scattered, hyperactive, chasing stimulation to escape a mind that suddenly feels airless.",
   accentColor: "#6A8FB5",
   symbol: "◎",
+  wings: [
+    {
+      number: 4,
+      nickname: "The Iconoclast",
+      flavor:
+        "The Investigator inflected by the Individualist. Imaginative and original — more willing to work in art, philosophy, and strange terrain than pure system, and more openly idiosyncratic.",
+    },
+    {
+      number: 6,
+      nickname: "The Problem Solver",
+      flavor:
+        "The Investigator crossed with the Loyalist. Practical, technical, drawn to problems with real-world consequences and allies to build with — engineering rather than pure theory.",
+    },
+  ],
 };
 
 // ─── TYPE 6 ──────────────────────────────────────────────
@@ -245,6 +315,20 @@ export const loyalist: EnneagramArchetype = {
     "Under stress the Loyalist absorbs the Achiever's shadow: competitive, image-driven, posturing for a security that is really just approval in disguise.",
   accentColor: "#8B9A7F",
   symbol: "⛨",
+  wings: [
+    {
+      number: 5,
+      nickname: "The Defender",
+      flavor:
+        "The Loyalist steadied by the Investigator. Quieter, more analytic — guards the group with preparation, data, and contingency plans rather than charm or persuasion.",
+    },
+    {
+      number: 7,
+      nickname: "The Buddy",
+      flavor:
+        "The Loyalist lightened by the Enthusiast. Sociable and funny — binds people together with warmth and comic relief, and finds courage more easily in good company.",
+    },
+  ],
 };
 
 // ─── TYPE 7 ──────────────────────────────────────────────
@@ -279,6 +363,20 @@ export const enthusiast: EnneagramArchetype = {
     "Under stress the Enthusiast slips toward the Reformer's shadow: suddenly critical, judgmental, and angry at a world that has failed to deliver the promised lightness.",
   accentColor: "#F0C14B",
   symbol: "✺",
+  wings: [
+    {
+      number: 6,
+      nickname: "The Entertainer",
+      flavor:
+        "The Enthusiast with the Loyalist's sociability. Playful and responsible to the group — keeps the party going for everyone and stays tethered to the people who showed up.",
+    },
+    {
+      number: 8,
+      nickname: "The Realist",
+      flavor:
+        "The Enthusiast sharpened by the Challenger. Harder-edged and ambitious — turns appetite for experience into appetite for power, and is quicker to push past obstacles.",
+    },
+  ],
 };
 
 // ─── TYPE 8 ──────────────────────────────────────────────
@@ -313,6 +411,20 @@ export const challenger: EnneagramArchetype = {
     "Under stress the Challenger withdraws into the Investigator's shadow: secretive, isolated, hoarding information and plotting in private rather than moving in the open.",
   accentColor: "#B04848",
   symbol: "⚔",
+  wings: [
+    {
+      number: 7,
+      nickname: "The Maverick",
+      flavor:
+        "The Challenger with the Enthusiast's spark. Bold, extroverted, entrepreneurial — force in motion, more playful and more visible, builds empires as an extended adventure.",
+    },
+    {
+      number: 9,
+      nickname: "The Bear",
+      flavor:
+        "The Challenger grounded by the Peacemaker. Quieter and more implacable — a deliberate strength that moves only when it has to, and is harder to provoke but heavier when roused.",
+    },
+  ],
 };
 
 // ─── TYPE 9 ──────────────────────────────────────────────
@@ -347,6 +459,20 @@ export const peacemaker: EnneagramArchetype = {
     "Under stress the Peacemaker slips toward the Loyalist's shadow: anxious, self-doubting, stuck in worst-case loops, suddenly unable to find the calm that used to be native ground.",
   accentColor: "#7FA68A",
   symbol: "☯",
+  wings: [
+    {
+      number: 8,
+      nickname: "The Referee",
+      flavor:
+        "The Peacemaker stiffened by the Challenger. More assertive and physically present — mediates with authority, holds the line when needed, and is harder to steamroll.",
+    },
+    {
+      number: 1,
+      nickname: "The Dreamer",
+      flavor:
+        "The Peacemaker refined by the Reformer. Idealistic and gently principled — serves a vision of how things ought to be, and turns quiet presence into moral imagination.",
+    },
+  ],
 };
 
 // ─── COLLECTIONS ──────────────────────────────────────────────

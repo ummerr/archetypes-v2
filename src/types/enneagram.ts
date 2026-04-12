@@ -24,6 +24,13 @@ export interface EnneagramArchetype {
   pressureNarrative: string;
   accentColor: string;
   symbol: string;
+  wings: EnneagramWing[];
+}
+
+export interface EnneagramWing {
+  number: EnneagramNumber;
+  nickname: string;
+  flavor: string;
 }
 
 export interface EnneagramTriadGroup {

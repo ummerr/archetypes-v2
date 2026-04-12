@@ -41,6 +41,9 @@ export default async function EnneagramArchetypePage({
   );
   const integrationTarget = getEnneagramByNumber(archetype.integrationTo)!;
   const disintegrationTarget = getEnneagramByNumber(archetype.disintegrationTo)!;
+  const wingTargets = archetype.wings.map(
+    (w) => getEnneagramByNumber(w.number)!
+  );
 
   return (
     <EnneagramDetailClient
@@ -49,6 +52,7 @@ export default async function EnneagramArchetypePage({
       triadSiblings={triadSiblings}
       integrationTarget={integrationTarget}
       disintegrationTarget={disintegrationTarget}
+      wingTargets={wingTargets}
     />
   );
 }

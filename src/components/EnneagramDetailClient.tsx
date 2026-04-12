@@ -5,6 +5,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import { EnneagramArchetype, EnneagramTriadGroup } from "@/types/enneagram";
 import { useTheme } from "@/components/ThemeProvider";
+import EnneagramWings from "@/components/EnneagramWings";
 
 const EnneagramTotemCanvas = dynamic(
   () => import("@/components/EnneagramTotemCanvas"),
@@ -17,6 +18,7 @@ interface Props {
   triadSiblings: EnneagramArchetype[];
   integrationTarget: EnneagramArchetype;
   disintegrationTarget: EnneagramArchetype;
+  wingTargets: EnneagramArchetype[];
 }
 
 type State = "thriving" | "pressure";
@@ -27,6 +29,7 @@ export default function EnneagramDetailClient({
   triadSiblings,
   integrationTarget,
   disintegrationTarget,
+  wingTargets,
 }: Props) {
   const { theme } = useTheme();
   const light = theme === "light";
@@ -156,6 +159,9 @@ export default function EnneagramDetailClient({
             </div>
           ))}
         </div>
+
+        {/* Wings */}
+        <EnneagramWings archetype={archetype} wingTargets={wingTargets} />
 
         {/* State toggle + arrows */}
         <div className="mb-16 animate-slide-up delay-300">
