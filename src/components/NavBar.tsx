@@ -50,7 +50,7 @@ export default function NavBar() {
         <div className="flex items-center gap-3">
           <Link href="/" className="group flex items-center gap-3">
             <span className="font-mono text-sm font-bold tracking-[0.25em] text-gold transition-colors duration-200 group-hover:text-gold-bright glow-text-subtle">
-              ARCHETYPES
+              MAPS OF THE INNER WORLD
             </span>
           </Link>
           {systemLabel && (

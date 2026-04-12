@@ -5,9 +5,9 @@ import ThemeProvider from "@/components/ThemeProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "KWML — Archetype Explorer",
+  title: "Maps of the Inner World",
   description:
-    "Explore the King, Warrior, Magician, and Lover archetypes of the mature masculine psyche.",
+    "Explore archetypal systems that chart the inner world — Jungian, Enneagram, and more.",
 };
 
 export default function RootLayout({

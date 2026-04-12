@@ -3,7 +3,7 @@ import { FAMILIES } from "@/data/kwml/archetypes";
 import Link from "next/link";
 
 export const metadata = {
-  title: "About — KWML Archetype Explorer",
+  title: "About — Maps of the Inner World",
 };
 
 export default function AboutPage() {

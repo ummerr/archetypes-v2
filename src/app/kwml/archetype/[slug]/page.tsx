@@ -19,7 +19,7 @@ export function generateMetadata({
     const archetype = getArchetypeBySlug(slug);
     if (!archetype) return { title: "Not Found" };
     return {
-      title: `${archetype.name} — KWML Archetype Explorer`,
+      title: `${archetype.name} — Maps of the Inner World`,
       description: archetype.description,
     };
   });
