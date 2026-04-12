@@ -64,4 +64,28 @@ export const SYSTEMS: ArchetypeSystem[] = [
     count: 16,
     framework: "Myers & Briggs",
   },
+  {
+    id: "heros-journey",
+    name: "Hero's Journey",
+    subtitle: "Archetypes of the Monomyth",
+    description:
+      "Characters that recur across the stages of the Hero's Journey — Mentor, Herald, Threshold Guardian, Shapeshifter, Shadow, Trickster, and more.",
+    status: "soon",
+    accent: "#B85C38",
+    accentLight: "#7A3A1E",
+    count: 8,
+    framework: "Campbell & Vogler",
+  },
+  {
+    id: "tarot",
+    name: "Tarot",
+    subtitle: "The Major Arcana",
+    description:
+      "Twenty-two symbolic figures tracing the Fool's journey through initiation, trial, and transcendence — archetypes rendered as images.",
+    status: "soon",
+    accent: "#8C3A5E",
+    accentLight: "#5E1F3D",
+    count: 22,
+    framework: "Major Arcana",
+  },
 ];
