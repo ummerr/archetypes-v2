@@ -4,6 +4,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import type { HeroJourneyArchetype, JourneyStage } from "@/types/herosjourney";
 import { useTheme } from "@/components/ThemeProvider";
+import { HeroJourneyArchetypeIcon } from "@/components/HeroJourneyArchetypeIcon";
 
 const HeroJourneyTotemCanvas = dynamic(
   () => import("@/components/HeroJourneyTotemCanvas"),
@@ -283,11 +284,10 @@ export default function HeroJourneyDetailClient({
               >
                 <div className="flex items-center gap-3">
                   <span
-                    className="font-serif text-2xl opacity-70 group-hover:opacity-100 transition-opacity"
-                    style={{ color: s.accentColor }}
+                    className="opacity-70 group-hover:opacity-100 transition-opacity shrink-0"
                     aria-hidden
                   >
-                    {s.symbol}
+                    <HeroJourneyArchetypeIcon slug={s.slug} color={s.accentColor} size={26} />
                   </span>
                   <div>
                     <p
