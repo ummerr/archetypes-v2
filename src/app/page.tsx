@@ -41,20 +41,21 @@ export default function Home() {
             {SYSTEMS.map((system, i) => {
               const isHovered = hovered === system.id;
               const isLive = system.status === "live";
+              const accent = light ? system.accentLight : system.accent;
               const Card = (
                 <div
                   className="relative overflow-visible rounded-sm transition-all duration-500 h-full"
                   style={{
-                    background: `linear-gradient(145deg, ${system.accent}${light ? "0C" : "06"} 0%, var(--color-bg) 40%, var(--color-bg) 100%)`,
+                    background: `linear-gradient(145deg, ${accent}${light ? "0C" : "06"} 0%, var(--color-bg) 40%, var(--color-bg) 100%)`,
                     border: `1px ${isLive ? "solid" : "dashed"} ${
                       isHovered
-                        ? system.accent + (light ? "40" : "30")
-                        : system.accent + (light ? "20" : "10")
+                        ? accent + (light ? "40" : "30")
+                        : accent + (light ? "20" : "10")
                     }`,
                     boxShadow: isHovered && isLive
                       ? light
                         ? `0 4px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.5)`
-                        : `0 0 40px ${system.accent}08, 0 0 80px ${system.accent}04, inset 0 1px 0 ${system.accent}10`
+                        : `0 0 40px ${accent}08, 0 0 80px ${accent}04, inset 0 1px 0 ${accent}10`
                       : light
                         ? `0 1px 4px rgba(0,0,0,0.04)`
                         : "none",
@@ -64,7 +65,7 @@ export default function Home() {
                   <div
                     className="absolute top-0 left-0 right-0 h-px transition-opacity duration-500"
                     style={{
-                      background: `linear-gradient(90deg, transparent, ${system.accent}40, transparent)`,
+                      background: `linear-gradient(90deg, transparent, ${accent}40, transparent)`,
                       opacity: isHovered ? 1 : 0,
                     }}
                   />
@@ -78,12 +79,12 @@ export default function Home() {
                       <div
                         className="h-px flex-1"
                         style={{
-                          background: `linear-gradient(90deg, ${system.accent}${light ? "30" : "15"}, transparent)`,
+                          background: `linear-gradient(90deg, ${accent}${light ? "30" : "15"}, transparent)`,
                         }}
                       />
                       <span
                         className="font-mono text-[8px] tracking-[0.2em] uppercase"
-                        style={{ color: isLive ? system.accent : "var(--color-muted)" }}
+                        style={{ color: isLive ? accent : "var(--color-muted)" }}
                       >
                         {isLive ? `${system.count} types` : "Coming Soon"}
                       </span>
@@ -93,10 +94,10 @@ export default function Home() {
                     <h2
                       className="font-serif text-4xl md:text-5xl font-medium tracking-tight mb-2 transition-all duration-300"
                       style={{
-                        color: system.accent,
+                        color: accent,
                         textShadow:
                           isHovered && !light && isLive
-                            ? `0 0 20px ${system.accent}40`
+                            ? `0 0 20px ${accent}40`
                             : "none",
                       }}
                     >
