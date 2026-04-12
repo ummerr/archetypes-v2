@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import {
   ALL_JUNGIAN,
   JUNGIAN_CLUSTERS,
@@ -9,6 +10,11 @@ import {
 } from "@/data/jungian/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
 import { JungianArchetype } from "@/types/jungian";
+
+const JungianTotemCanvas = dynamic(
+  () => import("@/components/JungianTotemCanvas"),
+  { ssr: false }
+);
 
 export default function JungianHome() {
   const { theme } = useTheme();
@@ -106,17 +112,19 @@ export default function JungianHome() {
                             }}
                           />
 
-                          <div className="flex items-start justify-between mb-3">
-                            <span
-                              className="font-serif text-3xl leading-none"
-                              style={{ color: a.accentColor, opacity: 0.7 }}
-                              aria-hidden
-                            >
-                              {a.symbol}
-                            </span>
-                            <span className="font-mono text-[7px] tracking-[0.25em] text-muted/70 uppercase">
+                          <div className="flex items-start justify-between mb-2">
+                            <span className="sr-only">{a.symbol}</span>
+                            <span className="font-mono text-[7px] tracking-[0.25em] text-muted/70 uppercase ml-auto">
                               {cluster.label}
                             </span>
+                          </div>
+
+                          <div className="w-full h-32 -mt-1 mb-2" aria-hidden>
+                            <JungianTotemCanvas
+                              slug={a.slug}
+                              color={a.accentColor}
+                              isHovered={isHovered}
+                            />
                           </div>
 
                           <h3

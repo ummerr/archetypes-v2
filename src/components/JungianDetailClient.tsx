@@ -1,8 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { JungianArchetype, JungianClusterGroup } from "@/types/jungian";
 import { useTheme } from "@/components/ThemeProvider";
+
+const JungianTotemCanvas = dynamic(
+  () => import("@/components/JungianTotemCanvas"),
+  { ssr: false }
+);
 
 interface Props {
   archetype: JungianArchetype;
@@ -50,13 +56,17 @@ export default function JungianDetailClient({
         {/* Hero */}
         <div className="mb-12 animate-slide-up delay-100">
           <div className="flex items-start gap-5 mb-4">
-            <span
-              className="font-serif text-6xl md:text-7xl leading-none opacity-80"
-              style={{ color }}
+            <span className="sr-only">{archetype.symbol}</span>
+            <div
+              className="w-40 h-40 md:w-56 md:h-56 flex-shrink-0 -mt-4"
               aria-hidden
             >
-              {archetype.symbol}
-            </span>
+              <JungianTotemCanvas
+                slug={archetype.slug}
+                color={color}
+                isHovered
+              />
+            </div>
             <div className="flex-1 pt-1">
               <p
                 className="font-mono text-[10px] tracking-[0.35em] uppercase mb-2"
