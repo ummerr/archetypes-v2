@@ -2,15 +2,62 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/ThemeProvider";
+import { ALL_ARCHETYPES } from "@/data/kwml/archetypes";
+import { ALL_JUNGIAN } from "@/data/jungian/archetypes";
+import { ALL_ENNEAGRAM } from "@/data/enneagram/archetypes";
+
+type NavItem = { label: string; href: string };
 
 export default function NavBar() {
   const { theme, toggle } = useTheme();
   const pathname = usePathname() ?? "/";
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const inKwml = pathname.startsWith("/kwml");
   const inJungian = pathname.startsWith("/jungian");
   const inEnneagram = pathname.startsWith("/enneagram");
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
+
+  const navItems: NavItem[] | null = inKwml
+    ? ALL_ARCHETYPES.map((a) => ({
+        label: a.name,
+        href: `/kwml/archetype/${a.slug}`,
+      }))
+    : inJungian
+      ? ALL_JUNGIAN.map((a) => ({
+          label: a.name,
+          href: `/jungian/archetype/${a.slug}`,
+        }))
+      : inEnneagram
+        ? ALL_ENNEAGRAM.map((a) => ({
+            label: `${a.number}. ${a.name}`,
+            href: `/enneagram/archetype/${a.slug}`,
+          }))
+        : null;
   const systemLabel = inKwml
     ? "KWML"
     : inJungian
@@ -56,12 +103,62 @@ export default function NavBar() {
           {systemLabel && (
             <>
               <span className="text-muted/40 font-mono text-[10px]">/</span>
-              <Link
-                href={systemHref}
-                className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-secondary hover:text-gold transition-colors duration-200"
-              >
-                {systemLabel}
-              </Link>
+              <div ref={menuRef} className="relative flex items-center">
+                <Link
+                  href={systemHref}
+                  className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-secondary hover:text-gold transition-colors duration-200"
+                >
+                  {systemLabel}
+                </Link>
+                {navItems && (
+                  <button
+                    type="button"
+                    onClick={() => setMenuOpen((v) => !v)}
+                    aria-label="Browse types"
+                    aria-expanded={menuOpen}
+                    className="ml-1 p-1 text-muted hover:text-gold transition-colors duration-200"
+                  >
+                    <svg
+                      width="10"
+                      height="10"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`transition-transform duration-200 ${menuOpen ? "rotate-180" : ""}`}
+                    >
+                      <path d="M2 4l3 3 3-3" />
+                    </svg>
+                  </button>
+                )}
+                {navItems && menuOpen && (
+                  <div
+                    className="absolute left-0 top-full mt-2 min-w-[200px] rounded-md border border-gold/20 bg-bg/95 backdrop-blur-xl shadow-lg overflow-hidden"
+                  >
+                    <ul className="py-1">
+                      {navItems.map((item) => {
+                        const active = pathname === item.href;
+                        return (
+                          <li key={item.href}>
+                            <Link
+                              href={item.href}
+                              className={`block px-4 py-2 font-mono text-[11px] tracking-[0.1em] uppercase transition-colors duration-150 ${
+                                active
+                                  ? "text-gold bg-gold/5"
+                                  : "text-text-secondary hover:text-gold hover:bg-gold/5"
+                              }`}
+                            >
+                              {item.label}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </>
           )}
         </div>
