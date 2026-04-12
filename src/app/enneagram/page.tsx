@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import {
-  ALL_ENNEAGRAM,
   ENNEAGRAM_TRIADS,
   getEnneagramByTriad,
 } from "@/data/enneagram/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
 import { EnneagramArchetype } from "@/types/enneagram";
+import EnneagramSymbol from "@/components/EnneagramSymbol";
 
 const EnneagramTotemCanvas = dynamic(
   () => import("@/components/EnneagramTotemCanvas"),
@@ -43,6 +43,13 @@ export default function EnneagramHome() {
               intelligence: Gut, Heart, and Head.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Interactive symbol */}
+      <div className="px-6 pb-16">
+        <div className="max-w-5xl mx-auto animate-slide-up" style={{ animationDelay: "150ms" }}>
+          <EnneagramSymbol />
         </div>
       </div>
 
@@ -182,7 +189,6 @@ export default function EnneagramHome() {
         </div>
       </div>
 
-      <span className="hidden">{ALL_ENNEAGRAM.length}</span>
     </div>
   );
 }
