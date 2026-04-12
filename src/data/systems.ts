@@ -84,7 +84,8 @@ export const SYSTEMS: ArchetypeSystem[] = [
     subtitle: "The Major Arcana",
     description:
       "Twenty-two symbolic figures tracing the Fool's journey through initiation, trial, and transcendence — archetypes rendered as images.",
-    status: "soon",
+    href: "/tarot",
+    status: "live",
     accent: "#8C3A5E",
     accentLight: "#5E1F3D",
     count: 22,

@@ -8,6 +8,7 @@ import { ALL_ARCHETYPES } from "@/data/kwml/archetypes";
 import { ALL_JUNGIAN } from "@/data/jungian/archetypes";
 import { ALL_ENNEAGRAM } from "@/data/enneagram/archetypes";
 import { ALL_HEROSJOURNEY } from "@/data/herosjourney/archetypes";
+import { ALL_TAROT } from "@/data/tarot/archetypes";
 
 type NavItem = { label: string; href: string };
 
@@ -21,6 +22,7 @@ export default function NavBar() {
   const inJungian = pathname.startsWith("/jungian");
   const inEnneagram = pathname.startsWith("/enneagram");
   const inHerosJourney = pathname.startsWith("/heros-journey");
+  const inTarot = pathname.startsWith("/tarot");
 
   useEffect(() => {
     setMenuOpen(false);
@@ -64,7 +66,12 @@ export default function NavBar() {
               label: a.name,
               href: `/heros-journey/archetype/${a.slug}`,
             }))
-          : null;
+          : inTarot
+            ? ALL_TAROT.map((a) => ({
+                label: `${a.numeral} · ${a.name}`,
+                href: `/tarot/archetype/${a.slug}`,
+              }))
+            : null;
   const systemLabel = inKwml
     ? "KWML"
     : inJungian
@@ -73,7 +80,9 @@ export default function NavBar() {
         ? "Enneagram"
         : inHerosJourney
           ? "Hero's Journey"
-          : null;
+          : inTarot
+            ? "Tarot"
+            : null;
   const systemHref = inKwml
     ? "/kwml"
     : inJungian
@@ -82,7 +91,9 @@ export default function NavBar() {
         ? "/enneagram"
         : inHerosJourney
           ? "/heros-journey"
-          : "/";
+          : inTarot
+            ? "/tarot"
+            : "/";
   const systemAbout = inKwml
     ? "/kwml/about"
     : inJungian
@@ -91,7 +102,9 @@ export default function NavBar() {
         ? "/enneagram/about"
         : inHerosJourney
           ? "/heros-journey/about"
-          : "/";
+          : inTarot
+            ? "/tarot/about"
+            : "/";
 
   return (
     <nav className="fixed top-0 inset-x-0 z-50">
@@ -217,7 +230,7 @@ export default function NavBar() {
               <path d="M13.5 8.5a5.5 5.5 0 1 1-6-6 4.5 4.5 0 0 0 6 6z" />
             </svg>
           </button>
-          {(inKwml || inJungian || inEnneagram || inHerosJourney) && (
+          {(inKwml || inJungian || inEnneagram || inHerosJourney || inTarot) && (
             <Link
               href={systemAbout}
               className="font-mono text-[9px] tracking-[0.15em] text-muted uppercase hover:text-text-secondary transition-colors duration-200"
