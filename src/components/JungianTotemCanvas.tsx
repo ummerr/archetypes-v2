@@ -12,38 +12,67 @@ type Slug = JungianArchetype["slug"];
 function InnocentTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const rays = useRef<THREE.Group>(null);
+  const raysInner = useRef<THREE.Group>(null);
   const core = useRef<THREE.Mesh>(null);
+  const halo = useRef<THREE.Mesh>(null);
   useFrame((s) => {
     const t = s.clock.elapsedTime;
-    if (rays.current) rays.current.rotation.z = t * 0.15;
+    if (rays.current) rays.current.rotation.z = t * 0.12;
+    if (raysInner.current) raysInner.current.rotation.z = -t * 0.18;
     if (core.current) {
-      const k = 0.38 + Math.sin(t * 1.1) * 0.025;
+      const k = 0.42 + Math.sin(t * 1.1) * 0.03;
       core.current.scale.setScalar(k);
+    }
+    if (halo.current) {
+      const m = halo.current.material as THREE.MeshBasicMaterial;
+      m.opacity = (0.35 + Math.sin(t * 1.3) * 0.08) * intensity;
     }
     if (group.current) group.current.position.y = Math.sin(t * 0.5) * 0.04;
   });
   return (
     <group ref={group}>
+      {/* glowing core */}
       <mesh ref={core}>
-        <sphereGeometry args={[1, 24, 24]} />
-        <meshStandardMaterial color="#FFF8E0" emissive={color} emissiveIntensity={1.8 * intensity} />
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2.2 * intensity} />
       </mesh>
+      {/* bright halo disk */}
+      <mesh ref={halo}>
+        <ringGeometry args={[0.5, 0.58, 64]} />
+        <meshBasicMaterial color={color} transparent opacity={0.35 * intensity} side={THREE.DoubleSide} />
+      </mesh>
+      {/* outer ring */}
       <mesh>
-        <torusGeometry args={[0.65, 0.012, 8, 48]} />
-        <meshBasicMaterial color={color} transparent opacity={0.55 * intensity} />
+        <torusGeometry args={[0.92, 0.018, 10, 64]} />
+        <meshBasicMaterial color={color} transparent opacity={0.75 * intensity} />
       </mesh>
+      {/* long primary rays */}
       <group ref={rays}>
-        {Array.from({ length: 12 }).map((_, i) => {
-          const a = (i / 12) * Math.PI * 2;
+        {Array.from({ length: 8 }).map((_, i) => {
+          const a = (i / 8) * Math.PI * 2;
+          const r = 1.15;
           return (
-            <mesh key={i} position={[Math.cos(a) * 0.85, Math.sin(a) * 0.85, 0]} rotation={[0, 0, a - Math.PI / 2]}>
-              <coneGeometry args={[0.04, 0.18, 6]} />
-              <meshBasicMaterial color={color} transparent opacity={0.5 * intensity} />
+            <mesh key={i} position={[Math.cos(a) * r, Math.sin(a) * r, 0]} rotation={[0, 0, a - Math.PI / 2]}>
+              <coneGeometry args={[0.07, 0.42, 8]} />
+              <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.2 * intensity} transparent opacity={0.95 * intensity} />
             </mesh>
           );
         })}
       </group>
-      <pointLight color={color} intensity={1.6 * intensity} distance={4} decay={2} />
+      {/* short secondary rays offset between primary */}
+      <group ref={raysInner}>
+        {Array.from({ length: 8 }).map((_, i) => {
+          const a = (i / 8) * Math.PI * 2 + Math.PI / 8;
+          const r = 1.0;
+          return (
+            <mesh key={i} position={[Math.cos(a) * r, Math.sin(a) * r, 0]} rotation={[0, 0, a - Math.PI / 2]}>
+              <coneGeometry args={[0.04, 0.22, 6]} />
+              <meshBasicMaterial color={color} transparent opacity={0.7 * intensity} />
+            </mesh>
+          );
+        })}
+      </group>
+      <pointLight color={color} intensity={2.0 * intensity} distance={4} decay={2} />
     </group>
   );
 }
