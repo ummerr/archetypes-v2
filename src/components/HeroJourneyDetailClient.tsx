@@ -1,8 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import type { HeroJourneyArchetype, JourneyStage } from "@/types/herosjourney";
 import { useTheme } from "@/components/ThemeProvider";
+
+const HeroJourneyTotemCanvas = dynamic(
+  () => import("@/components/HeroJourneyTotemCanvas"),
+  { ssr: false }
+);
 
 interface Props {
   archetype: HeroJourneyArchetype;
@@ -58,22 +64,14 @@ export default function HeroJourneyDetailClient({
         <div className="mb-12 animate-slide-up delay-100">
           <div className="flex items-start gap-6 mb-4">
             <div
-              className="w-24 h-24 md:w-32 md:h-32 flex-shrink-0 flex items-center justify-center rounded-sm"
+              className="w-40 h-40 md:w-56 md:h-56 flex-shrink-0 -mt-4"
               aria-hidden
-              style={{
-                background: `linear-gradient(145deg, ${color}${light ? "18" : "10"}, transparent)`,
-                border: `1px solid ${color}${light ? "30" : "20"}`,
-              }}
             >
-              <span
-                className="font-serif text-6xl md:text-7xl"
-                style={{
-                  color,
-                  textShadow: !light ? `0 0 24px ${color}50` : "none",
-                }}
-              >
-                {archetype.symbol}
-              </span>
+              <HeroJourneyTotemCanvas
+                slug={archetype.slug}
+                color={color}
+                isHovered
+              />
             </div>
             <div className="flex-1 pt-1">
               <p
