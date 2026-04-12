@@ -86,14 +86,6 @@ export default function NavBar() {
               <path d="M13.5 8.5a5.5 5.5 0 1 1-6-6 4.5 4.5 0 0 0 6 6z" />
             </svg>
           </button>
-          {inKwml && (
-            <Link
-              href="/kwml/boy-within-man"
-              className="font-mono text-[9px] tracking-[0.15em] text-muted uppercase hover:text-text-secondary transition-colors duration-200"
-            >
-              Boy Within Man
-            </Link>
-          )}
           {(inKwml || inJungian) && (
             <Link
               href={inKwml ? "/kwml/about" : "/jungian/about"}

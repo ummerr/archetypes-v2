@@ -197,6 +197,71 @@ export default function Home() {
             })}
           </div>
 
+          {/* ─── Boy Within the Man — interactive bridge ───────────── */}
+          <div className="max-w-6xl mx-auto mt-20">
+            <Link
+              href="/kwml/boy-within-man"
+              className="group block animate-slide-up"
+              style={{ animationDelay: "550ms" }}
+            >
+              <div
+                className="relative overflow-hidden rounded-sm transition-all duration-500"
+                style={{
+                  background: light
+                    ? `linear-gradient(135deg, var(--color-gold)10 0%, var(--color-bg) 60%)`
+                    : `linear-gradient(135deg, var(--color-gold)08 0%, var(--color-bg) 60%)`,
+                  border: `1px solid var(--color-gold)${light ? "30" : "18"}`,
+                }}
+              >
+                <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-5">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="font-mono text-[8px] tracking-[0.25em] text-gold/80 uppercase">
+                        Interactive
+                      </span>
+                      <div
+                        className="h-px flex-1"
+                        style={{
+                          background: `linear-gradient(90deg, var(--color-gold)${light ? "30" : "15"}, transparent)`,
+                        }}
+                      />
+                    </div>
+                    <h2
+                      className="font-serif text-3xl md:text-4xl font-medium tracking-tight mb-2"
+                      style={{ color: "var(--color-text-primary)" }}
+                    >
+                      The Boy{" "}
+                      <span
+                        className={light ? "" : "text-gold glow-text-subtle"}
+                        style={light ? { color: "var(--color-text-primary)" } : undefined}
+                      >
+                        Within
+                      </span>{" "}
+                      the Man
+                    </h2>
+                    <p className="text-text-secondary text-sm md:text-base leading-relaxed max-w-2xl font-light">
+                      Drag the slider to feel what happens when uninitiated boy
+                      psychology takes the wheel of the adult psyche. Nested
+                      triangles, shadow voices, behavioral signs.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-gold uppercase shrink-0 group-hover:translate-x-0.5 transition-transform duration-300">
+                    Enter experience
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M6 4L10 8L6 12"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+
           {/* ─── Boy Psychology section ───────────── */}
           <div className="max-w-6xl mx-auto mt-20 mb-12">
             <div className="animate-slide-up delay-500">
