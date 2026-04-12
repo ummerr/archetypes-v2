@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import {
   HEROSJOURNEY_COLORS,
@@ -12,13 +12,15 @@ import {
   getArchetypesByStage,
 } from "@/data/herosjourney/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
-import type { HeroJourneyArchetype, JourneyStage } from "@/types/herosjourney";
+import type { JourneyStage } from "@/types/herosjourney";
 
 const SIZE = 620;
 const CENTER = SIZE / 2;
+const PAD = 44;
 const STAGE_RADIUS = 228;
 const ARCHETYPE_RADIUS = 282;
-const LABEL_RADIUS = 198;
+const LABEL_RADIUS = 182;
+const MASK_LABEL_RADIUS = 316;
 
 function polar(radius: number, degrees: number) {
   const rad = ((degrees - 90) * Math.PI) / 180;
@@ -44,9 +46,24 @@ const ACT_BOUNDS: Record<string, [number, number]> = {
 
 export default function HeroJourneyWheel() {
   const { theme } = useTheme();
+  const router = useRouter();
   const light = theme === "light";
-  const [hoveredStage, setHoveredStage] = useState<number | null>(null);
-  const [hoveredRole, setHoveredRole] = useState<string | null>(null);
+  // Unified selection state — driven by hover on desktop, tap on touch.
+  const [activeStage, setActiveStage] = useState<number | null>(null);
+  const [activeMask, setActiveMask] = useState<string | null>(null);
+
+  const selectStage = (n: number | null) => {
+    setActiveStage(n);
+    setActiveMask(null);
+  };
+  const selectMask = (slug: string | null) => {
+    setActiveMask(slug);
+    setActiveStage(null);
+  };
+  const clearSelection = () => {
+    setActiveStage(null);
+    setActiveMask(null);
+  };
 
   // Position each archetype at the midpoint of its primary stages (circular mean).
   const placements = useMemo(() => {
@@ -67,22 +84,25 @@ export default function HeroJourneyWheel() {
     });
   }, []);
 
-  const activeStages = hoveredRole
-    ? ALL_HEROSJOURNEY.find((a) => a.slug === hoveredRole)?.primaryStages ?? []
+  const activeStages = activeMask
+    ? ALL_HEROSJOURNEY.find((a) => a.slug === activeMask)?.primaryStages ?? []
     : [];
 
-  const activeRoles = hoveredStage
-    ? getArchetypesByStage(hoveredStage).map((a) => a.slug)
+  const activeRoles = activeStage
+    ? getArchetypesByStage(activeStage).map((a) => a.slug)
     : [];
 
   return (
     <div className="w-full flex justify-center">
       <svg
-        viewBox={`0 0 ${SIZE} ${SIZE}`}
-        className="w-full max-w-[640px] h-auto"
+        viewBox={`${-PAD} ${-PAD} ${SIZE + PAD * 2} ${SIZE + PAD * 2}`}
+        className="w-full max-w-[720px] h-auto"
         role="img"
         aria-label="Hero's Journey twelve-stage wheel"
+        onClick={clearSelection}
       >
+        {/* Transparent background — taps here clear any selection. */}
+        <rect x={-PAD} y={-PAD} width={SIZE + PAD * 2} height={SIZE + PAD * 2} fill="transparent" />
         <defs>
           {JOURNEY_ACTS.map((act) => {
             const [start, end] = ACT_BOUNDS[act.id];
@@ -148,7 +168,7 @@ export default function HeroJourneyWheel() {
           const p = polar(STAGE_RADIUS, stage.clockPosition);
           const act = JOURNEY_ACTS.find((a) => a.id === stage.act)!;
           const isActive =
-            hoveredStage === stage.number || activeStages.includes(stage.number);
+            activeStage === stage.number || activeStages.includes(stage.number);
           const label = polar(LABEL_RADIUS, stage.clockPosition);
           // Rotate label tangent to the ring so adjacent labels don't collide.
           // Flip on the lower half so text stays upright/readable.
@@ -160,8 +180,16 @@ export default function HeroJourneyWheel() {
             <g
               key={stage.number}
               style={{ cursor: "pointer" }}
-              onMouseEnter={() => setHoveredStage(stage.number)}
-              onMouseLeave={() => setHoveredStage(null)}
+              onPointerEnter={(e) => {
+                if (e.pointerType === "mouse") selectStage(stage.number);
+              }}
+              onPointerLeave={(e) => {
+                if (e.pointerType === "mouse") clearSelection();
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                selectStage(activeStage === stage.number ? null : stage.number);
+              }}
             >
               <circle
                 cx={p.x}
@@ -213,25 +241,46 @@ export default function HeroJourneyWheel() {
         {/* Archetype masks at outer ring */}
         {placements.map(({ archetype, angle }) => {
           const p = polar(ARCHETYPE_RADIUS, angle);
+          const namePos = polar(MASK_LABEL_RADIUS, angle);
           const dim =
-            (hoveredStage !== null && !activeRoles.includes(archetype.slug)) ||
-            (hoveredRole !== null && hoveredRole !== archetype.slug);
-          const hi = hoveredRole === archetype.slug || activeRoles.includes(archetype.slug);
+            (activeStage !== null && !activeRoles.includes(archetype.slug)) ||
+            (activeMask !== null && activeMask !== archetype.slug);
+          const hi = activeMask === archetype.slug || activeRoles.includes(archetype.slug);
+          const href = `/heros-journey/archetype/${archetype.slug}`;
           return (
-            <Link
-              key={archetype.slug}
-              href={`/heros-journey/archetype/${archetype.slug}`}
-            >
+            <g key={archetype.slug}>
               <g
                 style={{ cursor: "pointer", transition: "opacity 200ms ease" }}
                 opacity={dim ? 0.3 : 1}
-                onMouseEnter={() => setHoveredRole(archetype.slug)}
-                onMouseLeave={() => setHoveredRole(null)}
+                onPointerEnter={(e) => {
+                  if (e.pointerType === "mouse") selectMask(archetype.slug);
+                }}
+                onPointerLeave={(e) => {
+                  if (e.pointerType === "mouse") clearSelection();
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // Desktop pointer: hover already set active → navigate.
+                  // Touch/pen: first tap selects; already-selected mask navigates.
+                  const isMouse = (e.nativeEvent as PointerEvent).pointerType === "mouse";
+                  if (isMouse || activeMask === archetype.slug) {
+                    router.push(href);
+                  } else {
+                    selectMask(archetype.slug);
+                  }
+                }}
               >
                 {archetype.primaryStages.map((n) => {
                   const s = JOURNEY_STAGES.find((x) => x.number === n);
                   if (!s) return null;
                   const sp = polar(STAGE_RADIUS, s.clockPosition);
+                  // Only draw a connector when something is being hovered:
+                  // - mask hover: show all of that mask's lines
+                  // - stage hover: show only the lines that land on that stage
+                  const showAllForMask = activeMask === archetype.slug;
+                  const showForStage = activeStage === n;
+                  const visible = showAllForMask || showForStage;
+                  if (!visible) return null;
                   return (
                     <line
                       key={n}
@@ -240,9 +289,10 @@ export default function HeroJourneyWheel() {
                       x2={sp.x}
                       y2={sp.y}
                       stroke={archetype.accentColor}
-                      strokeOpacity={hi ? 0.55 : 0.18}
-                      strokeWidth={hi ? 1.2 : 0.8}
-                      style={{ transition: "all 200ms ease" }}
+                      strokeOpacity={0.6}
+                      strokeWidth={1.25}
+                      strokeLinecap="round"
+                      style={{ transition: "opacity 200ms ease" }}
                     />
                   );
                 })}
@@ -250,7 +300,11 @@ export default function HeroJourneyWheel() {
                   cx={p.x}
                   cy={p.y}
                   r={hi ? 22 : 18}
-                  fill={light ? "var(--color-bg)" : "var(--color-bg)"}
+                  fill={
+                    hi
+                      ? `${archetype.accentColor}${light ? "22" : "2A"}`
+                      : "var(--color-bg)"
+                  }
                   stroke={archetype.accentColor}
                   strokeWidth={hi ? 2 : 1.3}
                   style={{ transition: "all 200ms ease" }}
@@ -267,8 +321,8 @@ export default function HeroJourneyWheel() {
                   {archetype.symbol}
                 </text>
                 <text
-                  x={p.x}
-                  y={p.y + 36}
+                  x={namePos.x}
+                  y={namePos.y + 3}
                   textAnchor="middle"
                   fontSize={8.5}
                   className="font-mono"
@@ -288,7 +342,7 @@ export default function HeroJourneyWheel() {
                   {archetype.name.replace("The ", "")}
                 </text>
               </g>
-            </Link>
+            </g>
           );
         })}
 
@@ -313,10 +367,10 @@ export default function HeroJourneyWheel() {
           fill={HEROSJOURNEY_COLORS.accent}
           fontStyle="italic"
         >
-          {hoveredStage
-            ? JOURNEY_STAGES.find((s) => s.number === hoveredStage)?.name
-            : hoveredRole
-              ? ALL_HEROSJOURNEY.find((a) => a.slug === hoveredRole)?.name
+          {activeStage
+            ? JOURNEY_STAGES.find((s) => s.number === activeStage)?.name
+            : activeMask
+              ? ALL_HEROSJOURNEY.find((a) => a.slug === activeMask)?.name
               : "twelve stages · eight masks"}
         </text>
       </svg>

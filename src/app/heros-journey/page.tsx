@@ -53,17 +53,17 @@ export default function HerosJourneyHome() {
       </div>
 
       {/* Wheel */}
-      <div className="px-6 pb-6 animate-slide-up delay-200">
+      <div className="px-6 pb-6 animate-slide-up" style={{ animationDelay: "200ms" }}>
         <div className="max-w-6xl mx-auto">
           <HeroJourneyWheel />
           <p className="text-center font-mono text-[9px] tracking-[0.25em] text-muted uppercase mt-2">
-            Hover a stage to see which masks act there · hover a mask to see where
+            Tap or hover a numbered stage → the masks that act there light up · tap or hover a mask → the stages it appears in · tap a selected mask again to open it
           </p>
         </div>
       </div>
 
       {/* Act context */}
-      <div className="px-6 pb-16 animate-slide-up delay-300">
+      <div className="px-6 pb-16 animate-slide-up" style={{ animationDelay: "300ms" }}>
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-4">
           {JOURNEY_ACTS.map((act) => (
             <div
