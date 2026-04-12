@@ -267,6 +267,22 @@ h1, h2, h3, h4, h5, h6 {
    is a compromise. Authors can opt individual elements out
    with `.no-contrast-boost`. */
 
+/* ─── Light-mode headings: force dark text ────────
+   The diagrams and detail pages tint H1/H2/H3 with the
+   archetype accent via inline styles. Those hues are
+   tuned for a dark background — on cream they fail
+   contrast. In light mode, override every heading under
+   main to text-primary and strip the glow shadow.
+   Small mono labels / body accents keep their colors. */
+:root[data-theme="light"] main :is(h1, h2, h3) {
+  color: var(--color-text-primary) !important;
+  text-shadow: none !important;
+}
+:root[data-theme="light"] main .glow-text,
+:root[data-theme="light"] main .glow-text-subtle {
+  text-shadow: none !important;
+}
+
 /* ─── Focus-visible ring for keyboard nav ────────── */
 :where(a, button, [role="button"], [tabindex]):focus-visible {
   outline: 2px solid var(--color-gold);

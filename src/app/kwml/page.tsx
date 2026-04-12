@@ -27,7 +27,7 @@ export default function Home() {
               </p>
               <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
                 Archetypes of the{" "}
-                <span className="text-gold glow-text-subtle animate-flicker">
+                <span className={`${light ? "text-text-primary" : "text-gold glow-text-subtle animate-flicker"}`}>
                   Mature Masculine
                 </span>
               </h1>
@@ -108,7 +108,7 @@ export default function Home() {
                           <h2
                             className="font-serif text-3xl md:text-4xl font-medium tracking-tight mb-2 transition-all duration-300"
                             style={{
-                              color: family.color,
+                              color: light ? "var(--color-text-primary)" : family.color,
                               textShadow: isHovered && !light
                                 ? `0 0 20px ${family.color}40`
                                 : "none",
@@ -220,12 +220,12 @@ export default function Home() {
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium text-text-primary tracking-tight leading-[1.05] mb-3 text-center">
                 Boy{" "}
                 <span
-                  className="animate-flicker"
+                  className={light ? "" : "animate-flicker"}
                   style={{
                     color: light
-                      ? "var(--color-gold)"
+                      ? "var(--color-text-primary)"
                       : "var(--color-gold-bright)",
-                    opacity: 0.7,
+                    opacity: light ? 1 : 0.7,
                   }}
                 >
                   Psychology
@@ -298,8 +298,8 @@ export default function Home() {
                         <h3
                           className="font-serif text-2xl md:text-3xl font-medium tracking-tight mb-2 transition-all duration-300"
                           style={{
-                            color: family.color,
-                            opacity: isBoyHovered ? 1 : 0.8,
+                            color: light ? "var(--color-text-primary)" : family.color,
+                            opacity: isBoyHovered ? 1 : light ? 0.95 : 0.8,
                             textShadow:
                               isBoyHovered && !light
                                 ? `0 0 20px ${family.color}30`

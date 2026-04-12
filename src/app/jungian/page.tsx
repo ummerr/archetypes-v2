@@ -26,7 +26,7 @@ export default function JungianHome() {
             </p>
             <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
               Twelve{" "}
-              <span className="text-gold glow-text-subtle animate-flicker">
+              <span className={light ? "text-text-primary" : "text-gold glow-text-subtle animate-flicker"}>
                 Heroic Archetypes
               </span>
             </h1>
@@ -122,7 +122,7 @@ export default function JungianHome() {
                           <h3
                             className="font-serif text-xl md:text-2xl font-medium tracking-tight mb-2 transition-all duration-300"
                             style={{
-                              color: a.accentColor,
+                              color: light ? "var(--color-text-primary)" : a.accentColor,
                               textShadow:
                                 isHovered && !light
                                   ? `0 0 16px ${a.accentColor}50`

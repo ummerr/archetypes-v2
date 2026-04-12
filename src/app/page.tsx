@@ -22,7 +22,7 @@ export default function Home() {
               </p>
               <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
                 Maps of the{" "}
-                <span className="text-gold glow-text-subtle animate-flicker">
+                <span className={light ? "text-text-primary" : "text-gold glow-text-subtle animate-flicker"}>
                   Inner World
                 </span>
               </h1>
@@ -94,7 +94,7 @@ export default function Home() {
                     <h2
                       className="font-serif text-4xl md:text-5xl font-medium tracking-tight mb-2 transition-all duration-300"
                       style={{
-                        color: accent,
+                        color: light ? "var(--color-text-primary)" : accent,
                         textShadow:
                           isHovered && !light && isLive
                             ? `0 0 20px ${accent}40`
