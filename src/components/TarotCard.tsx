@@ -72,6 +72,7 @@ export default function TarotCard({
     return arr[0] + arr[1];
   });
   const rotateX = sTiltX;
+  const flipScale = useTransform(flipY, [0, 90, 180], [1, 1.08, 1]);
 
   // Foil glow position
   const glowX = useTransform(mx, (v) => `${v * 100}%`);
@@ -116,6 +117,7 @@ export default function TarotCard({
         transformStyle: "preserve-3d",
         rotateX,
         rotateY,
+        scale: flipScale,
       }}
     >
         {/* FRONT FACE */}
@@ -264,13 +266,13 @@ export default function TarotCard({
                   }}
                 >
                   <p
-                    className="font-mono text-[7px] tracking-[0.3em] uppercase mb-1"
+                    className="font-mono text-[9px] tracking-[0.3em] uppercase mb-1"
                     style={{ color: row.tint + (light ? "EE" : "CC") }}
                   >
                     {row.label}
                   </p>
                   <p
-                    className="font-serif italic text-[11px] leading-snug line-clamp-2"
+                    className="font-serif text-[13px] leading-snug line-clamp-3"
                     style={{
                       color: light ? "var(--color-text-primary)" : "var(--color-text-secondary)",
                     }}
