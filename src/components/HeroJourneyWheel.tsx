@@ -14,13 +14,14 @@ import {
 import { useTheme } from "@/components/ThemeProvider";
 
 const W = 1120;
-const H = 760;
-const PAD_L = 168;
-const PAD_R = 56;
-const SPINE_Y = 282;
-const LANE_TOP = 360;
+const H = 880;
+const PAD_L = 184;
+const PAD_R = 64;
+const SPINE_Y = 300;
+const LANE_TOP = 440;
 const LANE_H = 44;
 const ACT_Y = 56;
+const ANN_Y = 224;
 
 const STAGES = JOURNEY_STAGES;
 
@@ -29,12 +30,13 @@ function stageX(n: number): number {
   return PAD_L + ((n - 1) / (STAGES.length - 1)) * usable;
 }
 
-const ANNOTATIONS: { stage: number; text: string; side: "top" }[] = [
-  { stage: 2, text: "The Call shatters homeostasis", side: "top" },
-  { stage: 5, text: "Point of no return — threshold crossed", side: "top" },
-  { stage: 8, text: "Death & rebirth at the nadir", side: "top" },
-  { stage: 11, text: "Final test — shadow's last bid", side: "top" },
-  { stage: 12, text: "Elixir brought home", side: "top" },
+// Single-band annotations, short enough to never collide with neighbours.
+// Spacing between marked stages (≥3) keeps text comfortably apart.
+const ANNOTATIONS: { stage: number; text: string }[] = [
+  { stage: 2, text: "homeostasis breaks" },
+  { stage: 5, text: "point of no return" },
+  { stage: 8, text: "death & rebirth" },
+  { stage: 12, text: "elixir brought home" },
 ];
 
 // Lane order (top→bottom). Broad-span masks first.
@@ -160,31 +162,33 @@ export default function HeroJourneyWheel() {
           );
         })}
 
-        {/* ——— Annotations (pull-quotes above spine) ——— */}
-        {ANNOTATIONS.map((ann, i) => {
+        {/* ——— Annotations: single band, short connectors ——— */}
+        {ANNOTATIONS.map((ann) => {
           const sx = stageX(ann.stage);
           const isNadir = ann.stage === 8;
-          // stagger vertically to avoid overlap
-          const yBase = 132 + (i % 2 === 0 ? 0 : 22);
           const isActive = activeStage === ann.stage;
+          const tone = isNadir ? HEROSJOURNEY_COLORS.accent : faintText;
           return (
-            <g key={ann.stage} opacity={activeMask ? 0.35 : 1}>
+            <g key={ann.stage} opacity={activeMask ? 0.3 : 1}>
+              {/* short tether — text sits above, tick points to spine */}
               <line
                 x1={sx}
-                y1={yBase + 10}
+                y1={ANN_Y + 6}
                 x2={sx}
                 y2={SPINE_Y - 14}
-                stroke={isNadir ? HEROSJOURNEY_COLORS.accent : hairline}
-                strokeDasharray="2 4"
-                strokeWidth={isActive ? 1.4 : 1}
+                stroke={tone}
+                strokeOpacity={isActive ? 0.85 : isNadir ? 0.55 : 0.22}
+                strokeWidth={1}
+                strokeDasharray="2 5"
               />
               <text
                 x={sx}
-                y={yBase}
+                y={ANN_Y}
                 textAnchor="middle"
                 fontSize={10}
                 className="font-serif"
-                fill={isNadir ? HEROSJOURNEY_COLORS.accent : mutedText}
+                fill={tone}
+                fillOpacity={isActive ? 1 : isNadir ? 1 : 0.75}
                 fontStyle="italic"
               >
                 {ann.text}
@@ -279,7 +283,7 @@ export default function HeroJourneyWheel() {
                 {stage.number}
               </text>
               <g
-                transform={`translate(${x} ${SPINE_Y + 28}) rotate(-32)`}
+                transform={`translate(${x} ${SPINE_Y + 22}) rotate(-58)`}
                 style={{ pointerEvents: "none" }}
               >
                 <text
