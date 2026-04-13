@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { JOURNEY_ACTS } from "@/data/herosjourney/stages";
+import { buildPageMetadata, systemOgImage } from "@/lib/site";
 
-export const metadata = {
+export const metadata = buildPageMetadata({
   title: "About — Hero's Journey",
   description:
     "Campbell's monomyth, Vogler's twelve-stage adaptation, and honest notes on what the framework illuminates and what it leaves out.",
-};
+  path: "/heros-journey/about",
+  ogImage: systemOgImage("heros-journey"),
+});
 
 export default function HerosJourneyAbout() {
   return (

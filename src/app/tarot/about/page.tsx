@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { TAROT_PHASES } from "@/data/tarot/archetypes";
+import { buildPageMetadata, systemOgImage } from "@/lib/site";
 
-export const metadata = {
+export const metadata = buildPageMetadata({
   title: "About — Tarot",
   description:
     "The Major Arcana as a psychological map: twenty-two archetypal images tracing the Fool's Journey through individuation, each carrying a fullness pole and two shadow expressions.",
-};
+  path: "/tarot/about",
+  ogImage: systemOgImage("tarot"),
+});
 
 export default function TarotAbout() {
   return (

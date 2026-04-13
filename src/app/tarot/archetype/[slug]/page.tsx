@@ -6,23 +6,35 @@ import {
   getTarotById,
 } from "@/data/tarot/archetypes";
 import TarotDetailClient from "@/components/TarotDetailClient";
+import JsonLd from "@/components/seo/JsonLd";
+import {
+  buildPageMetadata,
+  systemOgImage,
+  absoluteUrl,
+  SITE_NAME,
+  SITE_AUTHOR,
+  truncate,
+} from "@/lib/site";
+import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return ALL_TAROT.map((a) => ({ slug: a.slug }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
-  return params.then(({ slug }) => {
-    const archetype = getTarotBySlug(slug);
-    if (!archetype) return { title: "Not Found" };
-    return {
-      title: `${archetype.name} — Major Arcanum ${archetype.numeral}`,
-      description: archetype.description,
-    };
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const archetype = getTarotBySlug(slug);
+  if (!archetype) return { title: "Not Found" };
+  return buildPageMetadata({
+    title: `${archetype.name} — Major Arcanum ${archetype.numeral}`,
+    description: truncate(archetype.description),
+    path: `/tarot/archetype/${archetype.slug}`,
+    ogImage: systemOgImage("tarot"),
+    type: "article",
   });
 }
 
@@ -42,13 +54,28 @@ export default async function TarotArchetypePage({
   const previous = getTarotById(archetype.id - 1) ?? null;
   const next = getTarotById(archetype.id + 1) ?? null;
 
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `${archetype.name} — Major Arcanum ${archetype.numeral}`,
+    description: archetype.description,
+    about: archetype.name,
+    url: absoluteUrl(`/tarot/archetype/${archetype.slug}`),
+    isPartOf: { "@type": "WebSite", name: SITE_NAME },
+    author: { "@type": "Person", name: SITE_AUTHOR },
+    publisher: { "@type": "Person", name: SITE_AUTHOR },
+  };
+
   return (
-    <TarotDetailClient
-      archetype={archetype}
-      phase={phase}
-      phaseSiblings={phaseSiblings}
-      previous={previous}
-      next={next}
-    />
+    <>
+      <JsonLd data={articleLd} />
+      <TarotDetailClient
+        archetype={archetype}
+        phase={phase}
+        phaseSiblings={phaseSiblings}
+        previous={previous}
+        next={next}
+      />
+    </>
   );
 }

@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { ENNEAGRAM_TRIADS } from "@/data/enneagram/archetypes";
+import { buildPageMetadata, systemOgImage } from "@/lib/site";
 
-export const metadata = {
+export const metadata = buildPageMetadata({
   title: "About — Enneagram",
   description:
     "The Enneagram: nine motivational types organized into three centers of intelligence, with dynamic paths of integration and disintegration.",
-};
+  path: "/enneagram/about",
+  ogImage: systemOgImage("enneagram"),
+});
 
 export default function EnneagramAbout() {
   return (

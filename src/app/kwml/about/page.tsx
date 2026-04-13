@@ -1,10 +1,15 @@
 import PageTransition from "@/components/PageTransition";
 import { FAMILIES } from "@/data/kwml/archetypes";
 import Link from "next/link";
+import { buildPageMetadata, systemOgImage } from "@/lib/site";
 
-export const metadata = {
-  title: "About — Maps of the Inner World",
-};
+export const metadata = buildPageMetadata({
+  title: "About — KWML",
+  description:
+    "Moore & Gillette's King-Warrior-Magician-Lover system: four mature-masculine archetypes, the boy-to-man initiation path, and the active/passive shadow poles of each.",
+  path: "/kwml/about",
+  ogImage: systemOgImage("kwml"),
+});
 
 export default function AboutPage() {
   return (

@@ -6,23 +6,35 @@ import {
   getEnneagramByNumber,
 } from "@/data/enneagram/archetypes";
 import EnneagramDetailClient from "@/components/EnneagramDetailClient";
+import JsonLd from "@/components/seo/JsonLd";
+import {
+  buildPageMetadata,
+  systemOgImage,
+  absoluteUrl,
+  SITE_NAME,
+  SITE_AUTHOR,
+  truncate,
+} from "@/lib/site";
+import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return ALL_ENNEAGRAM.map((a) => ({ slug: a.slug }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
-  return params.then(({ slug }) => {
-    const archetype = getEnneagramBySlug(slug);
-    if (!archetype) return { title: "Not Found" };
-    return {
-      title: `${archetype.name} — Enneagram Type ${archetype.number}`,
-      description: archetype.description,
-    };
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const archetype = getEnneagramBySlug(slug);
+  if (!archetype) return { title: "Not Found" };
+  return buildPageMetadata({
+    title: `${archetype.name} — Enneagram Type ${archetype.number}`,
+    description: truncate(archetype.description),
+    path: `/enneagram/archetype/${archetype.slug}`,
+    ogImage: systemOgImage("enneagram"),
+    type: "article",
   });
 }
 
@@ -45,14 +57,29 @@ export default async function EnneagramArchetypePage({
     (w) => getEnneagramByNumber(w.number)!
   );
 
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `${archetype.name} — Enneagram Type ${archetype.number}`,
+    description: archetype.description,
+    about: archetype.name,
+    url: absoluteUrl(`/enneagram/archetype/${archetype.slug}`),
+    isPartOf: { "@type": "WebSite", name: SITE_NAME },
+    author: { "@type": "Person", name: SITE_AUTHOR },
+    publisher: { "@type": "Person", name: SITE_AUTHOR },
+  };
+
   return (
-    <EnneagramDetailClient
-      archetype={archetype}
-      triad={triad}
-      triadSiblings={triadSiblings}
-      integrationTarget={integrationTarget}
-      disintegrationTarget={disintegrationTarget}
-      wingTargets={wingTargets}
-    />
+    <>
+      <JsonLd data={articleLd} />
+      <EnneagramDetailClient
+        archetype={archetype}
+        triad={triad}
+        triadSiblings={triadSiblings}
+        integrationTarget={integrationTarget}
+        disintegrationTarget={disintegrationTarget}
+        wingTargets={wingTargets}
+      />
+    </>
   );
 }

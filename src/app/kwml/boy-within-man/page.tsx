@@ -1,11 +1,14 @@
 import PageTransition from "@/components/PageTransition";
 import BoySteeringMan from "@/components/BoySteeringMan";
+import { buildPageMetadata, systemOgImage } from "@/lib/site";
 
-export const metadata = {
-  title: "The Boy Within the Man — Maps of the Inner World",
+export const metadata = buildPageMetadata({
+  title: "The Boy Within the Man",
   description:
-    "Explore how unchecked boy psychology steers the adult masculine psyche. An interactive visualization of nested archetypal triangles.",
-};
+    "How unchecked boy psychology steers the adult masculine psyche — an interactive visualization of nested archetypal triangles from Moore & Gillette's KWML.",
+  path: "/kwml/boy-within-man",
+  ogImage: systemOgImage("kwml"),
+});
 
 export default function BoyWithinManPage() {
   return (

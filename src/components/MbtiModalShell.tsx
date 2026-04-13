@@ -46,6 +46,9 @@ export default function MbtiModalShell({
       <div
         role="dialog"
         aria-modal="true"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) close();
+        }}
         className="relative min-h-full flex items-start justify-center px-4 py-10 md:py-14"
       >
         <div
