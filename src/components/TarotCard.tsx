@@ -104,7 +104,10 @@ export default function TarotCard({
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      onClick={() => setFlipped((f) => !f)}
+      onClick={(e) => {
+        if ((e.target as HTMLElement).closest("a")) return;
+        setFlipped((f) => !f);
+      }}
       role="button"
       aria-label={`${archetype.numeral} — ${archetype.name}${flipped ? " (flipped)" : ""}`}
       aria-pressed={flipped}
