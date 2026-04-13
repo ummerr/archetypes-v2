@@ -253,9 +253,9 @@ export default function TarotCard({
 
             <div className="flex flex-col gap-2.5 mt-1">
               {[
-                { label: "Fullness", pole: archetype.poles.fullness, tint: color },
-                { label: "Active Shadow", pole: archetype.poles.activeShadow, tint: "#C0392B" },
-                { label: "Passive Shadow", pole: archetype.poles.passiveShadow, tint: "#4A5A7A" },
+                { label: "Fullness", hint: "Integrated", pole: archetype.poles.fullness, tint: color },
+                { label: "Active Shadow", hint: "Inflated", pole: archetype.poles.activeShadow, tint: "#C0392B" },
+                { label: "Passive Shadow", hint: "Refused", pole: archetype.poles.passiveShadow, tint: "#4A5A7A" },
               ].map((row) => (
                 <div
                   key={row.label}
@@ -265,12 +265,23 @@ export default function TarotCard({
                     borderLeft: `2px solid ${row.tint}${light ? "AA" : "80"}`,
                   }}
                 >
-                  <p
-                    className="font-mono text-[9px] tracking-[0.3em] uppercase mb-1"
-                    style={{ color: row.tint + (light ? "EE" : "CC") }}
-                  >
-                    {row.label}
-                  </p>
+                  <div className="flex items-baseline justify-between gap-2 mb-1">
+                    <p
+                      className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                      style={{ color: row.tint + (light ? "EE" : "CC") }}
+                    >
+                      {row.label}
+                    </p>
+                    <p
+                      className="font-serif italic text-[10px] leading-none"
+                      style={{
+                        color: row.tint + (light ? "88" : "66"),
+                        letterSpacing: "0.02em",
+                      }}
+                    >
+                      {row.hint}
+                    </p>
+                  </div>
                   <p
                     className="font-serif text-[13px] leading-snug line-clamp-3"
                     style={{
