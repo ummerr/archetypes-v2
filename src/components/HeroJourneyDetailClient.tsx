@@ -4,6 +4,9 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import type { HeroJourneyArchetype, JourneyStage } from "@/types/herosjourney";
 import { useTheme } from "@/components/ThemeProvider";
+import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
+import { getHerosJourneyExemplars } from "@/data/herosjourney/exemplars";
 
 const HeroJourneyTotemCanvas = dynamic(
   () => import("@/components/HeroJourneyTotemCanvas"),
@@ -32,12 +35,6 @@ export default function HeroJourneyDetailClient({
     { label: "Strategy", body: archetype.strategy },
     { label: "Gift", body: archetype.gift },
     { label: "Trap (Shadow)", body: archetype.trap },
-  ];
-
-  const correlations: { label: string; body: string }[] = [
-    { label: "KWML", body: archetype.crossSystem.kwml },
-    { label: "Pearson-Marr", body: archetype.crossSystem.pearsonMarr },
-    { label: "Enneagram", body: archetype.crossSystem.enneagram },
   ];
 
   return (
@@ -221,41 +218,17 @@ export default function HeroJourneyDetailClient({
           </div>
         </div>
 
-        {/* Cross-system correlations */}
-        <div className="mb-16 animate-slide-up delay-400">
-          <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
-              Cross-System Resonance
-            </span>
-            <div
-              className="h-px flex-1"
-              style={{
-                background: `linear-gradient(90deg, ${color}${light ? "30" : "18"}, transparent)`,
-              }}
-            />
-          </div>
-          <div className="grid sm:grid-cols-3 gap-3">
-            {correlations.map((c) => (
-              <div
-                key={c.label}
-                className="rounded-sm p-4"
-                style={{
-                  background: `linear-gradient(145deg, ${color}${light ? "06" : "03"}, transparent)`,
-                  border: `1px solid ${color}${light ? "18" : "0E"}`,
-                }}
-              >
-                <p
-                  className="font-mono text-[9px] tracking-[0.3em] uppercase mb-1 text-muted"
-                >
-                  {c.label}
-                </p>
-                <p className="text-sm text-text-primary leading-snug font-light">
-                  {c.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+        {(() => {
+          const exemplars = getHerosJourneyExemplars(archetype.slug);
+          if (!exemplars) return null;
+          return (
+            <div className="animate-slide-up delay-400">
+              <ExemplarsTabs color={color} exemplars={exemplars} />
+            </div>
+          );
+        })()}
+
+        <CrossSystemResonance system="heros-journey" slug={archetype.slug} accentColor={color} />
 
         {/* Siblings */}
         <div className="animate-slide-up delay-500">

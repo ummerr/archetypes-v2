@@ -10,8 +10,9 @@ import ShadowPanel from "@/components/jungian/ShadowPanel";
 import LevelsLadder from "@/components/jungian/LevelsLadder";
 import AwakeningList from "@/components/jungian/AwakeningList";
 import OppositeCard from "@/components/jungian/OppositeCard";
-import ExemplarsTabs from "@/components/jungian/ExemplarsTabs";
+import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getJungianExemplars } from "@/data/jungian/exemplars";
+import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
 
 const JungianTotemCanvas = dynamic(
   () => import("@/components/JungianTotemCanvas"),
@@ -178,6 +179,13 @@ export default function JungianDetailClient({
         <div className="animate-slide-up delay-500">
           <OppositeCard opposite={opposite} fromColor={color} />
         </div>
+
+        <CrossSystemResonance
+          system="jungian"
+          slug={archetype.slug}
+          accentColor={archetype.accentColor}
+          delay="delay-500"
+        />
 
         {/* Cluster siblings — demoted to thin strip */}
         <section className="animate-slide-up delay-500 pt-4">

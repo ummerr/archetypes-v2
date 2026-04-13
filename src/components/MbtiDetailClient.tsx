@@ -5,6 +5,9 @@ import { MbtiArchetype, TemperamentGroup } from "@/types/mbti";
 import { getFunction } from "@/data/mbti/functions";
 import { useTheme } from "@/components/ThemeProvider";
 import MbtiGlyph from "@/components/MbtiGlyph";
+import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
+import { getMbtiExemplars } from "@/data/mbti/exemplars";
 
 interface Props {
   archetype: MbtiArchetype;
@@ -249,6 +252,23 @@ export default function MbtiDetailClient({
             </ul>
           </div>
         </div>
+
+        {(() => {
+          const exemplars = getMbtiExemplars(archetype.slug);
+          if (!exemplars) return null;
+          return (
+            <div className="animate-slide-up delay-350">
+              <ExemplarsTabs color={color} exemplars={exemplars} />
+            </div>
+          );
+        })()}
+
+        <CrossSystemResonance
+          system="mbti"
+          slug={archetype.slug}
+          accentColor={color}
+          delay="delay-400"
+        />
 
         {/* Prev / Next */}
         <div className="mb-16 animate-slide-up delay-400">

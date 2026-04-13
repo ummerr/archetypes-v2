@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Research pipeline raw outputs (see research/00-pipeline.md)
+research/*
+!research/README.md
+!research/00-pipeline.md

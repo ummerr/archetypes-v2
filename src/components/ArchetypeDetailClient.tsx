@@ -11,6 +11,7 @@ import ShadowTheater from "@/components/ShadowTheater";
 import EvolutionArrow from "@/components/EvolutionArrow";
 import BoyWithinMan from "@/components/BoyWithinMan";
 import { useTheme } from "@/components/ThemeProvider";
+import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
 
 interface Props {
   archetype: Archetype;
@@ -420,6 +421,14 @@ export default function ArchetypeDetailClient({
               </div>
             </motion.section>
           )}
+
+          <motion.section {...sectionAnim}>
+            <CrossSystemResonance
+              system="kwml"
+              slug={archetype.slug}
+              accentColor={archetype.accentColor}
+            />
+          </motion.section>
 
           {/* ─── NAVIGATION ─── */}
           <motion.section className="relative" {...sectionAnim}>

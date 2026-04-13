@@ -34,7 +34,7 @@ function InnocentTotem({ color, intensity }: { color: string; intensity: number 
       {/* glowing core */}
       <mesh ref={core}>
         <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2.2 * intensity} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.1 * intensity} />
       </mesh>
       {/* bright halo disk */}
       <mesh ref={halo}>
@@ -72,7 +72,7 @@ function InnocentTotem({ color, intensity }: { color: string; intensity: number 
           );
         })}
       </group>
-      <pointLight color={color} intensity={2.0 * intensity} distance={4} decay={2} />
+      <pointLight color={color} intensity={1.0 * intensity} distance={3} decay={2} />
     </group>
   );
 }

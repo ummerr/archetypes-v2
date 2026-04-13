@@ -1,29 +1,52 @@
 "use client";
 
 import { useState } from "react";
-import { JungianExemplars } from "@/types/jungian";
 import { useTheme } from "@/components/ThemeProvider";
+
+export interface ExemplarBrand {
+  name: string;
+  note: string;
+}
+
+export interface ExemplarCultural {
+  name: string;
+  medium: string;
+  note: string;
+}
+
+export interface ExemplarHistorical {
+  name: string;
+  note: string;
+}
+
+export interface ExemplarSet {
+  brands?: ExemplarBrand[];
+  cultural: ExemplarCultural[];
+  historical: ExemplarHistorical[];
+}
 
 interface Props {
   color: string;
-  exemplars: JungianExemplars;
+  exemplars: ExemplarSet;
 }
 
 type TabKey = "brands" | "cultural" | "historical";
 
-const TABS: { key: TabKey; label: string }[] = [
-  { key: "brands", label: "Brands" },
-  { key: "cultural", label: "Cultural" },
-  { key: "historical", label: "Historical" },
-];
-
 export default function ExemplarsTabs({ color, exemplars }: Props) {
   const { theme } = useTheme();
   const light = theme === "light";
-  const [active, setActive] = useState<TabKey>("brands");
+
+  const tabs: { key: TabKey; label: string }[] = [];
+  if (exemplars.brands && exemplars.brands.length) {
+    tabs.push({ key: "brands", label: "Brands" });
+  }
+  tabs.push({ key: "cultural", label: "Cultural" });
+  tabs.push({ key: "historical", label: "Historical" });
+
+  const [active, setActive] = useState<TabKey>(tabs[0].key);
 
   const renderRows = () => {
-    if (active === "brands") {
+    if (active === "brands" && exemplars.brands) {
       return exemplars.brands.map((e) => (
         <Row key={e.name} name={e.name} note={e.note} color={color} light={light} />
       ));
@@ -60,7 +83,7 @@ export default function ExemplarsTabs({ color, exemplars }: Props) {
       </div>
 
       <div className="flex gap-1 mb-5" role="tablist">
-        {TABS.map((t) => {
+        {tabs.map((t) => {
           const isActive = active === t.key;
           return (
             <button

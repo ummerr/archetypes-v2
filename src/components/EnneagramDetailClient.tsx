@@ -6,6 +6,9 @@ import dynamic from "next/dynamic";
 import { EnneagramArchetype, EnneagramTriadGroup } from "@/types/enneagram";
 import { useTheme } from "@/components/ThemeProvider";
 import EnneagramWings from "@/components/EnneagramWings";
+import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
+import { getEnneagramExemplars } from "@/data/enneagram/exemplars";
 
 const EnneagramTotemCanvas = dynamic(
   () => import("@/components/EnneagramTotemCanvas"),
@@ -317,6 +320,23 @@ export default function EnneagramDetailClient({
             ))}
           </ul>
         </div>
+
+        {(() => {
+          const exemplars = getEnneagramExemplars(archetype.slug);
+          if (!exemplars) return null;
+          return (
+            <div className="animate-slide-up delay-450">
+              <ExemplarsTabs color={color} exemplars={exemplars} />
+            </div>
+          );
+        })()}
+
+        <CrossSystemResonance
+          system="enneagram"
+          slug={archetype.slug}
+          accentColor={archetype.accentColor}
+          delay="delay-500"
+        />
 
         {/* Triad siblings */}
         <div className="animate-slide-up delay-500">

@@ -6,6 +6,9 @@ import { ALL_TAROT, TAROT_PHASES } from "@/data/tarot/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
 import TarotCard from "@/components/TarotCard";
 import TarotDeckArc from "@/components/TarotDeckArc";
+import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
+import { getTarotExemplars } from "@/data/tarot/exemplars";
 
 interface Props {
   archetype: TarotArchetype;
@@ -212,6 +215,23 @@ export default function TarotDetailClient({
             ))}
           </div>
         </div>
+
+        {(() => {
+          const exemplars = getTarotExemplars(archetype.slug);
+          if (!exemplars) return null;
+          return (
+            <div className="animate-slide-up delay-250">
+              <ExemplarsTabs color={color} exemplars={exemplars} />
+            </div>
+          );
+        })()}
+
+        <CrossSystemResonance
+          system="tarot"
+          slug={archetype.slug}
+          accentColor={color}
+          delay="delay-300"
+        />
 
         {/* Previous / Next — the Fool's Journey sequence */}
         <div className="mb-16 animate-slide-up delay-300">
