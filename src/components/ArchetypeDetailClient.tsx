@@ -12,6 +12,8 @@ import EvolutionArrow from "@/components/EvolutionArrow";
 import BoyWithinMan from "@/components/BoyWithinMan";
 import { useTheme } from "@/components/ThemeProvider";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
+import { getKwmlExemplars } from "@/data/kwml/exemplars";
 
 interface Props {
   archetype: Archetype;
@@ -421,6 +423,16 @@ export default function ArchetypeDetailClient({
               </div>
             </motion.section>
           )}
+
+          {(() => {
+            const exemplars = getKwmlExemplars(archetype.slug);
+            if (!exemplars) return null;
+            return (
+              <motion.section {...sectionAnim}>
+                <ExemplarsTabs color={archetype.accentColor} exemplars={exemplars} />
+              </motion.section>
+            );
+          })()}
 
           <motion.section {...sectionAnim}>
             <CrossSystemResonance
