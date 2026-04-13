@@ -95,7 +95,7 @@ export default function JungianHome() {
                         <div
                           className="relative overflow-visible rounded-sm transition-all duration-500 h-full p-5"
                           style={{
-                            background: `linear-gradient(145deg, ${a.accentColor}${light ? "0C" : "06"} 0%, var(--color-bg) 50%)`,
+                            background: `linear-gradient(145deg, ${a.accentColor}${light ? "08" : "03"} 0%, var(--color-bg) 50%)`,
                             border: `1px solid ${isHovered ? a.accentColor + (light ? "40" : "30") : a.accentColor + (light ? "20" : "10")}`,
                             boxShadow: isHovered
                               ? light
