@@ -95,12 +95,19 @@ export default function TarotCard({
 
   const borderColor = light ? color + "55" : color + "40";
 
-  const inner = (
+  return (
+    <div
+      className="relative inline-block select-none"
+      style={{ width: dim.w, height: dim.h, perspective: "1200px" }}
+    >
     <motion.div
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      onClick={href ? undefined : () => setFlipped((f) => !f)}
+      onClick={() => setFlipped((f) => !f)}
+      role="button"
+      aria-label={`${archetype.numeral} — ${archetype.name}${flipped ? " (flipped)" : ""}`}
+      aria-pressed={flipped}
       className="relative w-full h-full cursor-pointer"
       style={{
         transformStyle: "preserve-3d",
@@ -271,6 +278,27 @@ export default function TarotCard({
               ))}
             </div>
 
+            {href && (
+              <Link
+                href={href}
+                onClick={(e) => e.stopPropagation()}
+                className="group/enter mt-auto inline-flex items-center justify-center gap-2 font-mono text-[8px] tracking-[0.35em] uppercase py-2 rounded-sm transition-colors duration-300"
+                style={{
+                  color: color + (light ? "EE" : "DD"),
+                  background: light ? `${color}12` : `${color}18`,
+                  border: `1px solid ${color}${light ? "55" : "40"}`,
+                }}
+              >
+                <span className="w-4 h-px bg-current opacity-60 transition-all duration-300 group-hover/enter:w-6" />
+                Enter the Arcanum
+                <span
+                  className="transition-transform duration-300 group-hover/enter:translate-x-0.5"
+                  aria-hidden
+                >
+                  →
+                </span>
+              </Link>
+            )}
           </div>
 
           {/* Film grain on back too */}
@@ -286,24 +314,6 @@ export default function TarotCard({
           />
         </div>
     </motion.div>
-  );
-
-  return (
-    <div
-      className="relative inline-block select-none"
-      style={{ width: dim.w, height: dim.h, perspective: "1200px" }}
-    >
-      {href ? (
-        <Link
-          href={href}
-          aria-label={`${archetype.numeral} — ${archetype.name}`}
-          className="block w-full h-full"
-        >
-          {inner}
-        </Link>
-      ) : (
-        inner
-      )}
     </div>
   );
 }
