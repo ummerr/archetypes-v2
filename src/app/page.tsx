@@ -1,21 +1,53 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SYSTEMS } from "@/data/systems";
+import type { SystemId } from "@/data/resonance";
 import { useTheme } from "@/components/ThemeProvider";
+import Particles from "@/components/Particles";
+import ResonanceConstellation from "@/components/home/ResonanceConstellation";
+import ClusterRibbon from "@/components/home/ClusterRibbon";
+import {
+  CLUSTER_CHIPS,
+  clustersContainingSystem,
+  systemsForCluster,
+} from "@/lib/home-resonance";
+
+type Hover =
+  | { kind: "system"; id: SystemId }
+  | { kind: "cluster"; id: string }
+  | null;
 
 export default function Home() {
   const { theme } = useTheme();
   const light = theme === "light";
-  const [hovered, setHovered] = useState<string | null>(null);
+  const [hover, setHover] = useState<Hover>(null);
+
+  const focusSystem: SystemId | null = hover?.kind === "system" ? hover.id : null;
+  const focusCluster: string | null = hover?.kind === "cluster" ? hover.id : null;
+
+  const activeSystems = useMemo<Set<SystemId> | null>(() => {
+    if (!hover) return null;
+    if (hover.kind === "system") return new Set<SystemId>([hover.id]);
+    return new Set<SystemId>(systemsForCluster(hover.id));
+  }, [hover]);
+
+  const activeClusters = useMemo<Set<string> | null>(() => {
+    if (!hover) return null;
+    if (hover.kind === "cluster") return new Set<string>([hover.id]);
+    return new Set<string>(clustersContainingSystem(hover.id));
+  }, [hover]);
 
   return (
     <div className="min-h-screen relative">
       <div className="relative">
         {/* Hero */}
-        <div className="px-6 pt-24 pb-12 md:pt-32 md:pb-16">
-          <div className="max-w-6xl mx-auto">
+        <div className="px-6 pt-24 pb-10 md:pt-32 md:pb-14 relative">
+          <div className="absolute inset-0 pointer-events-none opacity-60 motion-safe:block motion-reduce:hidden">
+            <Particles color={light ? "#8A6A20" : "#D4AF37"} count={18} />
+          </div>
+          <div className="max-w-6xl mx-auto grid md:grid-cols-[1.2fr_1fr] gap-10 md:gap-14 items-center relative">
             <div className="animate-slide-up">
               <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
                 Archetypal Systems
@@ -28,50 +60,70 @@ export default function Home() {
               </h1>
               <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl font-light">
                 Each system offers a different lens onto the universal patterns
-                that shape human psyche. Explore one, or compare across
-                traditions.
+                that shape human psyche. Explore one, or trace the shared
+                currents that run between them.
               </p>
+            </div>
+            <div className="animate-slide-up delay-200 w-full flex justify-center md:justify-end">
+              <ResonanceConstellation
+                focusSystem={focusSystem}
+                activeSystems={activeSystems}
+                onHoverSystem={(id) =>
+                  setHover(id ? { kind: "system", id } : null)
+                }
+              />
             </div>
           </div>
         </div>
+
+        <ClusterRibbon
+          focusCluster={focusCluster}
+          focusSystem={focusSystem}
+          onHoverCluster={(id) =>
+            setHover(id ? { kind: "cluster", id } : null)
+          }
+        />
 
         {/* Systems grid */}
         <div className="px-6 pb-20">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-5">
             {SYSTEMS.map((system, i) => {
-              const isHovered = hovered === system.id;
+              const sid = system.id as SystemId;
+              const isFocused = focusSystem === sid;
+              const isInCluster = activeSystems ? activeSystems.has(sid) : true;
               const isLive = system.status === "live";
               const accent = light ? system.accentLight : system.accent;
+              const dimmed = (focusSystem && !isFocused) || (focusCluster && !isInCluster);
+              const lit = isFocused || (focusCluster && isInCluster);
               const Card = (
                 <div
                   className="relative overflow-visible rounded-sm transition-all duration-500 h-full"
                   style={{
                     background: `linear-gradient(145deg, ${accent}${light ? "0C" : "06"} 0%, var(--color-bg) 40%, var(--color-bg) 100%)`,
                     border: `1px ${isLive ? "solid" : "dashed"} ${
-                      isHovered
-                        ? accent + (light ? "40" : "30")
+                      lit
+                        ? accent + (light ? "60" : "45")
                         : accent + (light ? "20" : "10")
                     }`,
-                    boxShadow: isHovered && isLive
+                    boxShadow: lit && isLive
                       ? light
                         ? `0 4px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.5)`
-                        : `0 0 40px ${accent}08, 0 0 80px ${accent}04, inset 0 1px 0 ${accent}10`
+                        : `0 0 40px ${accent}14, 0 0 80px ${accent}08, inset 0 1px 0 ${accent}10`
                       : light
                         ? `0 1px 4px rgba(0,0,0,0.04)`
                         : "none",
-                    opacity: isLive ? 1 : 0.55,
+                    opacity: !isLive ? 0.55 : dimmed ? 0.4 : 1,
                   }}
                 >
                   <div
                     className="absolute top-0 left-0 right-0 h-px transition-opacity duration-500"
                     style={{
                       background: `linear-gradient(90deg, transparent, ${accent}40, transparent)`,
-                      opacity: isHovered ? 1 : 0,
+                      opacity: lit ? 1 : 0,
                     }}
                   />
 
                   <div className="p-6 md:p-8 flex flex-col h-full">
-                    {/* Header row */}
                     <div className="flex items-center gap-3 mb-4">
                       <span className="font-mono text-[8px] tracking-[0.25em] text-muted uppercase">
                         {system.framework}
@@ -90,15 +142,12 @@ export default function Home() {
                       </span>
                     </div>
 
-                    {/* Name */}
                     <h2
                       className="font-serif text-4xl md:text-5xl font-medium tracking-tight mb-2 transition-all duration-300"
                       style={{
                         color: light ? "var(--color-text-primary)" : accent,
                         textShadow:
-                          isHovered && !light && isLive
-                            ? `0 0 20px ${accent}40`
-                            : "none",
+                          lit && !light && isLive ? `0 0 20px ${accent}40` : "none",
                       }}
                     >
                       {system.name}
@@ -112,7 +161,6 @@ export default function Home() {
                       {system.description}
                     </p>
 
-                    {/* Footer */}
                     <div className="mt-auto pt-4 border-t border-surface-light/30 flex items-center justify-between">
                       <span className="font-mono text-[9px] tracking-[0.2em] text-muted uppercase">
                         {isLive ? "Enter system" : "In development"}
@@ -138,9 +186,11 @@ export default function Home() {
               const commonProps = {
                 key: system.id,
                 className: "group block animate-slide-up",
-                style: { animationDelay: `${150 + i * 100}ms` },
-                onMouseEnter: () => setHovered(system.id),
-                onMouseLeave: () => setHovered(null),
+                style: { animationDelay: `${300 + i * 90}ms` },
+                onMouseEnter: () => setHover({ kind: "system", id: sid }),
+                onMouseLeave: () => setHover(null),
+                onFocus: () => setHover({ kind: "system", id: sid }),
+                onBlur: () => setHover(null),
               };
 
               return isLive && system.href ? (
@@ -158,7 +208,9 @@ export default function Home() {
           <div className="max-w-6xl mx-auto mt-16 text-center">
             <p className="font-mono text-[9px] tracking-[0.2em] text-muted uppercase">
               <span className="inline-block w-6 h-px bg-current align-middle mr-3" />
-              More systems arriving
+              {activeClusters && activeClusters.size > 0 && hover?.kind === "system"
+                ? `${CLUSTER_CHIPS.filter((c) => activeClusters.has(c.id)).length} shared currents`
+                : "More systems arriving"}
               <span className="inline-block w-6 h-px bg-current align-middle ml-3" />
             </p>
           </div>
