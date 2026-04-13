@@ -4,6 +4,14 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { JungianArchetype, JungianClusterGroup } from "@/types/jungian";
 import { useTheme } from "@/components/ThemeProvider";
+import CoreTriad from "@/components/jungian/CoreTriad";
+import GiftTrapDiptych from "@/components/jungian/GiftTrapDiptych";
+import ShadowPanel from "@/components/jungian/ShadowPanel";
+import LevelsLadder from "@/components/jungian/LevelsLadder";
+import AwakeningList from "@/components/jungian/AwakeningList";
+import OppositeCard from "@/components/jungian/OppositeCard";
+import ExemplarsTabs from "@/components/jungian/ExemplarsTabs";
+import { getJungianExemplars } from "@/data/jungian/exemplars";
 
 const JungianTotemCanvas = dynamic(
   () => import("@/components/JungianTotemCanvas"),
@@ -14,24 +22,18 @@ interface Props {
   archetype: JungianArchetype;
   cluster: JungianClusterGroup;
   clusterSiblings: JungianArchetype[];
+  opposite: JungianArchetype;
 }
 
 export default function JungianDetailClient({
   archetype,
   cluster,
   clusterSiblings,
+  opposite,
 }: Props) {
   const { theme } = useTheme();
   const light = theme === "light";
   const color = archetype.accentColor;
-
-  const fields: { label: string; body: string }[] = [
-    { label: "Core Desire", body: archetype.coreDesire },
-    { label: "Greatest Fear", body: archetype.greatestFear },
-    { label: "Strategy", body: archetype.strategy },
-    { label: "Gift", body: archetype.gift },
-    { label: "Trap (Shadow)", body: archetype.trap },
-  ];
 
   return (
     <div className="min-h-screen px-6 pt-24 pb-24 md:pt-32">
@@ -95,34 +97,48 @@ export default function JungianDetailClient({
           </p>
         </div>
 
-        {/* Fields grid */}
-        <div className="grid md:grid-cols-2 gap-4 mb-16 animate-slide-up delay-200">
-          {fields.map((f) => (
-            <div
-              key={f.label}
-              className="rounded-sm p-5"
-              style={{
-                background: `linear-gradient(145deg, ${color}${light ? "0A" : "06"}, transparent)`,
-                border: `1px solid ${color}${light ? "22" : "14"}`,
-              }}
-            >
-              <p
-                className="font-mono text-[9px] tracking-[0.3em] uppercase mb-2"
-                style={{ color: color + "CC" }}
-              >
-                {f.label}
-              </p>
-              <p className="text-text-primary text-sm md:text-base leading-relaxed font-light">
-                {f.body}
-              </p>
-            </div>
-          ))}
+        {/* Core triad */}
+        <div className="animate-slide-up delay-200">
+          <CoreTriad
+            color={color}
+            coreDesire={archetype.coreDesire}
+            greatestFear={archetype.greatestFear}
+            strategy={archetype.strategy}
+          />
+        </div>
+
+        {/* Gift & Trap */}
+        <div className="animate-slide-up delay-300">
+          <GiftTrapDiptych
+            color={color}
+            gift={archetype.gift}
+            trap={archetype.trap}
+          />
+        </div>
+
+        {/* The Shadow */}
+        <div className="animate-slide-up delay-300">
+          <ShadowPanel color={color} shadow={archetype.shadow} />
+        </div>
+
+        {/* Levels */}
+        <div className="animate-slide-up delay-400">
+          <LevelsLadder color={color} levels={archetype.levels} />
+        </div>
+
+        {/* Awakening */}
+        <div className="animate-slide-up delay-400">
+          <AwakeningList
+            color={color}
+            awakening={archetype.awakening}
+            archetypeName={archetype.name}
+          />
         </div>
 
         {/* Characteristics */}
-        <div className="mb-16 animate-slide-up delay-300">
+        <section className="mb-16 animate-slide-up delay-500">
           <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+            <span className="font-mono text-[10px] tracking-[0.4em] text-muted uppercase">
               Key Characteristics
             </span>
             <div
@@ -145,12 +161,28 @@ export default function JungianDetailClient({
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* Exemplars */}
+        {(() => {
+          const exemplars = getJungianExemplars(archetype.slug);
+          if (!exemplars) return null;
+          return (
+            <div className="animate-slide-up delay-500">
+              <ExemplarsTabs color={color} exemplars={exemplars} />
+            </div>
+          );
+        })()}
+
+        {/* Opposite */}
+        <div className="animate-slide-up delay-500">
+          <OppositeCard opposite={opposite} fromColor={color} />
         </div>
 
-        {/* Cluster siblings */}
-        <div className="animate-slide-up delay-400">
-          <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-muted uppercase">
+        {/* Cluster siblings — demoted to thin strip */}
+        <section className="animate-slide-up delay-500 pt-4">
+          <div className="flex items-center gap-4 mb-4">
+            <span className="font-mono text-[9px] tracking-[0.4em] text-muted uppercase">
               Other {cluster.label} Archetypes
             </span>
             <div
@@ -160,41 +192,34 @@ export default function JungianDetailClient({
               }}
             />
           </div>
-          <div className="grid sm:grid-cols-3 gap-3">
+          <div className="flex flex-wrap gap-2">
             {clusterSiblings.map((s) => (
               <Link
                 key={s.slug}
                 href={`/jungian/archetype/${s.slug}`}
-                className="group block rounded-sm p-4 transition-all duration-300"
+                className="group inline-flex items-center gap-2 rounded-sm px-3 py-2 transition-all duration-300"
                 style={{
                   background: `linear-gradient(145deg, ${s.accentColor}${light ? "08" : "04"}, transparent)`,
                   border: `1px solid ${s.accentColor}${light ? "20" : "10"}`,
                 }}
               >
-                <div className="flex items-center gap-3">
-                  <span
-                    className="font-serif text-2xl opacity-70 group-hover:opacity-100 transition-opacity"
-                    style={{ color: s.accentColor }}
-                    aria-hidden
-                  >
-                    {s.symbol}
-                  </span>
-                  <div>
-                    <p
-                      className="font-serif text-base font-medium"
-                      style={{ color: s.accentColor }}
-                    >
-                      {s.name}
-                    </p>
-                    <p className="font-mono text-[9px] italic text-muted mt-0.5">
-                      &ldquo;{s.motto}&rdquo;
-                    </p>
-                  </div>
-                </div>
+                <span
+                  className="font-serif text-lg opacity-70 group-hover:opacity-100 transition-opacity"
+                  style={{ color: s.accentColor }}
+                  aria-hidden
+                >
+                  {s.symbol}
+                </span>
+                <span
+                  className="font-serif text-sm"
+                  style={{ color: s.accentColor }}
+                >
+                  {s.name}
+                </span>
               </Link>
             ))}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

@@ -40,6 +40,8 @@ export const innocent: JungianArchetype = {
   slug: "innocent",
   name: "The Innocent",
   cluster: "ego",
+  stageOrder: 1,
+  opposite: "everyman",
   motto: "Free to be you and me.",
   coreDesire: "To get to paradise.",
   greatestFear: "Being punished for doing something wrong.",
@@ -57,12 +59,42 @@ export const innocent: JungianArchetype = {
   trap: "Naivety — denying shadow truths and refusing to grow up.",
   accentColor: "#E8D7A0",
   symbol: "☀",
+  shadow: {
+    name: "The Pollyanna",
+    description:
+      "The Innocent's shadow denies what is. It keeps the smile intact by looking past suffering, complexity, and responsibility — mistaking avoidance for peace.",
+    signs: [
+      "Refuses to acknowledge obvious problems or abuse",
+      "Becomes dependent on others to handle hard truths",
+      "Moralizes instead of engaging",
+      "Crumbles under its first real disillusionment",
+    ],
+    integration:
+      "Let paradise be lost. Trust survives contact with shadow — faith that hasn't met pain is only innocence.",
+  },
+  levels: {
+    shadow: "Denial. The world is simple because I refuse to see its complexity.",
+    call: "A first betrayal, a first loss — the moment the protected garden fails.",
+    expression:
+      "A faith that has been through the fire. Open-eyed trust, chosen on purpose.",
+  },
+  awakening: {
+    circumstances: [
+      "Early childhood, when faith in caretakers is forming",
+      "After a season of cynicism, when hope becomes a deliberate choice",
+      "Spiritual conversion or reconciliation",
+      "Becoming a parent or caretaker of the young",
+    ],
+    ageOrStage: "Early life and late-life recovery of wonder.",
+  },
 };
 
 export const everyman: JungianArchetype = {
   slug: "everyman",
   name: "The Everyman",
   cluster: "ego",
+  stageOrder: 2,
+  opposite: "innocent",
   motto: "All people are created equal.",
   coreDesire: "Connection with others; belonging.",
   greatestFear: "Being left out, or standing out.",
@@ -80,12 +112,42 @@ export const everyman: JungianArchetype = {
   trap: "Losing self to the group; cynicism; victimhood.",
   accentColor: "#C9B68F",
   symbol: "◉",
+  shadow: {
+    name: "The Victim",
+    description:
+      "The Everyman's shadow is learned helplessness dressed as humility. It weaponizes ordinariness into complaint and converts solidarity into collective resentment.",
+    signs: [
+      "Persistent complaint without action",
+      "Suspicion of anyone who rises above the group",
+      "Blames circumstances for every outcome",
+      "Uses modesty to avoid responsibility",
+    ],
+    integration:
+      "Own your ordinary strength. Belonging is built by people who show up, not by people who wait to be rescued.",
+  },
+  levels: {
+    shadow: "Victimhood. The world happens to me; I have no real agency.",
+    call: "A loss of the comfortable place — exile, layoff, family rupture — that forces self-reliance.",
+    expression:
+      "The steady citizen. Grounded, honest, at home anywhere because they are at home with themselves.",
+  },
+  awakening: {
+    circumstances: [
+      "Disillusionment that ends the Innocent phase",
+      "Joining or leaving a close-knit community",
+      "Hard times that reveal who shows up",
+      "Service work or organizing",
+    ],
+    ageOrStage: "Adolescence and whenever life strips away naive privilege.",
+  },
 };
 
 export const hero: JungianArchetype = {
   slug: "hero",
   name: "The Hero",
   cluster: "ego",
+  stageOrder: 3,
+  opposite: "caregiver",
   motto: "Where there's a will, there's a way.",
   coreDesire: "Prove worth through courageous action.",
   greatestFear: "Weakness, vulnerability, being a coward.",
@@ -103,12 +165,42 @@ export const hero: JungianArchetype = {
   trap: "Arrogance; seeing every situation as a battle; hubris.",
   accentColor: "#C24747",
   symbol: "⚔",
+  shadow: {
+    name: "The Ruthless Competitor",
+    description:
+      "The Hero's shadow needs an enemy. It converts relationships into contests, conflates dominance with virtue, and loses the person inside the victory.",
+    signs: [
+      "Sees every interaction as win or lose",
+      "Contempt for the soft, the slow, the struggling",
+      "Cannot rest without a next mountain",
+      "Uses strength to silence rather than protect",
+    ],
+    integration:
+      "Turn the weapon around. The hardest enemy is the one inside; real courage knows when not to fight.",
+  },
+  levels: {
+    shadow: "The bully. Strength performed at others' expense; fear of my own softness.",
+    call: "A threat that demands action — to family, to community, to self-respect — that cannot be met from the bleachers.",
+    expression:
+      "The disciplined protector. Strength in service of something larger, with the wisdom to sheathe the blade.",
+  },
+  awakening: {
+    circumstances: [
+      "First real challenge that requires preparation",
+      "Being called to protect someone or something",
+      "Military, athletic, or entrepreneurial contexts",
+      "A defeat that demands rebuilding from the ground up",
+    ],
+    ageOrStage: "Late adolescence and early adulthood; re-awakens in crisis.",
+  },
 };
 
 export const caregiver: JungianArchetype = {
   slug: "caregiver",
   name: "The Caregiver",
   cluster: "ego",
+  stageOrder: 4,
+  opposite: "hero",
   motto: "Love your neighbor as yourself.",
   coreDesire: "To help and protect others.",
   greatestFear: "Selfishness, ingratitude, causing harm.",
@@ -126,6 +218,34 @@ export const caregiver: JungianArchetype = {
   trap: "Martyrdom; using care to control; self-neglect and resentment.",
   accentColor: "#E8A7B3",
   symbol: "❦",
+  shadow: {
+    name: "The Martyr",
+    description:
+      "The Caregiver's shadow gives to be owed. It tracks debts, withholds joy, and uses self-sacrifice as a lever of control — then collapses into resentment when the ledger is ignored.",
+    signs: [
+      "Sacrifice performed publicly, reward expected privately",
+      "Keeps others dependent by refusing to teach independence",
+      "Chronic exhaustion worn as moral credential",
+      "Resentment framed as disappointment",
+    ],
+    integration:
+      "Give from fullness, not depletion. Receive before you give; care for yourself without apology.",
+  },
+  levels: {
+    shadow: "Smothering. Care that cannot let others fail, fall, or leave.",
+    call: "Someone fragile who depends on you — child, parent, patient, team.",
+    expression:
+      "The compassionate steward. Generous, boundaried, able to love and let go in the same breath.",
+  },
+  awakening: {
+    circumstances: [
+      "Becoming a parent, nurse, teacher, or first-responder",
+      "A loved one's illness or decline",
+      "Crisis in a community that needs holding",
+      "Recovery from a season of purely self-focused pursuit",
+    ],
+    ageOrStage: "Parenthood, midlife, and whenever one is trusted with the vulnerable.",
+  },
 };
 
 // ─── SOUL CLUSTER ─────────────────────────────────────────────
@@ -134,6 +254,8 @@ export const explorer: JungianArchetype = {
   slug: "explorer",
   name: "The Explorer",
   cluster: "soul",
+  stageOrder: 1,
+  opposite: "lover",
   motto: "Don't fence me in.",
   coreDesire: "Freedom to find out who you are by exploring the world.",
   greatestFear: "Conformity; entrapment; inner emptiness.",
@@ -151,12 +273,42 @@ export const explorer: JungianArchetype = {
   trap: "Chronic dissatisfaction; rootlessness; avoiding commitment.",
   accentColor: "#8B7355",
   symbol: "⇢",
+  shadow: {
+    name: "The Perpetual Wanderer",
+    description:
+      "The Explorer's shadow mistakes motion for growth. Every door it opens it must walk out of. Intimacy becomes a cage; commitment becomes death.",
+    signs: [
+      "Leaves the moment things get real",
+      "Collects experiences and avoids depth",
+      "Contempt for people who stay",
+      "Loneliness reframed as independence",
+    ],
+    integration:
+      "Stay. The longest journey runs through the same room for a decade — depth is the territory you never visit.",
+  },
+  levels: {
+    shadow: "Restlessness. Leaving is the only self I trust.",
+    call: "A life that has become a cage — a job, a town, a self-concept that no longer fits.",
+    expression:
+      "The committed pilgrim. Free because they chose their path, not because they kept running.",
+  },
+  awakening: {
+    circumstances: [
+      "Adolescent individuation — the first 'I am not you'",
+      "Quitting the expected path",
+      "Travel, wilderness, solitude",
+      "Realizing an inherited life is not yours",
+    ],
+    ageOrStage: "Late teens and early twenties; re-awakens at midlife.",
+  },
 };
 
 export const rebel: JungianArchetype = {
   slug: "rebel",
   name: "The Rebel",
   cluster: "soul",
+  stageOrder: 2,
+  opposite: "creator",
   motto: "Rules are made to be broken.",
   coreDesire: "Revolution; to overturn what doesn't work.",
   greatestFear: "Powerlessness; being ineffectual.",
@@ -174,12 +326,42 @@ export const rebel: JungianArchetype = {
   trap: "Destruction for its own sake; nihilism; crime.",
   accentColor: "#2E2E2E",
   symbol: "✕",
+  shadow: {
+    name: "The Destroyer",
+    description:
+      "The Rebel's shadow burns everything, including what it claimed to love. It confuses destruction with meaning and mistakes adolescent fury for moral clarity.",
+    signs: [
+      "Opposes anything, regardless of merit",
+      "Loyalty only to opposition, never to building",
+      "Cruelty dressed as honesty",
+      "Leaves ruins and calls them revolution",
+    ],
+    integration:
+      "Know what you are burning for. Destruction is only sacred in service of what you love — not what you hate.",
+  },
+  levels: {
+    shadow: "Nihilism. Nothing matters; only the breaking matters.",
+    call: "A system, institution, or self-concept that has become corrupt or hollow and must be unmade.",
+    expression:
+      "The liberator. Disruption in service of life, with the discipline to rebuild what is torn down.",
+  },
+  awakening: {
+    circumstances: [
+      "Witnessing injustice or institutional rot",
+      "A belief system collapsing under its own hypocrisy",
+      "Adolescence — the first refusal of inherited rules",
+      "Midlife reckoning with a false self",
+    ],
+    ageOrStage: "Adolescence and whenever a structure outlives its truth.",
+  },
 };
 
 export const lover: JungianArchetype = {
   slug: "lover",
   name: "The Lover",
   cluster: "soul",
+  stageOrder: 3,
+  opposite: "explorer",
   motto: "You're the only one.",
   coreDesire: "Intimacy and experience.",
   greatestFear: "Being alone, unloved, unwanted.",
@@ -197,12 +379,42 @@ export const lover: JungianArchetype = {
   trap: "Loss of identity in the other; jealousy; people-pleasing.",
   accentColor: "#A63D5C",
   symbol: "♥",
+  shadow: {
+    name: "The Addict",
+    description:
+      "The Lover's shadow needs the other to exist. It fuses, consumes, and panics at the first sign of separateness — converting passion into compulsion and devotion into possession.",
+    signs: [
+      "Cannot tolerate the beloved's autonomy",
+      "Jealousy disguised as intensity",
+      "Reshapes self to be what the other wants",
+      "Swings between idealization and collapse",
+    ],
+    integration:
+      "Love the other as other. Devotion without self-loss; intimacy that leaves both people more, not less.",
+  },
+  levels: {
+    shadow: "Fusion. I disappear into you, and then resent you for it.",
+    call: "A beloved — person, art, cause, place — that pulls you past the safe edges of self.",
+    expression:
+      "The devoted partner. Passionate, present, whole enough to love without dissolving.",
+  },
+  awakening: {
+    circumstances: [
+      "First deep romantic love",
+      "Falling for a practice, art, or place",
+      "Parenthood's erotic-spiritual dimension",
+      "Being truly seen after a long absence of self",
+    ],
+    ageOrStage: "Late adolescence through midlife; any season of deep attachment.",
+  },
 };
 
 export const creator: JungianArchetype = {
   slug: "creator",
   name: "The Creator",
   cluster: "soul",
+  stageOrder: 4,
+  opposite: "rebel",
   motto: "If you can imagine it, it can be done.",
   coreDesire: "Create something of enduring value.",
   greatestFear: "Mediocrity; unrealized vision.",
@@ -220,6 +432,34 @@ export const creator: JungianArchetype = {
   trap: "Perfectionism; never finishing; precious isolation.",
   accentColor: "#5A3D7A",
   symbol: "✦",
+  shadow: {
+    name: "The Tortured Artist",
+    description:
+      "The Creator's shadow hoards the vision. It treats the work as too sacred to finish, too special to share, and uses suffering as proof of depth.",
+    signs: [
+      "Starts everything; finishes nothing",
+      "Contempt for anyone less exacting",
+      "Romanticizes blockage and misery",
+      "Withholds the work to protect the self",
+    ],
+    integration:
+      "Ship. Making is a practice, not a purity; the real work lives on the other side of completion.",
+  },
+  levels: {
+    shadow: "Perfectionism. The vision is sacred because it is never tested against reality.",
+    call: "A vision that won't leave you alone — an image, a refrain, a structure that insists on being made.",
+    expression:
+      "The making artist. Practiced, generative, able to finish and begin again.",
+  },
+  awakening: {
+    circumstances: [
+      "A strong aesthetic or intellectual obsession",
+      "Discovering a craft that rewires the day",
+      "A mentor who demands you finish",
+      "A deadline that forces shipping",
+    ],
+    ageOrStage: "Any season of devoted making.",
+  },
 };
 
 // ─── SELF CLUSTER ─────────────────────────────────────────────
@@ -228,6 +468,8 @@ export const jester: JungianArchetype = {
   slug: "jester",
   name: "The Jester",
   cluster: "self",
+  stageOrder: 1,
+  opposite: "sage",
   motto: "You only live once.",
   coreDesire: "To live in the moment with full enjoyment.",
   greatestFear: "Being bored; being boring.",
@@ -245,12 +487,42 @@ export const jester: JungianArchetype = {
   trap: "Avoidance; frivolity; inability to take anything seriously.",
   accentColor: "#E8B041",
   symbol: "◆",
+  shadow: {
+    name: "The Evader",
+    description:
+      "The Jester's shadow uses humor to stay unreachable. It laughs off grief, punctures intimacy, and treats every serious moment as a threat to be defused.",
+    signs: [
+      "Cannot sit with discomfort or sorrow",
+      "Deflects every difficult conversation with a joke",
+      "Cruelty dressed as irony",
+      "Exhausting to anyone seeking depth",
+    ],
+    integration:
+      "Let the joke land where it hurts. Real humor is not a shield; it touches pain and transforms it.",
+  },
+  levels: {
+    shadow: "Frivolity. Nothing is allowed to matter for long.",
+    call: "A season so heavy that levity becomes a survival practice.",
+    expression:
+      "The holy fool. Playful in the presence of the serious; lightness that carries truth.",
+  },
+  awakening: {
+    circumstances: [
+      "Burnout from chronic over-seriousness",
+      "Grief, illness, or loss that demands levity",
+      "Creative work in comedy, performance, or play",
+      "Aging — the freedom of not caring what others think",
+    ],
+    ageOrStage: "Childhood and late life; whenever the game needs lightening.",
+  },
 };
 
 export const sage: JungianArchetype = {
   slug: "sage",
   name: "The Sage",
   cluster: "self",
+  stageOrder: 2,
+  opposite: "jester",
   motto: "The truth will set you free.",
   coreDesire: "Find the truth.",
   greatestFear: "Being duped, misled, or ignorant.",
@@ -268,12 +540,42 @@ export const sage: JungianArchetype = {
   trap: "Analysis paralysis; intellectual arrogance; detachment from life.",
   accentColor: "#5A7A8B",
   symbol: "☉",
+  shadow: {
+    name: "The Dogmatist",
+    description:
+      "The Sage's shadow ossifies. It trades the search for truth for the defense of its current position, using knowledge as armor against surprise.",
+    signs: [
+      "Unwilling to update in the face of new evidence",
+      "Condescension toward the less-informed",
+      "Learning as collection, not as change",
+      "Retreats into the tower when tested by life",
+    ],
+    integration:
+      "Stay a student. The sage who stops learning has become an idol of a former sage.",
+  },
+  levels: {
+    shadow: "Detachment. Knowing about life as a substitute for living it.",
+    call: "A confusion or question that demands patient, honest inquiry.",
+    expression:
+      "The lifelong student. Clear, humble, holding knowledge loosely enough to revise it.",
+  },
+  awakening: {
+    circumstances: [
+      "An obsession with a domain that demands depth",
+      "Being fooled badly enough to require discernment",
+      "A teacher or text that rewires one's thinking",
+      "The midlife call to understand one's own life",
+    ],
+    ageOrStage: "Any season of disciplined learning; ripens in later life.",
+  },
 };
 
 export const magician: JungianArchetype = {
   slug: "magician",
   name: "The Magician",
   cluster: "self",
+  stageOrder: 3,
+  opposite: "ruler",
   motto: "I make things happen.",
   coreDesire: "Understand the fundamental laws of how things work.",
   greatestFear: "Unintended negative consequences.",
@@ -291,12 +593,42 @@ export const magician: JungianArchetype = {
   trap: "Manipulation; playing god; ignoring consequences.",
   accentColor: "#6B4E8C",
   symbol: "✧",
+  shadow: {
+    name: "The Manipulator",
+    description:
+      "The Magician's shadow uses its sight to pull strings. It bypasses consent, treats others as systems to be optimized, and mistakes effect for ethics.",
+    signs: [
+      "Moves others without telling them why",
+      "Confuses persuasion with honesty",
+      "Collects knowledge as leverage",
+      "Denies responsibility for the wakes it leaves",
+    ],
+    integration:
+      "Serve what you can see. Sight without ethics is sorcery; real magic is transformation others consent to.",
+  },
+  levels: {
+    shadow: "Manipulation. Power without service; sight without consent.",
+    call: "A system or person in need of transformation that ordinary means cannot reach.",
+    expression:
+      "The healer, the catalyst. Insight in service of what wants to live.",
+  },
+  awakening: {
+    circumstances: [
+      "Deep practice in therapy, medicine, engineering, design, or spiritual work",
+      "A breakthrough that reveals the hidden structure of a problem",
+      "Becoming a mentor to someone in transformation",
+      "Midlife — when depth becomes more interesting than breadth",
+    ],
+    ageOrStage: "Mature adulthood; the second half of life.",
+  },
 };
 
 export const ruler: JungianArchetype = {
   slug: "ruler",
   name: "The Ruler",
   cluster: "self",
+  stageOrder: 4,
+  opposite: "magician",
   motto: "Power is not everything, it's the only thing.",
   coreDesire: "Control; create a prosperous, successful community.",
   greatestFear: "Chaos; being overthrown.",
@@ -314,6 +646,34 @@ export const ruler: JungianArchetype = {
   trap: "Authoritarianism; rigidity; loss of connection with the governed.",
   accentColor: "#2A4E7A",
   symbol: "♛",
+  shadow: {
+    name: "The Tyrant",
+    description:
+      "The Ruler's shadow confuses the throne with the self. It clings to power, punishes dissent, and sacrifices the commons to preserve its own grip.",
+    signs: [
+      "Paranoia about rivals and successors",
+      "Punishes the messenger for bad news",
+      "Rigid enforcement where discernment is needed",
+      "The realm declines while the ruler's comfort grows",
+    ],
+    integration:
+      "Serve the realm, not the crown. A sovereign who cannot step down is not a ruler — only a prisoner in a tower.",
+  },
+  levels: {
+    shadow: "Tyranny. The throne defends itself against the people it was built to serve.",
+    call: "Responsibility for something that cannot be delegated — a family, a company, a community.",
+    expression:
+      "The steward-king. Authority in service, standards held in love, successors raised on purpose.",
+  },
+  awakening: {
+    circumstances: [
+      "Taking on executive, parental, or civic responsibility",
+      "A mentor or elder stepping down and handing on the realm",
+      "The failure of existing authority that requires someone to step in",
+      "Midlife — when legacy becomes the real question",
+    ],
+    ageOrStage: "Mature adulthood; the Self-cluster's late expression.",
+  },
 };
 
 // ─── COLLECTIONS ──────────────────────────────────────────────
