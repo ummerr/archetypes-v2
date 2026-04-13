@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   HEROSJOURNEY_COLORS,
   JOURNEY_ACTS,
@@ -12,43 +12,48 @@ import {
   getArchetypesByStage,
 } from "@/data/herosjourney/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
-import type { JourneyStage } from "@/types/herosjourney";
 
-const SIZE = 620;
-const CENTER = SIZE / 2;
-const PAD = 44;
-const STAGE_RADIUS = 228;
-const ARCHETYPE_RADIUS = 282;
-const LABEL_RADIUS = 182;
-const MASK_LABEL_RADIUS = 316;
+const W = 1120;
+const H = 760;
+const PAD_L = 168;
+const PAD_R = 56;
+const SPINE_Y = 282;
+const LANE_TOP = 360;
+const LANE_H = 44;
+const ACT_Y = 56;
 
-function polar(radius: number, degrees: number) {
-  const rad = ((degrees - 90) * Math.PI) / 180;
-  return { x: CENTER + radius * Math.cos(rad), y: CENTER + radius * Math.sin(rad) };
+const STAGES = JOURNEY_STAGES;
+
+function stageX(n: number): number {
+  const usable = W - PAD_L - PAD_R;
+  return PAD_L + ((n - 1) / (STAGES.length - 1)) * usable;
 }
 
-function arcPath(
-  radius: number,
-  startDeg: number,
-  endDeg: number
-): string {
-  const start = polar(radius, startDeg);
-  const end = polar(radius, endDeg);
-  const large = endDeg - startDeg > 180 ? 1 : 0;
-  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${large} 1 ${end.x} ${end.y}`;
-}
+const ANNOTATIONS: { stage: number; text: string; side: "top" }[] = [
+  { stage: 2, text: "The Call shatters homeostasis", side: "top" },
+  { stage: 5, text: "Point of no return — threshold crossed", side: "top" },
+  { stage: 8, text: "Death & rebirth at the nadir", side: "top" },
+  { stage: 11, text: "Final test — shadow's last bid", side: "top" },
+  { stage: 12, text: "Elixir brought home", side: "top" },
+];
 
-const ACT_BOUNDS: Record<string, [number, number]> = {
-  departure: [-15, 135],
-  initiation: [135, 245],
-  return: [245, 345],
-};
+// Lane order (top→bottom). Broad-span masks first.
+const LANE_ORDER = [
+  "hero",
+  "herald",
+  "mentor",
+  "threshold-guardian",
+  "ally",
+  "shapeshifter",
+  "trickster",
+  "shadow",
+];
 
 export default function HeroJourneyWheel() {
   const { theme } = useTheme();
   const router = useRouter();
   const light = theme === "light";
-  // Unified selection state — driven by hover on desktop, tap on touch.
+
   const [activeStage, setActiveStage] = useState<number | null>(null);
   const [activeMask, setActiveMask] = useState<string | null>(null);
 
@@ -65,117 +70,171 @@ export default function HeroJourneyWheel() {
     setActiveMask(null);
   };
 
-  // Position each archetype at the midpoint of its primary stages (circular mean).
-  const placements = useMemo(() => {
-    return ALL_HEROSJOURNEY.map((a) => {
-      const stages = a.primaryStages
-        .map((n) => JOURNEY_STAGES.find((s) => s.number === n))
-        .filter((s): s is JourneyStage => !!s);
-      const xs = stages.reduce(
-        (acc, s) => acc + Math.cos((s.clockPosition * Math.PI) / 180),
-        0
-      );
-      const ys = stages.reduce(
-        (acc, s) => acc + Math.sin((s.clockPosition * Math.PI) / 180),
-        0
-      );
-      const angle = (Math.atan2(ys, xs) * 180) / Math.PI;
-      return { archetype: a, angle };
-    });
-  }, []);
+  const orderedMasks = LANE_ORDER.map(
+    (slug) => ALL_HEROSJOURNEY.find((a) => a.slug === slug)!
+  );
 
   const activeStages = activeMask
     ? ALL_HEROSJOURNEY.find((a) => a.slug === activeMask)?.primaryStages ?? []
     : [];
-
   const activeRoles = activeStage
     ? getArchetypesByStage(activeStage).map((a) => a.slug)
     : [];
 
+  const mutedText = light ? "#6a5f50" : "#9a907e";
+  const faintText = light ? "#8a7f70" : "#756c5e";
+  const hairline = light ? "#00000014" : "#FFFFFF14";
+
   return (
     <div className="w-full flex justify-center">
       <svg
-        viewBox={`${-PAD} ${-PAD} ${SIZE + PAD * 2} ${SIZE + PAD * 2}`}
-        className="w-full max-w-[720px] h-auto"
+        viewBox={`0 0 ${W} ${H}`}
+        className="w-full max-w-[1200px] h-auto"
         role="img"
-        aria-label="Hero's Journey twelve-stage wheel"
+        aria-label="Hero's Journey — twelve-stage timeline with archetype swim lanes"
         onClick={clearSelection}
       >
-        {/* Transparent background — taps here clear any selection. */}
-        <rect x={-PAD} y={-PAD} width={SIZE + PAD * 2} height={SIZE + PAD * 2} fill="transparent" />
+        <rect x={0} y={0} width={W} height={H} fill="transparent" />
+
         <defs>
-          {JOURNEY_ACTS.map((act) => {
-            const [start, end] = ACT_BOUNDS[act.id];
-            const from = polar(STAGE_RADIUS, start);
-            const to = polar(STAGE_RADIUS, end);
-            return (
-              <linearGradient
-                key={act.id}
-                id={`arc-${act.id}`}
-                gradientUnits="userSpaceOnUse"
-                x1={from.x}
-                y1={from.y}
-                x2={to.x}
-                y2={to.y}
-              >
-                <stop offset="0%" stopColor={act.color} stopOpacity={0.15} />
-                <stop offset="50%" stopColor={act.color} stopOpacity={0.9} />
-                <stop offset="100%" stopColor={act.color} stopOpacity={0.15} />
-              </linearGradient>
-            );
-          })}
-          <radialGradient id="nadir-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor={HEROSJOURNEY_COLORS.accent} stopOpacity={0.18} />
+          {JOURNEY_ACTS.map((act) => (
+            <linearGradient
+              key={act.id}
+              id={`ribbon-${act.id}`}
+              x1="0%"
+              x2="100%"
+              y1="0%"
+              y2="0%"
+            >
+              <stop offset="0%" stopColor={act.color} stopOpacity={0.25} />
+              <stop offset="50%" stopColor={act.color} stopOpacity={0.9} />
+              <stop offset="100%" stopColor={act.color} stopOpacity={0.25} />
+            </linearGradient>
+          ))}
+          <radialGradient id="nadir-pulse" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor={HEROSJOURNEY_COLORS.accent} stopOpacity={0.26} />
             <stop offset="100%" stopColor={HEROSJOURNEY_COLORS.accent} stopOpacity={0} />
           </radialGradient>
         </defs>
 
-        {/* Horizon line — threshold between conscious (top) and unconscious (bottom) */}
-        <line
-          x1={CENTER - STAGE_RADIUS - 30}
-          x2={CENTER + STAGE_RADIUS + 30}
-          y1={CENTER}
-          y2={CENTER}
-          stroke={light ? "#00000018" : "#FFFFFF12"}
-          strokeDasharray="2 6"
-        />
-
-        {/* Act arcs */}
+        {/* ——— Act ribbons (top) ——— */}
         {JOURNEY_ACTS.map((act) => {
-          const [s, e] = ACT_BOUNDS[act.id];
+          const stagesInAct = STAGES.filter((s) => s.act === act.id);
+          const first = stagesInAct[0].number;
+          const last = stagesInAct[stagesInAct.length - 1].number;
+          const x1 = stageX(first) - 18;
+          const x2 = stageX(last) + 18;
           return (
-            <path
-              key={act.id}
-              d={arcPath(STAGE_RADIUS, s, e)}
-              fill="none"
-              stroke={`url(#arc-${act.id})`}
-              strokeWidth={3}
-              strokeLinecap="round"
-            />
+            <g key={act.id}>
+              <rect
+                x={x1}
+                y={ACT_Y}
+                width={x2 - x1}
+                height={14}
+                rx={7}
+                fill={`url(#ribbon-${act.id})`}
+              />
+              <text
+                x={(x1 + x2) / 2}
+                y={ACT_Y - 10}
+                textAnchor="middle"
+                fontSize={10.5}
+                className="font-mono"
+                fill={act.color}
+                style={{ letterSpacing: "0.28em", textTransform: "uppercase" }}
+              >
+                {act.label}
+              </text>
+              <text
+                x={(x1 + x2) / 2}
+                y={ACT_Y + 34}
+                textAnchor="middle"
+                fontSize={9.5}
+                className="font-serif"
+                fill={mutedText}
+                fontStyle="italic"
+              >
+                {act.tagline}
+              </text>
+            </g>
           );
         })}
 
-        {/* Nadir glow behind the Ordeal */}
-        <circle
-          cx={polar(STAGE_RADIUS, 200).x}
-          cy={polar(STAGE_RADIUS, 200).y}
-          r={72}
-          fill="url(#nadir-glow)"
-        />
+        {/* ——— Annotations (pull-quotes above spine) ——— */}
+        {ANNOTATIONS.map((ann, i) => {
+          const sx = stageX(ann.stage);
+          const isNadir = ann.stage === 8;
+          // stagger vertically to avoid overlap
+          const yBase = 132 + (i % 2 === 0 ? 0 : 22);
+          const isActive = activeStage === ann.stage;
+          return (
+            <g key={ann.stage} opacity={activeMask ? 0.35 : 1}>
+              <line
+                x1={sx}
+                y1={yBase + 10}
+                x2={sx}
+                y2={SPINE_Y - 14}
+                stroke={isNadir ? HEROSJOURNEY_COLORS.accent : hairline}
+                strokeDasharray="2 4"
+                strokeWidth={isActive ? 1.4 : 1}
+              />
+              <text
+                x={sx}
+                y={yBase}
+                textAnchor="middle"
+                fontSize={10}
+                className="font-serif"
+                fill={isNadir ? HEROSJOURNEY_COLORS.accent : mutedText}
+                fontStyle="italic"
+              >
+                {ann.text}
+              </text>
+            </g>
+          );
+        })}
 
-        {/* Stage nodes */}
-        {JOURNEY_STAGES.map((stage) => {
-          const p = polar(STAGE_RADIUS, stage.clockPosition);
+        {/* ——— Spine ——— */}
+        <line
+          x1={stageX(1) - 24}
+          x2={stageX(12) + 24}
+          y1={SPINE_Y}
+          y2={SPINE_Y}
+          stroke={light ? "#00000028" : "#FFFFFF22"}
+          strokeWidth={1}
+        />
+        {/* Nadir glow behind Ordeal */}
+        <circle
+          cx={stageX(8)}
+          cy={SPINE_Y}
+          r={46}
+          fill="url(#nadir-pulse)"
+        />
+        {/* Return-loop hint — faint arc from 12 back toward 1 */}
+        <path
+          d={`M ${stageX(12) + 22} ${SPINE_Y} Q ${stageX(12) + 60} ${SPINE_Y + 80} ${stageX(12) + 10} ${SPINE_Y + 120} Q ${(stageX(1) + stageX(12)) / 2} ${H - 30} ${stageX(1) - 10} ${SPINE_Y + 80} Q ${stageX(1) - 46} ${SPINE_Y + 30} ${stageX(1) - 22} ${SPINE_Y}`}
+          fill="none"
+          stroke={hairline}
+          strokeDasharray="3 6"
+          strokeWidth={1}
+        />
+        <text
+          x={(stageX(1) + stageX(12)) / 2}
+          y={H - 18}
+          textAnchor="middle"
+          fontSize={9}
+          className="font-mono"
+          fill={faintText}
+          style={{ letterSpacing: "0.3em", textTransform: "uppercase" }}
+        >
+          the cycle begins again
+        </text>
+
+        {/* ——— Stage nodes on spine ——— */}
+        {STAGES.map((stage) => {
+          const x = stageX(stage.number);
           const act = JOURNEY_ACTS.find((a) => a.id === stage.act)!;
           const isActive =
             activeStage === stage.number || activeStages.includes(stage.number);
-          const label = polar(LABEL_RADIUS, stage.clockPosition);
-          // Rotate label tangent to the ring so adjacent labels don't collide.
-          // Flip on the lower half so text stays upright/readable.
-          const cp = ((stage.clockPosition % 360) + 360) % 360;
-          const flip = cp > 90 && cp < 270;
-          const baseRot = cp - 90; // tangent to circle
-          const labelRot = flip ? baseRot + 180 : baseRot;
           return (
             <g
               key={stage.number}
@@ -191,18 +250,26 @@ export default function HeroJourneyWheel() {
                 selectStage(activeStage === stage.number ? null : stage.number);
               }}
             >
+              {/* invisible hit target */}
+              <rect
+                x={x - 28}
+                y={SPINE_Y - 70}
+                width={56}
+                height={140}
+                fill="transparent"
+              />
               <circle
-                cx={p.x}
-                cy={p.y}
+                cx={x}
+                cy={SPINE_Y}
                 r={isActive ? 13 : 9}
-                fill={light ? "var(--color-bg)" : "var(--color-bg)"}
+                fill="var(--color-bg)"
                 stroke={act.color}
                 strokeWidth={isActive ? 2.2 : 1.4}
                 style={{ transition: "all 200ms ease" }}
               />
               <text
-                x={p.x}
-                y={p.y + 3.5}
+                x={x}
+                y={SPINE_Y + 3.5}
                 textAnchor="middle"
                 className="font-mono"
                 fontSize={9}
@@ -211,164 +278,175 @@ export default function HeroJourneyWheel() {
               >
                 {stage.number}
               </text>
-              <text
-                x={label.x}
-                y={label.y}
-                textAnchor="middle"
-                fontSize={9.5}
-                className="font-mono"
-                fill={
-                  isActive
-                    ? act.color
-                    : light
-                      ? "#5a5040"
-                      : "#a8a090"
-                }
-                transform={`rotate(${labelRot} ${label.x} ${label.y})`}
-                style={{
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  pointerEvents: "none",
-                  transition: "fill 200ms ease",
-                }}
-              >
-                {stage.name}
-              </text>
-            </g>
-          );
-        })}
-
-        {/* Archetype masks at outer ring */}
-        {placements.map(({ archetype, angle }) => {
-          const p = polar(ARCHETYPE_RADIUS, angle);
-          const namePos = polar(MASK_LABEL_RADIUS, angle);
-          const dim =
-            (activeStage !== null && !activeRoles.includes(archetype.slug)) ||
-            (activeMask !== null && activeMask !== archetype.slug);
-          const hi = activeMask === archetype.slug || activeRoles.includes(archetype.slug);
-          const href = `/heros-journey/archetype/${archetype.slug}`;
-          return (
-            <g key={archetype.slug}>
               <g
-                style={{ cursor: "pointer", transition: "opacity 200ms ease" }}
-                opacity={dim ? 0.3 : 1}
-                onPointerEnter={(e) => {
-                  if (e.pointerType === "mouse") selectMask(archetype.slug);
-                }}
-                onPointerLeave={(e) => {
-                  if (e.pointerType === "mouse") clearSelection();
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  // Desktop pointer: hover already set active → navigate.
-                  // Touch/pen: first tap selects; already-selected mask navigates.
-                  const isMouse = (e.nativeEvent as PointerEvent).pointerType === "mouse";
-                  if (isMouse || activeMask === archetype.slug) {
-                    router.push(href);
-                  } else {
-                    selectMask(archetype.slug);
-                  }
-                }}
+                transform={`translate(${x} ${SPINE_Y + 28}) rotate(-32)`}
+                style={{ pointerEvents: "none" }}
               >
-                {archetype.primaryStages.map((n) => {
-                  const s = JOURNEY_STAGES.find((x) => x.number === n);
-                  if (!s) return null;
-                  const sp = polar(STAGE_RADIUS, s.clockPosition);
-                  // Only draw a connector when something is being hovered:
-                  // - mask hover: show all of that mask's lines
-                  // - stage hover: show only the lines that land on that stage
-                  const showAllForMask = activeMask === archetype.slug;
-                  const showForStage = activeStage === n;
-                  const visible = showAllForMask || showForStage;
-                  if (!visible) return null;
-                  return (
-                    <line
-                      key={n}
-                      x1={p.x}
-                      y1={p.y}
-                      x2={sp.x}
-                      y2={sp.y}
-                      stroke={archetype.accentColor}
-                      strokeOpacity={0.6}
-                      strokeWidth={1.25}
-                      strokeLinecap="round"
-                      style={{ transition: "opacity 200ms ease" }}
-                    />
-                  );
-                })}
-                <circle
-                  cx={p.x}
-                  cy={p.y}
-                  r={hi ? 22 : 18}
-                  fill={
-                    hi
-                      ? `${archetype.accentColor}${light ? "22" : "2A"}`
-                      : "var(--color-bg)"
-                  }
-                  stroke={archetype.accentColor}
-                  strokeWidth={hi ? 2 : 1.3}
-                  style={{ transition: "all 200ms ease" }}
-                />
                 <text
-                  x={p.x}
-                  y={p.y + 6}
-                  textAnchor="middle"
-                  fontSize={18}
-                  fill={archetype.accentColor}
-                  style={{ pointerEvents: "none" }}
-                  className="font-serif"
-                >
-                  {archetype.symbol}
-                </text>
-                <text
-                  x={namePos.x}
-                  y={namePos.y + 3}
-                  textAnchor="middle"
-                  fontSize={8.5}
+                  textAnchor="end"
+                  fontSize={10}
                   className="font-mono"
-                  fill={
-                    hi
-                      ? archetype.accentColor
-                      : light
-                        ? "#5a5040"
-                        : "#a8a090"
-                  }
+                  fill={isActive ? act.color : mutedText}
                   style={{
-                    letterSpacing: "0.18em",
+                    letterSpacing: "0.14em",
                     textTransform: "uppercase",
-                    pointerEvents: "none",
+                    transition: "fill 200ms ease",
                   }}
                 >
-                  {archetype.name.replace("The ", "")}
+                  {stage.name}
                 </text>
               </g>
             </g>
           );
         })}
 
-        {/* Center label */}
+        {/* ——— Swim lanes ——— */}
+        {orderedMasks.map((archetype, laneIdx) => {
+          const laneY = LANE_TOP + laneIdx * LANE_H;
+          const stages = [...archetype.primaryStages].sort((a, b) => a - b);
+          const dim =
+            (activeStage !== null && !activeRoles.includes(archetype.slug)) ||
+            (activeMask !== null && activeMask !== archetype.slug);
+          const hi =
+            activeMask === archetype.slug ||
+            activeRoles.includes(archetype.slug);
+          const href = `/heros-journey/archetype/${archetype.slug}`;
+
+          // lane baseline
+          const laneX1 = stageX(stages[0]);
+          const laneX2 = stageX(stages[stages.length - 1]);
+
+          return (
+            <g
+              key={archetype.slug}
+              opacity={dim ? 0.28 : 1}
+              style={{ cursor: "pointer", transition: "opacity 200ms ease" }}
+              onPointerEnter={(e) => {
+                if (e.pointerType === "mouse") selectMask(archetype.slug);
+              }}
+              onPointerLeave={(e) => {
+                if (e.pointerType === "mouse") clearSelection();
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                const isMouse =
+                  (e.nativeEvent as PointerEvent).pointerType === "mouse";
+                if (isMouse || activeMask === archetype.slug) {
+                  router.push(href);
+                } else {
+                  selectMask(archetype.slug);
+                }
+              }}
+            >
+              {/* lane guide */}
+              <line
+                x1={PAD_L - 18}
+                x2={W - PAD_R}
+                y1={laneY}
+                y2={laneY}
+                stroke={hairline}
+                strokeDasharray="1 4"
+              />
+
+              {/* mask label (left gutter) */}
+              <text
+                x={PAD_L - 26}
+                y={laneY - 2}
+                textAnchor="end"
+                fontSize={10}
+                className="font-mono"
+                fill={hi ? archetype.accentColor : mutedText}
+                style={{
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  transition: "fill 200ms ease",
+                }}
+              >
+                {archetype.name.replace("The ", "")}
+              </text>
+              <text
+                x={PAD_L - 26}
+                y={laneY + 12}
+                textAnchor="end"
+                fontSize={16}
+                fill={archetype.accentColor}
+                className="font-serif"
+              >
+                {archetype.symbol}
+              </text>
+
+              {/* active segment */}
+              <line
+                x1={laneX1}
+                x2={laneX2}
+                y1={laneY}
+                y2={laneY}
+                stroke={archetype.accentColor}
+                strokeOpacity={hi ? 0.9 : 0.55}
+                strokeWidth={hi ? 2.2 : 1.4}
+                strokeLinecap="round"
+                style={{ transition: "all 200ms ease" }}
+              />
+
+              {/* intersection markers at each primaryStage */}
+              {stages.map((n) => {
+                const x = stageX(n);
+                const stageActive =
+                  activeStage === n || activeMask === archetype.slug;
+                return (
+                  <g key={n}>
+                    {/* drop-line up to spine when this pairing is highlighted */}
+                    {stageActive && (
+                      <line
+                        x1={x}
+                        x2={x}
+                        y1={SPINE_Y + 14}
+                        y2={laneY}
+                        stroke={archetype.accentColor}
+                        strokeOpacity={0.5}
+                        strokeWidth={1}
+                        strokeDasharray="2 3"
+                      />
+                    )}
+                    <circle
+                      cx={x}
+                      cy={laneY}
+                      r={hi ? 6.5 : 4.5}
+                      fill="var(--color-bg)"
+                      stroke={archetype.accentColor}
+                      strokeWidth={hi ? 2 : 1.4}
+                      style={{ transition: "all 200ms ease" }}
+                    />
+                  </g>
+                );
+              })}
+            </g>
+          );
+        })}
+
+        {/* ——— Title + dynamic caption ——— */}
         <text
-          x={CENTER}
-          y={CENTER - 8}
-          textAnchor="middle"
-          fontSize={9}
+          x={PAD_L - 26}
+          y={28}
+          textAnchor="end"
+          fontSize={10}
           className="font-mono"
-          fill={light ? "#7a6e5f" : "#8a8070"}
+          fill={faintText}
           style={{ letterSpacing: "0.3em", textTransform: "uppercase" }}
         >
           The Monomyth
         </text>
         <text
-          x={CENTER}
-          y={CENTER + 10}
-          textAnchor="middle"
-          fontSize={11}
+          x={PAD_L - 26}
+          y={46}
+          textAnchor="end"
+          fontSize={11.5}
           className="font-serif"
           fill={HEROSJOURNEY_COLORS.accent}
           fontStyle="italic"
         >
           {activeStage
-            ? JOURNEY_STAGES.find((s) => s.number === activeStage)?.name
+            ? STAGES.find((s) => s.number === activeStage)?.name
             : activeMask
               ? ALL_HEROSJOURNEY.find((a) => a.slug === activeMask)?.name
               : "twelve stages · eight masks"}
