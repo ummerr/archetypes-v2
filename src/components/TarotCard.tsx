@@ -10,6 +10,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { TarotArchetype } from "@/types/tarot";
+import { TAROT_PHASES } from "@/data/tarot/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
 
 type Size = "sm" | "md" | "lg";
@@ -42,7 +43,9 @@ export default function TarotCard({
   const { theme } = useTheme();
   const light = theme === "light";
   const dim = DIMS[size];
-  const color = archetype.accentColor;
+  const color =
+    TAROT_PHASES.find((p) => p.ids.includes(archetype.id))?.color ??
+    archetype.accentColor;
   const [flipped, setFlipped] = useState(initialFlipped);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -240,7 +243,7 @@ export default function TarotCard({
               {[
                 { label: "Fullness", pole: archetype.poles.fullness, tint: color },
                 { label: "Active Shadow", pole: archetype.poles.activeShadow, tint: "#C0392B" },
-                { label: "Passive Shadow", pole: archetype.poles.passiveShadow, tint: "#6B4E8C" },
+                { label: "Passive Shadow", pole: archetype.poles.passiveShadow, tint: "#4A5A7A" },
               ].map((row) => (
                 <div
                   key={row.label}

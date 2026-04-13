@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
 
 export default function TarotModalShell({
   children,
@@ -10,63 +9,81 @@ export default function TarotModalShell({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    const raf = requestAnimationFrame(() => setOpen(true));
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") router.back();
+      if (e.key === "Escape") close();
     };
     window.addEventListener("keydown", onKey);
     return () => {
+      cancelAnimationFrame(raf);
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
     };
-  }, [router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function close() {
+    setOpen(false);
+    setTimeout(() => router.back(), 220);
+  }
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.25 }}
+    <div className="fixed inset-0 z-[100] overflow-y-auto">
+      <div
+        onClick={close}
+        aria-hidden
+        className="fixed inset-0 transition-opacity duration-[220ms] ease-out"
+        style={{
+          background: "rgba(6, 6, 10, 0.78)",
+          opacity: open ? 1 : 0,
+        }}
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        className="relative min-h-full flex items-start justify-center px-4 py-10 md:py-14"
       >
-        <motion.div
-          className="absolute inset-0 bg-black/70 backdrop-blur-md cursor-pointer"
-          onClick={() => router.back()}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          aria-hidden
-        />
-        <motion.div
-          role="dialog"
-          aria-modal="true"
-          className="relative z-10 w-full max-w-5xl mx-auto my-8 md:my-12 rounded-lg overflow-hidden shadow-2xl"
-          initial={{ opacity: 0, y: 24, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 24, scale: 0.97 }}
-          transition={{ type: "spring", stiffness: 150, damping: 20, mass: 0.9 }}
-          style={{ background: "var(--color-bg, #0A0A0F)" }}
+        <div
+          className="relative w-full max-w-5xl transition-all duration-[260ms] ease-out"
+          style={{
+            opacity: open ? 1 : 0,
+            transform: open ? "translateY(0)" : "translateY(-12px)",
+            background: "var(--color-bg, #0A0A0F)",
+            borderTop: "1px solid rgba(212,175,55,0.35)",
+            borderBottom: "1px solid rgba(212,175,55,0.15)",
+          }}
         >
-          <button
-            type="button"
-            onClick={() => router.back()}
-            aria-label="Close"
-            className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full flex items-center justify-center font-mono text-sm text-text-secondary hover:text-gold transition-colors"
+          {/* Top rail: breadcrumb-like label + close */}
+          <div
+            className="sticky top-0 z-20 flex items-center justify-between px-6 py-3"
             style={{
-              background: "rgba(0,0,0,0.35)",
-              border: "1px solid rgba(212,175,55,0.3)",
+              background:
+                "linear-gradient(180deg, var(--color-bg, #0A0A0F) 70%, transparent)",
             }}
           >
-            ✕
-          </button>
+            <span className="font-mono text-[9px] tracking-[0.4em] text-gold/70 uppercase">
+              Major Arcanum
+            </span>
+            <button
+              type="button"
+              onClick={close}
+              aria-label="Close"
+              className="group inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.3em] uppercase text-muted hover:text-gold transition-colors"
+            >
+              <span>close</span>
+              <span className="text-[8px] opacity-60 group-hover:opacity-100">esc</span>
+              <span className="w-4 h-px bg-current" />
+            </button>
+          </div>
+
           {children}
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
+        </div>
+      </div>
+    </div>
   );
 }

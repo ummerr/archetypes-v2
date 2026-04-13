@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { TarotArchetype, TarotPhaseGroup } from "@/types/tarot";
-import { ALL_TAROT } from "@/data/tarot/archetypes";
+import { ALL_TAROT, TAROT_PHASES } from "@/data/tarot/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
 import TarotCard from "@/components/TarotCard";
 import TarotDeckArc from "@/components/TarotDeckArc";
@@ -26,7 +26,9 @@ export default function TarotDetailClient({
 }: Props) {
   const { theme } = useTheme();
   const light = theme === "light";
-  const color = archetype.accentColor;
+  const color = phase.color;
+  const phaseColorFor = (id: number) =>
+    TAROT_PHASES.find((p) => p.ids.includes(id))?.color ?? color;
 
   const poles = [
     {
@@ -47,7 +49,7 @@ export default function TarotDetailClient({
       key: "passive" as const,
       label: "Passive Shadow",
       pole: archetype.poles.passiveShadow,
-      tint: "#6B4E8C",
+      tint: "#4A5A7A",
       kicker: "Under-expression — the repressed or deflated pole",
     },
   ];
@@ -231,10 +233,10 @@ export default function TarotDetailClient({
                 href={`/tarot/archetype/${previous.slug}`}
                 className="group block rounded-sm p-4 transition-all duration-300"
                 style={{
-                  border: `1px solid ${previous.accentColor}${light ? "25" : "18"}`,
+                  border: `1px solid ${phaseColorFor(previous.id)}${light ? "25" : "18"}`,
                   background: light
-                    ? `linear-gradient(145deg, ${previous.accentColor}08, transparent)`
-                    : `linear-gradient(145deg, ${previous.accentColor}08, transparent)`,
+                    ? `linear-gradient(145deg, ${phaseColorFor(previous.id)}08, transparent)`
+                    : `linear-gradient(145deg, ${phaseColorFor(previous.id)}08, transparent)`,
                 }}
               >
                 <p className="font-mono text-[8px] tracking-[0.3em] text-muted uppercase mb-2">
@@ -242,7 +244,7 @@ export default function TarotDetailClient({
                 </p>
                 <p
                   className="font-serif text-xl font-medium"
-                  style={{ color: previous.accentColor }}
+                  style={{ color: phaseColorFor(previous.id) }}
                 >
                   {previous.numeral} · {previous.name}
                 </p>
@@ -256,10 +258,10 @@ export default function TarotDetailClient({
                 href={`/tarot/archetype/${next.slug}`}
                 className="group block rounded-sm p-4 transition-all duration-300 sm:text-right"
                 style={{
-                  border: `1px solid ${next.accentColor}${light ? "25" : "18"}`,
+                  border: `1px solid ${phaseColorFor(next.id)}${light ? "25" : "18"}`,
                   background: light
-                    ? `linear-gradient(145deg, ${next.accentColor}08, transparent)`
-                    : `linear-gradient(145deg, ${next.accentColor}08, transparent)`,
+                    ? `linear-gradient(145deg, ${phaseColorFor(next.id)}08, transparent)`
+                    : `linear-gradient(145deg, ${phaseColorFor(next.id)}08, transparent)`,
                 }}
               >
                 <p className="font-mono text-[8px] tracking-[0.3em] text-muted uppercase mb-2">
@@ -267,7 +269,7 @@ export default function TarotDetailClient({
                 </p>
                 <p
                   className="font-serif text-xl font-medium"
-                  style={{ color: next.accentColor }}
+                  style={{ color: phaseColorFor(next.id) }}
                 >
                   {next.numeral} · {next.name}
                 </p>
@@ -302,20 +304,20 @@ export default function TarotDetailClient({
                   href={`/tarot/archetype/${s.slug}`}
                   className="group block rounded-sm p-3 transition-all duration-300"
                   style={{
-                    border: `1px solid ${s.accentColor}${light ? "25" : "15"}`,
-                    background: `linear-gradient(145deg, ${s.accentColor}${light ? "08" : "06"}, transparent)`,
+                    border: `1px solid ${phase.color}${light ? "25" : "15"}`,
+                    background: `linear-gradient(145deg, ${phase.color}${light ? "08" : "06"}, transparent)`,
                   }}
                 >
                   <p
                     className="font-mono text-[8px] tracking-[0.3em] uppercase mb-1"
-                    style={{ color: s.accentColor + "CC" }}
+                    style={{ color: phase.color + "CC" }}
                   >
                     {s.numeral}
                   </p>
                   <p
                     className="font-serif text-base font-medium"
                     style={{
-                      color: light ? "var(--color-text-primary)" : s.accentColor,
+                      color: light ? "var(--color-text-primary)" : phase.color,
                     }}
                   >
                     {s.name}
