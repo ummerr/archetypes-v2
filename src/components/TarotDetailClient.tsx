@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { TarotArchetype, TarotPhaseGroup } from "@/types/tarot";
+import { ALL_TAROT } from "@/data/tarot/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
 import TarotCard from "@/components/TarotCard";
+import TarotDeckArc from "@/components/TarotDeckArc";
 
 interface Props {
   archetype: TarotArchetype;
@@ -11,6 +13,7 @@ interface Props {
   phaseSiblings: TarotArchetype[];
   previous: TarotArchetype | null;
   next: TarotArchetype | null;
+  variant?: "page" | "modal";
 }
 
 export default function TarotDetailClient({
@@ -19,6 +22,7 @@ export default function TarotDetailClient({
   phaseSiblings,
   previous,
   next,
+  variant = "page",
 }: Props) {
   const { theme } = useTheme();
   const light = theme === "light";
@@ -48,9 +52,33 @@ export default function TarotDetailClient({
     },
   ];
 
+  const isModal = variant === "modal";
+
   return (
-    <div className="min-h-screen px-6 pt-24 pb-24 md:pt-32">
+    <div
+      className={
+        isModal
+          ? "px-6 pt-10 pb-14"
+          : "min-h-screen px-6 pt-24 pb-24 md:pt-32"
+      }
+    >
       <div className="max-w-4xl mx-auto">
+        {/* Journey arc — full 22, current card highlighted */}
+        <div className={`-mx-2 ${isModal ? "mb-4" : "mb-6"} animate-slide-up`}>
+          <TarotDeckArc
+            cards={ALL_TAROT}
+            activeSlug={archetype.slug}
+            height={200}
+            fanDeg={60}
+            arcRadius={900}
+            cardW={40}
+            cardH={64}
+            showLegend={false}
+            showHoverLabel={false}
+            liftY={-14}
+          />
+        </div>
+
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-6 animate-slide-up flex-wrap">
           <Link

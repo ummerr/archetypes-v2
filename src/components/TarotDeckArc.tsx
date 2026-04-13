@@ -3,64 +3,95 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ALL_TAROT, TAROT_PHASES } from "@/data/tarot/archetypes";
+import type { TarotArchetype } from "@/types/tarot";
 import { useTheme } from "@/components/ThemeProvider";
-
-const CARD_W = 68;
-const CARD_H = 108;
-const ARC_RADIUS = 1300; // shallow arc
-const FAN_DEG = 54; // total fan angle
 
 const GRAIN_SVG =
   "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
-export default function TarotDeckArc() {
+interface Props {
+  cards?: TarotArchetype[];
+  activeSlug?: string;
+  maxWidth?: number;
+  height?: number;
+  fanDeg?: number;
+  arcRadius?: number;
+  cardW?: number;
+  cardH?: number;
+  showLegend?: boolean;
+  showHoverLabel?: boolean;
+  strokeColor?: string;
+  liftY?: number;
+}
+
+export default function TarotDeckArc({
+  cards = ALL_TAROT,
+  activeSlug,
+  maxWidth = 980,
+  height = 360,
+  fanDeg = 54,
+  arcRadius = 1300,
+  cardW = 68,
+  cardH = 108,
+  showLegend = true,
+  showHoverLabel = true,
+  strokeColor,
+  liftY = -24,
+}: Props) {
   const { theme } = useTheme();
   const light = theme === "light";
   const [hovered, setHovered] = useState<string | null>(null);
 
-  const n = ALL_TAROT.length;
-  const step = FAN_DEG / (n - 1);
-  const start = -FAN_DEG / 2;
+  const n = cards.length;
+  const step = n > 1 ? fanDeg / (n - 1) : 0;
+  const start = -fanDeg / 2;
 
   const phaseColor = (id: number) =>
     TAROT_PHASES.find((p) => p.ids.includes(id))?.color ?? "#D4AF37";
+
+  // arc path sized to current viewBox
+  const vbW = 980;
+  const vbH = height;
+  const baselineY = vbH - 30;
+  const peakY = vbH * 0.44;
+  const arcPath = `M 40 ${baselineY} Q ${vbW / 2} ${peakY} ${vbW - 40} ${baselineY}`;
 
   return (
     <div className="w-full">
       <div
         className="relative mx-auto"
-        style={{
-          width: "100%",
-          maxWidth: 980,
-          height: 360,
-          perspective: "1400px",
-        }}
+        style={{ width: "100%", maxWidth, height, perspective: "1400px" }}
       >
         {/* ground arc */}
         <svg
           className="absolute inset-x-0 bottom-0 pointer-events-none"
           width="100%"
-          height="360"
-          viewBox="0 0 980 360"
+          height={height}
+          viewBox={`0 0 ${vbW} ${vbH}`}
           preserveAspectRatio="none"
         >
           <defs>
             <linearGradient id="arcStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={TAROT_PHASES[0].color} stopOpacity="0" />
-              <stop offset="15%" stopColor={TAROT_PHASES[0].color} stopOpacity={light ? 0.55 : 0.4} />
-              <stop offset="38%" stopColor={TAROT_PHASES[0].color} stopOpacity={light ? 0.55 : 0.4} />
-              <stop offset="50%" stopColor={TAROT_PHASES[1].color} stopOpacity={light ? 0.55 : 0.4} />
-              <stop offset="68%" stopColor={TAROT_PHASES[1].color} stopOpacity={light ? 0.55 : 0.4} />
-              <stop offset="80%" stopColor={TAROT_PHASES[2].color} stopOpacity={light ? 0.55 : 0.4} />
-              <stop offset="100%" stopColor={TAROT_PHASES[2].color} stopOpacity="0" />
+              {strokeColor ? (
+                <>
+                  <stop offset="0%" stopColor={strokeColor} stopOpacity="0" />
+                  <stop offset="50%" stopColor={strokeColor} stopOpacity={light ? 0.5 : 0.4} />
+                  <stop offset="100%" stopColor={strokeColor} stopOpacity="0" />
+                </>
+              ) : (
+                <>
+                  <stop offset="0%" stopColor={TAROT_PHASES[0].color} stopOpacity="0" />
+                  <stop offset="15%" stopColor={TAROT_PHASES[0].color} stopOpacity={light ? 0.55 : 0.4} />
+                  <stop offset="38%" stopColor={TAROT_PHASES[0].color} stopOpacity={light ? 0.55 : 0.4} />
+                  <stop offset="50%" stopColor={TAROT_PHASES[1].color} stopOpacity={light ? 0.55 : 0.4} />
+                  <stop offset="68%" stopColor={TAROT_PHASES[1].color} stopOpacity={light ? 0.55 : 0.4} />
+                  <stop offset="80%" stopColor={TAROT_PHASES[2].color} stopOpacity={light ? 0.55 : 0.4} />
+                  <stop offset="100%" stopColor={TAROT_PHASES[2].color} stopOpacity="0" />
+                </>
+              )}
             </linearGradient>
           </defs>
-          <path
-            d="M 40 330 Q 490 160 940 330"
-            fill="none"
-            stroke="url(#arcStroke)"
-            strokeWidth="1"
-          />
+          <path d={arcPath} fill="none" stroke="url(#arcStroke)" strokeWidth="1" />
         </svg>
 
         <div
@@ -73,11 +104,12 @@ export default function TarotDeckArc() {
             transformStyle: "preserve-3d",
           }}
         >
-          {ALL_TAROT.map((card, i) => {
+          {cards.map((card, i) => {
             const angle = start + step * i;
-            const isHovered = hovered === card.slug;
+            const isActive = activeSlug === card.slug;
+            const isHovered = hovered === card.slug || isActive;
             const color = phaseColor(card.id);
-            const liftY = isHovered ? -24 : 0;
+            const lift = isHovered ? liftY : 0;
 
             return (
               <Link
@@ -88,15 +120,15 @@ export default function TarotDeckArc() {
                 aria-label={`${card.numeral} — ${card.name}`}
                 className="group absolute block"
                 style={{
-                  width: CARD_W,
-                  height: CARD_H,
-                  left: -CARD_W / 2,
+                  width: cardW,
+                  height: cardH,
+                  left: -cardW / 2,
                   bottom: 0,
-                  transformOrigin: `center ${ARC_RADIUS}px`,
-                  transform: `rotate(${angle}deg) translateY(${liftY}px)`,
+                  transformOrigin: `center ${arcRadius}px`,
+                  transform: `rotate(${angle}deg) translateY(${lift}px)`,
                   transition:
                     "transform 420ms cubic-bezier(0.22, 1, 0.36, 1), z-index 0ms",
-                  zIndex: isHovered ? 50 : i,
+                  zIndex: isActive ? 60 : isHovered ? 50 : i,
                   willChange: "transform",
                 }}
               >
@@ -106,11 +138,11 @@ export default function TarotDeckArc() {
                     background: light
                       ? `linear-gradient(165deg, #F8F5EE 0%, ${color}18 50%, #EAE7E0 100%)`
                       : `linear-gradient(165deg, #15151C 0%, ${color}22 50%, #08080C 100%)`,
-                    border: `1px solid ${color}${light ? (isHovered ? "88" : "55") : isHovered ? "80" : "40"}`,
+                    border: `1px solid ${color}${light ? (isHovered ? "AA" : "55") : isHovered ? "90" : "40"}`,
                     boxShadow: isHovered
                       ? light
-                        ? `0 14px 28px -10px ${color}80, 0 0 0 1px ${color}50`
-                        : `0 14px 32px -8px #000, 0 0 24px ${color}60`
+                        ? `0 14px 28px -10px ${color}90, 0 0 0 1px ${color}60`
+                        : `0 14px 32px -8px #000, 0 0 24px ${color}70`
                       : light
                         ? `0 4px 10px -6px rgba(0,0,0,0.18)`
                         : `0 4px 10px -4px #000, 0 0 8px ${color}20`,
@@ -133,8 +165,7 @@ export default function TarotDeckArc() {
                       className="font-serif text-2xl leading-none"
                       style={{
                         color,
-                        textShadow:
-                          !light && isHovered ? `0 0 10px ${color}` : "none",
+                        textShadow: !light && isHovered ? `0 0 10px ${color}` : "none",
                       }}
                       aria-hidden
                     >
@@ -142,9 +173,7 @@ export default function TarotDeckArc() {
                     </span>
                     <span
                       className="font-serif text-[8px] tracking-tight leading-tight text-center px-0.5"
-                      style={{
-                        color: light ? "var(--color-text-primary)" : color,
-                      }}
+                      style={{ color: light ? "var(--color-text-primary)" : color }}
                     >
                       {card.name.replace(/^The /, "")}
                     </span>
@@ -166,52 +195,57 @@ export default function TarotDeckArc() {
           })}
         </div>
 
-        {/* Hovered label */}
-        <div className="absolute top-0 left-0 right-0 text-center pointer-events-none h-10 flex items-center justify-center">
-          {hovered && (() => {
-            const card = ALL_TAROT.find((c) => c.slug === hovered)!;
-            const color = phaseColor(card.id);
-            return (
-              <div className="animate-slide-up">
-                <p
-                  className="font-mono text-[9px] tracking-[0.35em] uppercase mb-0.5"
-                  style={{ color: color + "CC" }}
-                >
-                  Arcanum {card.numeral}
-                </p>
-                <p
-                  className="font-serif text-xl md:text-2xl font-medium tracking-tight"
-                  style={{ color: light ? "var(--color-text-primary)" : color }}
-                >
-                  {card.name}
-                </p>
-              </div>
-            );
-          })()}
-        </div>
+        {showHoverLabel && (
+          <div className="absolute top-0 left-0 right-0 text-center pointer-events-none h-10 flex items-center justify-center">
+            {(() => {
+              const slug = hovered ?? activeSlug;
+              if (!slug) return null;
+              const card = cards.find((c) => c.slug === slug);
+              if (!card) return null;
+              const color = phaseColor(card.id);
+              return (
+                <div className="animate-slide-up">
+                  <p
+                    className="font-mono text-[9px] tracking-[0.35em] uppercase mb-0.5"
+                    style={{ color: color + "CC" }}
+                  >
+                    Arcanum {card.numeral}
+                  </p>
+                  <p
+                    className="font-serif text-xl md:text-2xl font-medium tracking-tight"
+                    style={{ color: light ? "var(--color-text-primary)" : color }}
+                  >
+                    {card.name}
+                  </p>
+                </div>
+              );
+            })()}
+          </div>
+        )}
       </div>
 
-      {/* Phase legend */}
-      <div className="flex items-center justify-center gap-6 mt-6 flex-wrap">
-        {TAROT_PHASES.map((phase) => (
-          <div key={phase.id} className="flex items-center gap-2">
-            <span
-              className="w-6 h-px"
-              style={{ background: phase.color }}
-              aria-hidden
-            />
-            <span
-              className="font-mono text-[9px] tracking-[0.3em] uppercase"
-              style={{ color: phase.color + (light ? "EE" : "CC") }}
-            >
-              {phase.label}
-            </span>
-            <span className="font-mono text-[8px] tracking-[0.2em] text-muted/70 uppercase">
-              {phase.range}
-            </span>
-          </div>
-        ))}
-      </div>
+      {showLegend && (
+        <div className="flex items-center justify-center gap-6 mt-6 flex-wrap">
+          {TAROT_PHASES.map((phase) => (
+            <div key={phase.id} className="flex items-center gap-2">
+              <span
+                className="w-6 h-px"
+                style={{ background: phase.color }}
+                aria-hidden
+              />
+              <span
+                className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                style={{ color: phase.color + (light ? "EE" : "CC") }}
+              >
+                {phase.label}
+              </span>
+              <span className="font-mono text-[8px] tracking-[0.2em] text-muted/70 uppercase">
+                {phase.range}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

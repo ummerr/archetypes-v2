@@ -92,23 +92,19 @@ export default function TarotCard({
 
   const borderColor = light ? color + "55" : color + "40";
 
-  return (
-    <div
-      className="relative inline-block select-none"
-      style={{ width: dim.w, height: dim.h, perspective: "1200px" }}
+  const inner = (
+    <motion.div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      onClick={href ? undefined : () => setFlipped((f) => !f)}
+      className="relative w-full h-full cursor-pointer"
+      style={{
+        transformStyle: "preserve-3d",
+        rotateX,
+        rotateY,
+      }}
     >
-      <motion.div
-        ref={ref}
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
-        onClick={() => setFlipped((f) => !f)}
-        className="relative w-full h-full cursor-pointer"
-        style={{
-          transformStyle: "preserve-3d",
-          rotateX,
-          rotateY,
-        }}
-      >
         {/* FRONT FACE */}
         <div
           className="absolute inset-0 rounded-md overflow-hidden"
@@ -272,19 +268,6 @@ export default function TarotCard({
               ))}
             </div>
 
-            {href && (
-              <div className="mt-auto pt-2">
-                <Link
-                  href={href}
-                  onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.3em] uppercase transition-colors duration-200"
-                  style={{ color }}
-                >
-                  <span>Open</span>
-                  <span aria-hidden>→</span>
-                </Link>
-              </div>
-            )}
           </div>
 
           {/* Film grain on back too */}
@@ -299,7 +282,25 @@ export default function TarotCard({
             }}
           />
         </div>
-      </motion.div>
+    </motion.div>
+  );
+
+  return (
+    <div
+      className="relative inline-block select-none"
+      style={{ width: dim.w, height: dim.h, perspective: "1200px" }}
+    >
+      {href ? (
+        <Link
+          href={href}
+          aria-label={`${archetype.numeral} — ${archetype.name}`}
+          className="block w-full h-full"
+        >
+          {inner}
+        </Link>
+      ) : (
+        inner
+      )}
     </div>
   );
 }

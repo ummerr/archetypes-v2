@@ -1,14 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { TAROT_PHASES, getTarotByPhase } from "@/data/tarot/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
 import TarotCard from "@/components/TarotCard";
-
-const TarotDeckArc = dynamic(() => import("@/components/TarotDeckArc"), {
-  ssr: false,
-});
+import TarotDeckArc from "@/components/TarotDeckArc";
 
 export default function TarotHome() {
   const { theme } = useTheme();
@@ -90,7 +86,24 @@ export default function TarotHome() {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-6 justify-center md:justify-start">
+                {/* Phase-scoped mini arc */}
+                <div className="-mx-2 mb-6">
+                  <TarotDeckArc
+                    cards={members}
+                    height={180}
+                    fanDeg={Math.min(40, members.length * 6)}
+                    arcRadius={700}
+                    cardW={44}
+                    cardH={70}
+                    maxWidth={720}
+                    showLegend={false}
+                    showHoverLabel={false}
+                    strokeColor={phase.color}
+                    liftY={-16}
+                  />
+                </div>
+
+                <div className="flex flex-wrap gap-8 justify-center md:justify-start">
                   {members.map((card, i) => (
                     <div
                       key={card.slug}
@@ -101,7 +114,7 @@ export default function TarotHome() {
                     >
                       <TarotCard
                         archetype={card}
-                        size="sm"
+                        size="md"
                         href={`/tarot/archetype/${card.slug}`}
                       />
                     </div>
