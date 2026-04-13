@@ -66,7 +66,7 @@ export default function TarotDetailClient({
     >
       <div className="max-w-4xl mx-auto">
         {/* Journey arc — full 22, current card highlighted */}
-        <div className={`-mx-2 ${isModal ? "mb-4" : "mb-6"} animate-slide-up`}>
+        <div className={`-mx-2 ${isModal ? "mb-12" : "mb-14"} animate-slide-up`}>
           <TarotDeckArc
             cards={ALL_TAROT}
             activeSlug={archetype.slug}
