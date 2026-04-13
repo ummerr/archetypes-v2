@@ -2,7 +2,7 @@
 
 import { useTheme } from "@/components/ThemeProvider";
 import MbtiTemperamentGrid from "@/components/MbtiTemperamentGrid";
-import MbtiCognitiveCompass from "@/components/MbtiCognitiveCompass";
+import MbtiDichotomies from "@/components/MbtiDichotomies";
 
 export default function MbtiHome() {
   const { theme } = useTheme();
@@ -43,24 +43,23 @@ export default function MbtiHome() {
         </div>
       </div>
 
-      {/* Cognitive Compass — spatial map of the 16 */}
-      <div className="px-6 pb-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-8 animate-slide-up" style={{ animationDelay: "120ms" }}>
+      {/* Four Dichotomies — what the letters mean */}
+      <div className="px-6 pb-20">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-12 animate-slide-up" style={{ animationDelay: "120ms" }}>
             <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-3">
-              Spatial map
+              The four cuts
             </p>
             <h2 className="font-serif text-3xl md:text-4xl font-medium text-text-primary tracking-tight">
-              The cognitive field
+              What the letters mean
             </h2>
-          </div>
-          <div className="animate-slide-up" style={{ animationDelay: "200ms" }}>
-            <MbtiCognitiveCompass />
-            <p className="mt-6 mx-auto max-w-xl text-center text-xs text-text-secondary font-light leading-relaxed">
-              Color follows the four temperaments below; position follows the
-              dichotomies. The two cuts rarely agree — which is the point.
+            <p className="mt-4 text-text-secondary text-sm md:text-base leading-relaxed max-w-2xl font-light">
+              Every type code is a stack of four choices — four poles, four
+              opposites. None is a deficit; each pair names a real division in
+              how minds organize the world.
             </p>
           </div>
+          <MbtiDichotomies />
         </div>
       </div>
 
