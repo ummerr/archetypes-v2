@@ -8,7 +8,6 @@ import ArchetypeDetailClient from "@/components/ArchetypeDetailClient";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   buildPageMetadata,
-  systemOgImage,
   absoluteUrl,
   SITE_NAME,
   SITE_AUTHOR,
@@ -36,7 +35,6 @@ export async function generateMetadata({
     title: `${archetype.name} — KWML Archetype`,
     description: truncate(`${archetype.description}${shadows}`),
     path: `/kwml/archetype/${archetype.slug}`,
-    ogImage: systemOgImage("kwml"),
     type: "article",
   });
 }

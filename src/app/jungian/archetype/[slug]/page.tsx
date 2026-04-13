@@ -8,7 +8,6 @@ import JungianDetailClient from "@/components/JungianDetailClient";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   buildPageMetadata,
-  systemOgImage,
   absoluteUrl,
   SITE_NAME,
   SITE_AUTHOR,
@@ -32,7 +31,6 @@ export async function generateMetadata({
     title: `${archetype.name} — Jungian Archetype`,
     description: truncate(archetype.description),
     path: `/jungian/archetype/${archetype.slug}`,
-    ogImage: systemOgImage("jungian"),
     type: "article",
   });
 }

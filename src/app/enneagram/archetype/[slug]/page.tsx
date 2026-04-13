@@ -9,7 +9,6 @@ import EnneagramDetailClient from "@/components/EnneagramDetailClient";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   buildPageMetadata,
-  systemOgImage,
   absoluteUrl,
   SITE_NAME,
   SITE_AUTHOR,
@@ -33,7 +32,6 @@ export async function generateMetadata({
     title: `${archetype.name} — Enneagram Type ${archetype.number}`,
     description: truncate(archetype.description),
     path: `/enneagram/archetype/${archetype.slug}`,
-    ogImage: systemOgImage("enneagram"),
     type: "article",
   });
 }

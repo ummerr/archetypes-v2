@@ -9,7 +9,6 @@ import TarotDetailClient from "@/components/TarotDetailClient";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   buildPageMetadata,
-  systemOgImage,
   absoluteUrl,
   SITE_NAME,
   SITE_AUTHOR,
@@ -33,7 +32,6 @@ export async function generateMetadata({
     title: `${archetype.name} — Major Arcanum ${archetype.numeral}`,
     description: truncate(archetype.description),
     path: `/tarot/archetype/${archetype.slug}`,
-    ogImage: systemOgImage("tarot"),
     type: "article",
   });
 }

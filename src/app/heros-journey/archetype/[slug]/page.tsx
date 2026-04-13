@@ -8,7 +8,6 @@ import HeroJourneyDetailClient from "@/components/HeroJourneyDetailClient";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   buildPageMetadata,
-  systemOgImage,
   absoluteUrl,
   SITE_NAME,
   SITE_AUTHOR,
@@ -32,7 +31,6 @@ export async function generateMetadata({
     title: `${archetype.name} — Hero's Journey Archetype`,
     description: truncate(archetype.description),
     path: `/heros-journey/archetype/${archetype.slug}`,
-    ogImage: systemOgImage("heros-journey"),
     type: "article",
   });
 }

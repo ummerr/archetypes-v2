@@ -28,26 +28,31 @@ export function buildPageMetadata(opts: {
   ogImage?: string;
   type?: "website" | "article";
 }): Metadata {
-  const image = opts.ogImage ?? DEFAULT_OG_IMAGE;
   const url = absoluteUrl(opts.path);
+  const openGraph: NonNullable<Metadata["openGraph"]> = {
+    type: opts.type ?? "website",
+    url,
+    title: opts.title,
+    description: opts.description,
+    siteName: SITE_NAME,
+  };
+  const twitter: NonNullable<Metadata["twitter"]> = {
+    card: "summary_large_image",
+    title: opts.title,
+    description: opts.description,
+  };
+  if (opts.ogImage) {
+    openGraph.images = [
+      { url: opts.ogImage, width: 1200, height: 630, alt: opts.title },
+    ];
+    twitter.images = [opts.ogImage];
+  }
   return {
     title: opts.title,
     description: opts.description,
     alternates: { canonical: opts.path },
-    openGraph: {
-      type: opts.type ?? "website",
-      url,
-      title: opts.title,
-      description: opts.description,
-      siteName: SITE_NAME,
-      images: [{ url: image, width: 1200, height: 630, alt: opts.title }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: opts.title,
-      description: opts.description,
-      images: [image],
-    },
+    openGraph,
+    twitter,
   };
 }
 

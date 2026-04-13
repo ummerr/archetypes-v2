@@ -9,7 +9,6 @@ import MbtiDetailClient from "@/components/MbtiDetailClient";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   buildPageMetadata,
-  systemOgImage,
   absoluteUrl,
   SITE_NAME,
   SITE_AUTHOR,
@@ -33,7 +32,6 @@ export async function generateMetadata({
     title: `${archetype.code} — ${archetype.nickname}`,
     description: truncate(archetype.tagline),
     path: `/mbti/archetype/${archetype.slug}`,
-    ogImage: systemOgImage("mbti"),
     type: "article",
   });
 }
