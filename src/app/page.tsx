@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { SYSTEMS } from "@/data/systems";
+import { PRACTICE_LINKS, ATLAS_LINKS, ABOUT_LINKS } from "@/data/nav";
 import type { SystemId } from "@/data/resonance";
 import { useTheme } from "@/components/ThemeProvider";
 import Particles from "@/components/Particles";
@@ -213,6 +214,36 @@ export default function Home() {
                 : "More systems arriving"}
               <span className="inline-block w-6 h-px bg-current align-middle ml-3" />
             </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto mt-16 grid md:grid-cols-3 gap-4">
+            {PRACTICE_LINKS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="group block rounded-sm border border-gold/15 hover:border-gold/40 bg-bg/40 p-5 transition-colors"
+              >
+                <div className="font-mono text-[9px] tracking-[0.3em] uppercase text-gold/70 mb-2">
+                  Practice
+                </div>
+                <div className="font-serif text-2xl text-text-primary mb-1">{l.label}</div>
+                {l.desc && (
+                  <div className="font-serif italic text-sm text-text-secondary">{l.desc}</div>
+                )}
+              </Link>
+            ))}
+          </div>
+
+          <div className="max-w-6xl mx-auto mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+            {[...ATLAS_LINKS, ABOUT_LINKS[0]].map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-secondary hover:text-gold transition-colors"
+              >
+                {l.label} →
+              </Link>
+            ))}
           </div>
         </div>
       </div>
