@@ -7,6 +7,7 @@ import AtlasLensCanvas, {
   type LensNodeMeta,
 } from "./AtlasLensCanvas";
 import ClusterGrid from "./ClusterGrid";
+import SectionHeading from "@/components/shared/SectionHeading";
 import type { ConstellationLayout } from "./ResonanceConstellation";
 
 interface Props {
@@ -25,7 +26,12 @@ export default function AtlasInteractive(props: Props) {
         highlightClusterId={highlight}
         onHighlightCluster={setHighlight}
       />
-      <ClusterGrid onHoverCluster={setHighlight} />
+      <div>
+        <SectionHeading kicker="Nine figures six traditions keep drawing">
+          What Survives Translation
+        </SectionHeading>
+        <ClusterGrid onHoverCluster={setHighlight} />
+      </div>
     </div>
   );
 }
