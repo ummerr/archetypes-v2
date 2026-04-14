@@ -8,7 +8,7 @@ import type { EnneagramArchetype } from "@/types/enneagram";
 
 type Slug = EnneagramArchetype["slug"];
 
-/* ─── 1 REFORMER — plumb line + level ring ──────────── */
+/* ─── 1 REFORMER - plumb line + level ring ──────────── */
 function ReformerTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const bob = useRef<THREE.Mesh>(null);
@@ -56,7 +56,7 @@ function ReformerTotem({ color, intensity }: { color: string; intensity: number 
   );
 }
 
-/* ─── 2 HELPER — offered heart in cupped hands ──────── */
+/* ─── 2 HELPER - offered heart in cupped hands ──────── */
 function HelperTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const heart = useRef<THREE.Mesh>(null);
@@ -117,7 +117,7 @@ function HelperTotem({ color, intensity }: { color: string; intensity: number })
   );
 }
 
-/* ─── 3 ACHIEVER — trophy prism + spotlight ─────────── */
+/* ─── 3 ACHIEVER - trophy prism + spotlight ─────────── */
 function AchieverTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const prism = useRef<THREE.Mesh>(null);
@@ -167,7 +167,7 @@ function AchieverTotem({ color, intensity }: { color: string; intensity: number 
   );
 }
 
-/* ─── 4 INDIVIDUALIST — cracked gem ─────────────────── */
+/* ─── 4 INDIVIDUALIST - cracked gem ─────────────────── */
 function IndividualistTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const gem = useRef<THREE.Group>(null);
@@ -222,7 +222,7 @@ function IndividualistTotem({ color, intensity }: { color: string; intensity: nu
   );
 }
 
-/* ─── 5 INVESTIGATOR — orbiting knowledge rings ─────── */
+/* ─── 5 INVESTIGATOR - orbiting knowledge rings ─────── */
 function InvestigatorTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const r1 = useRef<THREE.Mesh>(null);
@@ -271,7 +271,7 @@ function InvestigatorTotem({ color, intensity }: { color: string; intensity: num
   );
 }
 
-/* ─── 6 LOYALIST — shield lattice + sentinels ───────── */
+/* ─── 6 LOYALIST - shield lattice + sentinels ───────── */
 function LoyalistTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const lattice = useRef<THREE.Group>(null);
@@ -292,7 +292,7 @@ function LoyalistTotem({ color, intensity }: { color: string; intensity: number 
   return (
     <group ref={group}>
       <group ref={lattice}>
-        {/* outer shield shape — diamond */}
+        {/* outer shield shape - diamond */}
         <mesh rotation={[0, 0, Math.PI / 4]}>
           <planeGeometry args={[0.95, 0.95]} />
           <meshBasicMaterial color={color} wireframe transparent opacity={0.6 * intensity} side={THREE.DoubleSide} />
@@ -328,7 +328,7 @@ function LoyalistTotem({ color, intensity }: { color: string; intensity: number 
   );
 }
 
-/* ─── 7 ENTHUSIAST — scattering polyhedra ───────────── */
+/* ─── 7 ENTHUSIAST - scattering polyhedra ───────────── */
 function EnthusiastTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const scatter = useRef<THREE.Group>(null);
@@ -382,7 +382,7 @@ function EnthusiastTotem({ color, intensity }: { color: string; intensity: numbe
   );
 }
 
-/* ─── 8 CHALLENGER — armored monolith + wedge ──────── */
+/* ─── 8 CHALLENGER - armored monolith + wedge ──────── */
 function ChallengerTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const wedge = useRef<THREE.Mesh>(null);
@@ -428,7 +428,7 @@ function ChallengerTotem({ color, intensity }: { color: string; intensity: numbe
   );
 }
 
-/* ─── 9 PEACEMAKER — concentric calm rings ──────────── */
+/* ─── 9 PEACEMAKER - concentric calm rings ──────────── */
 function PeacemakerTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const rings = useRef<THREE.Group>(null);

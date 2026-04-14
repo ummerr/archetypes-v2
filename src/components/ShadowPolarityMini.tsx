@@ -28,7 +28,7 @@ function RotatingTriangle({ children }: { children: React.ReactNode }) {
   return <group ref={ref}>{children}</group>;
 }
 
-/* ─── Fullness apex — glowing octahedron with orbiting ring ── */
+/* ─── Fullness apex - glowing octahedron with orbiting ring ── */
 function ApexNode({ color }: { color: string }) {
   const ref = useRef<THREE.Mesh>(null);
   const wireRef = useRef<THREE.Mesh>(null);
@@ -99,7 +99,7 @@ function ApexNode({ color }: { color: string }) {
   );
 }
 
-/* ─── Active shadow — hot, spiky, jittery tetrahedron with sparks ── */
+/* ─── Active shadow - hot, spiky, jittery tetrahedron with sparks ── */
 function ActiveNode() {
   const ref = useRef<THREE.Mesh>(null);
   const wireRef = useRef<THREE.Mesh>(null);
@@ -196,7 +196,7 @@ function ActiveNode() {
   );
 }
 
-/* ─── Passive shadow — cold, collapsed, slow box that shrinks ── */
+/* ─── Passive shadow - cold, collapsed, slow box that shrinks ── */
 function PassiveNode() {
   const ref = useRef<THREE.Mesh>(null);
   const wireRef = useRef<THREE.Mesh>(null);
@@ -208,7 +208,7 @@ function PassiveNode() {
       ref.current.rotation.x = t * 0.15;
       ref.current.position.x = RIGHT[0] + Math.sin(t * 0.4) * 0.02;
       ref.current.position.y = RIGHT[1] + Math.sin(t * 0.3) * 0.02;
-      // Collapsing breathing — shrinks and expands slowly
+      // Collapsing breathing - shrinks and expands slowly
       const sy = 0.4 + Math.sin(t * 0.8) * 0.08;
       ref.current.scale.set(1, sy, 1);
     }
@@ -300,7 +300,7 @@ function TriangleFrame({ color }: { color: string }) {
   return <primitive object={obj} />;
 }
 
-/* ─── Outer echo triangle — slow counter-rotate ── */
+/* ─── Outer echo triangle - slow counter-rotate ── */
 function TriangleEcho({ color }: { color: string }) {
   const ref = useRef<THREE.Group>(null);
 
@@ -342,7 +342,7 @@ function TriangleEcho({ color }: { color: string }) {
   );
 }
 
-/* ─── Energy pulse ring — expands outward from center periodically ── */
+/* ─── Energy pulse ring - expands outward from center periodically ── */
 function EnergyPulse({ color }: { color: string }) {
   const ref = useRef<THREE.Mesh>(null);
 
@@ -543,7 +543,7 @@ function PolarityLabels({
 }) {
   return (
     <>
-      {/* Apex — Fullness */}
+      {/* Apex - Fullness */}
       <Html position={[0, 1.12, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
@@ -561,7 +561,7 @@ function PolarityLabels({
         </div>
       </Html>
 
-      {/* Left — Active Shadow */}
+      {/* Left - Active Shadow */}
       <Html position={[-0.85, -0.86, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
@@ -582,7 +582,7 @@ function PolarityLabels({
         </div>
       </Html>
 
-      {/* Right — Passive Shadow */}
+      {/* Right - Passive Shadow */}
       <Html position={[0.85, -0.86, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
@@ -608,7 +608,7 @@ function PolarityLabels({
 }
 
 /* ═══════════════════════════════════════════════════════
-   ShadowPolarityMini — Compact canvas for home cards
+   ShadowPolarityMini - Compact canvas for home cards
    ═══════════════════════════════════════════════════════ */
 
 export default function ShadowPolarityMini({

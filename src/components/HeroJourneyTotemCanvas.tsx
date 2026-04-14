@@ -8,7 +8,7 @@ import type { HeroJourneyArchetype } from "@/types/herosjourney";
 
 type Slug = HeroJourneyArchetype["slug"];
 
-/* ─── HERO — ascending sword, solar halo, laurel crown ─ */
+/* ─── HERO - ascending sword, solar halo, laurel crown ─ */
 function HeroTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const blade = useRef<THREE.Group>(null);
@@ -111,7 +111,7 @@ function HeroTotem({ color, intensity }: { color: string; intensity: number }) {
         <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.6 * intensity} metalness={0.95} roughness={0.15} />
       </mesh>
 
-      {/* blade stack — core solid + spinning wireframe + fuller */}
+      {/* blade stack - core solid + spinning wireframe + fuller */}
       <group ref={blade} position={[0, 0.4, 0]}>
         <mesh geometry={bladeGeo}>
           <meshStandardMaterial color="#FFF4DC" emissive={color} emissiveIntensity={0.7 * intensity} metalness={0.95} roughness={0.05} />
@@ -149,7 +149,7 @@ function HeroTotem({ color, intensity }: { color: string; intensity: number }) {
   );
 }
 
-/* ─── MENTOR — hanging lantern, cage, chain, runes ───── */
+/* ─── MENTOR - hanging lantern, cage, chain, runes ───── */
 function MentorTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const lantern = useRef<THREE.Group>(null);
@@ -295,7 +295,7 @@ function MentorTotem({ color, intensity }: { color: string; intensity: number })
   );
 }
 
-/* ─── HERALD — trumpet horn, dawn line, shockwaves ──── */
+/* ─── HERALD - trumpet horn, dawn line, shockwaves ──── */
 function HeraldTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const horn = useRef<THREE.Group>(null);
@@ -411,7 +411,7 @@ function HeraldTotem({ color, intensity }: { color: string; intensity: number })
   );
 }
 
-/* ─── THRESHOLD GUARDIAN — carved gate, eye, chains ──── */
+/* ─── THRESHOLD GUARDIAN - carved gate, eye, chains ──── */
 function GuardianTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const eye = useRef<THREE.Mesh>(null);
@@ -544,7 +544,7 @@ function GuardianTotem({ color, intensity }: { color: string; intensity: number 
   );
 }
 
-/* ─── SHAPESHIFTER — dual masks + central mirror + mist ─ */
+/* ─── SHAPESHIFTER - dual masks + central mirror + mist ─ */
 function ShapeshifterTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const maskA = useRef<THREE.Group>(null);
@@ -614,7 +614,7 @@ function ShapeshifterTotem({ color, intensity }: { color: string; intensity: num
         <meshBasicMaterial color={color} transparent opacity={0.8 * intensity} />
       </mesh>
 
-      {/* mask A — cool face */}
+      {/* mask A - cool face */}
       <group ref={maskA}>
         <mesh geometry={halfMask}>
           <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.8 * intensity} metalness={0.6} roughness={0.3} side={THREE.DoubleSide} transparent opacity={0.72} />
@@ -638,7 +638,7 @@ function ShapeshifterTotem({ color, intensity }: { color: string; intensity: num
         </mesh>
       </group>
 
-      {/* mask B — warm face */}
+      {/* mask B - warm face */}
       <group ref={maskB}>
         <mesh geometry={halfMask}>
           <meshStandardMaterial color={warmColor} emissive={warmColor} emissiveIntensity={0.8 * intensity} metalness={0.6} roughness={0.3} side={THREE.DoubleSide} transparent opacity={0.72} />
@@ -680,7 +680,7 @@ function ShapeshifterTotem({ color, intensity }: { color: string; intensity: num
   );
 }
 
-/* ─── SHADOW — eclipse, corona flares, inverted crown ── */
+/* ─── SHADOW - eclipse, corona flares, inverted crown ── */
 function ShadowTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const corona = useRef<THREE.Mesh>(null);
@@ -770,7 +770,7 @@ function ShadowTotem({ color, intensity }: { color: string; intensity: number })
         <meshBasicMaterial color={crimson} transparent opacity={0.4 * intensity} />
       </mesh>
 
-      {/* inverted crown — spikes pointing INWARD */}
+      {/* inverted crown - spikes pointing INWARD */}
       <group ref={crown}>
         {Array.from({ length: 9 }).map((_, i) => {
           const a = (i / 9) * Math.PI * 2;
@@ -794,7 +794,7 @@ function ShadowTotem({ color, intensity }: { color: string; intensity: number })
   );
 }
 
-/* ─── TRICKSTER — flipping coin, tumbling masks, marotte ─ */
+/* ─── TRICKSTER - flipping coin, tumbling masks, marotte ─ */
 function TricksterTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const coin = useRef<THREE.Mesh>(null);
@@ -904,7 +904,7 @@ function TricksterTotem({ color, intensity }: { color: string; intensity: number
   );
 }
 
-/* ─── ALLY — clasped rings, shield, steadfast flame ──── */
+/* ─── ALLY - clasped rings, shield, steadfast flame ──── */
 function AllyTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const shield = useRef<THREE.Mesh>(null);

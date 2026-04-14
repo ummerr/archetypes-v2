@@ -32,7 +32,7 @@ export async function generateMetadata({
       ? ` Shadow poles: ${archetype.activeShadow.name} & ${archetype.passiveShadow.name}.`
       : "";
   return buildPageMetadata({
-    title: `${archetype.name} — KWML Archetype`,
+    title: `${archetype.name} - KWML Archetype`,
     description: truncate(`${archetype.description}${shadows}`),
     path: `/kwml/archetype/${archetype.slug}`,
     type: "article",
@@ -61,7 +61,7 @@ export default async function ArchetypePage({
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: `${archetype.name} — KWML Archetype`,
+    headline: `${archetype.name} - KWML Archetype`,
     description: archetype.description,
     about: archetype.name,
     url: absoluteUrl(`/kwml/archetype/${archetype.slug}`),

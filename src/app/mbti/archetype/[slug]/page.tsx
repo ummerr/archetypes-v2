@@ -29,7 +29,7 @@ export async function generateMetadata({
   const archetype = getMbtiBySlug(slug);
   if (!archetype) return { title: "Not Found" };
   return buildPageMetadata({
-    title: `${archetype.code} — ${archetype.nickname}`,
+    title: `${archetype.code} - ${archetype.nickname}`,
     description: truncate(archetype.tagline),
     path: `/mbti/archetype/${archetype.slug}`,
     type: "article",
@@ -55,7 +55,7 @@ export default async function MbtiArchetypePage({
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: `${archetype.code} — ${archetype.nickname}`,
+    headline: `${archetype.code} - ${archetype.nickname}`,
     description: archetype.tagline,
     about: `${archetype.code} ${archetype.nickname}`,
     url: absoluteUrl(`/mbti/archetype/${archetype.slug}`),

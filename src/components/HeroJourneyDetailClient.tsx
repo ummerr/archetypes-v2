@@ -207,7 +207,7 @@ export default function HeroJourneyDetailClient({
             <p
               className="font-mono text-[9px] tracking-[0.3em] uppercase mb-2 text-muted"
             >
-              Shadow Pole — the inverted mask
+              Shadow Pole - the inverted mask
             </p>
             <p
               className="font-serif text-xl font-medium"

@@ -19,7 +19,7 @@ export const SYSTEMS: ArchetypeSystem[] = [
     name: "Jungian",
     subtitle: "Twelve Heroic Archetypes",
     description:
-      "Universal motivations clustered across Ego, Soul, and Self — the Pearson-Marr taxonomy rooted in Jung's collective unconscious.",
+      "Universal motivations clustered across Ego, Soul, and Self - the Pearson-Marr taxonomy rooted in Jung's collective unconscious.",
     href: "/jungian",
     status: "live",
     accent: "#6B4E8C",
@@ -45,7 +45,7 @@ export const SYSTEMS: ArchetypeSystem[] = [
     name: "KWML",
     subtitle: "Archetypes of the Mature Masculine",
     description:
-      "Four primal energy patterns — King, Warrior, Magician, Lover — each with its boy form, fullness, and two shadow poles.",
+      "Four primal energy patterns - King, Warrior, Magician, Lover - each with its boy form, fullness, and two shadow poles.",
     href: "/kwml",
     status: "live",
     accent: "#C6A355",
@@ -58,7 +58,7 @@ export const SYSTEMS: ArchetypeSystem[] = [
     name: "Myers-Briggs",
     subtitle: "Sixteen Cognitive Patterns",
     description:
-      "Sixteen types built from four dichotomies of perception and judgment — a map of cognitive preference rendered as geometric glyphs.",
+      "Sixteen types built from four dichotomies of perception and judgment - a map of cognitive preference rendered as geometric glyphs.",
     href: "/mbti",
     status: "live",
     accent: "#5B7A99",
@@ -71,7 +71,7 @@ export const SYSTEMS: ArchetypeSystem[] = [
     name: "Hero's Journey",
     subtitle: "Archetypes of the Monomyth",
     description:
-      "Twelve stages and eight recurring masks — Hero, Mentor, Herald, Threshold Guardian, Shapeshifter, Shadow, Trickster, Ally — the circular geometry of Campbell and Vogler's monomyth.",
+      "Twelve stages and eight recurring masks - Hero, Mentor, Herald, Threshold Guardian, Shapeshifter, Shadow, Trickster, Ally - the circular geometry of Campbell and Vogler's monomyth.",
     href: "/heros-journey",
     status: "live",
     accent: "#B85C38",
@@ -84,7 +84,7 @@ export const SYSTEMS: ArchetypeSystem[] = [
     name: "Tarot",
     subtitle: "The Major Arcana",
     description:
-      "Twenty-two symbolic figures tracing the Fool's journey through initiation, trial, and transcendence — archetypes rendered as images.",
+      "Twenty-two symbolic figures tracing the Fool's journey through initiation, trial, and transcendence - archetypes rendered as images.",
     href: "/tarot",
     status: "live",
     accent: "#8C3A5E",

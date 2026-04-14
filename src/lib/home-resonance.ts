@@ -17,7 +17,7 @@ export const CLUSTER_CHIPS: ClusterChip[] = CLUSTERS.map((c) => {
     systems.add(a.system);
     if (a.strength === "primary") primaries.add(a.system);
   }
-  const label = c.theme.split("—")[0].trim().replace(/^The\s+/i, "");
+  const label = c.theme.split("-")[0].trim().replace(/^The\s+/i, "");
   return {
     id: c.id,
     label,

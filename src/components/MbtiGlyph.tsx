@@ -60,7 +60,7 @@ export default function MbtiGlyph({
         transition={{ type: "spring", stiffness: 220, damping: 18 }}
         {...ambientLoop}
       >
-        {/* Anchor ring — faint dichotomy envelope */}
+        {/* Anchor ring - faint dichotomy envelope */}
         <circle
           cx="50"
           cy="50"

@@ -117,7 +117,7 @@ export default function TarotDeckArc({
                 href={`/tarot/archetype/${card.slug}`}
                 onMouseEnter={() => setHovered(card.slug)}
                 onMouseLeave={() => setHovered(null)}
-                aria-label={`${card.numeral} — ${card.name}`}
+                aria-label={`${card.numeral} - ${card.name}`}
                 className="group absolute block"
                 style={{
                   width: cardW,

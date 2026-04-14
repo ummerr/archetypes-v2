@@ -6,7 +6,7 @@ export const SITE_URL =
 export const SITE_NAME = "Maps of the Inner World";
 
 export const SITE_TAGLINE =
-  "Explore archetypal systems that chart the inner world — Jungian, Enneagram, KWML, MBTI, Hero's Journey, and Tarot.";
+  "Explore archetypal systems that chart the inner world - Jungian, Enneagram, KWML, MBTI, Hero's Journey, and Tarot.";
 
 export const SITE_AUTHOR = "ummerr";
 

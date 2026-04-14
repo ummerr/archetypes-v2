@@ -61,7 +61,7 @@ export default function ArchetypeCardVisual({
     );
   }
 
-  // Jungian · Enneagram · Tarot — typographic glyph with accent ring
+  // Jungian · Enneagram · Tarot - typographic glyph with accent ring
   const char = entry.symbol ?? "◯";
   return (
     <div

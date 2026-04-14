@@ -1,9 +1,9 @@
 import { TarotArchetype, TarotPhase, TarotPhaseGroup } from "@/types/tarot";
 
 export const TAROT_COLORS = {
-  egoFormation: "#D4AF37", // Sovereign Gold — structures of self
-  psycheAlchemy: "#6B4E8C", // Deep violet — internal alchemy
-  unconsciousRealization: "#8C3A5E", // Deep rose — descent & return
+  egoFormation: "#D4AF37", // Sovereign Gold - structures of self
+  psycheAlchemy: "#6B4E8C", // Deep violet - internal alchemy
+  unconsciousRealization: "#8C3A5E", // Deep rose - descent & return
   accent: "#8C3A5E",
 } as const;
 
@@ -21,10 +21,10 @@ export const TAROT_PHASES: TarotPhaseGroup[] = [
   {
     id: "psyche-alchemy",
     label: "Psyche & Alchemy",
-    tagline: "The inner mechanics — time, sacrifice, transformation",
+    tagline: "The inner mechanics - time, sacrifice, transformation",
     range: "VIII – XIV",
     description:
-      "The middle passage turns inward. Here the conscious ego contends with instinct, solitude, cyclical fate, and the necessary deaths that clear the ground for transformation. The work is alchemical — tempering opposites into a workable self.",
+      "The middle passage turns inward. Here the conscious ego contends with instinct, solitude, cyclical fate, and the necessary deaths that clear the ground for transformation. The work is alchemical - tempering opposites into a workable self.",
     color: TAROT_COLORS.psycheAlchemy,
     ids: [8, 9, 10, 11, 12, 13, 14],
   },
@@ -34,7 +34,7 @@ export const TAROT_PHASES: TarotPhaseGroup[] = [
     tagline: "The descent into shadow and the return as Self",
     range: "XV – XXI",
     description:
-      "The final phase is the deep descent — bondage, collapse, dream, and disintegration — followed by a reconstitution at a higher order. The journey does not end so much as complete a turn; the World opens again onto the Fool.",
+      "The final phase is the deep descent - bondage, collapse, dream, and disintegration - followed by a reconstitution at a higher order. The journey does not end so much as complete a turn; the World opens again onto the Fool.",
     color: TAROT_COLORS.unconsciousRealization,
     ids: [15, 16, 17, 18, 19, 20, 21],
   },
@@ -49,9 +49,9 @@ export const theFool: TarotArchetype = {
   phase: "ego-formation",
   symbol: "✺",
   motto: "I step off the edge because the air is also ground.",
-  coreTheme: "Unconditioned potential — the psyche before it has chosen a shape.",
+  coreTheme: "Unconditioned potential - the psyche before it has chosen a shape.",
   description:
-    "The Fool is the zero-point of the psyche: awareness before conditioning, openness before commitment. He carries no history because he has not yet lived; every direction is equally possible. In the individuation process he marks both the beginning and the eternal return — the naïve self that the completed self must re-find.",
+    "The Fool is the zero-point of the psyche: awareness before conditioning, openness before commitment. He carries no history because he has not yet lived; every direction is equally possible. In the individuation process he marks both the beginning and the eternal return - the naïve self that the completed self must re-find.",
   poles: {
     fullness: {
       title: "The Open Beginner",
@@ -61,12 +61,12 @@ export const theFool: TarotArchetype = {
     activeShadow: {
       title: "The Compulsive Wanderer",
       description:
-        "Novelty as addiction. Here openness curdles into recklessness — the refusal ever to land, commit, or bear the weight of consequence. Every leap avoids the one leap that would actually cost something.",
+        "Novelty as addiction. Here openness curdles into recklessness - the refusal ever to land, commit, or bear the weight of consequence. Every leap avoids the one leap that would actually cost something.",
     },
     passiveShadow: {
       title: "The Paralyzed Seeker",
       description:
-        "The leap that never happens. Beneath the stillness is terror — of error, of looking foolish, of the unmade self. Potential calcifies into fantasy; the journey is endlessly planned, never begun.",
+        "The leap that never happens. Beneath the stillness is terror - of error, of looking foolish, of the unmade self. Potential calcifies into fantasy; the journey is endlessly planned, never begun.",
     },
   },
   jungianCorrelation: "The Innocent",
@@ -82,8 +82,8 @@ export const theMagician: TarotArchetype = {
   name: "The Magician",
   phase: "ego-formation",
   symbol: "∞",
-  motto: "As above, so below — and I am the current between them.",
-  coreTheme: "Directed will — the discovery that consciousness can shape matter.",
+  motto: "As above, so below - and I am the current between them.",
+  coreTheme: "Directed will - the discovery that consciousness can shape matter.",
   description:
     "The Magician is the psyche's first taste of agency: the recognition that inner intention can be transmitted through focused attention into the world. He gathers the four elements of the self and learns to conduct them. This is the birth of craft, the will as instrument.",
   poles: {
@@ -117,9 +117,9 @@ export const theHighPriestess: TarotArchetype = {
   phase: "ego-formation",
   symbol: "☾",
   motto: "What you cannot yet say already knows you.",
-  coreTheme: "Inner knowing — the counterweight to the Magician's outward will.",
+  coreTheme: "Inner knowing - the counterweight to the Magician's outward will.",
   description:
-    "The High Priestess sits at the threshold between conscious and unconscious, tending the veil. She is the psyche's capacity to receive — to listen to dream, body, and the slow knowing that arrives without argument. She is not secretive; she is simply prior to speech.",
+    "The High Priestess sits at the threshold between conscious and unconscious, tending the veil. She is the psyche's capacity to receive - to listen to dream, body, and the slow knowing that arrives without argument. She is not secretive; she is simply prior to speech.",
   poles: {
     fullness: {
       title: "The Inner Ear",
@@ -149,14 +149,14 @@ export const theEmpress: TarotArchetype = {
   phase: "ego-formation",
   symbol: "♀",
   motto: "Life makes itself through me when I let it.",
-  coreTheme: "Generative embodiment — the archetypal mother of forms.",
+  coreTheme: "Generative embodiment - the archetypal mother of forms.",
   description:
     "The Empress is the principle of fecund creation: the garden, the body, the felt sense of abundance. She is the archetypal mother not only of children but of works, relationships, and the lived pleasures that keep a psyche in contact with the earth. To meet her is to remember that creation is erotic before it is productive.",
   poles: {
     fullness: {
       title: "The Fertile Ground",
       description:
-        "Embodied, sensuous creativity. The Empress in fullness nourishes what is alive, honors the body, and lets form arise without forcing — a maker rooted in the pleasure of making.",
+        "Embodied, sensuous creativity. The Empress in fullness nourishes what is alive, honors the body, and lets form arise without forcing - a maker rooted in the pleasure of making.",
     },
     activeShadow: {
       title: "The Smothering Mother",
@@ -183,7 +183,7 @@ export const theEmperor: TarotArchetype = {
   phase: "ego-formation",
   symbol: "♁",
   motto: "Order is the first kindness.",
-  coreTheme: "Structure and boundary — the archetypal father of forms.",
+  coreTheme: "Structure and boundary - the archetypal father of forms.",
   description:
     "The Emperor establishes the frame inside which life can proceed. He is law, structure, the reliable protection that allows softer things to grow. The psyche needs him as a backbone; without him, interior life floods its banks and nothing lasts long enough to mean anything.",
   poles: {
@@ -217,7 +217,7 @@ export const theHierophant: TarotArchetype = {
   phase: "ego-formation",
   symbol: "☩",
   motto: "What was learned before me is still half of what I know.",
-  coreTheme: "Transmission — the link between the individual and tradition.",
+  coreTheme: "Transmission - the link between the individual and tradition.",
   description:
     "The Hierophant is the inherited structure of meaning: scripture, lineage, discipline, the slow teachings that precede any one life. He is the psyche's need to be initiated, to place itself inside a story larger than its own invention. Properly held, he is the bridge between private experience and collective wisdom.",
   poles: {
@@ -234,7 +234,7 @@ export const theHierophant: TarotArchetype = {
     passiveShadow: {
       title: "The Unmoored Iconoclast",
       description:
-        "Tradition refused entirely. Every inheritance is suspect; every teacher is a threat to autonomy. The result is not freedom but rootlessness — a self endlessly reinventing itself from zero.",
+        "Tradition refused entirely. Every inheritance is suspect; every teacher is a threat to autonomy. The result is not freedom but rootlessness - a self endlessly reinventing itself from zero.",
     },
   },
   jungianCorrelation: "The Sage",
@@ -251,14 +251,14 @@ export const theLovers: TarotArchetype = {
   phase: "ego-formation",
   symbol: "⚭",
   motto: "I become more myself in the presence of the other.",
-  coreTheme: "Conscious union — the integration of opposites inside and between.",
+  coreTheme: "Conscious union - the integration of opposites inside and between.",
   description:
-    "The Lovers stage the meeting of psychic opposites — anima and animus, self and other — and the first mature choice of value. This is not infatuation but alignment: the moment one begins to choose what one loves and to let that choice shape a life. Every later union in the deck has its root here.",
+    "The Lovers stage the meeting of psychic opposites - anima and animus, self and other - and the first mature choice of value. This is not infatuation but alignment: the moment one begins to choose what one loves and to let that choice shape a life. Every later union in the deck has its root here.",
   poles: {
     fullness: {
       title: "The Aligned Union",
       description:
-        "Two sovereign selves that become more distinct in meeting, not less. The Lovers in fullness hold intimacy and individuation as the same gesture — love as a clarifying fire.",
+        "Two sovereign selves that become more distinct in meeting, not less. The Lovers in fullness hold intimacy and individuation as the same gesture - love as a clarifying fire.",
     },
     activeShadow: {
       title: "The Fused Pair",
@@ -285,9 +285,9 @@ export const theChariot: TarotArchetype = {
   phase: "ego-formation",
   symbol: "➤",
   motto: "I hold the reins of forces that do not agree.",
-  coreTheme: "Directed momentum — the victorious ego holding opposing energies in harness.",
+  coreTheme: "Directed momentum - the victorious ego holding opposing energies in harness.",
   description:
-    "The Chariot closes the first phase with a demonstration of will: the ego has internalized its parents and its teachers, and can now yoke contradictory drives to a chosen direction. It is the archetype of triumphant forward motion — necessary, dangerous, and not yet wise.",
+    "The Chariot closes the first phase with a demonstration of will: the ego has internalized its parents and its teachers, and can now yoke contradictory drives to a chosen direction. It is the archetype of triumphant forward motion - necessary, dangerous, and not yet wise.",
   poles: {
     fullness: {
       title: "The Disciplined Will",
@@ -319,7 +319,7 @@ export const strength: TarotArchetype = {
   phase: "psyche-alchemy",
   symbol: "⚕",
   motto: "I do not conquer the beast; I befriend it.",
-  coreTheme: "Soft power — the taming of instinct through relationship rather than force.",
+  coreTheme: "Soft power - the taming of instinct through relationship rather than force.",
   description:
     "Strength is the psyche's discovery that instinct cannot be defeated, only befriended. She rests her hand on the lion's jaw without fear and without coercion. This is the archetype of courageous tenderness, the capacity to remain present to one's own animal without denying or being overrun by it.",
   poles: {
@@ -331,7 +331,7 @@ export const strength: TarotArchetype = {
     activeShadow: {
       title: "The Iron Suppressor",
       description:
-        "Instinct beaten into submission. Feeling is clamped down by force of will, the body is held in a permanent brace, and what cannot be felt returns as symptom — rigidity, breakage, sudden rupture.",
+        "Instinct beaten into submission. Feeling is clamped down by force of will, the body is held in a permanent brace, and what cannot be felt returns as symptom - rigidity, breakage, sudden rupture.",
     },
     passiveShadow: {
       title: "The Overtaken",
@@ -353,9 +353,9 @@ export const theHermit: TarotArchetype = {
   phase: "psyche-alchemy",
   symbol: "✧",
   motto: "I lit the lantern so I could see my own footsteps.",
-  coreTheme: "Meaningful solitude — the inward turn and the lamp carried down.",
+  coreTheme: "Meaningful solitude - the inward turn and the lamp carried down.",
   description:
-    "The Hermit steps out of the crowd to find a light he can actually trust. His solitude is not withdrawal but apprenticeship — the slow work of separating inherited voices from genuine inner knowing. Eventually he must come back, but not before he is his own authority.",
+    "The Hermit steps out of the crowd to find a light he can actually trust. His solitude is not withdrawal but apprenticeship - the slow work of separating inherited voices from genuine inner knowing. Eventually he must come back, but not before he is his own authority.",
   poles: {
     fullness: {
       title: "The Lamp-Bearer",
@@ -365,7 +365,7 @@ export const theHermit: TarotArchetype = {
     activeShadow: {
       title: "The Misanthrope",
       description:
-        "Solitude as weapon. Isolation is wielded against others — as superiority, as punishment, as proof of having been misunderstood. Knowledge is hoarded; the lamp is kept in the cave.",
+        "Solitude as weapon. Isolation is wielded against others - as superiority, as punishment, as proof of having been misunderstood. Knowledge is hoarded; the lamp is kept in the cave.",
     },
     passiveShadow: {
       title: "The Unable to Be Alone",
@@ -387,7 +387,7 @@ export const wheelOfFortune: TarotArchetype = {
   phase: "psyche-alchemy",
   symbol: "◎",
   motto: "I do not turn the wheel; I learn its seasons.",
-  coreTheme: "Cyclical fate — the non-linearity beneath any striving.",
+  coreTheme: "Cyclical fate - the non-linearity beneath any striving.",
   description:
     "The Wheel introduces time as a law the ego cannot negotiate. Seasons rise and fall; the same life visits comfort and crisis without consulting anyone's plan. To meet the Wheel is to feel the scale of pattern larger than personal effort, and to find inside it a strange steadiness.",
   poles: {
@@ -399,7 +399,7 @@ export const wheelOfFortune: TarotArchetype = {
     activeShadow: {
       title: "The Gambler",
       description:
-        "Cycle mistaken for casino. Fate is invoked to justify recklessness — big swings, abdicated responsibility, the thrill of letting 'destiny' decide what the self refuses to.",
+        "Cycle mistaken for casino. Fate is invoked to justify recklessness - big swings, abdicated responsibility, the thrill of letting 'destiny' decide what the self refuses to.",
     },
     passiveShadow: {
       title: "The Clinger",
@@ -419,9 +419,9 @@ export const justice: TarotArchetype = {
   phase: "psyche-alchemy",
   symbol: "⚖",
   motto: "The scale is in me before it is between us.",
-  coreTheme: "Honest accounting — the psyche's capacity to see itself truthfully.",
+  coreTheme: "Honest accounting - the psyche's capacity to see itself truthfully.",
   description:
-    "Justice weighs. She does not punish and she does not forgive; she tells the truth about what has been done and what follows from it. Psychologically she is the capacity for honest self-assessment — the moment the ego becomes responsible for its own pattern.",
+    "Justice weighs. She does not punish and she does not forgive; she tells the truth about what has been done and what follows from it. Psychologically she is the capacity for honest self-assessment - the moment the ego becomes responsible for its own pattern.",
   poles: {
     fullness: {
       title: "The Clear Scale",
@@ -453,9 +453,9 @@ export const theHangedMan: TarotArchetype = {
   phase: "psyche-alchemy",
   symbol: "⊥",
   motto: "I stopped kicking and the world began to speak.",
-  coreTheme: "Willing suspension — the reversal of perspective that follows surrender.",
+  coreTheme: "Willing suspension - the reversal of perspective that follows surrender.",
   description:
-    "The Hanged Man hangs upside-down by his own consent. The old leverage is gone; the old plan is not going to work. In the stillness a different view becomes available — not because he achieved it, but because he let go of what was blocking it.",
+    "The Hanged Man hangs upside-down by his own consent. The old leverage is gone; the old plan is not going to work. In the stillness a different view becomes available - not because he achieved it, but because he let go of what was blocking it.",
   poles: {
     fullness: {
       title: "The Willing Surrender",
@@ -485,9 +485,9 @@ export const death: TarotArchetype = {
   phase: "psyche-alchemy",
   symbol: "☠",
   motto: "Something in me finished so that something in me could begin.",
-  coreTheme: "Necessary ending — the psyche's capacity to let an old self die.",
+  coreTheme: "Necessary ending - the psyche's capacity to let an old self die.",
   description:
-    "Death is not mortality; it is transformation. An identity, a relationship, a phase has exhausted its life and is already over — Death only tells the truth about it. Refusing him is how the psyche rots in place; meeting him is how it keeps moving.",
+    "Death is not mortality; it is transformation. An identity, a relationship, a phase has exhausted its life and is already over - Death only tells the truth about it. Refusing him is how the psyche rots in place; meeting him is how it keeps moving.",
   poles: {
     fullness: {
       title: "The Clean Letting Go",
@@ -497,7 +497,7 @@ export const death: TarotArchetype = {
     activeShadow: {
       title: "The Premature Destroyer",
       description:
-        "Endings conjured. The self kills what is still alive — relationships, projects, commitments — because endings feel more controllable than uncertainty. Scorched earth as identity.",
+        "Endings conjured. The self kills what is still alive - relationships, projects, commitments - because endings feel more controllable than uncertainty. Scorched earth as identity.",
     },
     passiveShadow: {
       title: "The Embalmer",
@@ -519,14 +519,14 @@ export const temperance: TarotArchetype = {
   phase: "psyche-alchemy",
   symbol: "⚗",
   motto: "The third thing cannot be forced; only slowly poured.",
-  coreTheme: "Alchemical blending — patient integration of opposites.",
+  coreTheme: "Alchemical blending - patient integration of opposites.",
   description:
-    "Temperance pours one vessel slowly into another. After Death's clearing, she is the patient work of combination — holding fire and water together long enough for a new substance to form. She is the psyche's capacity for nuance, moderation, and the long view.",
+    "Temperance pours one vessel slowly into another. After Death's clearing, she is the patient work of combination - holding fire and water together long enough for a new substance to form. She is the psyche's capacity for nuance, moderation, and the long view.",
   poles: {
     fullness: {
       title: "The Steady Alchemist",
       description:
-        "Opposites blended without haste. Temperance in fullness refuses the false choice, holds tension between poles, and lets the third thing — the actual integration — emerge on its own timing.",
+        "Opposites blended without haste. Temperance in fullness refuses the false choice, holds tension between poles, and lets the third thing - the actual integration - emerge on its own timing.",
     },
     activeShadow: {
       title: "The Sterile Moderator",
@@ -536,7 +536,7 @@ export const temperance: TarotArchetype = {
     passiveShadow: {
       title: "The Volatile",
       description:
-        "No blending at all. The self swings between poles without ever integrating them — elation then despair, fusion then cutoff, craving then aversion — exhausting itself on the vertical.",
+        "No blending at all. The self swings between poles without ever integrating them - elation then despair, fusion then cutoff, craving then aversion - exhausting itself on the vertical.",
     },
   },
   jungianCorrelation: "The Caregiver",
@@ -552,20 +552,20 @@ export const theDevil: TarotArchetype = {
   name: "The Devil",
   phase: "unconscious-realization",
   symbol: "⛧",
-  motto: "The chain is loose — I have only forgotten to look at my hand.",
-  coreTheme: "The bound shadow — appetite, addiction, and the face one hides from.",
+  motto: "The chain is loose - I have only forgotten to look at my hand.",
+  coreTheme: "The bound shadow - appetite, addiction, and the face one hides from.",
   description:
     "The Devil is the material and instinctual shadow: the parts of the self that have been disowned and therefore rule. He is addiction, compulsion, the secret pact with a harm one has decided is identity. To meet him is not to defeat him but to see the chains clearly enough to notice they are not locked.",
   poles: {
     fullness: {
       title: "The Shadow Acknowledged",
       description:
-        "Appetite and instinct owned. The Devil in fullness is the honest confrontation with one's own darkness — greed, lust, cruelty, compulsion — without theatrical horror or flight. What is seen can be negotiated with.",
+        "Appetite and instinct owned. The Devil in fullness is the honest confrontation with one's own darkness - greed, lust, cruelty, compulsion - without theatrical horror or flight. What is seen can be negotiated with.",
     },
     activeShadow: {
       title: "The Enchained",
       description:
-        "Appetite as identity. The self collapses into its compulsion — substance, status, control, a destructive relationship — and calls the collapse 'who I am.' The chain is sanctified so it cannot be removed.",
+        "Appetite as identity. The self collapses into its compulsion - substance, status, control, a destructive relationship - and calls the collapse 'who I am.' The chain is sanctified so it cannot be removed.",
     },
     passiveShadow: {
       title: "The Puritan",
@@ -585,7 +585,7 @@ export const theTower: TarotArchetype = {
   phase: "unconscious-realization",
   symbol: "▼",
   motto: "The structure that could not hold truth has been freed of the burden of holding it.",
-  coreTheme: "Liberating collapse — the sudden destruction of an untenable ego-structure.",
+  coreTheme: "Liberating collapse - the sudden destruction of an untenable ego-structure.",
   description:
     "The Tower is the moment a life built on a lie comes down. The collapse is not punishment; it is the return of reality. Something that was going to fall has finally fallen, and the shock clears the way for a ground-level rebuild. It is terrible and it is mercy.",
   poles: {
@@ -597,7 +597,7 @@ export const theTower: TarotArchetype = {
     activeShadow: {
       title: "The Self-Demolisher",
       description:
-        "Collapse manufactured. The self detonates its own life — relationships, jobs, health — as a way to control the timing of a pain it cannot otherwise face. Destruction replaces change.",
+        "Collapse manufactured. The self detonates its own life - relationships, jobs, health - as a way to control the timing of a pain it cannot otherwise face. Destruction replaces change.",
     },
     passiveShadow: {
       title: "The Denier in the Ruins",
@@ -619,9 +619,9 @@ export const theStar: TarotArchetype = {
   phase: "unconscious-realization",
   symbol: "✦",
   motto: "After the tower fell I could see the sky again.",
-  coreTheme: "Quiet renewal — hope that returns only after collapse.",
+  coreTheme: "Quiet renewal - hope that returns only after collapse.",
   description:
-    "The Star is the cool night after the fire. Something has burned; the ego has been humbled; and above the ruin is an unbothered sky. She is the archetype of restored faith — not the naive kind, but the kind that is only available to someone who has lost it.",
+    "The Star is the cool night after the fire. Something has burned; the ego has been humbled; and above the ruin is an unbothered sky. She is the archetype of restored faith - not the naive kind, but the kind that is only available to someone who has lost it.",
   poles: {
     fullness: {
       title: "The Returned Faith",
@@ -653,9 +653,9 @@ export const theMoon: TarotArchetype = {
   phase: "unconscious-realization",
   symbol: "☽",
   motto: "I walked through the country where nothing is yet what it will be called.",
-  coreTheme: "The dreaming unconscious — passage through distortion toward deeper truth.",
+  coreTheme: "The dreaming unconscious - passage through distortion toward deeper truth.",
   description:
-    "The Moon is the landscape of dream, symbol, and primal image — the territory the psyche must cross without the daytime map. Everything here is half-lit; nothing arrives in its final form. To travel it is to trust that confusion is sometimes the most accurate state.",
+    "The Moon is the landscape of dream, symbol, and primal image - the territory the psyche must cross without the daytime map. Everything here is half-lit; nothing arrives in its final form. To travel it is to trust that confusion is sometimes the most accurate state.",
   poles: {
     fullness: {
       title: "The Dream-Walker",
@@ -685,9 +685,9 @@ export const theSun: TarotArchetype = {
   phase: "unconscious-realization",
   symbol: "☀",
   motto: "I am warmed by what I no longer need to hide.",
-  coreTheme: "Integrated radiance — the clarity available after shadow work.",
+  coreTheme: "Integrated radiance - the clarity available after shadow work.",
   description:
-    "The Sun is the clarity that follows the Moon's night crossing. Something formerly hidden has been lived with long enough to be metabolized, and the self becomes warm, direct, and simple — not because it is naive, but because it no longer has to split itself in half to function.",
+    "The Sun is the clarity that follows the Moon's night crossing. Something formerly hidden has been lived with long enough to be metabolized, and the self becomes warm, direct, and simple - not because it is naive, but because it no longer has to split itself in half to function.",
   poles: {
     fullness: {
       title: "The Warm Clarity",
@@ -719,7 +719,7 @@ export const judgement: TarotArchetype = {
   phase: "unconscious-realization",
   symbol: "✧",
   motto: "I heard a voice that had been mine all along.",
-  coreTheme: "The inner calling — vocation, reckoning, and rebirth.",
+  coreTheme: "The inner calling - vocation, reckoning, and rebirth.",
   description:
     "Judgement is the summons: a voice from beneath the life one has been living, calling it to account and calling it forward. It is neither punishment nor reward, but the moment the self is ready to answer for itself and become something truer.",
   poles: {
@@ -753,14 +753,14 @@ export const theWorld: TarotArchetype = {
   phase: "unconscious-realization",
   symbol: "✺",
   motto: "The turn is complete; the next turn is already beginning.",
-  coreTheme: "Integration and wholeness — the completion that opens onto the Fool.",
+  coreTheme: "Integration and wholeness - the completion that opens onto the Fool.",
   description:
-    "The World is the closing of a cycle of individuation: opposites reconciled, journey metabolized, self at rest in its own completeness. It is not an endpoint. The wholeness immediately becomes the new ground on which the next Fool steps off — the wheel turns on.",
+    "The World is the closing of a cycle of individuation: opposites reconciled, journey metabolized, self at rest in its own completeness. It is not an endpoint. The wholeness immediately becomes the new ground on which the next Fool steps off - the wheel turns on.",
   poles: {
     fullness: {
       title: "The Integrated Self",
       description:
-        "Wholeness without rigidity. The World in fullness lives as a completed phase that already knows it is temporary — ready to begin again, carrying what was learned without clinging to it.",
+        "Wholeness without rigidity. The World in fullness lives as a completed phase that already knows it is temporary - ready to begin again, carrying what was learned without clinging to it.",
     },
     activeShadow: {
       title: "The Megalomaniac",

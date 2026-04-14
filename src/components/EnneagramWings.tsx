@@ -60,7 +60,7 @@ export default function EnneagramWings({ archetype, wingTargets }: Props) {
 
       <p className="text-text-secondary text-sm md:text-base leading-relaxed font-light max-w-2xl mb-6">
         Your wings are the two numbers beside yours on the circle. They don&rsquo;t
-        replace your type — they season it. Most people lean noticeably toward
+        replace your type - they season it. Most people lean noticeably toward
         one wing, giving rise to sub-types written as{" "}
         <span
           className="font-mono text-xs"

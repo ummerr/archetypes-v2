@@ -28,7 +28,7 @@ export default function JungianHome() {
         <div className="max-w-6xl mx-auto">
           <div className="animate-slide-up">
             <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
-              Pearson &amp; Marr — Jungian Framework
+              Pearson &amp; Marr - Jungian Framework
             </p>
             <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
               Twelve{" "}
@@ -38,7 +38,7 @@ export default function JungianHome() {
             </h1>
             <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl font-light">
               Universal motivations drawn from Jung&rsquo;s collective unconscious,
-              organized across three developmental clusters — Ego, Soul, and
+              organized across three developmental clusters - Ego, Soul, and
               Self. Each archetype is a chapter of a single journey toward
               wholeness.
             </p>

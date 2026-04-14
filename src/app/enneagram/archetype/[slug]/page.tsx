@@ -29,7 +29,7 @@ export async function generateMetadata({
   const archetype = getEnneagramBySlug(slug);
   if (!archetype) return { title: "Not Found" };
   return buildPageMetadata({
-    title: `${archetype.name} — Enneagram Type ${archetype.number}`,
+    title: `${archetype.name} - Enneagram Type ${archetype.number}`,
     description: truncate(archetype.description),
     path: `/enneagram/archetype/${archetype.slug}`,
     type: "article",
@@ -58,7 +58,7 @@ export default async function EnneagramArchetypePage({
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: `${archetype.name} — Enneagram Type ${archetype.number}`,
+    headline: `${archetype.name} - Enneagram Type ${archetype.number}`,
     description: archetype.description,
     about: archetype.name,
     url: absoluteUrl(`/enneagram/archetype/${archetype.slug}`),

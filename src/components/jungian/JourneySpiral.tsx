@@ -48,7 +48,7 @@ export default function JourneySpiral({ archetypes, clusters }: Props) {
         viewBox={`0 0 ${VIEW} ${VIEW}`}
         className="w-full h-auto max-w-[680px] mx-auto block"
         role="img"
-        aria-label="The Pearson-Marr journey — three rings of archetypes from Ego to Soul to Self."
+        aria-label="The Pearson-Marr journey - three rings of archetypes from Ego to Soul to Self."
       >
         {/* Rings */}
         {(Object.keys(RING_RADII) as Array<keyof typeof RING_RADII>).map(
@@ -127,7 +127,7 @@ export default function JourneySpiral({ archetypes, clusters }: Props) {
               onClick={() => router.push(`/jungian/archetype/${a.slug}`)}
               tabIndex={0}
               role="link"
-              aria-label={`${a.name} — ${a.motto}`}
+              aria-label={`${a.name} - ${a.motto}`}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();

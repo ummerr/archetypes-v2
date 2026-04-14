@@ -348,7 +348,7 @@ export default function ArchetypeDetailClient({
                 <ShadowTriangle archetype={archetype} />
               </div>
 
-              {/* Shadow Theater — interactive possession experience */}
+              {/* Shadow Theater - interactive possession experience */}
               <div className="mt-10">
                 <ShadowTheater
                   archetypeName={archetype.name}

@@ -93,7 +93,7 @@ export default function HeroJourneyWheel() {
         viewBox={`0 0 ${W} ${H}`}
         className="w-full max-w-[1200px] h-auto"
         role="img"
-        aria-label="Hero's Journey — twelve-stage timeline with archetype swim lanes"
+        aria-label="Hero's Journey - twelve-stage timeline with archetype swim lanes"
         onClick={clearSelection}
       >
         <rect x={0} y={0} width={W} height={H} fill="transparent" />
@@ -119,7 +119,7 @@ export default function HeroJourneyWheel() {
           </radialGradient>
         </defs>
 
-        {/* ——— Act ribbons (top) ——— */}
+        {/* --- Act ribbons (top) --- */}
         {JOURNEY_ACTS.map((act) => {
           const stagesInAct = STAGES.filter((s) => s.act === act.id);
           const first = stagesInAct[0].number;
@@ -162,7 +162,7 @@ export default function HeroJourneyWheel() {
           );
         })}
 
-        {/* ——— Annotations: single band, short connectors ——— */}
+        {/* --- Annotations: single band, short connectors --- */}
         {ANNOTATIONS.map((ann) => {
           const sx = stageX(ann.stage);
           const isNadir = ann.stage === 8;
@@ -170,7 +170,7 @@ export default function HeroJourneyWheel() {
           const tone = isNadir ? HEROSJOURNEY_COLORS.accent : faintText;
           return (
             <g key={ann.stage} opacity={activeMask ? 0.3 : 1}>
-              {/* short tether — text sits above, tick points to spine */}
+              {/* short tether - text sits above, tick points to spine */}
               <line
                 x1={sx}
                 y1={ANN_Y + 6}
@@ -197,7 +197,7 @@ export default function HeroJourneyWheel() {
           );
         })}
 
-        {/* ——— Spine ——— */}
+        {/* --- Spine --- */}
         <line
           x1={stageX(1) - 24}
           x2={stageX(12) + 24}
@@ -213,7 +213,7 @@ export default function HeroJourneyWheel() {
           r={46}
           fill="url(#nadir-pulse)"
         />
-        {/* Return-loop hint — faint arc from 12 back toward 1 */}
+        {/* Return-loop hint - faint arc from 12 back toward 1 */}
         <path
           d={`M ${stageX(12) + 22} ${SPINE_Y} Q ${stageX(12) + 60} ${SPINE_Y + 80} ${stageX(12) + 10} ${SPINE_Y + 120} Q ${(stageX(1) + stageX(12)) / 2} ${H - 30} ${stageX(1) - 10} ${SPINE_Y + 80} Q ${stageX(1) - 46} ${SPINE_Y + 30} ${stageX(1) - 22} ${SPINE_Y}`}
           fill="none"
@@ -233,7 +233,7 @@ export default function HeroJourneyWheel() {
           the cycle begins again
         </text>
 
-        {/* ——— Stage nodes on spine ——— */}
+        {/* --- Stage nodes on spine --- */}
         {STAGES.map((stage) => {
           const x = stageX(stage.number);
           const act = JOURNEY_ACTS.find((a) => a.id === stage.act)!;
@@ -304,7 +304,7 @@ export default function HeroJourneyWheel() {
           );
         })}
 
-        {/* ——— Swim lanes ——— */}
+        {/* --- Swim lanes --- */}
         {orderedMasks.map((archetype, laneIdx) => {
           const laneY = LANE_TOP + laneIdx * LANE_H;
           const stages = [...archetype.primaryStages].sort((a, b) => a - b);
@@ -428,7 +428,7 @@ export default function HeroJourneyWheel() {
           );
         })}
 
-        {/* ——— Title + dynamic caption ——— */}
+        {/* --- Title + dynamic caption --- */}
         <text
           x={PAD_L - 26}
           y={28}

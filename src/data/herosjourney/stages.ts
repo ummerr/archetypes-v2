@@ -21,7 +21,7 @@ export const JOURNEY_ACTS: JourneyActGroup[] = [
     label: "Initiation",
     tagline: "Descent into the unknown",
     description:
-      "In the special world, the hero is tested, approaches the inmost cave, faces the Ordeal — a symbolic death and rebirth — and seizes the reward.",
+      "In the special world, the hero is tested, approaches the inmost cave, faces the Ordeal - a symbolic death and rebirth - and seizes the reward.",
     color: HEROSJOURNEY_COLORS.initiation,
   },
   {
@@ -45,7 +45,7 @@ export const JOURNEY_STAGES: JourneyStage[] = [
     clockPosition: 0,
     shortDescription: "The hero at rest in the familiar.",
     psychologicalMilestone:
-      "The unindividuated ego in homeostasis — comfortable, yet shadowed by a gnawing incompleteness.",
+      "The unindividuated ego in homeostasis - comfortable, yet shadowed by a gnawing incompleteness.",
   },
   {
     number: 2,
@@ -72,7 +72,7 @@ export const JOURNEY_STAGES: JourneyStage[] = [
     clockPosition: 90,
     shortDescription: "Wisdom arrives as guide or gift.",
     psychologicalMilestone:
-      "The 'Wise Old One' emerges — inner or outer — bringing tools, courage, or the spark that lets the hero proceed.",
+      "The 'Wise Old One' emerges - inner or outer - bringing tools, courage, or the spark that lets the hero proceed.",
   },
   {
     number: 5,
@@ -112,7 +112,7 @@ export const JOURNEY_STAGES: JourneyStage[] = [
   },
   {
     number: 9,
-    name: "Reward — Seizing the Sword",
+    name: "Reward - Seizing the Sword",
     act: "initiation",
     clockPosition: 230,
     shortDescription: "The boon of the descent.",
@@ -144,7 +144,7 @@ export const JOURNEY_STAGES: JourneyStage[] = [
     clockPosition: 335,
     shortDescription: "The gift brought home to heal the world.",
     psychologicalMilestone:
-      "The Jungian Self — light and shadow held together — is offered back to the community as medicine.",
+      "The Jungian Self - light and shadow held together - is offered back to the community as medicine.",
   },
 ];
 

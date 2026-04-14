@@ -28,7 +28,7 @@ export default function EnneagramHome() {
         <div className="max-w-6xl mx-auto">
           <div className="animate-slide-up">
             <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
-              Riso &amp; Hudson — Enneagram Framework
+              Riso &amp; Hudson - Enneagram Framework
             </p>
             <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
               Nine{" "}
@@ -38,7 +38,7 @@ export default function EnneagramHome() {
             </h1>
             <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl font-light">
               If archetypes describe the roles we play, the Enneagram describes
-              the motor beneath them — the core fear, core desire, and moving
+              the motor beneath them - the core fear, core desire, and moving
               states of the psyche. Nine types, grouped into three centers of
               intelligence: Gut, Heart, and Head.
             </p>

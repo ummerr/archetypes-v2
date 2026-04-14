@@ -6,9 +6,9 @@ import {
 import { buildPageMetadata, systemOgImage } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
-  title: "About — Jungian Archetypes",
+  title: "About - Jungian Archetypes",
   description:
-    "The Pearson-Marr twelve — the framework behind modern brand identity, and the living vocabulary of Jung's collective unconscious. Ego, Soul, and Self.",
+    "The Pearson-Marr twelve - the framework behind modern brand identity, and the living vocabulary of Jung's collective unconscious. Ego, Soul, and Self.",
   path: "/jungian/about",
   ogImage: systemOgImage("jungian"),
 });
@@ -18,13 +18,13 @@ const BRAND_TEASERS: { brand: string; archetype: string; slug: string; note: str
     brand: "Nike",
     archetype: "The Hero",
     slug: "hero",
-    note: "Mastery and victory — the athlete as mythic conqueror.",
+    note: "Mastery and victory - the athlete as mythic conqueror.",
   },
   {
     brand: "Apple",
     archetype: "The Creator",
     slug: "creator",
-    note: "Think different — tools for the ones who make.",
+    note: "Think different - tools for the ones who make.",
   },
   {
     brand: "Harley-Davidson",
@@ -36,7 +36,7 @@ const BRAND_TEASERS: { brand: string; archetype: string; slug: string; note: str
     brand: "Disney",
     archetype: "The Magician",
     slug: "magician",
-    note: "Where dreams come true — transformation as product.",
+    note: "Where dreams come true - transformation as product.",
   },
 ];
 
@@ -93,7 +93,7 @@ export default function JungianAbout() {
             </h3>
             <p className="mb-4">
               Pearson-Marr arranges the twelve across three stages of
-              development — Ego, Soul, and Self. The whole system is easier to
+              development - Ego, Soul, and Self. The whole system is easier to
               see than to describe.
             </p>
             <Link
@@ -195,7 +195,7 @@ export default function JungianAbout() {
             <p className="mb-4">
               Carl Jung argued the psyche is not a blank slate. Beneath
               personal memory lies a <em>collective unconscious</em>: a shared
-              inheritance of symbolic forms — archetypes — that shape how
+              inheritance of symbolic forms - archetypes - that shape how
               every human imagines the world. Mother, Hero, Shadow, Wise Old
               One recur across cultures not by coincidence but because they
               encode patterns of being human. Pearson and Marr turned that
@@ -204,7 +204,7 @@ export default function JungianAbout() {
             <p>
               Modern psychology has not empirically proven that archetypes are
               biologically inherited. What is empirically clear is that these
-              patterns <em>resonate</em> — across cultures, eras, and media.
+              patterns <em>resonate</em> - across cultures, eras, and media.
               Treat them as a vocabulary for self-inquiry and for reading the
               world, not as a test.
             </p>

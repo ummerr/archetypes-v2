@@ -3,7 +3,7 @@ import { ENNEAGRAM_TRIADS } from "@/data/enneagram/archetypes";
 import { buildPageMetadata, systemOgImage } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
-  title: "About — Enneagram",
+  title: "About - Enneagram",
   description:
     "The Enneagram: nine motivational types organized into three centers of intelligence, with dynamic paths of integration and disintegration.",
   path: "/enneagram/about",
@@ -29,7 +29,7 @@ export default function EnneagramAbout() {
             </h2>
             <p>
               The Enneagram is a map of nine personality types defined not by
-              surface traits but by underlying motivations — the core fear each
+              surface traits but by underlying motivations - the core fear each
               type is organized around, and the core desire it keeps reaching
               for. Where Jungian archetypes describe the <em>role</em> someone
               plays, the Enneagram describes the <em>why</em> beneath the role.
@@ -82,9 +82,9 @@ export default function EnneagramAbout() {
             <p>
               Each type is connected to two others by directional arrows. The{" "}
               <em>integration arrow</em> describes the type's direction of
-              growth — the traits that come online when the person is thriving.
+              growth - the traits that come online when the person is thriving.
               The <em>disintegration arrow</em> describes the direction of
-              stress — the shadow qualities that surface when the person is
+              stress - the shadow qualities that surface when the person is
               under pressure. Reading both together turns a static type into a
               dynamic map of movement.
             </p>
@@ -98,7 +98,7 @@ export default function EnneagramAbout() {
               Each type page offers a <em>Thriving / Under Pressure</em> toggle
               that surfaces the two movements. Treat the descriptions as
               mirrors, not verdicts. The Enneagram works best as a vocabulary
-              for honest self-observation over time — not as a label to settle
+              for honest self-observation over time - not as a label to settle
               into.
             </p>
           </section>

@@ -29,7 +29,7 @@ export default function HerosJourneyHome() {
         <div className="max-w-6xl mx-auto">
           <div className="animate-slide-up">
             <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
-              Campbell &amp; Vogler — The Monomyth
+              Campbell &amp; Vogler - The Monomyth
             </p>
             <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
               The{" "}

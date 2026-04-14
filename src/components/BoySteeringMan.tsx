@@ -8,7 +8,7 @@ import type { ArchetypeFamilyGroup, ArchetypeFamily } from "@/types/archetype";
 import { useTheme } from "@/components/ThemeProvider";
 
 /* ═══════════════════════════════════════════════════════
-   Data — shadow voices, behavioral signs, phase content
+   Data - shadow voices, behavioral signs, phase content
    ═══════════════════════════════════════════════════════ */
 
 const SHADOW_VOICES: Record<
@@ -37,13 +37,13 @@ const SHADOW_VOICES: Record<
     bleeding:
       "I could help them, but why should I? Knowledge is power, and I'm keeping mine.",
     possessed:
-      "I see through everyone and share nothing. I pull strings from the shadows. If you knew what I know, it would destroy you — but I'll never tell.",
+      "I see through everyone and share nothing. I pull strings from the shadows. If you knew what I know, it would destroy you - but I'll never tell.",
   },
   lover: {
     boy: "No one will ever love me the way I need. I'll keep searching everywhere, in everyone.",
     boyPassive: "Real connection hurts too much. I'll stay inside my fantasies where it's safe.",
     bleeding:
-      "More. I need more of everything — more feeling, more intensity, more stimulation. Nothing is enough.",
+      "More. I need more of everything - more feeling, more intensity, more stimulation. Nothing is enough.",
     possessed:
       "I feel nothing anymore. The world is flat grey ash. I am cut off from everything alive, and I don't even care.",
   },
@@ -68,7 +68,7 @@ function getPhaseData(
     return {
       phase: "seed",
       label: "The Seed",
-      description: `${boy.name} rests quietly inside ${man.name}. The boy's energy is integrated — his wonder, vitality, and enthusiasm fuel the man's mature power without distorting it. The man can access the boy's gifts because he is not identified with them.`,
+      description: `${boy.name} rests quietly inside ${man.name}. The boy's energy is integrated - his wonder, vitality, and enthusiasm fuel the man's mature power without distorting it. The man can access the boy's gifts because he is not identified with them.`,
       signs: [
         "Feels centered and calm in his authority",
         "Can be playful without losing adult perspective",
@@ -82,7 +82,7 @@ function getPhaseData(
     return {
       phase: "stirring",
       label: "The Stirring",
-      description: `Something shifts beneath the surface. The boy's unresolved wounds start leaking into the man's behavior. ${boy.activeShadow.name} begins coloring decisions that should come from ${man.name}'s maturity. The man doesn't notice yet — he mistakes the boy's reactions for his own adult judgment.`,
+      description: `Something shifts beneath the surface. The boy's unresolved wounds start leaking into the man's behavior. ${boy.activeShadow.name} begins coloring decisions that should come from ${man.name}'s maturity. The man doesn't notice yet - he mistakes the boy's reactions for his own adult judgment.`,
       signs: [
         "Overreacts to perceived slights or challenges",
         "Rationalizes immature impulses as 'justified'",
@@ -96,7 +96,7 @@ function getPhaseData(
     return {
       phase: "hijacking",
       label: "The Hijacking",
-      description: `The boy's shadow system is now actively running interference. ${man.name}'s decisions are increasingly made by ${boy.activeShadow.name} wearing an adult mask. The man oscillates between grandiose inflation and collapse — the bipolar shadow system of the uninitiated boy playing out through an adult body with adult consequences.`,
+      description: `The boy's shadow system is now actively running interference. ${man.name}'s decisions are increasingly made by ${boy.activeShadow.name} wearing an adult mask. The man oscillates between grandiose inflation and collapse - the bipolar shadow system of the uninitiated boy playing out through an adult body with adult consequences.`,
       signs: [
         `${boy.activeShadow.name} drives decisions, ${man.name} takes the blame`,
         "Oscillation between grandiosity and shame",
@@ -109,7 +109,7 @@ function getPhaseData(
   return {
     phase: "possession",
     label: "The Possession",
-    description: `${boy.activeShadow.name} has taken the wheel. What the world sees as ${man.activeShadow.name} is actually a boy's shadow operating through a man's body — with a man's power and a man's reach but none of a man's wisdom. The mature ${man.name} is buried, his fullness inaccessible. The tragedy: the man may not know he's been overtaken.`,
+    description: `${boy.activeShadow.name} has taken the wheel. What the world sees as ${man.activeShadow.name} is actually a boy's shadow operating through a man's body - with a man's power and a man's reach but none of a man's wisdom. The mature ${man.name} is buried, his fullness inaccessible. The tragedy: the man may not know he's been overtaken.`,
     signs: [
       `${man.activeShadow.name} is actually ${boy.activeShadow.name} with adult power`,
       `${man.passiveShadow.name} is actually ${boy.passiveShadow.name} with adult despair`,
@@ -121,7 +121,7 @@ function getPhaseData(
 }
 
 /* ═══════════════════════════════════════════════════════
-   Ambient particle canvas — uses refs to avoid re-mounts
+   Ambient particle canvas - uses refs to avoid re-mounts
    ═══════════════════════════════════════════════════════ */
 
 function ParticleField({
@@ -218,7 +218,7 @@ function ParticleField({
       cancelAnimationFrame(frameRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, []); // Stable — never re-mounts
+  }, []); // Stable - never re-mounts
 
   return (
     <canvas
@@ -230,7 +230,7 @@ function ParticleField({
 }
 
 /* ═══════════════════════════════════════════════════════
-   SVG — Breathing + trembling via rAF refs (no re-renders)
+   SVG - Breathing + trembling via rAF refs (no re-renders)
    ═══════════════════════════════════════════════════════ */
 
 function lerp(a: number, b: number, t: number) {
@@ -390,7 +390,7 @@ function NestedTriangleSVG({
 
     frameRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frameRef.current);
-  }, []);  // Stable — reads from possRef
+  }, []);  // Stable - reads from possRef
 
   // ─── These values are driven by slider (React render) for smooth CSS transitions ──
   const manOpacity = lerp(0.9, 0.15, possession);
@@ -583,7 +583,7 @@ function NestedTriangleSVG({
         </text>
       </g>
 
-      {/* Boy fullness — label follows via CSS, position set by rAF on the marker */}
+      {/* Boy fullness - label follows via CSS, position set by rAF on the marker */}
       <text
         x={CX + (MA.x - CX) * scale0}
         y={CY + (MA.y - CY) * scale0 - 14}
@@ -731,7 +731,7 @@ function PossessionSlider({
 }
 
 /* ═══════════════════════════════════════════════════════
-   BoySteeringMan — Main Export
+   BoySteeringMan - Main Export
    ═══════════════════════════════════════════════════════ */
 
 export default function BoySteeringMan() {
@@ -776,7 +776,7 @@ export default function BoySteeringMan() {
           <div className="max-w-3xl mx-auto">
             <div className="animate-slide-up">
               <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
-                Moore &amp; Gillette — The Nested Psyche
+                Moore &amp; Gillette - The Nested Psyche
               </p>
               <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
                 The Boy{" "}
@@ -788,7 +788,7 @@ export default function BoySteeringMan() {
               <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl font-light">
                 Every man carries the boy he once was. When properly initiated,
                 that boy becomes the seed of mature power. Left unchecked, the
-                boy&apos;s shadows leak through — and begin to steer the adult
+                boy&apos;s shadows leak through - and begin to steer the adult
                 from within.
               </p>
               <p className="text-text-secondary/60 text-sm mt-4 font-light italic">
@@ -1156,7 +1156,7 @@ export default function BoySteeringMan() {
                 <p>
                   The solution is never to kill the boy. He is the source of
                   vitality, wonder, and creative fire. A man who cuts off his
-                  inner boy becomes hollow — technically mature but spiritually
+                  inner boy becomes hollow - technically mature but spiritually
                   dead.
                 </p>
                 <p>
@@ -1166,7 +1166,7 @@ export default function BoySteeringMan() {
                   inner boy can draw on that energy without being possessed by it.
                 </p>
                 <p className="text-text-secondary/60 text-xs">
-                  This is the central work of masculine maturation — not once,
+                  This is the central work of masculine maturation - not once,
                   but as a lifelong practice. The boy never fully goes away. He
                   is always there, waiting to be seen.
                 </p>

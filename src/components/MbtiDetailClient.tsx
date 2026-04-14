@@ -192,7 +192,7 @@ export default function MbtiDetailClient({
                       {ROLE_LABEL[entry.role]}
                     </p>
                     <h3 className="font-serif text-xl font-medium tracking-tight">
-                      {fn.name} <span className="text-text-secondary/70 italic font-normal">— {fn.nickname}</span>
+                      {fn.name} <span className="text-text-secondary/70 italic font-normal">- {fn.nickname}</span>
                     </h3>
                     <p className="text-text-secondary text-sm md:text-base leading-relaxed font-light mt-2">
                       {fn.blurb}

@@ -21,7 +21,7 @@ export const JUNGIAN_CLUSTERS: JungianClusterGroup[] = [
     label: "Soul",
     tagline: "The internal quest for identity",
     description:
-      "The Soul types are activated in the call to individuation — freedom, rebellion, intimacy, and creation. They drive the hero's descent and return.",
+      "The Soul types are activated in the call to individuation - freedom, rebellion, intimacy, and creation. They drive the hero's descent and return.",
     color: JUNGIAN_COLORS.soul,
   },
   {
@@ -47,7 +47,7 @@ export const innocent: JungianArchetype = {
   greatestFear: "Being punished for doing something wrong.",
   strategy: "Do things right.",
   description:
-    "The Innocent seeks purity, goodness, and simple happiness. Faith is their native air. They believe in a world that can be safe, kind, and whole — and they work, often unconsciously, to stay inside that vision.",
+    "The Innocent seeks purity, goodness, and simple happiness. Faith is their native air. They believe in a world that can be safe, kind, and whole - and they work, often unconsciously, to stay inside that vision.",
   keyCharacteristics: [
     "Optimism and faith in a benevolent world",
     "Purity of intent and simplicity of desire",
@@ -56,13 +56,13 @@ export const innocent: JungianArchetype = {
     "Seeks belonging through goodness",
   ],
   gift: "Faith, optimism, and the capacity to renew hope in others.",
-  trap: "Naivety — denying shadow truths and refusing to grow up.",
+  trap: "Naivety - denying shadow truths and refusing to grow up.",
   accentColor: "#E8D7A0",
   symbol: "☀",
   shadow: {
     name: "The Pollyanna",
     description:
-      "The Innocent's shadow denies what is. It keeps the smile intact by looking past suffering, complexity, and responsibility — mistaking avoidance for peace.",
+      "The Innocent's shadow denies what is. It keeps the smile intact by looking past suffering, complexity, and responsibility - mistaking avoidance for peace.",
     signs: [
       "Refuses to acknowledge obvious problems or abuse",
       "Becomes dependent on others to handle hard truths",
@@ -70,11 +70,11 @@ export const innocent: JungianArchetype = {
       "Crumbles under its first real disillusionment",
     ],
     integration:
-      "Let paradise be lost. Trust survives contact with shadow — faith that hasn't met pain is only innocence.",
+      "Let paradise be lost. Trust survives contact with shadow - faith that hasn't met pain is only innocence.",
   },
   levels: {
     shadow: "Denial. The world is simple because I refuse to see its complexity.",
-    call: "A first betrayal, a first loss — the moment the protected garden fails.",
+    call: "A first betrayal, a first loss - the moment the protected garden fails.",
     expression:
       "A faith that has been through the fire. Open-eyed trust, chosen on purpose.",
   },
@@ -127,7 +127,7 @@ export const everyman: JungianArchetype = {
   },
   levels: {
     shadow: "Victimhood. The world happens to me; I have no real agency.",
-    call: "A loss of the comfortable place — exile, layoff, family rupture — that forces self-reliance.",
+    call: "A loss of the comfortable place - exile, layoff, family rupture - that forces self-reliance.",
     expression:
       "The steady citizen. Grounded, honest, at home anywhere because they are at home with themselves.",
   },
@@ -153,7 +153,7 @@ export const hero: JungianArchetype = {
   greatestFear: "Weakness, vulnerability, being a coward.",
   strategy: "Become strong and competent; master the challenge.",
   description:
-    "The Hero rises to meet the monster. They train, they fight, they prevail — transforming fear into mastery. Their energy lifts others, but their shadow demands an enemy to define themselves against.",
+    "The Hero rises to meet the monster. They train, they fight, they prevail - transforming fear into mastery. Their energy lifts others, but their shadow demands an enemy to define themselves against.",
   keyCharacteristics: [
     "Courage and resolve in the face of difficulty",
     "Discipline, training, and mastery",
@@ -180,7 +180,7 @@ export const hero: JungianArchetype = {
   },
   levels: {
     shadow: "The bully. Strength performed at others' expense; fear of my own softness.",
-    call: "A threat that demands action — to family, to community, to self-respect — that cannot be met from the bleachers.",
+    call: "A threat that demands action - to family, to community, to self-respect - that cannot be met from the bleachers.",
     expression:
       "The disciplined protector. Strength in service of something larger, with the wisdom to sheathe the blade.",
   },
@@ -206,7 +206,7 @@ export const caregiver: JungianArchetype = {
   greatestFear: "Selfishness, ingratitude, causing harm.",
   strategy: "Do things for others; nurture; give generously.",
   description:
-    "The Caregiver tends to what cannot tend itself. Compassion is their orientation and generosity their language. They stabilize families, teams, and communities — often invisibly.",
+    "The Caregiver tends to what cannot tend itself. Compassion is their orientation and generosity their language. They stabilize families, teams, and communities - often invisibly.",
   keyCharacteristics: [
     "Empathy and attuned nurturing",
     "Generosity without expectation",
@@ -221,7 +221,7 @@ export const caregiver: JungianArchetype = {
   shadow: {
     name: "The Martyr",
     description:
-      "The Caregiver's shadow gives to be owed. It tracks debts, withholds joy, and uses self-sacrifice as a lever of control — then collapses into resentment when the ledger is ignored.",
+      "The Caregiver's shadow gives to be owed. It tracks debts, withholds joy, and uses self-sacrifice as a lever of control - then collapses into resentment when the ledger is ignored.",
     signs: [
       "Sacrifice performed publicly, reward expected privately",
       "Keeps others dependent by refusing to teach independence",
@@ -233,7 +233,7 @@ export const caregiver: JungianArchetype = {
   },
   levels: {
     shadow: "Smothering. Care that cannot let others fail, fall, or leave.",
-    call: "Someone fragile who depends on you — child, parent, patient, team.",
+    call: "Someone fragile who depends on you - child, parent, patient, team.",
     expression:
       "The compassionate steward. Generous, boundaried, able to love and let go in the same breath.",
   },
@@ -284,17 +284,17 @@ export const explorer: JungianArchetype = {
       "Loneliness reframed as independence",
     ],
     integration:
-      "Stay. The longest journey runs through the same room for a decade — depth is the territory you never visit.",
+      "Stay. The longest journey runs through the same room for a decade - depth is the territory you never visit.",
   },
   levels: {
     shadow: "Restlessness. Leaving is the only self I trust.",
-    call: "A life that has become a cage — a job, a town, a self-concept that no longer fits.",
+    call: "A life that has become a cage - a job, a town, a self-concept that no longer fits.",
     expression:
       "The committed pilgrim. Free because they chose their path, not because they kept running.",
   },
   awakening: {
     circumstances: [
-      "Adolescent individuation — the first 'I am not you'",
+      "Adolescent individuation - the first 'I am not you'",
       "Quitting the expected path",
       "Travel, wilderness, solitude",
       "Realizing an inherited life is not yours",
@@ -314,7 +314,7 @@ export const rebel: JungianArchetype = {
   greatestFear: "Powerlessness; being ineffectual.",
   strategy: "Disrupt, destroy, or shock.",
   description:
-    "Also the Outlaw or Revolutionary. The Rebel refuses inherited forms. They burn down what's rotten to make room for what could be — sometimes liberators, sometimes destroyers.",
+    "Also the Outlaw or Revolutionary. The Rebel refuses inherited forms. They burn down what's rotten to make room for what could be - sometimes liberators, sometimes destroyers.",
   keyCharacteristics: [
     "Disdain for hypocrisy and empty authority",
     "Willingness to break from the group",
@@ -337,7 +337,7 @@ export const rebel: JungianArchetype = {
       "Leaves ruins and calls them revolution",
     ],
     integration:
-      "Know what you are burning for. Destruction is only sacred in service of what you love — not what you hate.",
+      "Know what you are burning for. Destruction is only sacred in service of what you love - not what you hate.",
   },
   levels: {
     shadow: "Nihilism. Nothing matters; only the breaking matters.",
@@ -349,7 +349,7 @@ export const rebel: JungianArchetype = {
     circumstances: [
       "Witnessing injustice or institutional rot",
       "A belief system collapsing under its own hypocrisy",
-      "Adolescence — the first refusal of inherited rules",
+      "Adolescence - the first refusal of inherited rules",
       "Midlife reckoning with a false self",
     ],
     ageOrStage: "Adolescence and whenever a structure outlives its truth.",
@@ -367,7 +367,7 @@ export const lover: JungianArchetype = {
   greatestFear: "Being alone, unloved, unwanted.",
   strategy: "Become ever more attractive, emotionally and physically.",
   description:
-    "The Lover is drawn to beauty, passion, and deep connection. They want to be with — to merge, to adore, to be adored. They bring warmth and devotion, and risk losing themselves in the beloved.",
+    "The Lover is drawn to beauty, passion, and deep connection. They want to be with - to merge, to adore, to be adored. They bring warmth and devotion, and risk losing themselves in the beloved.",
   keyCharacteristics: [
     "Aesthetic sensitivity and sensuality",
     "Capacity for deep intimacy",
@@ -382,7 +382,7 @@ export const lover: JungianArchetype = {
   shadow: {
     name: "The Addict",
     description:
-      "The Lover's shadow needs the other to exist. It fuses, consumes, and panics at the first sign of separateness — converting passion into compulsion and devotion into possession.",
+      "The Lover's shadow needs the other to exist. It fuses, consumes, and panics at the first sign of separateness - converting passion into compulsion and devotion into possession.",
     signs: [
       "Cannot tolerate the beloved's autonomy",
       "Jealousy disguised as intensity",
@@ -394,7 +394,7 @@ export const lover: JungianArchetype = {
   },
   levels: {
     shadow: "Fusion. I disappear into you, and then resent you for it.",
-    call: "A beloved — person, art, cause, place — that pulls you past the safe edges of self.",
+    call: "A beloved - person, art, cause, place - that pulls you past the safe edges of self.",
     expression:
       "The devoted partner. Passionate, present, whole enough to love without dissolving.",
   },
@@ -420,7 +420,7 @@ export const creator: JungianArchetype = {
   greatestFear: "Mediocrity; unrealized vision.",
   strategy: "Develop artistic control and skill; make the vision real.",
   description:
-    "The Creator sees what is not yet. They bring form to formless possibility — through art, writing, product, code, or institution. Imagination is their compulsion and their burden.",
+    "The Creator sees what is not yet. They bring form to formless possibility - through art, writing, product, code, or institution. Imagination is their compulsion and their burden.",
   keyCharacteristics: [
     "Vivid imagination and aesthetic vision",
     "Drive to manifest ideas materially",
@@ -447,7 +447,7 @@ export const creator: JungianArchetype = {
   },
   levels: {
     shadow: "Perfectionism. The vision is sacred because it is never tested against reality.",
-    call: "A vision that won't leave you alone — an image, a refrain, a structure that insists on being made.",
+    call: "A vision that won't leave you alone - an image, a refrain, a structure that insists on being made.",
     expression:
       "The making artist. Practiced, generative, able to finish and begin again.",
   },
@@ -511,7 +511,7 @@ export const jester: JungianArchetype = {
       "Burnout from chronic over-seriousness",
       "Grief, illness, or loss that demands levity",
       "Creative work in comedy, performance, or play",
-      "Aging — the freedom of not caring what others think",
+      "Aging - the freedom of not caring what others think",
     ],
     ageOrStage: "Childhood and late life; whenever the game needs lightening.",
   },
@@ -528,7 +528,7 @@ export const sage: JungianArchetype = {
   greatestFear: "Being duped, misled, or ignorant.",
   strategy: "Seek information, analyze, reflect, understand.",
   description:
-    "The Sage trusts knowledge. They study, analyze, and share what they've learned — teachers, researchers, advisors, philosophers. Their clarity comes from the discipline of honest inquiry.",
+    "The Sage trusts knowledge. They study, analyze, and share what they've learned - teachers, researchers, advisors, philosophers. Their clarity comes from the discipline of honest inquiry.",
   keyCharacteristics: [
     "Discernment and critical thinking",
     "Patience in the pursuit of understanding",
@@ -581,7 +581,7 @@ export const magician: JungianArchetype = {
   greatestFear: "Unintended negative consequences.",
   strategy: "Develop vision and live it; transform reality.",
   description:
-    "The Magician turns insight into transformation. They see the hidden levers of systems — psychological, technological, spiritual — and use them to change the visible world. Vision, practice, and humility.",
+    "The Magician turns insight into transformation. They see the hidden levers of systems - psychological, technological, spiritual - and use them to change the visible world. Vision, practice, and humility.",
   keyCharacteristics: [
     "Systems thinking; seeing underlying patterns",
     "Capacity to convert insight into action",
@@ -617,7 +617,7 @@ export const magician: JungianArchetype = {
       "Deep practice in therapy, medicine, engineering, design, or spiritual work",
       "A breakthrough that reveals the hidden structure of a problem",
       "Becoming a mentor to someone in transformation",
-      "Midlife — when depth becomes more interesting than breadth",
+      "Midlife - when depth becomes more interesting than breadth",
     ],
     ageOrStage: "Mature adulthood; the second half of life.",
   },
@@ -634,7 +634,7 @@ export const ruler: JungianArchetype = {
   greatestFear: "Chaos; being overthrown.",
   strategy: "Exercise power; take responsibility; lead.",
   description:
-    "The Ruler takes responsibility for the whole. They hold the structure, set standards, and serve order — at their best, a steward whose authority protects the commons; at worst, a tyrant.",
+    "The Ruler takes responsibility for the whole. They hold the structure, set standards, and serve order - at their best, a steward whose authority protects the commons; at worst, a tyrant.",
   keyCharacteristics: [
     "Natural authority and command",
     "Long-term, systemic thinking",
@@ -657,11 +657,11 @@ export const ruler: JungianArchetype = {
       "The realm declines while the ruler's comfort grows",
     ],
     integration:
-      "Serve the realm, not the crown. A sovereign who cannot step down is not a ruler — only a prisoner in a tower.",
+      "Serve the realm, not the crown. A sovereign who cannot step down is not a ruler - only a prisoner in a tower.",
   },
   levels: {
     shadow: "Tyranny. The throne defends itself against the people it was built to serve.",
-    call: "Responsibility for something that cannot be delegated — a family, a company, a community.",
+    call: "Responsibility for something that cannot be delegated - a family, a company, a community.",
     expression:
       "The steward-king. Authority in service, standards held in love, successors raised on purpose.",
   },
@@ -670,7 +670,7 @@ export const ruler: JungianArchetype = {
       "Taking on executive, parental, or civic responsibility",
       "A mentor or elder stepping down and handing on the realm",
       "The failure of existing authority that requires someone to step in",
-      "Midlife — when legacy becomes the real question",
+      "Midlife - when legacy becomes the real question",
     ],
     ageOrStage: "Mature adulthood; the Self-cluster's late expression.",
   },

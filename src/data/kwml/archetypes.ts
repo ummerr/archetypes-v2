@@ -136,7 +136,7 @@ export const magician: Archetype = {
   maturity: "man",
   accentColor: COLORS.magician,
   description:
-    "The energy of initiation and transformation. The Magician is the sage and knower of secrets who navigates inner worlds and understands the dynamics of outer energy. He is the master of technology, mathematics, mysticism, and logic. He governs the observing ego — the part of the psyche that watches life rather than living it.",
+    "The energy of initiation and transformation. The Magician is the sage and knower of secrets who navigates inner worlds and understands the dynamics of outer energy. He is the master of technology, mathematics, mysticism, and logic. He governs the observing ego - the part of the psyche that watches life rather than living it.",
   keyCharacteristics: [
     "Highly knowledgeable with capacity for deep, reflective thinking",
     "Possesses a powerful B.S. detector",
@@ -158,7 +158,7 @@ export const magician: Archetype = {
     traits: [
       "Cynical detachment from human values",
       "Employs subliminal technologies of control",
-      "Paralyzed by overthinking — thinks excessively, never acts",
+      "Paralyzed by overthinking - thinks excessively, never acts",
       "Unwilling to share knowledge unless personally advantaged",
       "Cold, calculating, and exploitative",
       "Caught in a web of pros and cons",
@@ -193,7 +193,7 @@ export const lover: Archetype = {
   maturity: "man",
   accentColor: COLORS.lover,
   description:
-    "The energy that connects one to others and the world. The Lover provides vividness, passion, embodiment, and deep sensory-emotional connection to life. He is the musician, poet, and artist of the psyche — profoundly attuned to sensory realms and beauty, reading people intuitively and sensing emotional shifts.",
+    "The energy that connects one to others and the world. The Lover provides vividness, passion, embodiment, and deep sensory-emotional connection to life. He is the musician, poet, and artist of the psyche - profoundly attuned to sensory realms and beauty, reading people intuitively and sensing emotional shifts.",
   keyCharacteristics: [
     "Enables deep sensitivity and compassion through feeling",
     "Reads people and senses hidden motives intuitively",
@@ -252,7 +252,7 @@ export const divineChild: Archetype = {
   maturity: "boy",
   accentColor: COLORS.king,
   description:
-    "The first and most primal boyhood archetype. Represents miraculous new life, creative emergence, wonder, and wholeness. The Divine Child is the source of boyish enthusiasm for life — producing feelings of well-being, peace, joy, and a zest for adventure. Paradoxically, he is both extremely helpless and extremely powerful.",
+    "The first and most primal boyhood archetype. Represents miraculous new life, creative emergence, wonder, and wholeness. The Divine Child is the source of boyish enthusiasm for life - producing feelings of well-being, peace, joy, and a zest for adventure. Paradoxically, he is both extremely helpless and extremely powerful.",
   keyCharacteristics: [
     "Source of wonder, vitality, and new beginnings",
     "Fuels creativity and spurs adventure",
@@ -264,7 +264,7 @@ export const divineChild: Archetype = {
   fullness: {
     title: "The Divine Child in His Fullness",
     description:
-      "When properly nurtured, the Divine Child keeps life fresh and full of possibility. In the adult, a healthy connection means remaining young at heart — life still feels full of wonder, even with age.",
+      "When properly nurtured, the Divine Child keeps life fresh and full of possibility. In the adult, a healthy connection means remaining young at heart - life still feels full of wonder, even with age.",
   },
   activeShadow: {
     name: "The High Chair Tyrant",
@@ -302,13 +302,13 @@ export const hero: Archetype = {
   maturity: "boy",
   accentColor: COLORS.warrior,
   description:
-    "The most advanced form of Boy Psychology — the peak of masculine energy of the boy. The Hero emerges during adolescence, representing the drive for independence, testing one's mettle, and proving capability through confrontation and risk-taking. Critically, the Hero lacks realism about his own limitations.",
+    "The most advanced form of Boy Psychology - the peak of masculine energy of the boy. The Hero emerges during adolescence, representing the drive for independence, testing one's mettle, and proving capability through confrontation and risk-taking. Critically, the Hero lacks realism about his own limitations.",
   keyCharacteristics: [
     "Mobilizes energy to break free from childhood dependence",
     "Drive for independence and proving capability",
     "Takes risks for meaningful causes",
     "Idealism used for self-serving purpose",
-    "Romantic invulnerability — denial of death and limitation",
+    "Romantic invulnerability - denial of death and limitation",
     "The launching pad for the Warrior",
   ],
   fullness: {
@@ -352,7 +352,7 @@ export const precociousChild: Archetype = {
   maturity: "boy",
   accentColor: COLORS.magician,
   description:
-    "Represents curiosity, intellectual wonder, and the drive to understand how the world works and what motivates people. This archetype manifests through endless questioning, intense focus on learning, and skill development. The Precocious Child is contemplative yet social — eager to share discoveries.",
+    "Represents curiosity, intellectual wonder, and the drive to understand how the world works and what motivates people. This archetype manifests through endless questioning, intense focus on learning, and skill development. The Precocious Child is contemplative yet social - eager to share discoveries.",
   keyCharacteristics: [
     "Maintains boyish wonder and resists cynicism",
     "Talented, reflective, and introspective",
@@ -402,7 +402,7 @@ export const oedipalChild: Archetype = {
   maturity: "boy",
   accentColor: COLORS.lover,
   description:
-    "The archetype that gives a boy the desire to forge deep relationships with others and the warmth and affection to nurture those connections. The core energy is connection — a yearning for nurturing and creative forces. This energy drives spirituality, imagination, and relational bonding.",
+    "The archetype that gives a boy the desire to forge deep relationships with others and the warmth and affection to nurture those connections. The core energy is connection - a yearning for nurturing and creative forces. This energy drives spirituality, imagination, and relational bonding.",
   keyCharacteristics: [
     "Warmth, gentleness, and relational capacity",
     "Taps into emotional and spiritual depths",

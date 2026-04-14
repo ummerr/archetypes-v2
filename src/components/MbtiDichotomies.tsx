@@ -36,7 +36,7 @@ const AXES: Axis[] = [
     kicker: "Judgment",
     question: "By what measure is a thing decided?",
     left: { letter: "T", name: "Thinking", gloss: "By principle. Impersonal logic; the rule that holds when no one is watching." },
-    right: { letter: "F", name: "Feeling", gloss: "By value. What matters, to whom, and at what cost — weighed in the body." },
+    right: { letter: "F", name: "Feeling", gloss: "By value. What matters, to whom, and at what cost - weighed in the body." },
   },
   {
     id: "jp",

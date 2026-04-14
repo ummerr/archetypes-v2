@@ -28,7 +28,7 @@ export async function generateMetadata({
   const archetype = getJungianBySlug(slug);
   if (!archetype) return { title: "Not Found" };
   return buildPageMetadata({
-    title: `${archetype.name} — Jungian Archetype`,
+    title: `${archetype.name} - Jungian Archetype`,
     description: truncate(archetype.description),
     path: `/jungian/archetype/${archetype.slug}`,
     type: "article",
@@ -53,7 +53,7 @@ export default async function JungianArchetypePage({
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: `${archetype.name} — Jungian Archetype`,
+    headline: `${archetype.name} - Jungian Archetype`,
     description: archetype.description,
     about: archetype.name,
     url: absoluteUrl(`/jungian/archetype/${archetype.slug}`),

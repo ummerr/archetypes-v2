@@ -46,14 +46,14 @@ export default function TarotDetailClient({
       label: "Active Shadow",
       pole: archetype.poles.activeShadow,
       tint: "#C0392B",
-      kicker: "Over-expression — Enantiodromia inflates the energy",
+      kicker: "Over-expression - Enantiodromia inflates the energy",
     },
     {
       key: "passive" as const,
       label: "Passive Shadow",
       pole: archetype.poles.passiveShadow,
       tint: "#4A5A7A",
-      kicker: "Under-expression — the repressed or deflated pole",
+      kicker: "Under-expression - the repressed or deflated pole",
     },
   ];
 
@@ -68,7 +68,7 @@ export default function TarotDetailClient({
       }
     >
       <div className="max-w-4xl mx-auto">
-        {/* Journey arc — full 22, current card highlighted */}
+        {/* Journey arc - full 22, current card highlighted */}
         <div className={`-mx-2 ${isModal ? "mb-12" : "mb-14"} animate-slide-up`}>
           <TarotDeckArc
             cards={ALL_TAROT}
@@ -233,7 +233,7 @@ export default function TarotDetailClient({
           delay="delay-300"
         />
 
-        {/* Previous / Next — the Fool's Journey sequence */}
+        {/* Previous / Next - the Fool's Journey sequence */}
         <div className="mb-16 animate-slide-up delay-300">
           <div className="flex items-center gap-4 mb-5">
             <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
@@ -343,7 +343,7 @@ export default function TarotDetailClient({
                     {s.name}
                   </p>
                   <p className="font-mono text-[8px] text-muted/80 mt-1 line-clamp-1">
-                    {s.symbol} {s.coreTheme.split("—")[0].trim()}
+                    {s.symbol} {s.coreTheme.split("-")[0].trim()}
                   </p>
                 </Link>
               ))}

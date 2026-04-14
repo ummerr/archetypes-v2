@@ -110,7 +110,7 @@ export default function TarotCard({
         setFlipped((f) => !f);
       }}
       role="button"
-      aria-label={`${archetype.numeral} — ${archetype.name}${flipped ? " (flipped)" : ""}`}
+      aria-label={`${archetype.numeral} - ${archetype.name}${flipped ? " (flipped)" : ""}`}
       aria-pressed={flipped}
       className="relative w-full h-full cursor-pointer"
       style={{
@@ -187,12 +187,12 @@ export default function TarotCard({
                 className="font-mono text-[8px] tracking-[0.3em] uppercase mt-1 line-clamp-1"
                 style={{ color: light ? "var(--color-muted)" : "var(--color-text-secondary)" }}
               >
-                {archetype.coreTheme.split("—")[0].trim()}
+                {archetype.coreTheme.split("-")[0].trim()}
               </p>
             </div>
           </div>
 
-          {/* Foil glow — cursor-tracked, blended */}
+          {/* Foil glow - cursor-tracked, blended */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
             style={{

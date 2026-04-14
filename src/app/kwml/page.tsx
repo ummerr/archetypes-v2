@@ -23,7 +23,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="animate-slide-up">
               <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
-                Moore &amp; Gillette — Archetypal Framework
+                Moore &amp; Gillette - Archetypal Framework
               </p>
               <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
                 Archetypes of the{" "}
@@ -33,7 +33,7 @@ export default function Home() {
               </h1>
               <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl font-light">
                 Four primal energy patterns shape the masculine psyche. Each
-                holds a fullness and two shadow poles — the inflated and the
+                holds a fullness and two shadow poles - the inflated and the
                 deflated. Boy becomes man through initiation.
               </p>
             </div>
@@ -133,7 +133,7 @@ export default function Home() {
                           </div>
                         </div>
 
-                        {/* Footer — Boy → Man evolution */}
+                        {/* Footer - Boy → Man evolution */}
                         <div className="flex items-center justify-between pt-3 border-t border-surface-light/30">
                           <div className="flex items-center gap-2.5">
                             <span className="font-mono text-[8px] tracking-wider text-muted uppercase">
@@ -197,7 +197,7 @@ export default function Home() {
             })}
           </div>
 
-          {/* ─── Boy Within the Man — interactive bridge ───────────── */}
+          {/* ─── Boy Within the Man - interactive bridge ───────────── */}
           <div className="max-w-6xl mx-auto mt-20">
             <Link
               href="/kwml/boy-within-man"
@@ -298,7 +298,7 @@ export default function Home() {
               </h2>
               <p className="text-text-secondary text-sm md:text-base leading-relaxed max-w-xl mx-auto text-center font-light mb-10">
                 The immature patterns every man carries within. Each boy
-                archetype is the seed of its mature counterpart — powerful when
+                archetype is the seed of its mature counterpart - powerful when
                 integrated, destructive when it possesses the adult ego.
               </p>
             </div>
@@ -330,7 +330,7 @@ export default function Home() {
                           : "none",
                       }}
                     >
-                      {/* Top accent — dashed for unformed quality */}
+                      {/* Top accent - dashed for unformed quality */}
                       <div
                         className="absolute top-0 left-0 right-0 h-px transition-opacity duration-500"
                         style={{
@@ -389,7 +389,7 @@ export default function Home() {
                           />
                         </div>
 
-                        {/* Footer — evolution arrow */}
+                        {/* Footer - evolution arrow */}
                         <div className="flex items-center justify-between pt-3 border-t border-surface-light/30">
                           <div className="flex items-center gap-2.5">
                             <span

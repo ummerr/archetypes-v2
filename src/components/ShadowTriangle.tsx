@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import type { Archetype } from "@/types/archetype";
 
-/* ─── Apex vertex: fullness — glowing bright node ── */
+/* ─── Apex vertex: fullness - glowing bright node ── */
 function ApexNode({ color }: { color: string }) {
   const ref = useRef<THREE.Mesh>(null);
   const glowRef = useRef<THREE.Mesh>(null);
@@ -199,7 +199,7 @@ function TriangleFrame({ color }: { color: string }) {
   return <primitive object={obj} />;
 }
 
-/* ─── Outer triangle echo — faint secondary frame ── */
+/* ─── Outer triangle echo - faint secondary frame ── */
 function TriangleEcho({ color }: { color: string }) {
   const obj = useMemo(() => {
     const scale = 1.12;
@@ -349,7 +349,7 @@ function TriangleLabels({ archetype }: { archetype: Archetype }) {
 
   return (
     <>
-      {/* Apex — Fullness */}
+      {/* Apex - Fullness */}
       <Html position={[0, 1.55, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
@@ -367,7 +367,7 @@ function TriangleLabels({ archetype }: { archetype: Archetype }) {
         </div>
       </Html>
 
-      {/* Left — Active Shadow */}
+      {/* Left - Active Shadow */}
       <Html position={[-1.2, -1.15, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
@@ -385,7 +385,7 @@ function TriangleLabels({ archetype }: { archetype: Archetype }) {
         </div>
       </Html>
 
-      {/* Right — Passive Shadow */}
+      {/* Right - Passive Shadow */}
       <Html position={[1.2, -1.15, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
@@ -407,7 +407,7 @@ function TriangleLabels({ archetype }: { archetype: Archetype }) {
 }
 
 /* ═══════════════════════════════════════════════════════
-   ShadowTriangle — Main Canvas
+   ShadowTriangle - Main Canvas
    ═══════════════════════════════════════════════════════ */
 
 export default function ShadowTriangle({

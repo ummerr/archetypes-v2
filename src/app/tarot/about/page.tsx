@@ -3,7 +3,7 @@ import { TAROT_PHASES } from "@/data/tarot/archetypes";
 import { buildPageMetadata, systemOgImage } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
-  title: "About — Tarot",
+  title: "About - Tarot",
   description:
     "The Major Arcana as a psychological map: twenty-two archetypal images tracing the Fool's Journey through individuation, each carrying a fullness pole and two shadow expressions.",
   path: "/tarot/about",
@@ -25,12 +25,12 @@ export default function TarotAbout() {
         <div className="space-y-8 text-text-secondary leading-relaxed font-light animate-slide-up delay-200">
           <section>
             <h2 className="font-serif text-2xl text-text-primary mb-3 font-medium">
-              Not Divination — Individuation
+              Not Divination - Individuation
             </h2>
             <p>
               This system treats the Major Arcana strictly as a psychological
               instrument, not an oracle. Jung saw the cards as preserved
-              fragments of the <em>collective unconscious</em> — archetypal
+              fragments of the <em>collective unconscious</em> - archetypal
               images shared across cultures because they mirror structures the
               human psyche keeps re-producing. Read this way, the deck has
               nothing to do with fortune-telling. It is a sequence of
@@ -92,7 +92,7 @@ export default function TarotAbout() {
             <ul className="space-y-2.5 pl-5 list-disc marker:text-gold">
               <li>
                 <span className="text-text-primary">Fullness.</span> The healthy,
-                integrated expression — the apex the archetype points toward.
+                integrated expression - the apex the archetype points toward.
               </li>
               <li>
                 <span className="text-text-primary">Active Shadow.</span> The
@@ -102,14 +102,14 @@ export default function TarotAbout() {
               </li>
               <li>
                 <span className="text-text-primary">Passive Shadow.</span> The
-                deflated, repressed, or refused pole — what remains when the
+                deflated, repressed, or refused pole - what remains when the
                 archetype is disowned rather than lived.
               </li>
             </ul>
             <p className="mt-3">
               A reversed card, in this reading, is not a bad omen. It is simply
-              a cue that an archetypal energy is out of balance — inflated or
-              refused — and an invitation to shadow work.
+              a cue that an archetypal energy is out of balance - inflated or
+              refused - and an invitation to shadow work.
             </p>
           </section>
 

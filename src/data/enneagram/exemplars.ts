@@ -1,6 +1,6 @@
 import { ExemplarSet } from "@/components/shared/ExemplarsTabs";
 
-// Enneagram exemplars — one set per type. Community typings are used
+// Enneagram exemplars - one set per type. Community typings are used
 // suggestively, not as definitive assignments.
 
 export const ENNEAGRAM_EXEMPLARS: Record<string, ExemplarSet> = {
@@ -9,7 +9,7 @@ export const ENNEAGRAM_EXEMPLARS: Record<string, ExemplarSet> = {
       { name: "Atticus Finch", medium: "Literature", note: "The upright principle carried into a crooked town." },
       { name: "Hermione Granger", medium: "Literature", note: "The inner auditor; corrects teachers, classmates, and herself." },
       { name: "Leslie Knope", medium: "Television", note: "The reform impulse as civic love; the waffle as manifesto." },
-      { name: "Mary Poppins", medium: "Film", note: "Practically perfect in every way — the Reformer's secret wish." },
+      { name: "Mary Poppins", medium: "Film", note: "Practically perfect in every way - the Reformer's secret wish." },
     ],
     historical: [
       { name: "Mahatma Gandhi", note: "Discipline of truth applied as a political method." },
@@ -26,7 +26,7 @@ export const ENNEAGRAM_EXEMPLARS: Record<string, ExemplarSet> = {
       { name: "Leo McGarry (West Wing)", medium: "Television", note: "Serves the president's mission with a devotion that is also his identity." },
     ],
     historical: [
-      { name: "Mother Teresa", note: "The archetypal 2 — given over, entirely, to the needs of others." },
+      { name: "Mother Teresa", note: "The archetypal 2 - given over, entirely, to the needs of others." },
       { name: "Princess Diana", note: "Warmth deployed as public vocation." },
       { name: "Dolly Parton", note: "Generosity on a scale that has become infrastructure." },
     ],
@@ -35,9 +35,9 @@ export const ENNEAGRAM_EXEMPLARS: Record<string, ExemplarSet> = {
   achiever: {
     cultural: [
       { name: "Don Draper", medium: "Television", note: "Image as asset, asset as self." },
-      { name: "Gatsby", medium: "Literature", note: "The Achiever's green light — success as proof one exists." },
+      { name: "Gatsby", medium: "Literature", note: "The Achiever's green light - success as proof one exists." },
       { name: "Miranda Priestly", medium: "Film", note: "Excellence weaponized; the cost of standing absolutely at the top." },
-      { name: "Joey Tribbiani (auditioning)", medium: "Television", note: "Charm and adaptation — the Achiever's lighter shape." },
+      { name: "Joey Tribbiani (auditioning)", medium: "Television", note: "Charm and adaptation - the Achiever's lighter shape." },
     ],
     historical: [
       { name: "Tom Brady", note: "Twenty-three years of measurable excellence; Achiever as career." },
@@ -50,13 +50,13 @@ export const ENNEAGRAM_EXEMPLARS: Record<string, ExemplarSet> = {
     cultural: [
       { name: "Jay Gatsby", medium: "Literature", note: "Longing as the constant mood; the perfect thing always a little out of reach." },
       { name: "Rue (Euphoria)", medium: "Television", note: "The depth of feeling as both gift and wound." },
-      { name: "Don Draper (interior)", medium: "Television", note: "The private 4 under the public 3 — ache as the real engine." },
+      { name: "Don Draper (interior)", medium: "Television", note: "The private 4 under the public 3 - ache as the real engine." },
       { name: "Amy Winehouse's persona", medium: "Music / Culture", note: "Torch songs from the romantic interior; beauty braided into self-harm." },
     ],
     historical: [
       { name: "Vincent van Gogh", note: "The painter of feeling itself; devotion to the unique inner seeing." },
       { name: "Frida Kahlo", note: "The 4's mirror held up to the body and the life." },
-      { name: "Prince", note: "Unapologetic singularity — the 4 in glittering public form." },
+      { name: "Prince", note: "Unapologetic singularity - the 4 in glittering public form." },
     ],
   },
 
@@ -79,19 +79,19 @@ export const ENNEAGRAM_EXEMPLARS: Record<string, ExemplarSet> = {
       { name: "Ron Weasley", medium: "Literature", note: "Loyalty tested again and again; the friend who stays." },
       { name: "Chandler Bing", medium: "Television", note: "Humor as defense; anxiety managed through the group." },
       { name: "Walter White (anxious phase)", medium: "Television", note: "Contingency-planning under threat; the 6 cornered." },
-      { name: "Steve Rogers", medium: "Film", note: "Counter-phobic 6 — meets every threat head-on for the sake of duty." },
+      { name: "Steve Rogers", medium: "Film", note: "Counter-phobic 6 - meets every threat head-on for the sake of duty." },
     ],
     historical: [
       { name: "George H. W. Bush", note: "Lifelong institutionalist; loyalty to country as organizing principle." },
-      { name: "Malala Yousafzai", note: "Counter-phobic 6 — walked toward danger because the cause required it." },
-      { name: "Ellen DeGeneres", note: "Anxious-to-warm 6 — safety built through welcome." },
+      { name: "Malala Yousafzai", note: "Counter-phobic 6 - walked toward danger because the cause required it." },
+      { name: "Ellen DeGeneres", note: "Anxious-to-warm 6 - safety built through welcome." },
     ],
   },
 
   enthusiast: {
     cultural: [
       { name: "Peter Quill / Star-Lord", medium: "Film", note: "Joy, playlists, improvisation; the 7 with a jetpack." },
-      { name: "Willy Wonka", medium: "Literature / Film", note: "The Enthusiast's factory — every door opens on something delightful or terrifying." },
+      { name: "Willy Wonka", medium: "Literature / Film", note: "The Enthusiast's factory - every door opens on something delightful or terrifying." },
       { name: "Jack Sparrow", medium: "Film", note: "Avoidance dressed as charm; the 7 outrunning its own hold." },
       { name: "Phoebe Buffay", medium: "Television", note: "Relentlessly open to experience; every day a new possibility." },
     ],
@@ -104,15 +104,15 @@ export const ENNEAGRAM_EXEMPLARS: Record<string, ExemplarSet> = {
 
   challenger: {
     cultural: [
-      { name: "Tony Soprano", medium: "Television", note: "Dominance, territory, force — the 8 in full north-Jersey bloom." },
+      { name: "Tony Soprano", medium: "Television", note: "Dominance, territory, force - the 8 in full north-Jersey bloom." },
       { name: "Olenna Tyrell", medium: "Literature / TV", note: "The iron matriarch; truth stated without costume." },
       { name: "Furiosa", medium: "Film", note: "The 8 as protector; force organized around a mercy." },
-      { name: "Walter White (late)", medium: "Television", note: "The 8 shadow fully claimed — I am the one who knocks." },
+      { name: "Walter White (late)", medium: "Television", note: "The 8 shadow fully claimed - I am the one who knocks." },
     ],
     historical: [
       { name: "Martin Luther King Jr. (Letter from Birmingham Jail)", note: "Eight-energy held in service of justice and non-violence." },
       { name: "Serena Williams", note: "Physical and competitive dominance as birthright." },
-      { name: "Fidel Castro", note: "The 8 as revolutionary — force used until it becomes its own regime." },
+      { name: "Fidel Castro", note: "The 8 as revolutionary - force used until it becomes its own regime." },
     ],
   },
 
@@ -124,7 +124,7 @@ export const ENNEAGRAM_EXEMPLARS: Record<string, ExemplarSet> = {
       { name: "Winnie-the-Pooh", medium: "Literature", note: "The bear of very little fuss; presence without demand." },
     ],
     historical: [
-      { name: "Abraham Lincoln", note: "9 integrating to 3 — the quiet mediator moved, by duty, into decisive action." },
+      { name: "Abraham Lincoln", note: "9 integrating to 3 - the quiet mediator moved, by duty, into decisive action." },
       { name: "Queen Elizabeth II", note: "Decades of the 9's still, impartial center at the heart of the state." },
       { name: "Carl Rogers", note: "Built a whole therapy on the 9's gift for unconditional, non-intrusive presence." },
     ],

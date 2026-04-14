@@ -48,7 +48,7 @@ export function archetypeDisplayName(system: SystemId, slug: string): string | u
       return getEnneagramBySlug(slug)?.name;
     case "mbti": {
       const m = getMbtiBySlug(slug);
-      return m ? `${m.code} — ${m.nickname}` : undefined;
+      return m ? `${m.code} - ${m.nickname}` : undefined;
     }
     case "heros-journey":
       return getHeroJourneyBySlug(slug)?.name;

@@ -137,7 +137,7 @@ function BoyCore({ color, isBoy }: { color: string; isBoy: boolean }) {
           opacity={0.08}
         />
       </mesh>
-      {/* Boy icosahedron — wireframe */}
+      {/* Boy icosahedron - wireframe */}
       <mesh ref={meshRef}>
         <icosahedronGeometry args={[0.3, 1]} />
         <meshBasicMaterial
@@ -147,7 +147,7 @@ function BoyCore({ color, isBoy }: { color: string; isBoy: boolean }) {
           opacity={isBoy ? 0.9 : 0.6}
         />
       </mesh>
-      {/* Boy icosahedron — solid */}
+      {/* Boy icosahedron - solid */}
       <mesh rotation={[0, 0.3, 0]}>
         <icosahedronGeometry args={[0.3, 1]} />
         <meshStandardMaterial
@@ -192,7 +192,7 @@ function ManContainer({ color, isMan }: { color: string; isMan: boolean }) {
 
   return (
     <group>
-      {/* Main man sphere — wireframe */}
+      {/* Main man sphere - wireframe */}
       <mesh ref={outerRef}>
         <icosahedronGeometry args={[1.0, 1]} />
         <meshBasicMaterial
@@ -243,7 +243,7 @@ function ShadowMarkers({
 
   return (
     <>
-      {/* Active shadow — spiky tetrahedron */}
+      {/* Active shadow - spiky tetrahedron */}
       <mesh ref={activeRef} position={[-1.35, 0, 0]}>
         <tetrahedronGeometry args={[0.08, 0]} />
         <meshStandardMaterial
@@ -254,7 +254,7 @@ function ShadowMarkers({
           opacity={0.7}
         />
       </mesh>
-      {/* Passive shadow — flat box */}
+      {/* Passive shadow - flat box */}
       <mesh ref={passiveRef} position={[1.35, 0, 0]} scale={[1, 0.4, 1]}>
         <boxGeometry args={[0.1, 0.1, 0.1]} />
         <meshStandardMaterial
@@ -287,7 +287,7 @@ function Labels({
 }) {
   return (
     <>
-      {/* Man label — top */}
+      {/* Man label - top */}
       <Html position={[0, 1.35, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
@@ -309,7 +309,7 @@ function Labels({
         </div>
       </Html>
 
-      {/* Boy label — center bottom */}
+      {/* Boy label - center bottom */}
       <Html position={[0, -0.45, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
@@ -419,7 +419,7 @@ function ShadowConnectors() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   BoyWithinMan — Main Canvas
+   BoyWithinMan - Main Canvas
    ═══════════════════════════════════════════════════════ */
 
 export default function BoyWithinMan({

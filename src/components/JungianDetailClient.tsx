@@ -187,7 +187,7 @@ export default function JungianDetailClient({
           delay="delay-500"
         />
 
-        {/* Cluster siblings — demoted to thin strip */}
+        {/* Cluster siblings - demoted to thin strip */}
         <section className="animate-slide-up delay-500 pt-4">
           <div className="flex items-center gap-4 mb-4">
             <span className="font-mono text-[9px] tracking-[0.4em] text-muted uppercase">

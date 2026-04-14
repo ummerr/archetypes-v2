@@ -22,7 +22,7 @@ interface Props {
 const SHADOW_VOICES: Record<string, { active: string; passive: string }> = {
   "the-king": {
     active:
-      "I am the center of everything. Bow before me — or I will destroy you.",
+      "I am the center of everything. Bow before me - or I will destroy you.",
     passive:
       "I am nothing. I have no power, no center, no worth at all.",
   },
@@ -34,7 +34,7 @@ const SHADOW_VOICES: Record<string, { active: string; passive: string }> = {
   },
   "the-magician": {
     active:
-      "I see through everyone. Knowledge is my weapon — and I share nothing.",
+      "I see through everyone. Knowledge is my weapon - and I share nothing.",
     passive:
       "Who, me? I know nothing. I couldn't possibly be responsible for any of this.",
   },
@@ -52,7 +52,7 @@ const SHADOW_VOICES: Record<string, { active: string; passive: string }> = {
   },
   "the-hero": {
     active:
-      "I am invincible. Don't you dare question me — just watch and be amazed.",
+      "I am invincible. Don't you dare question me - just watch and be amazed.",
     passive:
       "I can't face it. Everyone out there is stronger and braver than me.",
   },
@@ -70,7 +70,7 @@ const SHADOW_VOICES: Record<string, { active: string; passive: string }> = {
   },
 };
 
-/* ─── Oscillation Dot — bounces between the two cards ── */
+/* ─── Oscillation Dot - bounces between the two cards ── */
 function OscillationDot({
   color,
   possessed,
@@ -97,7 +97,7 @@ function OscillationDot({
         // Pull toward bottom (passive side)
         yPct = 80 + Math.sin(t * 2) * 8;
       } else {
-        // Free oscillation — asymmetric, spends time at extremes
+        // Free oscillation - asymmetric, spends time at extremes
         const raw = Math.sin(t * 0.7) * Math.cos(t * 0.3);
         yPct = 50 + raw * 38;
       }
@@ -205,7 +205,7 @@ function ShadowCard({
       onMouseEnter={() => onPossess(pole)}
       onMouseLeave={() => onPossess(null)}
     >
-      {/* Top glow bar — intensifies on possession */}
+      {/* Top glow bar - intensifies on possession */}
       <div
         className="absolute top-0 left-0 right-0 h-[2px] transition-opacity duration-500"
         style={{
@@ -316,7 +316,7 @@ function ShadowCard({
           {shadow.description}
         </p>
 
-        {/* Traits — staggered reveal on possession */}
+        {/* Traits - staggered reveal on possession */}
         <div className="space-y-0">
           {shadow.traits.map((t, i) => (
             <motion.div
@@ -356,7 +356,7 @@ function ShadowCard({
 }
 
 /* ═══════════════════════════════════════════════════════
-   ShadowTheater — Interactive Shadow Possession Experience
+   ShadowTheater - Interactive Shadow Possession Experience
    ═══════════════════════════════════════════════════════ */
 
 export default function ShadowTheater({
@@ -378,7 +378,7 @@ export default function ShadowTheater({
 
   return (
     <div className="relative">
-      {/* ─── The Shadow Voice — first-person quote ─── */}
+      {/* ─── The Shadow Voice - first-person quote ─── */}
       <div className="relative h-24 flex items-center justify-center mb-6">
         <AnimatePresence mode="wait">
           {possessed ? (
@@ -441,7 +441,7 @@ export default function ShadowTheater({
 
       {/* ─── Shadow Cards with Oscillation Spine ─── */}
       <div className="grid md:grid-cols-2 gap-4 relative">
-        {/* Oscillation spine — center vertical connection */}
+        {/* Oscillation spine - center vertical connection */}
         <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px z-10 pointer-events-none">
           {/* Gradient line */}
           <div
@@ -485,7 +485,7 @@ export default function ShadowTheater({
         />
       </div>
 
-      {/* ─── Oscillation Insight — enhanced ─── */}
+      {/* ─── Oscillation Insight - enhanced ─── */}
       <motion.div
         className="mt-8 relative p-5 rounded-lg overflow-hidden transition-all duration-700"
         style={{

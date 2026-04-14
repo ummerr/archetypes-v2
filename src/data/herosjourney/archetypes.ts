@@ -11,11 +11,11 @@ export const hero: HeroJourneyArchetype = {
   coreDesire:
     "To prove their worth through courageous action and become whole by mastering the journey.",
   coreLie:
-    "I must carry the burden of the world alone — relying on others is a fatal weakness.",
+    "I must carry the burden of the world alone - relying on others is a fatal weakness.",
   strategy:
     "Action, sacrifice, relentless forward momentum, and confronting overwhelming odds.",
   description:
-    "The protagonist and surrogate of the audience's consciousness. The Hero begins in unfulfilled potential, answers the Call, and undergoes a profound psychological death and rebirth in order to return carrying the power to heal their society. They are the ego separating from the collective matrix to become itself — and then returning as a gift.",
+    "The protagonist and surrogate of the audience's consciousness. The Hero begins in unfulfilled potential, answers the Call, and undergoes a profound psychological death and rebirth in order to return carrying the power to heal their society. They are the ego separating from the collective matrix to become itself - and then returning as a gift.",
   keyCharacteristics: [
     "Courageous in the face of overwhelming odds",
     "Self-sacrificing on behalf of something larger",
@@ -42,7 +42,7 @@ export const mentor: HeroJourneyArchetype = {
   name: "The Mentor",
   role: "mentor",
   motto:
-    "The answers you seek are already within you — but you must learn to see past the illusions of the world.",
+    "The answers you seek are already within you - but you must learn to see past the illusions of the world.",
   coreFear:
     "Ignorance, futility, and failing to pass on the legacy or protect the next bearer.",
   coreDesire:
@@ -52,7 +52,7 @@ export const mentor: HeroJourneyArchetype = {
   strategy:
     "Guidance, teaching, the bestowal of gifts, and strategic intervention at moments of doubt.",
   description:
-    "A wise, experienced figure who prepares the hero with training, insight, or a talisman — and then steps aside. The Mentor is the activated 'Wise Old One,' the sign that the psyche is gathering its internal resources. Their great work is to become unnecessary.",
+    "A wise, experienced figure who prepares the hero with training, insight, or a talisman - and then steps aside. The Mentor is the activated 'Wise Old One,' the sign that the psyche is gathering its internal resources. Their great work is to become unnecessary.",
   keyCharacteristics: [
     "Patient and enigmatic",
     "Connected to hidden or spiritual mechanics",
@@ -87,7 +87,7 @@ export const herald: HeroJourneyArchetype = {
   strategy:
     "Announce, disrupt, deliver urgent messages, and present unavoidable ultimatums.",
   description:
-    "The catalyst who shatters the Ordinary World. The Herald may be a person, an event, an artifact, or an internal realization — whatever carries the Call to Adventure. Their function is to make staying impossible, whether or not going will be safe.",
+    "The catalyst who shatters the Ordinary World. The Herald may be a person, an event, an artifact, or an internal realization - whatever carries the Call to Adventure. Their function is to make staying impossible, whether or not going will be safe.",
   keyCharacteristics: [
     "Urgent and commanding",
     "Immune to the hero's excuses",
@@ -123,12 +123,12 @@ export const thresholdGuardian: HeroJourneyArchetype = {
     "Only the brutal deserve passage; empathy and compromise are disqualifying flaws.",
   strategy: "Test, block, interrogate, and present puzzles or force.",
   description:
-    "The structural gatekeeper standing between the hero and the special world. Not necessarily a villain — often a neutral force whose job is to confirm the hero's readiness. A Threshold Guardian who is properly met can become a loyal ally on the far side.",
+    "The structural gatekeeper standing between the hero and the special world. Not necessarily a villain - often a neutral force whose job is to confirm the hero's readiness. A Threshold Guardian who is properly met can become a loyal ally on the far side.",
   keyCharacteristics: [
     "Immovable and rule-bound",
     "Intimidating without being evil",
     "Fiercely protective of their domain",
-    "Neutral — hostile or helpful by response",
+    "Neutral - hostile or helpful by response",
     "Tests resolve more than strength",
     "Can be befriended, bypassed, or transformed",
   ],
@@ -149,7 +149,7 @@ export const shapeshifter: HeroJourneyArchetype = {
   slug: "shapeshifter",
   name: "The Shapeshifter",
   role: "shapeshifter",
-  motto: "Nothing in this world is exactly as it seems — including my heart.",
+  motto: "Nothing in this world is exactly as it seems - including my heart.",
   coreFear:
     "Confinement, categorization, being pinned to a single identity or allegiance.",
   coreDesire:
@@ -158,7 +158,7 @@ export const shapeshifter: HeroJourneyArchetype = {
   strategy:
     "Adapt, seduce, misdirect, and keep the hero perpetually off balance.",
   description:
-    "The most ambiguous mask. The Shapeshifter's loyalties, motives, and even form shift — introducing doubt, suspense, and romantic tension. Psychologically they are the Anima or Animus: the repressed contrasexual energy the hero must integrate on the way to wholeness.",
+    "The most ambiguous mask. The Shapeshifter's loyalties, motives, and even form shift - introducing doubt, suspense, and romantic tension. Psychologically they are the Anima or Animus: the repressed contrasexual energy the hero must integrate on the way to wholeness.",
   keyCharacteristics: [
     "Fluid and alluring",
     "Emotionally volatile",
@@ -195,7 +195,7 @@ export const shadow: HeroJourneyArchetype = {
   strategy:
     "Dominate, destroy, exploit the hero's flaws, and accumulate absolute power.",
   description:
-    "The primary antagonist — and the dark mirror of the hero. The Shadow holds everything the hero has repressed, including enormous unutilized power. To defeat it is not enough; the hero must, at some cost, reclaim what it guarded. The best Shadows are tragic: a reflection of what the hero could become.",
+    "The primary antagonist - and the dark mirror of the hero. The Shadow holds everything the hero has repressed, including enormous unutilized power. To defeat it is not enough; the hero must, at some cost, reclaim what it guarded. The best Shadows are tragic: a reflection of what the hero could become.",
   keyCharacteristics: [
     "Ruthless and uncompromising",
     "Deeply wounded, often in ways that mirror the hero",
@@ -232,7 +232,7 @@ export const trickster: HeroJourneyArchetype = {
   strategy:
     "Subvert, ridicule, break the fourth wall, and turn enemies' logic against them.",
   description:
-    "The chaotic truth-teller. The Trickster punctures inflation, keeps the psyche nimble, and prevents the narrative from collapsing under its own weight. As an ego-regulating mechanism, they ensure no mask — not even the hero's — gets worshipped for too long.",
+    "The chaotic truth-teller. The Trickster punctures inflation, keeps the psyche nimble, and prevents the narrative from collapsing under its own weight. As an ego-regulating mechanism, they ensure no mask - not even the hero's - gets worshipped for too long.",
   keyCharacteristics: [
     "Irreverent and observant",
     "Chaotic but rarely cruel",
@@ -268,7 +268,7 @@ export const ally: HeroJourneyArchetype = {
   strategy:
     "Serve, specialize, ground, and amplify the hero's strengths through teamwork.",
   description:
-    "The steadfast companion. Allies humanize the hero, provide exposition, and carry skills the hero lacks. Psychologically they represent the psyche's drive toward cooperative wholeness — the parts of the self that have agreed to work together.",
+    "The steadfast companion. Allies humanize the hero, provide exposition, and carry skills the hero lacks. Psychologically they represent the psyche's drive toward cooperative wholeness - the parts of the self that have agreed to work together.",
   keyCharacteristics: [
     "Loyal and dependable",
     "Specialized in a particular skill",

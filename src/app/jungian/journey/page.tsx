@@ -15,9 +15,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "The Journey — Jungian Archetypes",
+  title: "The Journey - Jungian Archetypes",
   description:
-    "The Pearson-Marr journey, visualized: twelve archetypes arranged across three rings — Ego, Soul, and Self — tracing the stages of psychological development.",
+    "The Pearson-Marr journey, visualized: twelve archetypes arranged across three rings - Ego, Soul, and Self - tracing the stages of psychological development.",
   path: "/jungian/journey",
   ogImage: systemOgImage("jungian"),
   type: "article",
@@ -27,7 +27,7 @@ export default function JungianJourneyPage() {
   const ld = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: "The Journey — Jungian Archetypes",
+    headline: "The Journey - Jungian Archetypes",
     description:
       "A visual map of the Pearson-Marr twelve-archetype journey across Ego, Soul, and Self.",
     url: absoluteUrl("/jungian/journey"),
@@ -69,12 +69,12 @@ export default function JungianJourneyPage() {
             </p>
             <p className="text-text-secondary text-base md:text-lg leading-relaxed font-light">
               Pearson-Marr groups the twelve archetypes into three stages of
-              development. The outer ring — <strong className="text-text-primary font-normal">Ego</strong> — holds the
+              development. The outer ring - <strong className="text-text-primary font-normal">Ego</strong> - holds the
               archetypes that establish the self in the world: trust, belonging,
-              courage, care. The middle ring — <strong className="text-text-primary font-normal">Soul</strong> — stirs
+              courage, care. The middle ring - <strong className="text-text-primary font-normal">Soul</strong> - stirs
               the individuation that pulls us out of the given life: freedom,
-              refusal, devotion, creation. The inner ring — <strong className="text-text-primary font-normal">Self</strong>{" "}
-              — expresses integration: play, truth, transformation, sovereignty.
+              refusal, devotion, creation. The inner ring - <strong className="text-text-primary font-normal">Self</strong>{" "}
+              - expresses integration: play, truth, transformation, sovereignty.
             </p>
           </header>
 

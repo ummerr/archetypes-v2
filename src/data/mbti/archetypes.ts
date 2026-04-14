@@ -44,7 +44,7 @@ export const TEMPERAMENT_GROUPS: TemperamentGroup[] = [
     letters: "SJ",
     tagline: "The keepers of order",
     ethos:
-      "Practical and dutiful, the bedrock of institutions — focused on stability, tradition, and reliable execution.",
+      "Practical and dutiful, the bedrock of institutions - focused on stability, tradition, and reliable execution.",
     primary: MBTI_COLORS.sentinels,
     secondary: MBTI_COLORS.sentinelsDeep,
   },
@@ -54,7 +54,7 @@ export const TEMPERAMENT_GROUPS: TemperamentGroup[] = [
     letters: "SP",
     tagline: "The improvisers of the present",
     ethos:
-      "Spontaneous and ingenious, masters of the tangible field — flexible, kinetic, and supremely tactical.",
+      "Spontaneous and ingenious, masters of the tangible field - flexible, kinetic, and supremely tactical.",
     primary: MBTI_COLORS.explorers,
     secondary: MBTI_COLORS.explorersDeep,
   },
@@ -88,7 +88,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Strategic visionaries with a meticulous plan for every contingency.",
     description:
-      "The Architect perceives inevitabilities before they arrive and organizes the external world to meet them. Singular visions are held with monastic conviction and executed with ruthless economy. The INTJ lives at the intersection of foresight and follow-through — most at home when a complex future can be compressed into a clean, unbroken line of cause and effect.",
+      "The Architect perceives inevitabilities before they arrive and organizes the external world to meet them. Singular visions are held with monastic conviction and executed with ruthless economy. The INTJ lives at the intersection of foresight and follow-through - most at home when a complex future can be compressed into a clean, unbroken line of cause and effect.",
     strengths: [
       "Long-range strategic foresight",
       "Uncompromising intellectual independence",
@@ -111,11 +111,11 @@ export const ALL_MBTI: MbtiArchetype[] = [
     alternateName: "Architect of Ideas",
     temperament: "Analysts",
     dichotomies: { ei: "I", sn: "N", tf: "T", jp: "P" },
-    motto: "The model must be internally consistent — or it is nothing.",
+    motto: "The model must be internally consistent - or it is nothing.",
     tagline:
       "Innovative conceptual inventors with an unquenchable thirst for abstract precision.",
     description:
-      "The Logician builds internal frameworks so precise that any contradiction registers as an intolerable flaw. Ideas are tested in private, turned endlessly, defined and redefined until the definitions themselves hold. The INTP is curious without being credulous — driven less by conclusions than by the pleasure of watching a structure hold its own weight.",
+      "The Logician builds internal frameworks so precise that any contradiction registers as an intolerable flaw. Ideas are tested in private, turned endlessly, defined and redefined until the definitions themselves hold. The INTP is curious without being credulous - driven less by conclusions than by the pleasure of watching a structure hold its own weight.",
     strengths: [
       "Surgical analytical precision",
       "Tolerance for ambiguity and open problems",
@@ -142,7 +142,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Bold, strong-willed leaders who forge paths through systemic obstacles.",
     description:
-      "The Commander organizes reality into a campaign. Goals are declared, resources marshaled, inefficiencies eliminated — and the world rearranged to match the vision. Warm leadership and cold logistics live in the same body. ENTJs do not wait for conditions to improve; they construct the conditions required for the next move.",
+      "The Commander organizes reality into a campaign. Goals are declared, resources marshaled, inefficiencies eliminated - and the world rearranged to match the vision. Warm leadership and cold logistics live in the same body. ENTJs do not wait for conditions to improve; they construct the conditions required for the next move.",
     strengths: [
       "Decisive, unsentimental leadership",
       "Rapid conversion of vision into operation",
@@ -169,7 +169,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Curious, divergent thinkers who cannot resist an intellectual challenge.",
     description:
-      "The Debater tests the structural integrity of ideas by running them against their opposites. Orthodoxy is interesting only as a surface to push against; heresy is interesting only when it yields a working model. ENTPs live in permanent brainstorm — irreverent, improvisational, and happiest where the category boundaries are beginning to fray.",
+      "The Debater tests the structural integrity of ideas by running them against their opposites. Orthodoxy is interesting only as a surface to push against; heresy is interesting only when it yields a working model. ENTPs live in permanent brainstorm - irreverent, improvisational, and happiest where the category boundaries are beginning to fray.",
     strengths: [
       "Rapid generation of novel possibilities",
       "Comfort in contradiction and paradox",
@@ -198,7 +198,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Quiet, mystical idealists guided by profound internal vision and ethical clarity.",
     description:
-      "The Advocate holds a singular, almost prophetic sense of what things mean — and, beneath it, a profound pull toward what they could become. INFJs mediate between the inner image and the outer world with patience that can look like passivity but is, in fact, long-horizon moral work. They are rare in part because the integration the type demands is itself rare.",
+      "The Advocate holds a singular, almost prophetic sense of what things mean - and, beneath it, a profound pull toward what they could become. INFJs mediate between the inner image and the outer world with patience that can look like passivity but is, in fact, long-horizon moral work. They are rare in part because the integration the type demands is itself rare.",
     strengths: [
       "Visionary ethical foresight",
       "Deep attunement to subtle human patterns",
@@ -225,7 +225,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Poetic, deeply altruistic individuals loyal to an inner moral compass.",
     description:
-      "The Mediator listens inward to an unfalsifiable compass of values and will not — cannot — act against it. This fidelity is the source of both their healing presence and their friction with instrumental worlds. INFPs are endlessly loyal to what feels true and slow to commit to what does not. Their gift is the capacity to meet others' inner lives as real.",
+      "The Mediator listens inward to an unfalsifiable compass of values and will not - cannot - act against it. This fidelity is the source of both their healing presence and their friction with instrumental worlds. INFPs are endlessly loyal to what feels true and slow to commit to what does not. Their gift is the capacity to meet others' inner lives as real.",
     strengths: [
       "Unwavering personal authenticity",
       "Poetic insight into human interiority",
@@ -252,7 +252,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Charismatic leaders who orchestrate collective harmony toward a unified vision.",
     description:
-      "The Protagonist feels the field of a room the way others feel weather and shapes it toward a shared end. Natural teachers, organizers, and moral guides, ENFJs model what they believe and call others into the pattern. Their power is relational — harnessed well, it transforms groups; harnessed poorly, it tips into pressure disguised as care.",
+      "The Protagonist feels the field of a room the way others feel weather and shapes it toward a shared end. Natural teachers, organizers, and moral guides, ENFJs model what they believe and call others into the pattern. Their power is relational - harnessed well, it transforms groups; harnessed poorly, it tips into pressure disguised as care.",
     strengths: [
       "Infectious, value-driven leadership",
       "Ability to name the group's best self",
@@ -279,7 +279,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Enthusiastic free spirits who champion individual potential across every circle.",
     description:
-      "The Campaigner scans the world for possibility — in people, in ideas, in the half-formed shape of something that could still become. Deeply values-driven under the sparkle, ENFPs give others permission to be larger than they were before the encounter. The cost is a certain restlessness; the gift is that the restlessness makes the world a little more alive.",
+      "The Campaigner scans the world for possibility - in people, in ideas, in the half-formed shape of something that could still become. Deeply values-driven under the sparkle, ENFPs give others permission to be larger than they were before the encounter. The cost is a certain restlessness; the gift is that the restlessness makes the world a little more alive.",
     strengths: [
       "Inspiring advocacy for others' potential",
       "Generative, cross-pollinating curiosity",
@@ -308,7 +308,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Practical, fact-minded individuals whose reliability cannot be doubted.",
     description:
-      "The Logistician holds the line. Facts are checked, promises kept, processes documented — and the institutions that depend on all three quietly go on functioning. ISTJs are often underestimated precisely because the work they do is the work that looks like nothing when it is done well. Their loyalty is structural as much as personal.",
+      "The Logistician holds the line. Facts are checked, promises kept, processes documented - and the institutions that depend on all three quietly go on functioning. ISTJs are often underestimated precisely because the work they do is the work that looks like nothing when it is done well. Their loyalty is structural as much as personal.",
     strengths: [
       "Rigorous follow-through and precision",
       "Institutional memory and consistency",
@@ -335,7 +335,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Warm, conscientious protectors of community safety and harmony.",
     description:
-      "The Defender attends to the concrete, recurring needs of the people in their care and does so without fanfare. Memory, attention, and felt responsibility converge into a presence that holds others. ISFJs are often the invisible architecture of a family, team, or tradition — carrying the continuity that makes belonging possible at all.",
+      "The Defender attends to the concrete, recurring needs of the people in their care and does so without fanfare. Memory, attention, and felt responsibility converge into a presence that holds others. ISFJs are often the invisible architecture of a family, team, or tradition - carrying the continuity that makes belonging possible at all.",
     strengths: [
       "Devoted, dependable care",
       "Precise attention to felt and practical needs",
@@ -362,7 +362,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Administrators who orchestrate people and process toward concrete results.",
     description:
-      "The Executive makes the operational world legible — roles defined, standards enforced, outcomes measured. Order is not a preference but a moral good, the thing that lets groups larger than a few dozen people actually do anything. ESTJs run what runs, and the institutions they steward tend to keep their promises.",
+      "The Executive makes the operational world legible - roles defined, standards enforced, outcomes measured. Order is not a preference but a moral good, the thing that lets groups larger than a few dozen people actually do anything. ESTJs run what runs, and the institutions they steward tend to keep their promises.",
     strengths: [
       "Decisive, accountable management",
       "Talent for building and enforcing clear systems",
@@ -389,7 +389,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Caring, community-focused individuals who sustain the traditions of their peers.",
     description:
-      "The Consul builds and maintains the social fabric — the birthday remembered, the meal made, the ritual kept. They read the emotional temperature of a group and move instinctively to warm it. ESFJs are the reason communities feel like communities; their talent is translating care into the small concrete acts that others will later remember.",
+      "The Consul builds and maintains the social fabric - the birthday remembered, the meal made, the ritual kept. They read the emotional temperature of a group and move instinctively to warm it. ESFJs are the reason communities feel like communities; their talent is translating care into the small concrete acts that others will later remember.",
     strengths: [
       "Skilled hosting and community care",
       "Sensitivity to collective mood",
@@ -418,7 +418,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Tolerant, mechanically brilliant experimenters who act with tactical precision.",
     description:
-      "The Virtuoso understands systems by touching them. Tools, machines, bodies, code — the ISTP absorbs the feel of a thing and intervenes with an economy that looks like luck until you watch them do it twice. They are quiet, observant, and astonishingly competent in a crisis, when thinking and moving collapse into a single act.",
+      "The Virtuoso understands systems by touching them. Tools, machines, bodies, code - the ISTP absorbs the feel of a thing and intervenes with an economy that looks like luck until you watch them do it twice. They are quiet, observant, and astonishingly competent in a crisis, when thinking and moving collapse into a single act.",
     strengths: [
       "Cool, tactical competence under pressure",
       "Embodied mechanical and systemic intuition",
@@ -445,7 +445,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Sensitive artistic souls deeply attuned to the aesthetics of the present.",
     description:
-      "The Adventurer lives close to the texture of experience. Color, sound, gesture, mood — perception arrives in high fidelity and is immediately filtered through a private, inviolate sense of what is true. ISFPs do not argue their values; they inhabit them. The result is an aesthetic and ethical presence that is quiet, particular, and difficult to fake.",
+      "The Adventurer lives close to the texture of experience. Color, sound, gesture, mood - perception arrives in high fidelity and is immediately filtered through a private, inviolate sense of what is true. ISFPs do not argue their values; they inhabit them. The result is an aesthetic and ethical presence that is quiet, particular, and difficult to fake.",
     strengths: [
       "Vivid aesthetic and sensory intelligence",
       "Quiet, uncompromised personal integrity",
@@ -499,7 +499,7 @@ export const ALL_MBTI: MbtiArchetype[] = [
     tagline:
       "Vibrant, warm performers who amplify the aliveness of every room they enter.",
     description:
-      "The Entertainer is a specialist in the present. Sensory richness, emotional immediacy, and an unfeigned generosity converge into a presence that wakes other people up. ESFPs do not merely enjoy the moment — they extend the invitation to it, and their gift is the reminder that meaning often arrives through the body before it arrives through the mind.",
+      "The Entertainer is a specialist in the present. Sensory richness, emotional immediacy, and an unfeigned generosity converge into a presence that wakes other people up. ESFPs do not merely enjoy the moment - they extend the invitation to it, and their gift is the reminder that meaning often arrives through the body before it arrives through the mind.",
     strengths: [
       "Luminous, embodied social presence",
       "Generosity in the moment",

@@ -17,7 +17,7 @@ export default function TarotHome() {
         <div className="max-w-6xl mx-auto">
           <div className="animate-slide-up">
             <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
-              Major Arcana — The Fool&rsquo;s Journey
+              Major Arcana - The Fool&rsquo;s Journey
             </p>
             <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
               Twenty-Two{" "}
@@ -33,7 +33,7 @@ export default function TarotHome() {
             </h1>
             <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl font-light">
               The Major Arcana is not a deck of predictions. It is a sequence of
-              archetypal images — drawn from the collective unconscious — that
+              archetypal images - drawn from the collective unconscious - that
               trace the stages of individuation. Each card names a psychological
               territory and its two shadows: what happens when the energy
               inflates, and what happens when it is repressed.

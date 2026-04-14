@@ -164,7 +164,7 @@ export default function IndexView() {
     }
 
     if (mode === "shuffle") {
-      // seeded shuffle — stable per click
+      // seeded shuffle - stable per click
       const arr = [...filtered];
       let seed = shuffleSeed || 1;
       const rand = () => {
@@ -237,7 +237,7 @@ export default function IndexView() {
             </span>
           </h1>
           <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl font-light">
-            Seventy-five figures across six systems — each with its own
+            Seventy-five figures across six systems - each with its own
             aesthetic and temperament. Group by system, browse by inner
             category, or search the whole field at once.
           </p>

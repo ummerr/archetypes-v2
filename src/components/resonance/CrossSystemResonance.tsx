@@ -114,7 +114,7 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
 
 function joinClusterNames(themes: string[]): string {
   const names = themes.map((t) => {
-    const dash = t.indexOf(" — ");
+    const dash = t.indexOf(" - ");
     return dash > 0 ? t.slice(0, dash) : t;
   });
   if (names.length === 1) return `the ${names[0]} cluster`;

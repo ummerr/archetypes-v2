@@ -8,7 +8,7 @@ import type { JungianArchetype } from "@/types/jungian";
 
 type Slug = JungianArchetype["slug"];
 
-/* ─── INNOCENT — radiant sun ─────────────────────────── */
+/* ─── INNOCENT - radiant sun ─────────────────────────── */
 function InnocentTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const rays = useRef<THREE.Group>(null);
@@ -77,7 +77,7 @@ function InnocentTotem({ color, intensity }: { color: string; intensity: number 
   );
 }
 
-/* ─── EVERYMAN — ring of twelve ──────────────────────── */
+/* ─── EVERYMAN - ring of twelve ──────────────────────── */
 function EverymanTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const ring = useRef<THREE.Group>(null);
@@ -114,7 +114,7 @@ function EverymanTotem({ color, intensity }: { color: string; intensity: number 
   );
 }
 
-/* ─── HERO — forward spear + laurel ──────────────────── */
+/* ─── HERO - forward spear + laurel ──────────────────── */
 function HeroTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const laurel = useRef<THREE.Group>(null);
@@ -162,7 +162,7 @@ function HeroTotem({ color, intensity }: { color: string; intensity: number }) {
   );
 }
 
-/* ─── CAREGIVER — cupping bowl ───────────────────────── */
+/* ─── CAREGIVER - cupping bowl ───────────────────────── */
 function CaregiverTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const heart = useRef<THREE.Mesh>(null);
@@ -206,7 +206,7 @@ function CaregiverTotem({ color, intensity }: { color: string; intensity: number
   );
 }
 
-/* ─── EXPLORER — compass ─────────────────────────────── */
+/* ─── EXPLORER - compass ─────────────────────────────── */
 function ExplorerTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const needle = useRef<THREE.Group>(null);
@@ -257,7 +257,7 @@ function ExplorerTotem({ color, intensity }: { color: string; intensity: number 
   );
 }
 
-/* ─── REBEL — fracturing cube ────────────────────────── */
+/* ─── REBEL - fracturing cube ────────────────────────── */
 function RebelTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const shards = useRef<THREE.Group>(null);
@@ -311,7 +311,7 @@ function RebelTotem({ color, intensity }: { color: string; intensity: number }) 
   );
 }
 
-/* ─── LOVER (Jungian) — Hopf link ────────────────────── */
+/* ─── LOVER (Jungian) - Hopf link ────────────────────── */
 function LoverJungianTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const a = useRef<THREE.Group>(null);
@@ -365,7 +365,7 @@ function LoverJungianTotem({ color, intensity }: { color: string; intensity: num
   );
 }
 
-/* ─── CREATOR — emerging crystal ─────────────────────── */
+/* ─── CREATOR - emerging crystal ─────────────────────── */
 function CreatorTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const outer = useRef<THREE.Mesh>(null);
@@ -429,7 +429,7 @@ function CreatorTotem({ color, intensity }: { color: string; intensity: number }
   );
 }
 
-/* ─── JESTER — juggling lemniscate ───────────────────── */
+/* ─── JESTER - juggling lemniscate ───────────────────── */
 function JesterTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const jugglers = useRef<THREE.Group>(null);
@@ -481,7 +481,7 @@ function JesterTotem({ color, intensity }: { color: string; intensity: number })
   );
 }
 
-/* ─── SAGE — astrolabe ───────────────────────────────── */
+/* ─── SAGE - astrolabe ───────────────────────────────── */
 function SageTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const r1 = useRef<THREE.Group>(null);
@@ -525,7 +525,7 @@ function SageTotem({ color, intensity }: { color: string; intensity: number }) {
   );
 }
 
-/* ─── MAGICIAN (Jungian) — seed of life ──────────────── */
+/* ─── MAGICIAN (Jungian) - seed of life ──────────────── */
 function MagicianJungianTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const flower = useRef<THREE.Group>(null);
@@ -572,7 +572,7 @@ function MagicianJungianTotem({ color, intensity }: { color: string; intensity: 
   );
 }
 
-/* ─── RULER — throne ─────────────────────────────────── */
+/* ─── RULER - throne ─────────────────────────────────── */
 function RulerTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const ring = useRef<THREE.Mesh>(null);

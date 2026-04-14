@@ -33,7 +33,7 @@ export default function ShadowSpectrum({
 
     function tick() {
       t += 0.008;
-      // Asymmetric oscillation — spends more time at the extremes
+      // Asymmetric oscillation - spends more time at the extremes
       const raw = Math.sin(t * 0.7) * Math.cos(t * 0.3);
       const pct = 50 + raw * 46; // 4% – 96%
       el.style.left = `${pct}%`;
@@ -130,7 +130,7 @@ export default function ShadowSpectrum({
           }}
         />
 
-        {/* Center marker — fullness */}
+        {/* Center marker - fullness */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-all duration-300"
           style={{

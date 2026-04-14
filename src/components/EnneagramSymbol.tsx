@@ -135,7 +135,7 @@ export default function EnneagramSymbol() {
         {/* Center glow */}
         <circle cx={CENTER} cy={CENTER} r={RING_RADIUS - 10} fill="url(#enn-center-glow)" />
 
-        {/* Outer circle — wholeness */}
+        {/* Outer circle - wholeness */}
         <circle
           cx={CENTER}
           cy={CENTER}
@@ -219,7 +219,7 @@ export default function EnneagramSymbol() {
             <g
               key={n}
               role="button"
-              aria-label={`Type ${n} — ${a.name}`}
+              aria-label={`Type ${n} - ${a.name}`}
               style={{
                 cursor: "pointer",
                 transition: "opacity 250ms ease",
@@ -323,7 +323,7 @@ export default function EnneagramSymbol() {
         )}
       </svg>
 
-      {/* Detail card — shown when a point is selected, with explicit CTA */}
+      {/* Detail card - shown when a point is selected, with explicit CTA */}
       <div className="w-full max-w-md min-h-[104px] transition-opacity duration-300">
         {active && activeTarget !== null ? (
           <div

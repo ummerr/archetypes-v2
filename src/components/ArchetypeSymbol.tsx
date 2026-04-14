@@ -18,7 +18,7 @@ export default function ArchetypeSymbol({ archetype, color, className = "" }: Pr
   } as const;
 
   switch (archetype) {
-    // Crown — three peaks with a band
+    // Crown - three peaks with a band
     case "king":
       return (
         <svg {...shared}>

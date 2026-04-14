@@ -44,17 +44,17 @@ const innerDots = Array.from({ length: 12 }).map((_, i) => {
  */
 function nodeShape(family: string, x: number, y: number, r: number): string {
   switch (family) {
-    // King: pentagon/crown — flat top with angled sides
+    // King: pentagon/crown - flat top with angled sides
     case "king": {
       const top = r * 0.85;
       const mid = r * 0.4;
       return `M${x - r * 0.6} ${y - top} L${x + r * 0.6} ${y - top} L${x + r} ${y - mid} L${x + r * 0.8} ${y + top} L${x - r * 0.8} ${y + top} L${x - r} ${y - mid}Z`;
     }
-    // Warrior: shield — pointed bottom
+    // Warrior: shield - pointed bottom
     case "warrior": {
       return `M${x} ${y - r} L${x + r * 0.9} ${y - r * 0.5} L${x + r * 0.9} ${y + r * 0.3} L${x} ${y + r} L${x - r * 0.9} ${y + r * 0.3} L${x - r * 0.9} ${y - r * 0.5}Z`;
     }
-    // Magician: octagon — faceted crystal
+    // Magician: octagon - faceted crystal
     case "magician": {
       const s = r * 0.42;
       return `M${x - s} ${y - r} L${x + s} ${y - r} L${x + r} ${y - s} L${x + r} ${y + s} L${x + s} ${y + r} L${x - s} ${y + r} L${x - r} ${y + s} L${x - r} ${y - s}Z`;
@@ -96,7 +96,7 @@ function FamilyNode({
       onMouseLeave={() => onHover(null)}
       onClick={() => router.push(`/kwml/archetype/${family.man.slug}`)}
     >
-      {/* Ambient glow — large and soft */}
+      {/* Ambient glow - large and soft */}
       <circle
         cx={pos.x}
         cy={pos.y}
@@ -275,7 +275,7 @@ export default function QuadrantMap() {
             />
           ))}
 
-          {/* Diagonal cross (45-degree lines) — lighter */}
+          {/* Diagonal cross (45-degree lines) - lighter */}
           {[45, 135, 225, 315].map((deg) => {
             const angle = (deg * Math.PI) / 180;
             const innerR = 70;
@@ -295,7 +295,7 @@ export default function QuadrantMap() {
             );
           })}
 
-          {/* Center — breathing Self node */}
+          {/* Center - breathing Self node */}
           <motion.g
             initial={{ opacity: 0, scale: 0.3 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -356,7 +356,7 @@ export default function QuadrantMap() {
             />
           ))}
 
-          {/* Axis labels — ethereal, outside everything */}
+          {/* Axis labels - ethereal, outside everything */}
           {[
             { x: cx, y: cy - r - 64, label: "Order" },
             { x: cx, y: cy + r + 72, label: "Knowledge" },

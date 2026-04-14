@@ -7,7 +7,7 @@ import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import type { ArchetypeFamily } from "@/types/archetype";
 
 /* ═══════════════════════════════════════════════════════
-   KING — Crown: flat-top cylinder base with 5 peaked
+   KING - Crown: flat-top cylinder base with 5 peaked
    spires + orbiting sovereignty ring
    ═══════════════════════════════════════════════════════ */
 
@@ -73,7 +73,7 @@ function KingTotem({ color, intensity }: { color: string; intensity: number }) {
 
   return (
     <group ref={group}>
-      {/* Crown body — solid */}
+      {/* Crown body - solid */}
       <mesh geometry={crownGeo}>
         <meshStandardMaterial
           color={color}
@@ -85,7 +85,7 @@ function KingTotem({ color, intensity }: { color: string; intensity: number }) {
           opacity={0.25}
         />
       </mesh>
-      {/* Crown body — wireframe */}
+      {/* Crown body - wireframe */}
       <mesh geometry={crownGeo}>
         <meshBasicMaterial
           color={color}
@@ -103,7 +103,7 @@ function KingTotem({ color, intensity }: { color: string; intensity: number }) {
           opacity={0.5 * intensity}
         />
       </mesh>
-      {/* Crown jewel — top */}
+      {/* Crown jewel - top */}
       <mesh position={[0, 0.55, 0]}>
         <octahedronGeometry args={[0.08, 0]} />
         <meshStandardMaterial
@@ -118,7 +118,7 @@ function KingTotem({ color, intensity }: { color: string; intensity: number }) {
 }
 
 /* ═══════════════════════════════════════════════════════
-   WARRIOR — Blade: two intersecting elongated pyramids
+   WARRIOR - Blade: two intersecting elongated pyramids
    forming a double-edged weapon shape
    ═══════════════════════════════════════════════════════ */
 
@@ -126,7 +126,7 @@ function WarriorTotem({ color, intensity }: { color: string; intensity: number }
   const group = useRef<THREE.Group>(null);
   const orbiterRef = useRef<THREE.Group>(null);
 
-  // Main blade — elongated octahedron (stretched on Y)
+  // Main blade - elongated octahedron (stretched on Y)
   const bladeGeo = useMemo(() => {
     const geo = new THREE.OctahedronGeometry(1, 0);
     // Stretch vertically to make it blade-like
@@ -236,7 +236,7 @@ function WarriorTotem({ color, intensity }: { color: string; intensity: number }
 }
 
 /* ═══════════════════════════════════════════════════════
-   MAGICIAN — Eye of Knowledge: nested platonic solids
+   MAGICIAN - Eye of Knowledge: nested platonic solids
    (icosahedron inside dodecahedron) with rotating
    inner eye
    ═══════════════════════════════════════════════════════ */
@@ -270,7 +270,7 @@ function MagicianTotem({ color, intensity }: { color: string; intensity: number 
 
   return (
     <group ref={group}>
-      {/* Outer dodecahedron — wireframe shell */}
+      {/* Outer dodecahedron - wireframe shell */}
       <mesh ref={outerRef}>
         <dodecahedronGeometry args={[0.85, 0]} />
         <meshBasicMaterial
@@ -280,7 +280,7 @@ function MagicianTotem({ color, intensity }: { color: string; intensity: number 
           opacity={0.4 * intensity}
         />
       </mesh>
-      {/* Inner icosahedron — counter-rotating */}
+      {/* Inner icosahedron - counter-rotating */}
       <mesh ref={innerRef}>
         <icosahedronGeometry args={[0.52, 0]} />
         <meshStandardMaterial
@@ -302,7 +302,7 @@ function MagicianTotem({ color, intensity }: { color: string; intensity: number 
           opacity={0.6 * intensity}
         />
       </mesh>
-      {/* Core eye — bright pulsing sphere */}
+      {/* Core eye - bright pulsing sphere */}
       <mesh ref={coreRef}>
         <sphereGeometry args={[1, 8, 8]} />
         <meshStandardMaterial
@@ -317,7 +317,7 @@ function MagicianTotem({ color, intensity }: { color: string; intensity: number 
 }
 
 /* ═══════════════════════════════════════════════════════
-   LOVER — Torus Knot: intertwined flowing form
+   LOVER - Torus Knot: intertwined flowing form
    representing connection, with orbiting petals
    ═══════════════════════════════════════════════════════ */
 
@@ -342,7 +342,7 @@ function LoverTotem({ color, intensity }: { color: string; intensity: number }) 
 
   return (
     <group ref={group}>
-      {/* Torus knot — solid */}
+      {/* Torus knot - solid */}
       <mesh ref={knotRef}>
         <torusKnotGeometry args={[0.5, 0.12, 64, 8, 2, 3]} />
         <meshStandardMaterial
@@ -355,7 +355,7 @@ function LoverTotem({ color, intensity }: { color: string; intensity: number }) 
           opacity={0.25}
         />
       </mesh>
-      {/* Torus knot — wireframe */}
+      {/* Torus knot - wireframe */}
       <mesh>
         <torusKnotGeometry args={[0.5, 0.12, 64, 8, 2, 3]} />
         <meshBasicMaterial
@@ -391,7 +391,7 @@ function LoverTotem({ color, intensity }: { color: string; intensity: number }) 
 }
 
 /* ═══════════════════════════════════════════════════════
-   Shadow pole orbiters — two small shapes representing
+   Shadow pole orbiters - two small shapes representing
    active (hot, inflated) and passive (cold, deflated)
    ═══════════════════════════════════════════════════════ */
 
@@ -409,14 +409,14 @@ function ShadowOrbiters({
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
-    // Active shadow — jittery, aggressive orbit
+    // Active shadow - jittery, aggressive orbit
     if (activeRef.current) {
       activeRef.current.position.x = -0.75 + Math.sin(t * 1.5) * 0.08;
       activeRef.current.position.y = -0.55 + Math.cos(t * 2.0) * 0.06;
       activeRef.current.rotation.y = t * 2;
       activeRef.current.rotation.x = t * 1.5;
     }
-    // Passive shadow — slow, sinking drift
+    // Passive shadow - slow, sinking drift
     if (passiveRef.current) {
       passiveRef.current.position.x = 0.75 + Math.sin(t * 0.5) * 0.04;
       passiveRef.current.position.y = -0.6 + Math.sin(t * 0.3) * 0.03;
@@ -426,7 +426,7 @@ function ShadowOrbiters({
 
   return (
     <>
-      {/* Active shadow — sharp, hot, spiky tetrahedron */}
+      {/* Active shadow - sharp, hot, spiky tetrahedron */}
       <mesh ref={activeRef} position={[-0.75, -0.55, 0]}>
         <tetrahedronGeometry args={[0.1, 0]} />
         <meshStandardMaterial
@@ -447,7 +447,7 @@ function ShadowOrbiters({
         />
       </mesh>
 
-      {/* Passive shadow — collapsed, cold, flat box */}
+      {/* Passive shadow - collapsed, cold, flat box */}
       <mesh ref={passiveRef} position={[0.75, -0.6, 0]} scale={[1, 0.4, 1]}>
         <boxGeometry args={[0.12, 0.12, 0.12]} />
         <meshStandardMaterial
@@ -472,7 +472,7 @@ function ShadowOrbiters({
 }
 
 /* ═══════════════════════════════════════════════════════
-   TotemCanvas — self-contained Canvas for one card
+   TotemCanvas - self-contained Canvas for one card
    ═══════════════════════════════════════════════════════ */
 
 export default function TotemCanvas({

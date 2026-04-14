@@ -3,7 +3,7 @@ import { JOURNEY_ACTS } from "@/data/herosjourney/stages";
 import { buildPageMetadata, systemOgImage } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
-  title: "About — Hero's Journey",
+  title: "About - Hero's Journey",
   description:
     "Campbell's monomyth, Vogler's twelve-stage adaptation, and honest notes on what the framework illuminates and what it leaves out.",
   path: "/heros-journey/about",
@@ -43,8 +43,8 @@ export default function HerosJourneyAbout() {
             </h2>
             <p>
               Campbell&rsquo;s original seventeen stages were dense, academic,
-              and culturally specific. In the 1980s, Christopher Vogler — a
-              story consultant at Disney — distilled the model into a practical
+              and culturally specific. In the 1980s, Christopher Vogler - a
+              story consultant at Disney - distilled the model into a practical
               twelve-beat structure in <em>The Writer&rsquo;s Journey</em>. The
               same work also reduced Jung&rsquo;s infinitely expressive
               archetypes into eight canonical masks: Hero, Mentor, Herald,
@@ -88,7 +88,7 @@ export default function HerosJourneyAbout() {
               Honest Limits
             </h2>
             <p className="mb-3">
-              The monomyth is a powerful interpretive lens — not a biological
+              The monomyth is a powerful interpretive lens - not a biological
               law. Feminist scholars (Maureen Murdock, Valerie Estelle Frankel)
               have shown how Campbell&rsquo;s original framing marginalized
               feminine experience, relegating the feminine to stations
@@ -101,7 +101,7 @@ export default function HerosJourneyAbout() {
               Eurocentric selection bias: a single universal template can
               flatten the specific political and cultural textures of the
               stories it claims to unite. In this atlas we use the twelve-stage
-              model as one interpretive map among several — precise enough to
+              model as one interpretive map among several - precise enough to
               illuminate recurring patterns, humble enough to admit its edges.
             </p>
           </section>
@@ -113,7 +113,7 @@ export default function HerosJourneyAbout() {
             <p>
               A character is rarely only one mask. The Mentor may shift into a
               Shapeshifter; a trusted Ally may be revealed as a Threshold
-              Guardian. Treat the eight roles as functions the story calls up —
+              Guardian. Treat the eight roles as functions the story calls up -
               not as costumes assigned for the whole run.
             </p>
           </section>

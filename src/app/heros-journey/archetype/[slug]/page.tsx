@@ -28,7 +28,7 @@ export async function generateMetadata({
   const archetype = getHeroJourneyBySlug(slug);
   if (!archetype) return { title: "Not Found" };
   return buildPageMetadata({
-    title: `${archetype.name} — Hero's Journey Archetype`,
+    title: `${archetype.name} - Hero's Journey Archetype`,
     description: truncate(archetype.description),
     path: `/heros-journey/archetype/${archetype.slug}`,
     type: "article",
@@ -52,7 +52,7 @@ export default async function HeroJourneyArchetypePage({
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: `${archetype.name} — Hero's Journey Archetype`,
+    headline: `${archetype.name} - Hero's Journey Archetype`,
     description: archetype.description,
     about: archetype.name,
     url: absoluteUrl(`/heros-journey/archetype/${archetype.slug}`),

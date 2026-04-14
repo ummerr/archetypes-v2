@@ -30,7 +30,7 @@ export default function MbtiHome() {
               </span>
             </h1>
             <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl font-light">
-              Each type is a stack — four Jungian cognitive functions arranged
+              Each type is a stack - four Jungian cognitive functions arranged
               in a fixed hierarchy from the automatic <em>Hero</em> to the
               aspirational <em>Inferior</em>. The sixteen four-letter codes are
               only the surface. Underneath is a precise architecture of how
@@ -43,7 +43,7 @@ export default function MbtiHome() {
         </div>
       </div>
 
-      {/* Four Dichotomies — what the letters mean */}
+      {/* Four Dichotomies - what the letters mean */}
       <div className="px-6 pb-20">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12 animate-slide-up" style={{ animationDelay: "120ms" }}>
@@ -54,7 +54,7 @@ export default function MbtiHome() {
               What the letters mean
             </h2>
             <p className="mt-4 text-text-secondary text-sm md:text-base leading-relaxed max-w-2xl font-light">
-              Every type code is a stack of four choices — four poles, four
+              Every type code is a stack of four choices - four poles, four
               opposites. None is a deficit; each pair names a real division in
               how minds organize the world.
             </p>
@@ -63,7 +63,7 @@ export default function MbtiHome() {
         </div>
       </div>
 
-      {/* Temperament grid — the 4×4 signature */}
+      {/* Temperament grid - the 4×4 signature */}
       <div className="px-6 pb-24">
         <div className="max-w-6xl mx-auto">
           <MbtiTemperamentGrid />

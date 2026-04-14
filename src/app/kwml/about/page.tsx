@@ -4,7 +4,7 @@ import Link from "next/link";
 import { buildPageMetadata, systemOgImage } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
-  title: "About — KWML",
+  title: "About - KWML",
   description:
     "Moore & Gillette's King-Warrior-Magician-Lover system: four mature-masculine archetypes, the boy-to-man initiation path, and the active/passive shadow poles of each.",
   path: "/kwml/about",
@@ -45,13 +45,13 @@ export default function AboutPage() {
               <p>
                 The book&apos;s central thesis: mature masculinity is not
                 abusive, domineering, or toxic. It is generative, creative, and
-                empowering — both of the self and of others. The crisis of
+                empowering - both of the self and of others. The crisis of
                 modern masculinity stems from men being stuck in Boy Psychology
                 rather than having transitioned into Man Psychology through
                 proper initiation.
               </p>
               <p>
-                Moore built explicitly on Carl Jung&apos;s work — the collective
+                Moore built explicitly on Carl Jung&apos;s work - the collective
                 unconscious, the Self, individuation, and the shadow. He
                 expanded Jung&apos;s single-shadow concept into a{" "}
                 <strong className="text-text-primary font-medium">
@@ -135,7 +135,7 @@ export default function AboutPage() {
             <div className="space-y-5 text-text-secondary leading-relaxed">
               <p>
                 Each archetype is visualized as a triangle. The apex represents
-                the mature fullness — the healthy expression. The two base
+                the mature fullness - the healthy expression. The two base
                 corners represent the shadow poles: the{" "}
                 <strong className="text-crimson-light font-medium">
                   active shadow
@@ -159,11 +159,11 @@ export default function AboutPage() {
                   <strong className="text-text-primary font-medium">
                     accessing
                   </strong>{" "}
-                  an archetype (healthy — the ego channels the energy) vs.{" "}
+                  an archetype (healthy - the ego channels the energy) vs.{" "}
                   <strong className="text-text-primary font-medium">
                     identifying with
                   </strong>{" "}
-                  it (pathological — the ego is possessed by it).
+                  it (pathological - the ego is possessed by it).
                 </p>
               </div>
             </div>
@@ -180,7 +180,7 @@ export default function AboutPage() {
             <div className="space-y-5 text-text-secondary leading-relaxed">
               <p>
                 The four archetypes form an integrated structural whole. No
-                single archetype suffices for maturity — they are
+                single archetype suffices for maturity - they are
                 interdependent. The Warrior without the Lover becomes sadistic.
                 The Lover without boundaries becomes addicted. The Magician
                 without the Warrior becomes a paralyzed thinker. All need the
@@ -191,7 +191,7 @@ export default function AboutPage() {
                 <p className="font-serif text-lg text-text-primary/80 italic leading-relaxed">
                   &ldquo;The King, Warrior, and Magician need the Lover to
                   energize them, to humanize them, and to give them their
-                  ultimate purpose — love.&rdquo;
+                  ultimate purpose - love.&rdquo;
                 </p>
               </blockquote>
             </div>

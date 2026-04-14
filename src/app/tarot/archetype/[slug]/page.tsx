@@ -29,7 +29,7 @@ export async function generateMetadata({
   const archetype = getTarotBySlug(slug);
   if (!archetype) return { title: "Not Found" };
   return buildPageMetadata({
-    title: `${archetype.name} — Major Arcanum ${archetype.numeral}`,
+    title: `${archetype.name} - Major Arcanum ${archetype.numeral}`,
     description: truncate(archetype.description),
     path: `/tarot/archetype/${archetype.slug}`,
     type: "article",
@@ -55,7 +55,7 @@ export default async function TarotArchetypePage({
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: `${archetype.name} — Major Arcanum ${archetype.numeral}`,
+    headline: `${archetype.name} - Major Arcanum ${archetype.numeral}`,
     description: archetype.description,
     about: archetype.name,
     url: absoluteUrl(`/tarot/archetype/${archetype.slug}`),
