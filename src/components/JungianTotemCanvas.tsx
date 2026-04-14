@@ -8,71 +8,89 @@ import type { JungianArchetype } from "@/types/jungian";
 
 type Slug = JungianArchetype["slug"];
 
-/* ─── INNOCENT - radiant sun ─────────────────────────── */
+/* ─── INNOCENT - sprout cradling a seed ──────────────── */
 function InnocentTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
-  const rays = useRef<THREE.Group>(null);
-  const raysInner = useRef<THREE.Group>(null);
-  const core = useRef<THREE.Mesh>(null);
-  const halo = useRef<THREE.Mesh>(null);
+  const leafL = useRef<THREE.Group>(null);
+  const leafR = useRef<THREE.Group>(null);
+  const seed = useRef<THREE.Mesh>(null);
+  const stem = useRef<THREE.Mesh>(null);
+  // cotyledon: flattened half-sphere shell
+  const leafGeo = useMemo(() => {
+    const g = new THREE.SphereGeometry(0.55, 20, 14, 0, Math.PI, 0, Math.PI);
+    const p = g.attributes.position;
+    for (let i = 0; i < p.count; i++) {
+      p.setZ(i, p.getZ(i) * 0.28);
+    }
+    p.needsUpdate = true;
+    g.computeVertexNormals();
+    return g;
+  }, []);
+  // slender curved stem
+  const stemGeo = useMemo(() => {
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, -0.7, 0),
+      new THREE.Vector3(0.04, -0.3, 0.02),
+      new THREE.Vector3(-0.02, 0.05, 0),
+      new THREE.Vector3(0.01, 0.35, 0),
+    ]);
+    return new THREE.TubeGeometry(curve, 24, 0.018, 8, false);
+  }, []);
   useFrame((s) => {
     const t = s.clock.elapsedTime;
-    if (rays.current) rays.current.rotation.z = t * 0.12;
-    if (raysInner.current) raysInner.current.rotation.z = -t * 0.18;
-    if (core.current) {
-      const k = 0.42 + Math.sin(t * 1.1) * 0.03;
-      core.current.scale.setScalar(k);
+    // leaves unfold and re-fold gently, like a waking bud
+    const open = 0.65 + Math.sin(t * 0.6) * 0.35; // 0.3..1.0
+    if (leafL.current) {
+      leafL.current.rotation.y = -Math.PI / 2 - open * 0.55;
+      leafL.current.rotation.z = 0.25 + Math.sin(t * 0.8) * 0.04;
     }
-    if (halo.current) {
-      const m = halo.current.material as THREE.MeshBasicMaterial;
-      m.opacity = (0.35 + Math.sin(t * 1.3) * 0.08) * intensity;
+    if (leafR.current) {
+      leafR.current.rotation.y = Math.PI / 2 + open * 0.55;
+      leafR.current.rotation.z = -0.25 - Math.sin(t * 0.8) * 0.04;
     }
-    if (group.current) group.current.position.y = Math.sin(t * 0.5) * 0.04;
+    if (seed.current) {
+      seed.current.position.y = 0.08 + Math.sin(t * 0.9) * 0.015;
+      seed.current.rotation.y = t * 0.25;
+    }
+    if (stem.current) stem.current.rotation.z = Math.sin(t * 0.4) * 0.05;
+    if (group.current) {
+      group.current.rotation.y = Math.sin(t * 0.25) * 0.18;
+      group.current.position.y = -0.1 + Math.sin(t * 0.35) * 0.02;
+    }
   });
+  const leafColor = new THREE.Color(color).lerp(new THREE.Color("#F5F1E6"), 0.35).getStyle();
+  const seedColor = new THREE.Color(color).lerp(new THREE.Color("#7A5A3A"), 0.45).getStyle();
   return (
     <group ref={group}>
-      {/* glowing core */}
-      <mesh ref={core}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.1 * intensity} />
+      {/* stem — matte, no emissive */}
+      <mesh ref={stem} geometry={stemGeo}>
+        <meshStandardMaterial color={seedColor} metalness={0.0} roughness={0.85} />
       </mesh>
-      {/* bright halo disk */}
-      <mesh ref={halo}>
-        <ringGeometry args={[0.5, 0.58, 64]} />
-        <meshBasicMaterial color={color} transparent opacity={0.35 * intensity} side={THREE.DoubleSide} />
-      </mesh>
-      {/* outer ring */}
-      <mesh>
-        <torusGeometry args={[0.92, 0.018, 10, 64]} />
-        <meshBasicMaterial color={color} transparent opacity={0.75 * intensity} />
-      </mesh>
-      {/* long primary rays */}
-      <group ref={rays}>
-        {Array.from({ length: 8 }).map((_, i) => {
-          const a = (i / 8) * Math.PI * 2;
-          const r = 1.15;
-          return (
-            <mesh key={i} position={[Math.cos(a) * r, Math.sin(a) * r, 0]} rotation={[0, 0, a - Math.PI / 2]}>
-              <coneGeometry args={[0.07, 0.42, 8]} />
-              <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.2 * intensity} transparent opacity={0.95 * intensity} />
-            </mesh>
-          );
-        })}
+      {/* left cotyledon */}
+      <group ref={leafL} position={[-0.04, 0.15, 0]}>
+        <mesh geometry={leafGeo}>
+          <meshStandardMaterial color={leafColor} metalness={0.0} roughness={0.9} transparent opacity={0.55} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh geometry={leafGeo}>
+          <meshBasicMaterial color={leafColor} wireframe transparent opacity={0.45 * intensity} side={THREE.DoubleSide} />
+        </mesh>
       </group>
-      {/* short secondary rays offset between primary */}
-      <group ref={raysInner}>
-        {Array.from({ length: 8 }).map((_, i) => {
-          const a = (i / 8) * Math.PI * 2 + Math.PI / 8;
-          const r = 1.0;
-          return (
-            <mesh key={i} position={[Math.cos(a) * r, Math.sin(a) * r, 0]} rotation={[0, 0, a - Math.PI / 2]}>
-              <coneGeometry args={[0.04, 0.22, 6]} />
-              <meshBasicMaterial color={color} transparent opacity={0.7 * intensity} />
-            </mesh>
-          );
-        })}
+      {/* right cotyledon */}
+      <group ref={leafR} position={[0.04, 0.15, 0]}>
+        <mesh geometry={leafGeo}>
+          <meshStandardMaterial color={leafColor} metalness={0.0} roughness={0.9} transparent opacity={0.55} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh geometry={leafGeo}>
+          <meshBasicMaterial color={leafColor} wireframe transparent opacity={0.45 * intensity} side={THREE.DoubleSide} />
+        </mesh>
       </group>
-      <pointLight color={color} intensity={1.0 * intensity} distance={3} decay={2} />
+      {/* seed — matte pearl, no emissive, no halo, no rays */}
+      <mesh ref={seed} position={[0, 0.08, 0]}>
+        <sphereGeometry args={[0.11, 20, 20]} />
+        <meshStandardMaterial color={seedColor} metalness={0.15} roughness={0.55} />
+      </mesh>
+      {/* quiet fill light so it reads without bloom */}
+      <pointLight color="#FFFFFF" intensity={0.55 * intensity} distance={3} decay={2} position={[0.6, 0.8, 0.8]} />
     </group>
   );
 }
