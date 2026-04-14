@@ -127,17 +127,6 @@ export default function NavBar() {
               MAPS OF THE INNER WORLD
             </span>
           </Link>
-          <span className="text-muted/40 font-mono text-[10px]">/</span>
-          <Link
-            href="/archetypes"
-            className={`font-mono text-[10px] tracking-[0.2em] uppercase transition-colors duration-200 ${
-              inArchetypes
-                ? "text-gold"
-                : "text-text-secondary hover:text-gold"
-            }`}
-          >
-            Archetypes
-          </Link>
           {systemLabel && (
             <>
               <span className="text-muted/40 font-mono text-[10px]">/</span>
@@ -201,6 +190,16 @@ export default function NavBar() {
           )}
         </div>
         <div className="flex items-center gap-4">
+          <Link
+            href="/archetypes"
+            className={`font-mono text-[10px] tracking-[0.2em] uppercase transition-colors duration-200 ${
+              inArchetypes
+                ? "text-gold"
+                : "text-text-secondary hover:text-gold"
+            }`}
+          >
+            Archetypes
+          </Link>
           <button
             onClick={toggle}
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
