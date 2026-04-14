@@ -18,6 +18,7 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const inArchetypes = pathname.startsWith("/archetypes");
   const inKwml = pathname.startsWith("/kwml");
   const inJungian = pathname.startsWith("/jungian");
   const inEnneagram = pathname.startsWith("/enneagram");
@@ -125,6 +126,17 @@ export default function NavBar() {
             <span className="font-mono text-sm font-bold tracking-[0.25em] text-gold transition-colors duration-200 group-hover:text-gold-bright glow-text-subtle">
               MAPS OF THE INNER WORLD
             </span>
+          </Link>
+          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <Link
+            href="/archetypes"
+            className={`font-mono text-[10px] tracking-[0.2em] uppercase transition-colors duration-200 ${
+              inArchetypes
+                ? "text-gold"
+                : "text-text-secondary hover:text-gold"
+            }`}
+          >
+            Archetypes
           </Link>
           {systemLabel && (
             <>
