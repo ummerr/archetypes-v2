@@ -155,9 +155,27 @@ function MetaDebateView({ debate }: { debate: ReturnType<typeof getMetaDebate> &
         <p className="leading-relaxed text-text-secondary/90">{debate.caseFor}</p>
         {debate.citationsFor && (
           <ul className="mt-2 space-y-1 font-mono text-[11px] italic text-text-secondary/70">
-            {debate.citationsFor.map((c) => (
-              <li key={c}>— {c}</li>
-            ))}
+            {debate.citationsFor.map((c) => {
+              const text = typeof c === "string" ? c : c.text;
+              const href = typeof c === "string" ? undefined : c.href;
+              return (
+                <li key={text}>
+                  —{" "}
+                  {href ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline decoration-text-secondary/30 hover:decoration-text-secondary hover:text-gold transition-colors"
+                    >
+                      {text}
+                    </a>
+                  ) : (
+                    text
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
       </section>
@@ -167,9 +185,27 @@ function MetaDebateView({ debate }: { debate: ReturnType<typeof getMetaDebate> &
         <p className="leading-relaxed text-text-secondary/90">{debate.caseAgainst}</p>
         {debate.citationsAgainst && (
           <ul className="mt-2 space-y-1 font-mono text-[11px] italic text-text-secondary/70">
-            {debate.citationsAgainst.map((c) => (
-              <li key={c}>— {c}</li>
-            ))}
+            {debate.citationsAgainst.map((c) => {
+              const text = typeof c === "string" ? c : c.text;
+              const href = typeof c === "string" ? undefined : c.href;
+              return (
+                <li key={text}>
+                  —{" "}
+                  {href ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline decoration-text-secondary/30 hover:decoration-text-secondary hover:text-gold transition-colors"
+                    >
+                      {text}
+                    </a>
+                  ) : (
+                    text
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
       </section>
