@@ -7,6 +7,7 @@ import { EnneagramArchetype, EnneagramTriadGroup } from "@/types/enneagram";
 import { useTheme } from "@/components/ThemeProvider";
 import EnneagramWings from "@/components/EnneagramWings";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getEnneagramExemplars } from "@/data/enneagram/exemplars";
@@ -353,6 +354,13 @@ export default function EnneagramDetailClient({
           slug={archetype.slug}
           accentColor={archetype.accentColor}
           delay="delay-500"
+        />
+
+        <ArchetypeShareCard
+          system="enneagram"
+          slug={archetype.slug}
+          displayName={archetype.name}
+          className="mt-10 animate-slide-up delay-500"
         />
 
         {/* Triad siblings */}

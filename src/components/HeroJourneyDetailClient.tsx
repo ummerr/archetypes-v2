@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import type { HeroJourneyArchetype, JourneyStage } from "@/types/herosjourney";
 import { useTheme } from "@/components/ThemeProvider";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import CounterCanonLinks from "@/components/resonance/CounterCanonLinks";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
@@ -246,6 +247,13 @@ export default function HeroJourneyDetailClient({
 
         <CrossSystemResonance system="heros-journey" slug={archetype.slug} accentColor={color} />
         <CounterCanonLinks parent="heros-journey" />
+
+        <ArchetypeShareCard
+          system="heros-journey"
+          slug={archetype.slug}
+          displayName={archetype.name}
+          className="mt-10 animate-slide-up delay-500"
+        />
 
         {/* Siblings */}
         <div className="animate-slide-up delay-500">

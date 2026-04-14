@@ -7,6 +7,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import TarotCard from "@/components/TarotCard";
 import TarotDeckArc from "@/components/TarotDeckArc";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getTarotExemplars } from "@/data/tarot/exemplars";
@@ -247,6 +248,13 @@ export default function TarotDetailClient({
           slug={archetype.slug}
           accentColor={color}
           delay="delay-300"
+        />
+
+        <ArchetypeShareCard
+          system="tarot"
+          slug={archetype.slug}
+          displayName={archetype.name}
+          className="mt-10 animate-slide-up delay-500"
         />
 
         {/* Previous / Next - the Fool's Journey sequence */}

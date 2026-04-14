@@ -6,6 +6,7 @@ import { getFunction } from "@/data/mbti/functions";
 import { useTheme } from "@/components/ThemeProvider";
 import MbtiGlyph from "@/components/MbtiGlyph";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getMbtiExemplars } from "@/data/mbti/exemplars";
@@ -277,6 +278,13 @@ export default function MbtiDetailClient({
           slug={archetype.slug}
           accentColor={color}
           delay="delay-400"
+        />
+
+        <ArchetypeShareCard
+          system="mbti"
+          slug={archetype.slug}
+          displayName={`${archetype.code} — ${archetype.nickname}`}
+          className="mt-10 animate-slide-up delay-500"
         />
 
         {/* Prev / Next */}

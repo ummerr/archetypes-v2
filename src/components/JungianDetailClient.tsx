@@ -13,6 +13,7 @@ import OppositeCard from "@/components/jungian/OppositeCard";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getJungianExemplars } from "@/data/jungian/exemplars";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
@@ -200,6 +201,13 @@ export default function JungianDetailClient({
           slug={archetype.slug}
           accentColor={archetype.accentColor}
           delay="delay-500"
+        />
+
+        <ArchetypeShareCard
+          system="jungian"
+          slug={archetype.slug}
+          displayName={archetype.name}
+          className="mt-10 animate-slide-up delay-500"
         />
 
         {/* Cluster siblings - demoted to thin strip */}

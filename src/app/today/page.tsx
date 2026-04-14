@@ -5,6 +5,7 @@ import { archetypeDisplayName, archetypeHref, systemAccent } from "@/lib/resonan
 import { buildPageMetadata } from "@/lib/site";
 import SectionHeading from "@/components/shared/SectionHeading";
 import HermeneuticCaveat from "@/components/shared/HermeneuticCaveat";
+import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Today's Resonance",
@@ -62,6 +63,15 @@ export default function TodayPage() {
       <p className="font-serif italic text-text-secondary/85">
         Where in your week is this energy already moving — in fullness, in shadow, or still asleep?
       </p>
+
+      <div className="mt-10">
+        <ArchetypeShareCard
+          system={entry.system}
+          slug={entry.slug}
+          displayName={name}
+          tweetText={`Today's resonance: ${name} — ${entry.note}`}
+        />
+      </div>
 
       <div className="mt-14">
         <HermeneuticCaveat variant="footnote" />

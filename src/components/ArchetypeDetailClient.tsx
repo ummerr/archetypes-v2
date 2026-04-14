@@ -12,6 +12,7 @@ import EvolutionArrow from "@/components/EvolutionArrow";
 import BoyWithinMan from "@/components/BoyWithinMan";
 import { useTheme } from "@/components/ThemeProvider";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import CounterCanonLinks from "@/components/resonance/CounterCanonLinks";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
@@ -458,6 +459,14 @@ export default function ArchetypeDetailClient({
               accentColor={archetype.accentColor}
             />
             <CounterCanonLinks parent="kwml" />
+          </motion.section>
+
+          <motion.section {...sectionAnim}>
+            <ArchetypeShareCard
+              system="kwml"
+              slug={archetype.slug}
+              displayName={archetype.name}
+            />
           </motion.section>
 
           {/* ─── NAVIGATION ─── */}

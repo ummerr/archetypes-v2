@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { renderOgCard } from "@/lib/og-card";
+import { renderOgCard, type OgFormat, type OgResonance } from "@/lib/og-card";
 import { truncate } from "@/lib/site";
 import { ALL_ARCHETYPES as ALL_KWML } from "@/data/kwml/archetypes";
 import { ALL_JUNGIAN } from "@/data/jungian/archetypes";
@@ -7,7 +7,11 @@ import { ALL_ENNEAGRAM } from "@/data/enneagram/archetypes";
 import { ALL_HEROSJOURNEY } from "@/data/herosjourney/archetypes";
 import { ALL_TAROT } from "@/data/tarot/archetypes";
 import { ALL_MBTI } from "@/data/mbti/archetypes";
-import { systemAccent } from "@/lib/resonance";
+import {
+  systemAccent,
+  getResonantArchetypes,
+  archetypeDisplayName,
+} from "@/lib/resonance";
 import type { SystemId } from "@/data/resonance";
 
 export const runtime = "edge";
@@ -52,12 +56,37 @@ function lookup(system: SystemId, slug: string): Card | null {
   }
 }
 
+function resonancesFor(system: SystemId, slug: string): OgResonance[] {
+  const clusters = getResonantArchetypes(system, slug);
+  const seen = new Set<string>();
+  const out: OgResonance[] = [];
+  for (const cr of clusters) {
+    for (const entry of cr.entries) {
+      const key = `${entry.system}/${entry.slug}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const name = archetypeDisplayName(entry.system, entry.slug);
+      if (!name) continue;
+      out.push({ system: entry.system, name, accent: systemAccent(entry.system).accent });
+      if (out.length >= 3) return out;
+    }
+  }
+  return out;
+}
+
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: Promise<{ system: string; slug: string }> },
 ) {
   const { system, slug } = await params;
   const card = lookup(system as SystemId, slug);
   if (!card) notFound();
-  return renderOgCard(card);
+  const url = new URL(req.url);
+  const format: OgFormat = url.searchParams.get("format") === "square" ? "square" : "wide";
+  const includeResonances = url.searchParams.get("resonances") !== "0";
+  return renderOgCard({
+    ...card,
+    format,
+    resonances: includeResonances ? resonancesFor(system as SystemId, slug) : undefined,
+  });
 }
