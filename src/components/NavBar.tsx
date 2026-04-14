@@ -53,7 +53,15 @@ export default function NavBar() {
         ? inAtlas
         : inAbout;
 
+  const hasSecondary =
+    systemFromPath(pathname) !== null ||
+    pathname.startsWith("/atlas") ||
+    pathname.startsWith("/archetypes") ||
+    pathname.startsWith("/about");
+
   return (
+    <>
+    <div aria-hidden className={hasSecondary ? "h-24" : "h-14"} />
     <nav className="fixed top-0 inset-x-0 z-50">
       <div className="absolute inset-0 bg-bg/80 backdrop-blur-xl transition-colors duration-300" />
       <div
@@ -77,9 +85,18 @@ export default function NavBar() {
             </span>
           </Link>
           <div className="hidden md:flex items-center gap-4">
-            <GroupTrigger id="systems" label="Systems" open={open} setOpen={setOpen} active={groupActive("systems")} />
-            <GroupTrigger id="atlas" label="Atlas" open={open} setOpen={setOpen} active={groupActive("atlas")} />
-            <GroupTrigger id="about" label="About" open={open} setOpen={setOpen} active={groupActive("about")} />
+            <div className="relative">
+              <GroupTrigger id="systems" label="Systems" open={open} setOpen={setOpen} active={groupActive("systems")} />
+              {open === "systems" && <SystemsPanel pathname={pathname} />}
+            </div>
+            <div className="relative">
+              <GroupTrigger id="atlas" label="Atlas" open={open} setOpen={setOpen} active={groupActive("atlas")} />
+              {open === "atlas" && <LinkListPanel links={ATLAS_LINKS} pathname={pathname} />}
+            </div>
+            <div className="relative">
+              <GroupTrigger id="about" label="About" open={open} setOpen={setOpen} active={groupActive("about")} />
+              {open === "about" && <LinkListPanel links={ABOUT_LINKS} pathname={pathname} />}
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -98,13 +115,11 @@ export default function NavBar() {
           </button>
         </div>
 
-        {open === "systems" && <SystemsPanel pathname={pathname} />}
-        {open === "atlas" && <LinkListPanel links={ATLAS_LINKS} pathname={pathname} />}
-        {open === "about" && <LinkListPanel links={ABOUT_LINKS} pathname={pathname} />}
       </div>
 
       <SecondaryBar pathname={pathname} />
     </nav>
+    </>
   );
 }
 
@@ -142,7 +157,7 @@ function GroupTrigger({
 function PanelShell({ children, wide }: { children: React.ReactNode; wide?: boolean }) {
   return (
     <div
-      className={`absolute left-6 top-full mt-2 z-[60] ${wide ? "min-w-[420px]" : "min-w-[260px]"} max-w-[calc(100vw-3rem)] max-h-[70vh] overflow-y-auto rounded-md border border-gold/20 bg-bg/95 backdrop-blur-xl shadow-lg`}
+      className={`absolute left-0 top-full mt-2 z-[60] ${wide ? "min-w-[420px]" : "min-w-[260px]"} max-w-[calc(100vw-3rem)] max-h-[70vh] overflow-y-auto rounded-md border border-gold/20 bg-bg/95 backdrop-blur-xl shadow-lg`}
     >
       {children}
     </div>
