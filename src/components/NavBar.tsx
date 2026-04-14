@@ -93,13 +93,13 @@ export default function NavBar() {
               <GroupTrigger id="atlas" label="Atlas" open={open} setOpen={setOpen} active={groupActive("atlas")} />
               {open === "atlas" && <LinkListPanel links={ATLAS_LINKS} pathname={pathname} />}
             </div>
-            <div className="relative">
-              <GroupTrigger id="about" label="About" open={open} setOpen={setOpen} active={groupActive("about")} />
-              {open === "about" && <LinkListPanel links={ABOUT_LINKS} pathname={pathname} />}
-            </div>
           </div>
         </div>
         <div className="flex items-center gap-4">
+          <div className="relative hidden md:block">
+            <GroupTrigger id="about" label="About" open={open} setOpen={setOpen} active={groupActive("about")} />
+            {open === "about" && <LinkListPanel links={ABOUT_LINKS} pathname={pathname} align="right" />}
+          </div>
           <button
             onClick={toggle}
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
@@ -154,19 +154,19 @@ function GroupTrigger({
   );
 }
 
-function PanelShell({ children, wide }: { children: React.ReactNode; wide?: boolean }) {
+function PanelShell({ children, wide, align = "left" }: { children: React.ReactNode; wide?: boolean; align?: "left" | "right" }) {
   return (
     <div
-      className={`absolute left-0 top-full mt-2 z-[60] ${wide ? "min-w-[420px]" : "min-w-[260px]"} max-w-[calc(100vw-3rem)] max-h-[70vh] overflow-y-auto rounded-md border border-gold/20 bg-bg/95 backdrop-blur-xl shadow-lg`}
+      className={`absolute ${align === "right" ? "right-0" : "left-0"} top-full mt-2 z-[60] ${wide ? "min-w-[420px]" : "min-w-[260px]"} max-w-[calc(100vw-3rem)] max-h-[70vh] overflow-y-auto rounded-md border border-gold/20 bg-bg/95 backdrop-blur-xl shadow-lg`}
     >
       {children}
     </div>
   );
 }
 
-function LinkListPanel({ links, pathname }: { links: NavLink[]; pathname: string }) {
+function LinkListPanel({ links, pathname, align }: { links: NavLink[]; pathname: string; align?: "left" | "right" }) {
   return (
-    <PanelShell>
+    <PanelShell align={align}>
       <ul className="py-2">
         {links.map((l) => {
           const active = pathname === l.href;
