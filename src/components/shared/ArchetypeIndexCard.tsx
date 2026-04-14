@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useTheme } from "@/components/ThemeProvider";
 import type { IndexEntry } from "@/data/allArchetypes";
+import ArchetypeCardVisual from "./ArchetypeCardVisual";
 
 export default function ArchetypeIndexCard({
   entry,
@@ -64,15 +65,20 @@ export default function ArchetypeIndexCard({
           </span>
         </div>
 
-        <h3
-          className="font-serif text-xl md:text-[1.4rem] font-medium tracking-tight leading-tight mb-3 transition-all duration-300"
-          style={{
-            color: light ? "var(--color-text-primary)" : c,
-            textShadow: hovered && !light ? `0 0 16px ${c}40` : "none",
-          }}
-        >
-          {entry.name}
-        </h3>
+        <div className="flex items-start gap-4 mb-3">
+          <div className="shrink-0 mt-0.5">
+            <ArchetypeCardVisual entry={entry} hovered={hovered} />
+          </div>
+          <h3
+            className="font-serif text-xl md:text-[1.4rem] font-medium tracking-tight leading-tight transition-all duration-300 flex-1"
+            style={{
+              color: light ? "var(--color-text-primary)" : c,
+              textShadow: hovered && !light ? `0 0 16px ${c}40` : "none",
+            }}
+          >
+            {entry.name}
+          </h3>
+        </div>
 
         {entry.motto && (
           <p className="font-serif italic text-[13px] md:text-sm text-text-secondary/85 leading-snug mt-auto">
