@@ -2,16 +2,14 @@ import Link from "next/link";
 import {
   ABOUT_LINKS,
   ATLAS_LINKS,
-  INDEX_LINK,
   NAV_SYSTEMS,
-  PRACTICE_LINKS,
   type NavLink,
 } from "@/data/nav";
 
 export default function Footer() {
   return (
     <footer className="border-t border-gold/10 mt-16">
-      <div className="max-w-5xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-4">
+      <div className="max-w-5xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-3">
         <Column title="Systems">
           <ul className="space-y-1.5">
             {NAV_SYSTEMS.map((s) => (
@@ -24,21 +22,10 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
-            <li className="pt-1">
-              <Link
-                href={INDEX_LINK.href}
-                className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted hover:text-gold"
-              >
-                {INDEX_LINK.label} →
-              </Link>
-            </li>
           </ul>
         </Column>
         <Column title="Atlas">
           <LinkList links={ATLAS_LINKS} />
-        </Column>
-        <Column title="Practice">
-          <LinkList links={PRACTICE_LINKS} />
         </Column>
         <Column title="About">
           <LinkList links={ABOUT_LINKS} />

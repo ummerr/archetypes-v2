@@ -54,10 +54,19 @@ export function archetypesForSystem(systemId: string): NavLink[] {
   }
 }
 
+export const INDEX_LINK: NavLink = {
+  label: "The Index",
+  href: "/archetypes",
+  desc: "All archetypes across every system",
+};
+
 export const ATLAS_LINKS: NavLink[] = [
   { label: "The Atlas", href: "/atlas", desc: "Cross-system constellation" },
   { label: "Debates", href: "/atlas/debates", desc: "Contested mappings" },
+  INDEX_LINK,
 ];
+
+export const SHOW_PRACTICE = false;
 
 export const PRACTICE_LINKS: NavLink[] = [
   { label: "Today", href: "/today", desc: "A daily archetype for the collective" },
@@ -71,12 +80,6 @@ export const ABOUT_LINKS: NavLink[] = [
   { label: "Counter-Canon", href: "/about/counter-canon", desc: "Parallel maps where canon was partial" },
   { label: "Shadow Structures", href: "/about/shadow-structures", desc: "Five different shadow models" },
 ];
-
-export const INDEX_LINK: NavLink = {
-  label: "The Index",
-  href: "/archetypes",
-  desc: "All archetypes across every system",
-};
 
 export function systemFromPath(pathname: string): NavSystem | null {
   const match = NAV_SYSTEMS.find((s) => pathname === s.href || pathname.startsWith(s.href + "/"));

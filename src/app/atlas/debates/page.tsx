@@ -2,32 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getContestedEntries, archetypeDisplayName, debateSlugFor } from "@/lib/resonance";
 import { buildPageMetadata } from "@/lib/site";
+import { META_DEBATES } from "@/data/debates";
 import SectionHeading from "@/components/shared/SectionHeading";
 import HermeneuticCaveat from "@/components/shared/HermeneuticCaveat";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Debates",
   description:
-    "Mappings on this site that practitioners actively dispute — with the case for, the case against, and the scholarship on both sides.",
+    "Mappings on this site that practitioners actively dispute — with the case for, the case against, and where this site lands.",
   path: "/atlas/debates",
 });
-
-const META_DEBATES = [
-  {
-    slug: "liminal-territory-real",
-    heading: "Is Liminal Territory a real structural finding or an over-reach?",
-  },
-  {
-    slug: "mbti-inclusion",
-    heading: "Should MBTI be included at all, given its psychometric problems?",
-  },
-  {
-    slug: "masculine-coded-universal",
-    heading: "Can a masculine-coded developmental arc (Boy → Man) serve as a universal axis?",
-  },
-  { slug: "murdock-vs-campbell", heading: "Murdock's Heroine's Journey vs. Campbell's monomyth" },
-  { slug: "riso-vs-naranjo", heading: "Riso-Hudson arrows vs. Naranjo's later disavowal" },
-];
 
 export default function DebatesPage() {
   const contested = getContestedEntries();
@@ -36,21 +20,48 @@ export default function DebatesPage() {
       <SectionHeading kicker="Atlas" as="h1">
         Debates
       </SectionHeading>
-      <HermeneuticCaveat variant="inline" className="mb-10" />
+      <p className="font-serif italic text-[17px] leading-[1.7] text-text-secondary/85 mt-4 mb-8 max-w-3xl">
+        Not every mapping on this site is settled. Some are editorial bets the canon does not
+        obviously support; others are structural choices working practitioners dispute. These are
+        the ones worth arguing about — with the case for, the case against, and where this site
+        lands.
+      </p>
+      <HermeneuticCaveat variant="inline" className="mb-12" />
 
       <section className="mb-14">
-        <h2 className="font-serif text-xl font-medium mb-4">Contested mappings</h2>
-        {contested.length === 0 ? (
-          <p className="italic text-text-secondary/80">
-            No mappings in the current map carry the <em>contested</em> tier.
+        <h2 className="font-serif text-xl font-medium mb-2">Structural meta-debates</h2>
+        <p className="font-serif italic text-text-secondary/70 text-[14px] mb-5">
+          Arguments about the shape of the map itself, not individual mappings.
+        </p>
+        <ul className="space-y-3">
+          {META_DEBATES.map((d) => (
+            <li key={d.slug}>
+              <Link
+                href={`/atlas/debates/${d.slug}`}
+                className="block rounded-sm border border-surface-light/40 p-5 hover:border-gold/40 transition-colors"
+              >
+                <p className="font-serif text-lg mb-2">{d.heading}</p>
+                <p className="font-serif italic text-[14px] leading-[1.6] text-text-secondary/75">
+                  {d.stance}
+                </p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {contested.length > 0 && (
+        <section>
+          <h2 className="font-serif text-xl font-medium mb-2">Contested mappings</h2>
+          <p className="font-serif italic text-text-secondary/70 text-[14px] mb-5">
+            Individual placements flagged as contested in the resonance data.
           </p>
-        ) : (
           <ul className="space-y-3">
             {contested.map(({ cluster, entry }) => (
               <li key={`${cluster.id}-${entry.system}-${entry.slug}`}>
                 <Link
                   href={`/atlas/debates/${debateSlugFor(cluster.id, entry.system, entry.slug)}`}
-                  className="block rounded-sm border border-amber-500/30 p-4 hover:border-amber-500/60"
+                  className="block rounded-sm border border-amber-500/30 p-4 hover:border-amber-500/60 transition-colors"
                 >
                   <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-amber-500/90 mb-1">
                     {cluster.theme.split(" — ")[0].replace(/^The\s+/i, "")}
@@ -66,24 +77,8 @@ export default function DebatesPage() {
               </li>
             ))}
           </ul>
-        )}
-      </section>
-
-      <section>
-        <h2 className="font-serif text-xl font-medium mb-4">Structural meta-debates</h2>
-        <ul className="space-y-3">
-          {META_DEBATES.map((d) => (
-            <li key={d.slug}>
-              <Link
-                href={`/atlas/debates/${d.slug}`}
-                className="block rounded-sm border border-surface-light/40 p-4 hover:border-gold/40"
-              >
-                <p className="font-serif text-lg">{d.heading}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+        </section>
+      )}
     </div>
   );
 }

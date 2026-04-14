@@ -7,16 +7,14 @@ import { useTheme } from "@/components/ThemeProvider";
 import {
   ABOUT_LINKS,
   ATLAS_LINKS,
-  INDEX_LINK,
   NAV_SYSTEMS,
-  PRACTICE_LINKS,
   archetypesForSystem,
   systemFromPath,
   systemSubLinks,
   type NavLink,
 } from "@/data/nav";
 
-type GroupId = "systems" | "atlas" | "practice" | "about";
+type GroupId = "systems" | "atlas" | "about";
 
 export default function NavBar() {
   const { theme, toggle } = useTheme();
@@ -45,19 +43,15 @@ export default function NavBar() {
   }, [open]);
 
   const activeSystem = systemFromPath(pathname);
-  const inAtlas = pathname.startsWith("/atlas");
+  const inAtlas = pathname.startsWith("/atlas") || pathname.startsWith("/archetypes");
   const inAbout = pathname.startsWith("/about");
-  const inPractice =
-    pathname === "/today" || pathname === "/mirror" || pathname === "/profile";
 
   const groupActive = (g: GroupId) =>
     g === "systems"
       ? activeSystem !== null
       : g === "atlas"
         ? inAtlas
-        : g === "about"
-          ? inAbout
-          : inPractice;
+        : inAbout;
 
   return (
     <nav className="fixed top-0 inset-x-0 z-50">
@@ -85,19 +79,10 @@ export default function NavBar() {
           <div className="hidden md:flex items-center gap-4">
             <GroupTrigger id="systems" label="Systems" open={open} setOpen={setOpen} active={groupActive("systems")} />
             <GroupTrigger id="atlas" label="Atlas" open={open} setOpen={setOpen} active={groupActive("atlas")} />
-            <GroupTrigger id="practice" label="Practice" open={open} setOpen={setOpen} active={groupActive("practice")} />
             <GroupTrigger id="about" label="About" open={open} setOpen={setOpen} active={groupActive("about")} />
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <Link
-            href={INDEX_LINK.href}
-            className={`hidden md:inline font-mono text-[10px] tracking-[0.2em] uppercase transition-colors duration-200 ${
-              pathname.startsWith("/archetypes") ? "text-gold" : "text-text-secondary hover:text-gold"
-            }`}
-          >
-            Index
-          </Link>
           <button
             onClick={toggle}
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
@@ -115,7 +100,6 @@ export default function NavBar() {
 
         {open === "systems" && <SystemsPanel pathname={pathname} />}
         {open === "atlas" && <LinkListPanel links={ATLAS_LINKS} pathname={pathname} />}
-        {open === "practice" && <LinkListPanel links={PRACTICE_LINKS} pathname={pathname} />}
         {open === "about" && <LinkListPanel links={ABOUT_LINKS} pathname={pathname} />}
       </div>
 
@@ -158,7 +142,7 @@ function GroupTrigger({
 function PanelShell({ children, wide }: { children: React.ReactNode; wide?: boolean }) {
   return (
     <div
-      className={`absolute left-6 top-full mt-2 ${wide ? "min-w-[420px]" : "min-w-[260px]"} max-w-[calc(100vw-3rem)] max-h-[70vh] overflow-y-auto rounded-md border border-gold/20 bg-bg/95 backdrop-blur-xl shadow-lg`}
+      className={`absolute left-6 top-full mt-2 z-[60] ${wide ? "min-w-[420px]" : "min-w-[260px]"} max-w-[calc(100vw-3rem)] max-h-[70vh] overflow-y-auto rounded-md border border-gold/20 bg-bg/95 backdrop-blur-xl shadow-lg`}
     >
       {children}
     </div>
@@ -232,12 +216,6 @@ function SystemsPanel({ pathname }: { pathname: string }) {
             </li>
           );
         })}
-        <li className="border-t border-gold/10 mt-2 pt-2 px-4 py-2.5">
-          <Link href={INDEX_LINK.href} className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-secondary hover:text-gold">
-            {INDEX_LINK.label} →
-          </Link>
-          <div className="font-serif italic text-[12px] text-muted mt-0.5">{INDEX_LINK.desc}</div>
-        </li>
       </ul>
     </PanelShell>
   );
@@ -245,7 +223,7 @@ function SystemsPanel({ pathname }: { pathname: string }) {
 
 function SecondaryBar({ pathname }: { pathname: string }) {
   const system = systemFromPath(pathname);
-  const inAtlas = pathname.startsWith("/atlas");
+  const inAtlas = pathname.startsWith("/atlas") || pathname.startsWith("/archetypes");
   const inAbout = pathname.startsWith("/about");
 
   if (system) return <SystemSecondaryBar system={system} pathname={pathname} />;
@@ -278,7 +256,7 @@ function SimpleSecondaryBar({
       <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-gold whitespace-nowrap">{label}</span>
       <span className="text-muted/40 font-mono text-[10px]">·</span>
       {links.map((l) => {
-        const active = pathname === l.href;
+        const active = pathname === l.href || pathname.startsWith(l.href + "/");
         return (
           <Link
             key={l.href}
