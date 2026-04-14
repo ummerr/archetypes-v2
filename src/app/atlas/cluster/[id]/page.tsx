@@ -13,6 +13,8 @@ import { buildPageMetadata } from "@/lib/site";
 import ConfidenceBadge from "@/components/shared/ConfidenceBadge";
 import CitationLine from "@/components/shared/CitationLine";
 import SectionHeading from "@/components/shared/SectionHeading";
+import ClusterTotem from "@/components/viz/ClusterTotem";
+import { CLUSTER_AXES, STAGE_LABELS, AFFECT_LABELS, STANCE_LABELS } from "@/data/atlas-lens-axes";
 
 export function generateStaticParams() {
   return CLUSTERS.map((c) => ({ id: c.id }));
@@ -50,10 +52,28 @@ export default async function ClusterPage({
       >
         ← Atlas
       </Link>
-      <div className="mt-6">
-        <SectionHeading kicker="Cluster" as="h1">
-          {cluster.theme}
-        </SectionHeading>
+      <div className="mt-6 flex items-start gap-6 flex-wrap">
+        <div
+          className="shrink-0 rounded-sm border p-3"
+          style={{
+            borderColor: `${CLUSTER_AXES[cluster.id]?.motifColor ?? "#e6c47a"}40`,
+            background: "rgba(6,6,10,0.6)",
+          }}
+        >
+          <ClusterTotem id={cluster.id} size="hero" title={cluster.theme} />
+        </div>
+        <div className="min-w-0 flex-1">
+          <SectionHeading kicker="Cluster" as="h1">
+            {cluster.theme}
+          </SectionHeading>
+          {CLUSTER_AXES[cluster.id] ? (
+            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10px] tracking-[0.25em] uppercase text-text-secondary/70">
+              <span>Stage · {STAGE_LABELS[CLUSTER_AXES[cluster.id].stage]}</span>
+              <span>Affect · {AFFECT_LABELS[CLUSTER_AXES[cluster.id].affect]}</span>
+              <span>Stance · {STANCE_LABELS[CLUSTER_AXES[cluster.id].stance]}</span>
+            </div>
+          ) : null}
+        </div>
       </div>
       <p className="font-serif text-lg italic text-text-secondary/85 max-w-3xl mb-6">
         {cluster.description}

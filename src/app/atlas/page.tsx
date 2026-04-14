@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { CLUSTERS, OPEN_QUESTIONS, CONFIDENCE_TIERS, ATLAS_AXES, type ConfidenceTier, type SystemId } from "@/data/resonance";
 import { archetypeDisplayName, archetypeHref, systemAccent } from "@/lib/resonance";
 import { SYSTEMS } from "@/data/systems";
@@ -7,10 +6,11 @@ import { buildPageMetadata } from "@/lib/site";
 import HermeneuticCaveat from "@/components/shared/HermeneuticCaveat";
 import SectionHeading from "@/components/shared/SectionHeading";
 import ConfidenceBadge from "@/components/shared/ConfidenceBadge";
-import ResonanceConstellation, {
-  type ConstellationLayout,
-  type ConstellationNodeMeta,
+import type {
+  ConstellationLayout,
+  ConstellationNodeMeta,
 } from "@/components/viz/ResonanceConstellation";
+import AtlasInteractive from "@/components/viz/AtlasInteractive";
 import constellationLayout from "@/data/constellation-layout.json";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -46,12 +46,16 @@ export default function AtlasPage() {
         .filter(Boolean) as string[],
     };
   }
-  const constellationSystems = SYSTEMS.map((s) => ({
+  const lensSystems = SYSTEMS.map((s) => ({
     id: s.id as SystemId,
     name: s.name,
     accent: s.accent,
   }));
-  const constellationClusters = CLUSTERS.map((c) => ({ id: c.id, theme: c.theme }));
+  const lensClusters = CLUSTERS.map((c) => ({
+    id: c.id,
+    theme: c.theme,
+    shortTheme: c.theme.split("—")[0].trim().split(" - ")[0].trim(),
+  }));
 
   return (
     <div className="max-w-6xl mx-auto px-6 md:px-10 py-20">
@@ -63,22 +67,22 @@ export default function AtlasPage() {
       <section className="mb-16">
         <div className="mb-4 flex items-baseline justify-between flex-wrap gap-2">
           <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80">
-            The Constellation
+            Four Lenses · One Atlas
           </p>
           <p className="font-serif italic text-xs text-text-secondary/70">
             {layout.nodes.length} archetypes · {layout.edges.length} resonances · six traditions
           </p>
         </div>
-        <ResonanceConstellation
+        <AtlasInteractive
           layout={layout}
-          systems={constellationSystems}
-          clusters={constellationClusters}
+          systems={lensSystems}
+          clusters={lensClusters}
           nodeMeta={nodeMeta}
         />
-        <p className="mt-4 font-serif text-sm italic text-text-secondary/75 max-w-2xl">
-          Each point is an archetype, colored by its tradition and sized by how densely it converges with others.
-          Lines are intra-cluster resonances, weighted by the confidence we give the mapping. Hover a node to isolate
-          its neighborhood; hover a cluster label to see its constellation; tap to open the archetype.
+        <p className="mt-4 font-serif text-sm italic text-text-secondary/75 max-w-3xl">
+          Switch lenses to see the same 87 archetypes regroup along a different structural claim —
+          developmental arc, affective seat, or relational stance. Each cluster carries its own totem.
+          Hover a tile to isolate its members in the map above; click to step into the cluster.
         </p>
       </section>
 
@@ -100,44 +104,6 @@ export default function AtlasPage() {
           {CONFIDENCE_TIERS.canonical} — {CONFIDENCE_TIERS.strong} — {CONFIDENCE_TIERS.moderate} —{" "}
           {CONFIDENCE_TIERS.speculative} — {CONFIDENCE_TIERS.contested}
         </p>
-      </section>
-
-      <section className="mb-16">
-        <SectionHeading kicker="21 Clusters">The thematic clusters</SectionHeading>
-        <div className="grid md:grid-cols-2 gap-5">
-          {CLUSTERS.map((cluster) => {
-            const counts: Record<ConfidenceTier, number> = {
-              canonical: 0,
-              strong: 0,
-              moderate: 0,
-              speculative: 0,
-              contested: 0,
-            };
-            for (const a of cluster.archetypes) counts[a.confidence]++;
-            return (
-              <Link
-                key={cluster.id}
-                href={`/atlas/cluster/${cluster.id}`}
-                className="block rounded-sm border border-surface-light/40 p-5 hover:border-gold/40 transition-colors"
-              >
-                <h3 className="font-serif text-lg md:text-xl font-medium mb-2">{cluster.theme}</h3>
-                <p className="font-serif text-sm italic text-text-secondary/80 mb-3 line-clamp-3">
-                  {cluster.description}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {TIER_ORDER.filter((t) => counts[t] > 0).map((t) => (
-                    <span
-                      key={t}
-                      className="font-mono text-[9px] tracking-[0.2em] uppercase px-1.5 py-0.5 border border-surface-light/40 rounded-sm text-text-secondary/70"
-                    >
-                      {t} · {counts[t]}
-                    </span>
-                  ))}
-                </div>
-              </Link>
-            );
-          })}
-        </div>
       </section>
 
       <section className="mb-16">
@@ -172,7 +138,6 @@ export default function AtlasPage() {
   );
 }
 
-// Suppress unused import lint for helpers that may be used by future sections.
 void archetypeDisplayName;
 void archetypeHref;
 void systemAccent;
