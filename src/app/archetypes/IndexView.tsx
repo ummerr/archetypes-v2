@@ -9,13 +9,31 @@ import {
 import ArchetypeIndexCard from "@/components/shared/ArchetypeIndexCard";
 import { useTheme } from "@/components/ThemeProvider";
 
-type GroupMode = "system" | "inner" | "alpha";
+type GroupMode = "system" | "inner" | "alpha" | "hue" | "shuffle";
 
 const GROUP_OPTIONS: { id: GroupMode; label: string }[] = [
   { id: "system", label: "By System" },
   { id: "inner", label: "By Group" },
   { id: "alpha", label: "Alphabetical" },
+  { id: "hue", label: "By Hue" },
+  { id: "shuffle", label: "Shuffle" },
 ];
+
+function hexToHue(hex: string): number {
+  const h = hex.replace("#", "");
+  const r = parseInt(h.slice(0, 2), 16) / 255;
+  const g = parseInt(h.slice(2, 4), 16) / 255;
+  const b = parseInt(h.slice(4, 6), 16) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const d = max - min;
+  if (d === 0) return 0;
+  let hue: number;
+  if (max === r) hue = ((g - b) / d) % 6;
+  else if (max === g) hue = (b - r) / d + 2;
+  else hue = (r - g) / d + 4;
+  return (hue * 60 + 360) % 360;
+}
 
 interface Section {
   key: string;
@@ -29,6 +47,7 @@ export default function IndexView() {
   const light = theme === "light";
   const [mode, setMode] = useState<GroupMode>("system");
   const [query, setQuery] = useState("");
+  const [shuffleSeed, setShuffleSeed] = useState(0);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -50,9 +69,45 @@ export default function IndexView() {
       return [
         {
           key: "all",
-          label: `All Archetypes`,
+          label: "All Archetypes",
           color: "var(--color-gold)",
           entries: sorted,
+        },
+      ];
+    }
+
+    if (mode === "hue") {
+      const sorted = [...filtered].sort(
+        (a, b) => hexToHue(a.accentColor) - hexToHue(b.accentColor)
+      );
+      return [
+        {
+          key: "hue",
+          label: "Across the Spectrum",
+          color: "var(--color-gold)",
+          entries: sorted,
+        },
+      ];
+    }
+
+    if (mode === "shuffle") {
+      // seeded shuffle — stable per click
+      const arr = [...filtered];
+      let seed = shuffleSeed || 1;
+      const rand = () => {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
+      };
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(rand() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return [
+        {
+          key: `shuffle-${shuffleSeed}`,
+          label: "Let the Field Decide",
+          color: "var(--color-gold)",
+          entries: arr,
         },
       ];
     }
@@ -91,7 +146,7 @@ export default function IndexView() {
       }
     }
     return Array.from(groups.values());
-  }, [filtered, mode]);
+  }, [filtered, mode, shuffleSeed]);
 
   const total = filtered.length;
 
@@ -126,7 +181,10 @@ export default function IndexView() {
                 <button
                   key={opt.id}
                   type="button"
-                  onClick={() => setMode(opt.id)}
+                  onClick={() => {
+                    setMode(opt.id);
+                    if (opt.id === "shuffle") setShuffleSeed(Date.now());
+                  }}
                   className={`font-mono text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 rounded-sm transition-colors duration-200 ${
                     active
                       ? "text-gold bg-gold/10 border border-gold/30"

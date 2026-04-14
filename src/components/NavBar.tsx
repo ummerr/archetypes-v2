@@ -198,7 +198,7 @@ export default function NavBar() {
                 : "text-text-secondary hover:text-gold"
             }`}
           >
-            Archetypes
+            Index
           </Link>
           <button
             onClick={toggle}
