@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { getMbtiBySlug } from "@/data/mbti/archetypes";
 import { getArchetypeBySlug as getKwmlBySlug } from "@/data/kwml/archetypes";
 import MbtiGlyph from "@/components/MbtiGlyph";
@@ -61,7 +62,83 @@ export default function ArchetypeCardVisual({
     );
   }
 
-  // Jungian · Enneagram · Tarot - typographic glyph with accent ring
+  if (entry.systemId === "tarot") {
+    const char = entry.symbol ?? "✶";
+    return (
+      <div
+        className="relative flex items-center justify-center"
+        style={{ width: SIZE, height: SIZE }}
+        aria-hidden
+      >
+        {/* breathing radial halo */}
+        <motion.span
+          className="absolute inset-[-4px] rounded-full"
+          style={{
+            background: `radial-gradient(circle, ${color}${hovered ? "33" : "1E"} 0%, transparent 65%)`,
+          }}
+          animate={{ scale: [1, 1.08, 1], opacity: [0.75, 1, 0.75] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+        {/* slow-rotating solid ring */}
+        <motion.span
+          className="absolute inset-0 rounded-full"
+          style={{ border: `1px solid ${color}${hovered ? "66" : "38"}` }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        />
+        {/* counter-rotating dashed ring */}
+        <motion.span
+          className="absolute inset-[5px] rounded-full"
+          style={{
+            border: `1px dashed ${color}${hovered ? "55" : "28"}`,
+          }}
+          animate={{ rotate: -360 }}
+          transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
+        />
+        {/* orbiting phase mote */}
+        <motion.span
+          className="absolute top-1/2 left-1/2"
+          style={{ width: 0, height: 0 }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+        >
+          <span
+            className="absolute block rounded-full"
+            style={{
+              width: 3,
+              height: 3,
+              left: SIZE / 2 - 1.5,
+              top: -1.5,
+              background: color,
+              boxShadow: `0 0 6px ${color}`,
+              opacity: hovered ? 0.95 : 0.6,
+            }}
+          />
+        </motion.span>
+        {/* glyph with subtle shimmer */}
+        <motion.span
+          className="relative font-serif leading-none"
+          style={{ color, fontSize: 26 }}
+          animate={{
+            textShadow: [
+              `0 0 6px ${color}40`,
+              `0 0 14px ${color}90`,
+              `0 0 6px ${color}40`,
+            ],
+            scale: hovered ? 1.08 : 1,
+          }}
+          transition={{
+            textShadow: { duration: 4.5, repeat: Infinity, ease: "easeInOut" },
+            scale: { duration: 0.5, ease: "easeOut" },
+          }}
+        >
+          {char}
+        </motion.span>
+      </div>
+    );
+  }
+
+  // Jungian · Enneagram - typographic glyph with accent ring
   const char = entry.symbol ?? "◯";
   return (
     <div
