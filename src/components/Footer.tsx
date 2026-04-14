@@ -3,13 +3,14 @@ import {
   ABOUT_LINKS,
   ATLAS_LINKS,
   NAV_SYSTEMS,
+  PRACTICE_LINKS,
   type NavLink,
 } from "@/data/nav";
 
 export default function Footer() {
   return (
     <footer className="border-t border-gold/10 mt-16">
-      <div className="max-w-5xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-3">
+      <div className="max-w-5xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-4">
         <Column title="Systems">
           <ul className="space-y-1.5">
             {NAV_SYSTEMS.map((s) => (
@@ -26,6 +27,9 @@ export default function Footer() {
         </Column>
         <Column title="Atlas">
           <LinkList links={ATLAS_LINKS} />
+        </Column>
+        <Column title="Practice">
+          <LinkList links={PRACTICE_LINKS} comingSoon />
         </Column>
         <Column title="About">
           <LinkList links={ABOUT_LINKS} />
@@ -56,19 +60,26 @@ function Column({ title, children }: { title: string; children: React.ReactNode 
   );
 }
 
-function LinkList({ links }: { links: NavLink[] }) {
+function LinkList({ links, comingSoon }: { links: NavLink[]; comingSoon?: boolean }) {
   return (
     <ul className="space-y-1.5">
       {links.map((l) => (
         <li key={l.href}>
-          <Link
-            href={l.href}
-            className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-secondary hover:text-gold transition-colors"
-          >
-            {l.label}
-          </Link>
+          {comingSoon ? (
+            <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted/60 cursor-default">
+              {l.label}
+              <span className="ml-2 text-[8px] tracking-[0.25em] text-gold/40">— soon</span>
+            </span>
+          ) : (
+            <Link
+              href={l.href}
+              className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-secondary hover:text-gold transition-colors"
+            >
+              {l.label}
+            </Link>
+          )}
           {l.desc && (
-            <div className="font-serif italic text-[11px] text-muted">{l.desc}</div>
+            <div className={`font-serif italic text-[11px] ${comingSoon ? "text-muted/50" : "text-muted"}`}>{l.desc}</div>
           )}
         </li>
       ))}
