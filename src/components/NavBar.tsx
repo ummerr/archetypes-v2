@@ -19,6 +19,7 @@ export default function NavBar() {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const inArchetypes = pathname.startsWith("/archetypes");
+  const inAtlas = pathname.startsWith("/atlas");
   const inKwml = pathname.startsWith("/kwml");
   const inJungian = pathname.startsWith("/jungian");
   const inEnneagram = pathname.startsWith("/enneagram");
@@ -137,6 +138,15 @@ export default function NavBar() {
             }`}
           >
             Index
+          </Link>
+          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <Link
+            href="/atlas"
+            className={`font-mono text-[10px] tracking-[0.2em] uppercase transition-colors duration-200 ${
+              inAtlas ? "text-gold" : "text-text-secondary hover:text-gold"
+            }`}
+          >
+            Atlas
           </Link>
           {systemLabel && (
             <>
