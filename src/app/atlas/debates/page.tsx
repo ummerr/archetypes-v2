@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getContestedEntries, archetypeDisplayName, debateSlugFor } from "@/lib/resonance";
 import { buildPageMetadata } from "@/lib/site";
 import { META_DEBATES } from "@/data/debates";
+import { OPEN_QUESTIONS } from "@/data/resonance";
 import SectionHeading from "@/components/shared/SectionHeading";
 import HermeneuticCaveat from "@/components/shared/HermeneuticCaveat";
 
@@ -45,6 +46,23 @@ export default function DebatesPage() {
                   {d.stance}
                 </p>
               </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mb-14">
+        <h2 className="font-serif text-xl font-medium mb-2">What the map does not resolve</h2>
+        <p className="font-serif italic text-text-secondary/70 text-[14px] mb-5">
+          Open questions the site carries without deciding — surfaced so readers can weigh them.
+        </p>
+        <ul className="space-y-3 max-w-3xl">
+          {OPEN_QUESTIONS.map((q, i) => (
+            <li
+              key={i}
+              className="font-serif text-[15px] italic text-text-secondary/85 leading-relaxed"
+            >
+              — {q}
             </li>
           ))}
         </ul>

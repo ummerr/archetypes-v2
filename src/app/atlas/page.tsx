@@ -1,5 +1,14 @@
 import type { Metadata } from "next";
-import { CLUSTERS, OPEN_QUESTIONS, CONFIDENCE_TIERS, ATLAS_AXES, type ConfidenceTier, type SystemId } from "@/data/resonance";
+import { CLUSTERS, CONFIDENCE_TIERS, type ConfidenceTier, type SystemId } from "@/data/resonance";
+import {
+  STAGE_LABELS,
+  AFFECT_LABELS,
+  AFFECT_ACCENT,
+  STANCE_LABELS,
+  STAGES,
+  AFFECTS,
+  STANCES,
+} from "@/data/atlas-lens-axes";
 import { archetypeDisplayName, archetypeHref, systemAccent } from "@/lib/resonance";
 import { SYSTEMS } from "@/data/systems";
 import { buildPageMetadata } from "@/lib/site";
@@ -21,6 +30,29 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 const TIER_ORDER: ConfidenceTier[] = ["canonical", "strong", "moderate", "speculative", "contested"];
+
+const LENS_LEGEND: { label: string; kicker: string; note: string }[] = [
+  {
+    label: "Developmental Arc",
+    kicker: "Stage",
+    note: "Pre-initiation to integration. Archetypes as a maturation flow.",
+  },
+  {
+    label: "Affect Wheel",
+    kicker: "Feeling",
+    note: "Gut, heart, head, eros — the four seats of felt motivation.",
+  },
+  {
+    label: "Relational Triad",
+    kicker: "Stance",
+    note: "Horney's toward / against / away postures toward the world.",
+  },
+  {
+    label: "Resonance Web",
+    kicker: "Network",
+    note: "The raw cross-tradition constellation, every tie at once.",
+  },
+];
 
 export default function AtlasPage() {
   const distribution: Record<ConfidenceTier, number> = {
@@ -87,6 +119,104 @@ export default function AtlasPage() {
       </section>
 
       <section className="mb-16">
+        <SectionHeading kicker="Legend">How to read the atlas</SectionHeading>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="rounded-sm border border-surface-light/40 p-5">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
+              The four lenses
+            </p>
+            <ul className="space-y-3">
+              {LENS_LEGEND.map((l) => (
+                <li key={l.label}>
+                  <p className="font-serif text-[15px] text-text-secondary/90">
+                    <span className="text-gold/90">{l.label}</span>
+                    <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-secondary/60 ml-2">
+                      {l.kicker}
+                    </span>
+                  </p>
+                  <p className="font-serif text-[13px] italic text-text-secondary/70 leading-relaxed">
+                    {l.note}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="rounded-sm border border-surface-light/40 p-5">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
+              Vocabulary
+            </p>
+            <div className="grid grid-cols-3 gap-4 text-[13px]">
+              <div>
+                <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/60 mb-2">
+                  Stage
+                </p>
+                <ul className="space-y-1 font-serif text-text-secondary/85">
+                  {STAGES.map((s) => (
+                    <li key={s}>{STAGE_LABELS[s]}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/60 mb-2">
+                  Affect
+                </p>
+                <ul className="space-y-1 font-serif text-text-secondary/85">
+                  {AFFECTS.map((a) => (
+                    <li key={a} className="flex items-center gap-2">
+                      <span
+                        aria-hidden
+                        className="inline-block w-2 h-2 rounded-full"
+                        style={{ background: AFFECT_ACCENT[a] }}
+                      />
+                      {AFFECT_LABELS[a]}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/60 mb-2">
+                  Stance
+                </p>
+                <ul className="space-y-1 font-serif text-text-secondary/85">
+                  {STANCES.map((s) => (
+                    <li key={s}>{STANCE_LABELS[s]}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-sm border border-surface-light/40 p-5">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
+              Confidence tiers
+            </p>
+            <ul className="space-y-2">
+              {TIER_ORDER.map((t) => (
+                <li key={t} className="flex items-baseline gap-3">
+                  <ConfidenceBadge tier={t} />
+                  <span className="font-serif text-[13px] italic text-text-secondary/75 leading-relaxed">
+                    {CONFIDENCE_TIERS[t]}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="rounded-sm border border-surface-light/40 p-5">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
+              Cluster totems
+            </p>
+            <p className="font-serif text-[14px] italic text-text-secondary/80 leading-relaxed">
+              Each cluster carries a small SVG motif — shape is unique to the cluster, color
+              derives from its primary affect. Totems appear on cluster tiles and inside the map,
+              so a shape you learn here stays consistent wherever that cluster shows up.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mb-16">
         <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
           Confidence Distribution
         </p>
@@ -106,34 +236,6 @@ export default function AtlasPage() {
         </p>
       </section>
 
-      <section className="mb-16">
-        <SectionHeading kicker="Structural Axes">Three axes of the atlas</SectionHeading>
-        <div className="grid md:grid-cols-3 gap-4">
-          {[
-            ATLAS_AXES.developmentalStage,
-            ATLAS_AXES.affectCenter,
-            ATLAS_AXES.relationalStance,
-          ].map((axis) => (
-            <div key={axis.label} className="rounded-sm border border-surface-light/40 p-4">
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-2">
-                {axis.label}
-              </p>
-              <p className="font-serif text-sm italic text-text-secondary/85">{axis.note}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mb-16">
-        <SectionHeading kicker="Open Questions">What the map does not resolve</SectionHeading>
-        <ul className="space-y-3 max-w-3xl">
-          {OPEN_QUESTIONS.map((q, i) => (
-            <li key={i} className="font-serif text-[15px] italic text-text-secondary/85 leading-relaxed">
-              — {q}
-            </li>
-          ))}
-        </ul>
-      </section>
     </div>
   );
 }
