@@ -5,12 +5,15 @@ import dynamic from "next/dynamic";
 import type { HeroJourneyArchetype, JourneyStage } from "@/types/herosjourney";
 import { useTheme } from "@/components/ThemeProvider";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
+import CounterCanonLinks from "@/components/resonance/CounterCanonLinks";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getHerosJourneyExemplars } from "@/data/herosjourney/exemplars";
+import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
 const HeroJourneyTotemCanvas = dynamic(
   () => import("@/components/HeroJourneyTotemCanvas"),
-  { ssr: false }
+  { ssr: false, loading: () => <CanvasSkeleton /> }
 );
 
 interface Props {
@@ -41,7 +44,10 @@ export default function HeroJourneyDetailClient({
     <div className="min-h-screen px-6 pt-24 pb-24 md:pt-32">
       <div className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 mb-6 animate-slide-up">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 mb-6 animate-slide-up flex-wrap"
+        >
           <Link
             href="/heros-journey"
             className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
@@ -50,12 +56,20 @@ export default function HeroJourneyDetailClient({
           </Link>
           <span className="text-muted/40 font-mono text-[10px]">/</span>
           <span
+            aria-current="page"
             className="font-mono text-[9px] tracking-[0.25em] uppercase"
             style={{ color }}
           >
             {archetype.role.replace("-", " ")}
           </span>
-        </div>
+          <span className="text-muted/40 font-mono text-[10px] ml-1">·</span>
+          <Link
+            href="/heros-journey/about"
+            className="font-mono text-[9px] tracking-[0.25em] text-muted/80 uppercase hover:text-gold transition-colors"
+          >
+            About
+          </Link>
+        </nav>
 
         {/* Hero */}
         <div className="mb-12 animate-slide-up delay-100">
@@ -96,6 +110,8 @@ export default function HeroJourneyDetailClient({
           <p className="text-text-secondary text-base md:text-lg leading-relaxed font-light max-w-2xl">
             {archetype.description}
           </p>
+
+          <CrossSystemResonanceInline system="heros-journey" slug={archetype.slug} />
         </div>
 
         {/* Fields grid */}
@@ -229,6 +245,7 @@ export default function HeroJourneyDetailClient({
         })()}
 
         <CrossSystemResonance system="heros-journey" slug={archetype.slug} accentColor={color} />
+        <CounterCanonLinks parent="heros-journey" />
 
         {/* Siblings */}
         <div className="animate-slide-up delay-500">

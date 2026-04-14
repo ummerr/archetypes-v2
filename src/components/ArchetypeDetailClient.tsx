@@ -12,6 +12,8 @@ import EvolutionArrow from "@/components/EvolutionArrow";
 import BoyWithinMan from "@/components/BoyWithinMan";
 import { useTheme } from "@/components/ThemeProvider";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
+import CounterCanonLinks from "@/components/resonance/CounterCanonLinks";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getKwmlExemplars } from "@/data/kwml/exemplars";
 
@@ -68,28 +70,39 @@ export default function ArchetypeDetailClient({
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-surface-light to-transparent" />
 
         <div className="relative max-w-6xl mx-auto">
-          {/* Back */}
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-muted hover:text-text-secondary transition-colors mb-10 group"
+          {/* Breadcrumb */}
+          <nav
+            aria-label="Breadcrumb"
+            className="flex items-center gap-2 mb-10 flex-wrap"
           >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              className="transition-transform group-hover:-translate-x-0.5"
+            <Link
+              href="/kwml"
+              className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
             >
-              <path
-                d="M10 12L6 8L10 4"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Back
-          </Link>
+              KWML
+            </Link>
+            <span className="text-muted/40 font-mono text-[10px]">/</span>
+            <span
+              className="font-mono text-[9px] tracking-[0.25em] uppercase"
+              style={{ color: light ? color : `${color}CC` }}
+            >
+              {family.label}
+            </span>
+            <span className="text-muted/40 font-mono text-[10px]">/</span>
+            <span
+              aria-current="page"
+              className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase"
+            >
+              {archetype.maturity === "boy" ? "Boy" : "Man"}
+            </span>
+            <span className="text-muted/40 font-mono text-[10px] ml-1">·</span>
+            <Link
+              href="/kwml/about"
+              className="font-mono text-[9px] tracking-[0.25em] text-muted/80 uppercase hover:text-gold transition-colors"
+            >
+              About
+            </Link>
+          </nav>
 
           <div className="flex flex-col-reverse md:flex-row md:items-start md:gap-12">
             {/* ─── Text column ─── */}
@@ -119,9 +132,13 @@ export default function ArchetypeDetailClient({
               </h1>
 
               {/* Description */}
-              <p className="text-text-secondary text-base md:text-lg leading-[1.7] max-w-xl mb-8">
+              <p className="text-text-secondary text-base md:text-lg leading-[1.7] max-w-xl mb-6">
                 {archetype.description}
               </p>
+
+              <div className="mb-6">
+                <CrossSystemResonanceInline system="kwml" slug={archetype.slug} />
+              </div>
 
               {/* Polarity summary strip */}
               <div className="flex flex-wrap gap-x-6 gap-y-2">
@@ -440,6 +457,7 @@ export default function ArchetypeDetailClient({
               slug={archetype.slug}
               accentColor={archetype.accentColor}
             />
+            <CounterCanonLinks parent="kwml" />
           </motion.section>
 
           {/* ─── NAVIGATION ─── */}

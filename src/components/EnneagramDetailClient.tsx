@@ -7,12 +7,14 @@ import { EnneagramArchetype, EnneagramTriadGroup } from "@/types/enneagram";
 import { useTheme } from "@/components/ThemeProvider";
 import EnneagramWings from "@/components/EnneagramWings";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getEnneagramExemplars } from "@/data/enneagram/exemplars";
+import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
 const EnneagramTotemCanvas = dynamic(
   () => import("@/components/EnneagramTotemCanvas"),
-  { ssr: false }
+  { ssr: false, loading: () => <CanvasSkeleton /> }
 );
 
 interface Props {
@@ -59,7 +61,10 @@ export default function EnneagramDetailClient({
     <div className="min-h-screen px-6 pt-24 pb-24 md:pt-32">
       <div className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 mb-6 animate-slide-up flex-wrap">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 mb-6 animate-slide-up flex-wrap"
+        >
           <Link
             href="/enneagram"
             className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
@@ -74,10 +79,20 @@ export default function EnneagramDetailClient({
             {triad.label} Triad
           </span>
           <span className="text-muted/40 font-mono text-[10px]">/</span>
-          <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+          <span
+            aria-current="page"
+            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase"
+          >
             Type {archetype.number}
           </span>
-        </div>
+          <span className="text-muted/40 font-mono text-[10px] ml-1">·</span>
+          <Link
+            href="/enneagram/about"
+            className="font-mono text-[9px] tracking-[0.25em] text-muted/80 uppercase hover:text-gold transition-colors"
+          >
+            About
+          </Link>
+        </nav>
 
         {/* Hero */}
         <div className="mb-10 animate-slide-up delay-100">
@@ -137,6 +152,8 @@ export default function EnneagramDetailClient({
               </Link>
             </div>
           )}
+
+          <CrossSystemResonanceInline system="enneagram" slug={archetype.slug} />
         </div>
 
         {/* Fields grid */}

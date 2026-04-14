@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { JOURNEY_ACTS } from "@/data/herosjourney/stages";
 import { buildPageMetadata, systemOgImage } from "@/lib/site";
+import BlindSpotsSection from "@/components/shared/BlindSpotsSection";
 
 export const metadata = buildPageMetadata({
   title: "About - Hero's Journey",
@@ -117,6 +118,8 @@ export default function HerosJourneyAbout() {
               not as costumes assigned for the whole run.
             </p>
           </section>
+
+          <BlindSpotsSection system="heros-journey" />
         </div>
 
         <div className="mt-16 text-center animate-slide-up delay-500">

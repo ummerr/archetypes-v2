@@ -6,6 +6,7 @@ import { getFunction } from "@/data/mbti/functions";
 import { useTheme } from "@/components/ThemeProvider";
 import MbtiGlyph from "@/components/MbtiGlyph";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getMbtiExemplars } from "@/data/mbti/exemplars";
 
@@ -53,7 +54,10 @@ export default function MbtiDetailClient({
     >
       <div className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 mb-6 animate-slide-up flex-wrap">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 mb-6 animate-slide-up flex-wrap"
+        >
           <Link
             href="/mbti"
             className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
@@ -68,10 +72,13 @@ export default function MbtiDetailClient({
             {temperament.label}
           </span>
           <span className="text-muted/40 font-mono text-[10px]">/</span>
-          <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+          <span
+            aria-current="page"
+            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase"
+          >
             {archetype.code}
           </span>
-        </div>
+        </nav>
 
         {/* Hero */}
         <div className="mb-14 animate-slide-up delay-100">
@@ -130,6 +137,8 @@ export default function MbtiDetailClient({
               <p className="text-text-secondary text-base md:text-lg leading-relaxed font-light">
                 {archetype.description}
               </p>
+
+              <CrossSystemResonanceInline system="mbti" slug={archetype.slug} />
             </div>
           </div>
         </div>

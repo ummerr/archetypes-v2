@@ -4,6 +4,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { useTheme } from "@/components/ThemeProvider";
 import type { IndexEntry } from "@/data/allArchetypes";
+import {
+  AGE_COLOR,
+  AGE_LABEL,
+  VALENCE_COLOR,
+  VALENCE_LABEL,
+  INTROVERSION_COLOR,
+  INTROVERSION_LABEL,
+} from "@/data/indexTags";
 import ArchetypeCardVisual from "./ArchetypeCardVisual";
 
 export default function ArchetypeIndexCard({
@@ -81,10 +89,34 @@ export default function ArchetypeIndexCard({
         </div>
 
         {entry.motto && (
-          <p className="font-serif italic text-[13px] md:text-sm text-text-secondary/85 leading-snug mt-auto">
+          <p className="font-serif italic text-[13px] md:text-sm text-text-secondary/85 leading-snug">
             &ldquo;{entry.motto}&rdquo;
           </p>
         )}
+
+        <div
+          className="mt-auto pt-3 flex items-center gap-1.5"
+          aria-label={`${AGE_LABEL[entry.tags.age]} · ${VALENCE_LABEL[entry.tags.valence]} · ${INTROVERSION_LABEL[entry.tags.introversion]}`}
+        >
+          <span
+            aria-hidden
+            title={`Age: ${AGE_LABEL[entry.tags.age]}`}
+            className="w-1.5 h-1.5 rounded-full"
+            style={{ background: AGE_COLOR[entry.tags.age], opacity: light ? 0.8 : 0.7 }}
+          />
+          <span
+            aria-hidden
+            title={`Valence: ${VALENCE_LABEL[entry.tags.valence]}`}
+            className="w-1.5 h-1.5 rounded-full"
+            style={{ background: VALENCE_COLOR[entry.tags.valence], opacity: light ? 0.8 : 0.7 }}
+          />
+          <span
+            aria-hidden
+            title={`Orientation: ${INTROVERSION_LABEL[entry.tags.introversion]}`}
+            className="w-1.5 h-1.5 rounded-full"
+            style={{ background: INTROVERSION_COLOR[entry.tags.introversion], opacity: light ? 0.8 : 0.7 }}
+          />
+        </div>
       </div>
     </Link>
   );

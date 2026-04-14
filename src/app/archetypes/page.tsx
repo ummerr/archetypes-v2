@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { buildPageMetadata } from "@/lib/site";
 import IndexView from "./IndexView";
 
@@ -9,5 +10,9 @@ export const metadata = buildPageMetadata({
 });
 
 export default function ArchetypesIndexPage() {
-  return <IndexView />;
+  return (
+    <Suspense fallback={<div className="min-h-screen" />}>
+      <IndexView />
+    </Suspense>
+  );
 }

@@ -4,6 +4,7 @@ import {
   getJungianByCluster,
 } from "@/data/jungian/archetypes";
 import { buildPageMetadata, systemOgImage } from "@/lib/site";
+import BlindSpotsSection from "@/components/shared/BlindSpotsSection";
 
 export const metadata = buildPageMetadata({
   title: "About - Jungian Archetypes",
@@ -209,6 +210,8 @@ export default function JungianAbout() {
               world, not as a test.
             </p>
           </section>
+
+          <BlindSpotsSection system="jungian" />
         </div>
 
         <div className="mt-16 text-center animate-slide-up delay-500">

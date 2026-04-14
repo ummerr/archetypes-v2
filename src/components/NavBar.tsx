@@ -127,6 +127,17 @@ export default function NavBar() {
               MAPS OF THE INNER WORLD
             </span>
           </Link>
+          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <Link
+            href="/archetypes"
+            className={`font-mono text-[10px] tracking-[0.2em] uppercase transition-colors duration-200 ${
+              inArchetypes
+                ? "text-gold"
+                : "text-text-secondary hover:text-gold"
+            }`}
+          >
+            Index
+          </Link>
           {systemLabel && (
             <>
               <span className="text-muted/40 font-mono text-[10px]">/</span>
@@ -162,7 +173,7 @@ export default function NavBar() {
                 )}
                 {navItems && menuOpen && (
                   <div
-                    className="absolute left-0 top-full mt-2 min-w-[200px] rounded-md border border-gold/20 bg-bg/95 backdrop-blur-xl shadow-lg overflow-hidden"
+                    className="absolute left-0 top-full mt-2 min-w-[200px] max-w-[calc(100vw-2rem)] max-h-[70vh] overflow-y-auto rounded-md border border-gold/20 bg-bg/95 backdrop-blur-xl shadow-lg"
                   >
                     <ul className="py-1">
                       {navItems.map((item) => {
@@ -190,16 +201,6 @@ export default function NavBar() {
           )}
         </div>
         <div className="flex items-center gap-4">
-          <Link
-            href="/archetypes"
-            className={`font-mono text-[10px] tracking-[0.2em] uppercase transition-colors duration-200 ${
-              inArchetypes
-                ? "text-gold"
-                : "text-text-secondary hover:text-gold"
-            }`}
-          >
-            Index
-          </Link>
           <button
             onClick={toggle}
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}

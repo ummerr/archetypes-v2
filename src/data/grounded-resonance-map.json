@@ -1,0 +1,375 @@
+{
+  "$schema": "grounded-resonance-map",
+  "version": 1,
+  "generatedBy": "research/11-final-synthesis.json",
+  "stance": "weak-hermeneutic",
+  "stanceNote": "A comparative hermeneutic atlas. Six vocabularies side-by-side - not an empirical map of a universal psyche. Convergence is partly shared intellectual descent, not independent corroboration.",
+
+  "confidenceTiers": {
+    "canonical": "Author-cited within the system's published primary literature.",
+    "strong": "Credentialed secondary scholarship (Nichols, Pollack, Vogler-on-Campbell, etc.).",
+    "moderate": "Defensible by structural similarity + hermeneutic convergence, but not author-endorsed.",
+    "speculative": "Site-original inference.",
+    "contested": "Mapping is actively disputed in the scholarship."
+  },
+
+  "clusters": [
+    {
+      "id": "sovereign",
+      "theme": "The Sovereign - Order, Authority, Centering",
+      "description": "The centering energy that orders the field, blesses, and holds the boundary. Not domination but the still point that makes a kingdom possible.",
+      "editorialNote": "Mission 8's tightest triangle (King/Ruler/Emperor). Challenger and Reformer removed: Type 8 is autonomy-defense; Type 1's authority is rule-derived.",
+      "adversarialNote": "Family-resemblance, not convergence. Four different theories of what authority IS.",
+      "archetypes": [
+        { "system": "kwml", "slug": "the-king", "strength": "primary", "confidence": "canonical", "note": "Fullness - the blessing centered self", "primarySourceCitation": "Moore & Gillette, King Warrior Magician Lover (1990), ch. 3–4", "scholarlyCitation": "Edinger, Ego and Archetype (1972)", "dissent": "Moore restricted KWML to mature masculine; gender-neutral use erases stated scope.", "editorialNote": "The King is centered blessing, not dominating power." },
+        { "system": "jungian", "slug": "ruler", "strength": "primary", "confidence": "canonical", "note": "Self cluster - claim dominion, take responsibility", "primarySourceCitation": "Pearson, Awakening the Heroes Within (1991)", "adversarialNote": "Pre-capture Pearson (1986) did not include Ruler; this is 1991-expansion material." },
+        { "system": "tarot", "slug": "the-emperor", "strength": "primary", "confidence": "strong", "note": "IV - structure, law, the enthroned boundary", "primarySourceCitation": "Waite, Pictorial Key to the Tarot (1910)", "scholarlyCitation": "Nichols, Jung and Tarot (1980)" },
+        { "system": "mbti", "slug": "entj", "strength": "secondary", "confidence": "moderate", "note": "Te-dom commander - systems-level authority", "scholarlyCitation": "Jung, Psychological Types (1921); Myers, Gifts Differing (1980)", "dissent": "MBTI psychometric status contested." },
+        { "system": "mbti", "slug": "estj", "strength": "secondary", "confidence": "moderate", "note": "Te/Si executive - enforces the working order", "adversarialNote": "Stronger fit to Threshold-Guardian." }
+      ]
+    },
+    {
+      "id": "warrior",
+      "theme": "The Warrior - Purposeful Action, Discipline, Courage",
+      "description": "Directed force in service of a cause larger than self. The disciplined edge that cuts what must be cut and protects what must be protected.",
+      "editorialNote": "Jungian/Pearson Hero moved to Boy-Hero primary - pre-initiation striving, not post-initiation service.",
+      "adversarialNote": "KWML Warrior is MAN-level; Pearson's Hero is EGO-level. Different sides of the initiation line.",
+      "archetypes": [
+        { "system": "kwml", "slug": "the-warrior", "strength": "primary", "confidence": "canonical", "note": "Fullness - disciplined, transpersonally-committed action", "primarySourceCitation": "Moore & Gillette (1990), ch. 5" },
+        { "system": "heros-journey", "slug": "hero", "strength": "primary", "confidence": "strong", "note": "The central protagonist who crosses the threshold", "primarySourceCitation": "Campbell, Hero with a Thousand Faces (1949)", "scholarlyCitation": "Vogler, The Writer's Journey (2007) - Hero as flexible function, not fixed identity", "dissent": "Murdock rejects the masculine-coded arc; Campbell's Jungianism contested (Segal, Rensma, IAJS)." },
+        { "system": "tarot", "slug": "the-chariot", "strength": "primary", "confidence": "strong", "note": "VII - directed momentum, will harnessing opposing forces", "primarySourceCitation": "Waite (1910)", "scholarlyCitation": "Nichols (1980)" },
+        { "system": "enneagram", "slug": "challenger", "strength": "secondary", "confidence": "moderate", "note": "Type 8 - confronts directly, breaks down resistance", "primarySourceCitation": "Riso & Hudson (1996)", "dissent": "Type 8's core is autonomy-defense (Horney against), not transpersonal commitment. Better fit: Rebel." },
+        { "system": "mbti", "slug": "estp", "strength": "secondary", "confidence": "moderate", "note": "Se-dom operator - decisive action under fire" }
+      ]
+    },
+    {
+      "id": "sage-magician",
+      "theme": "The Sage-Magician - Truth-Seeking and Transformation",
+      "description": "The knower-transformer. Sage seeks clarity for its own sake; Magician bends pattern to bring change. Same territory, two stances.",
+      "editorialNote": "MERGED. Sage and Magician were near-duplicates in feature space with mutually primary members. Presented as two lenses on shared territory.",
+      "adversarialNote": "Tension is between truth-as-freedom (Sage) and truth-as-leverage (Magician). Named, not collapsed.",
+      "archetypes": [
+        { "system": "kwml", "slug": "the-magician", "strength": "primary", "confidence": "canonical", "note": "Fullness - transformative ritual elder and seer", "primarySourceCitation": "Moore & Gillette (1990), ch. 6; Moore, The Magician Within (1993)" },
+        { "system": "jungian", "slug": "sage", "strength": "primary", "confidence": "canonical", "note": "Self cluster - truth will set you free", "primarySourceCitation": "Pearson (1991)" },
+        { "system": "jungian", "slug": "magician", "strength": "primary", "confidence": "canonical", "note": "Self cluster - make dreams real through inner power", "primarySourceCitation": "Pearson (1991)" },
+        { "system": "tarot", "slug": "the-magician", "strength": "primary", "confidence": "strong", "note": "I - directed will, the four tools in hand", "primarySourceCitation": "Waite (1910)", "scholarlyCitation": "Nichols (1980); Pollack, Seventy-Eight Degrees of Wisdom (1980)" },
+        { "system": "tarot", "slug": "the-high-priestess", "strength": "primary", "confidence": "strong", "note": "II - inner knowing, intuitive gnosis (Sage lens)", "scholarlyCitation": "Nichols (1980); Pollack (1980)", "dissent": "Pollack, a trans author, later complicated her own gendered Jungian framing." },
+        { "system": "tarot", "slug": "the-hermit", "strength": "primary", "confidence": "strong", "note": "IX - wisdom from solitude (both lenses)", "scholarlyCitation": "Nichols (1980)" },
+        { "system": "enneagram", "slug": "investigator", "strength": "primary", "confidence": "strong", "note": "Type 5 - mastery through knowing, the hidden observer", "primarySourceCitation": "Riso & Hudson, Wisdom of the Enneagram (1999)" },
+        { "system": "mbti", "slug": "intj", "strength": "secondary", "confidence": "moderate", "note": "Ni-dom - long-sight pattern-holder" },
+        { "system": "mbti", "slug": "intp", "strength": "secondary", "confidence": "moderate", "note": "Ti-dom - theorist of underlying structure" }
+      ]
+    },
+    {
+      "id": "lover",
+      "theme": "The Lover - Connection, Passion, Embodied Feeling",
+      "description": "The energy of communion - sensual, empathic, feelingful. Four different theories of what love IS, held together as family-resemblance.",
+      "editorialNote": "Each entry names its specific theory: Pearson's Soul-cluster intimacy; Tarot's conscious CHOICE; Type 4's shame-identity; MBTI's sensory-embodiment.",
+      "adversarialNote": "Lover anchors the fourth affect-center (desire/eros) that the Enneagram's three leave homeless.",
+      "archetypes": [
+        { "system": "kwml", "slug": "the-lover", "strength": "primary", "confidence": "canonical", "note": "Fullness - embodied empathy, the saint of sensuality", "primarySourceCitation": "Moore & Gillette (1990), ch. 7; Moore, The Lover Within (1995)" },
+        { "system": "jungian", "slug": "lover", "strength": "primary", "confidence": "canonical", "note": "Soul cluster - intimacy, devotion, aesthetic bliss", "primarySourceCitation": "Pearson (1991)" },
+        { "system": "tarot", "slug": "the-lovers", "strength": "primary", "confidence": "strong", "note": "VI - conscious CHOICE of value; alignment, not infatuation", "primarySourceCitation": "Waite (1910)", "scholarlyCitation": "Pollack (1980)", "editorialNote": "Common 'union' reading leans on name, not function." },
+        { "system": "enneagram", "slug": "individualist", "strength": "primary", "confidence": "moderate", "note": "Type 4 - shame-based identity-longing; depth-of-feeling as self-definition", "primarySourceCitation": "Riso & Hudson (1996)", "dissent": "Type 4's core is shame, not eros." },
+        { "system": "enneagram", "slug": "helper", "strength": "secondary", "confidence": "moderate", "note": "Type 2 - relational warmth, gives to be loved" },
+        { "system": "mbti", "slug": "enfp", "strength": "secondary", "confidence": "moderate", "note": "Fi/Ne - enthusiastic romantic" },
+        { "system": "mbti", "slug": "esfp", "strength": "secondary", "confidence": "moderate", "note": "Se/Fi - sensual present-moment connector" },
+        { "system": "mbti", "slug": "isfp", "strength": "secondary", "confidence": "moderate", "note": "Fi-dom - the poet of felt experience" }
+      ]
+    },
+    {
+      "id": "innocent",
+      "theme": "The Innocent - Pre-Initiation and Earned",
+      "description": "Every individuation model names TWO innocences: the pre-initiation openness (Fool, Divine Child) and the post-initiation radiance (Sun, Jester-at-rest). Not the same.",
+      "editorialNote": "Added Sun (XIX) and ISFJ per Mission 8. Two-part structure now explicit.",
+      "adversarialNote": "Previous version overweighted pre-initiation and ignored the return to innocence.",
+      "archetypes": [
+        { "system": "kwml", "slug": "the-divine-child", "strength": "primary", "confidence": "canonical", "note": "Boy in fullness (King family) - radiant wholeness before corruption", "primarySourceCitation": "Moore & Gillette (1990); The King Within (1992)" },
+        { "system": "jungian", "slug": "innocent", "strength": "primary", "confidence": "canonical", "note": "Ego cluster - faith, simplicity, the trusting beginner", "primarySourceCitation": "Pearson (1991)" },
+        { "system": "tarot", "slug": "the-fool", "strength": "primary", "confidence": "strong", "note": "0 - PRE-initiation unconditioned potential", "primarySourceCitation": "Waite (1910)", "scholarlyCitation": "Nichols (1980); Pollack (1980) on the Fool's Journey" },
+        { "system": "tarot", "slug": "the-sun", "strength": "primary", "confidence": "strong", "note": "XIX - EARNED innocence; post-individuation radiant wholeness", "scholarlyCitation": "Nichols (1980)" },
+        { "system": "enneagram", "slug": "peacemaker", "strength": "secondary", "confidence": "moderate", "note": "Type 9 - merging harmony, the unfallen garden" },
+        { "system": "mbti", "slug": "isfj", "strength": "secondary", "confidence": "moderate", "note": "Si/Fe - trust + belonging; Mission 8 feature-vector match" },
+        { "system": "mbti", "slug": "infp", "strength": "secondary", "confidence": "moderate", "note": "Fi-dom idealist - keeper of untouched values" },
+        { "system": "mbti", "slug": "isfp", "strength": "secondary", "confidence": "moderate", "note": "Fi/Se - quiet purity, guileless feeling" }
+      ]
+    },
+    {
+      "id": "explorer",
+      "theme": "The Explorer - Freedom, Autonomy, Self-Discovery",
+      "description": "The restless drive toward horizon. Refuses the small room, tests the world, builds selfhood through venturing.",
+      "editorialNote": "Enthusiast demoted to secondary: Pearson's Explorer is individuation-quest; Type 7 is fear-avoidance escape. Not the same.",
+      "adversarialNote": "Explorer and Enthusiast code similarly in feature space but come from opposite origins.",
+      "archetypes": [
+        { "system": "jungian", "slug": "explorer", "strength": "primary", "confidence": "canonical", "note": "Soul cluster - find the way, refuse captivity", "primarySourceCitation": "Pearson (1991)" },
+        { "system": "heros-journey", "slug": "hero", "strength": "secondary", "confidence": "strong", "note": "The call answered - leaving the ordinary world", "primarySourceCitation": "Campbell (1949), Departure phase" },
+        { "system": "tarot", "slug": "the-fool", "strength": "secondary", "confidence": "strong", "note": "0 - the leap into the unknown" },
+        { "system": "enneagram", "slug": "enthusiast", "strength": "secondary", "confidence": "moderate", "note": "Type 7 - appetite as ESCAPE from limitation", "primarySourceCitation": "Riso & Hudson (1996)", "dissent": "Riso: Type 7's core is fear-of-limitation, not freedom-toward-self." },
+        { "system": "enneagram", "slug": "investigator", "strength": "secondary", "confidence": "moderate", "note": "Type 5 - intellectual exploration" },
+        { "system": "heros-journey", "slug": "herald", "strength": "secondary", "confidence": "moderate", "note": "The call itself - echo in this cluster" },
+        { "system": "mbti", "slug": "entp", "strength": "secondary", "confidence": "moderate", "note": "Ne-dom - chases every unopened door" },
+        { "system": "mbti", "slug": "enfp", "strength": "secondary", "confidence": "moderate", "note": "Ne/Fi - possibility-seeker with heart" },
+        { "system": "mbti", "slug": "intp", "strength": "secondary", "confidence": "moderate", "note": "Ne/Ti - speculative cartographer" }
+      ]
+    },
+    {
+      "id": "rebel",
+      "theme": "The Rebel - Disruption, Revolution, Outrageous Honesty",
+      "description": "The one who breaks the corrupted pattern. AGENTS of breaking (Rebel, Challenger, Trickster) and EVENTS of breaking (Tower) co-present here.",
+      "editorialNote": "Agent-vs-event distinction named. Tower is event-kin; Rebel is agent.",
+      "adversarialNote": "Four incompatible theories of what 'breaking' means. Held as family-resemblance.",
+      "archetypes": [
+        { "system": "jungian", "slug": "rebel", "strength": "primary", "confidence": "canonical", "note": "Soul cluster (Outlaw/Destroyer) - revolutionary energy", "primarySourceCitation": "Pearson (1991)", "editorialNote": "Renamed Destroyer→Outlaw in the 2001 brand-wheel (post-capture)." },
+        { "system": "enneagram", "slug": "challenger", "strength": "primary", "confidence": "strong", "note": "Type 8 - confronts authority, autonomy-defense as protective-rebellion", "primarySourceCitation": "Riso & Hudson (1996)" },
+        { "system": "tarot", "slug": "the-tower", "strength": "primary", "confidence": "strong", "note": "XVI - EVENT-archetype: liberating collapse", "scholarlyCitation": "Pollack (1980)", "adversarialNote": "Moment-of-collapse, not agent-of-collapse." },
+        { "system": "heros-journey", "slug": "trickster", "strength": "secondary", "confidence": "strong", "note": "Disrupts the old order - dramatic FUNCTION, not fixed identity", "primarySourceCitation": "Vogler (2007)" },
+        { "system": "tarot", "slug": "the-devil", "strength": "secondary", "confidence": "moderate", "note": "XV - the chains that must be seen to be broken" },
+        { "system": "mbti", "slug": "entp", "strength": "secondary", "confidence": "moderate", "note": "Ne/Ti - the provocateur" },
+        { "system": "mbti", "slug": "estp", "strength": "secondary", "confidence": "moderate", "note": "Se/Ti - the rule-breaker at the edge" }
+      ]
+    },
+    {
+      "id": "caregiver",
+      "theme": "The Caregiver - Nurturance, Protection, Generosity",
+      "description": "The one who holds, feeds, protects. Service as love made visible. The most gender-coded cluster in the corpus - Bolen's Goddesses stand as counter-canon.",
+      "editorialNote": "Gender-coding named inline. Counter-canon (Bolen 1984, Estés 1992) linked as first-class parallel. Ally demoted to weakest tertiary per Vogler's function-not-energy distinction.",
+      "adversarialNote": "Refusing to name the gendering would repeat the erasure Murdock, Bolen, and Estés identified.",
+      "archetypes": [
+        { "system": "jungian", "slug": "caregiver", "strength": "primary", "confidence": "canonical", "note": "Ego cluster - care for others, nurture against harm", "primarySourceCitation": "Pearson (1991)", "dissent": "Bolen (1984): Caregiver elides Demeter (loss-in-motherhood), Hera (partnership), Hestia (hearth-as-selfhood)." },
+        { "system": "enneagram", "slug": "helper", "strength": "primary", "confidence": "canonical", "note": "Type 2 - gives to be loved", "primarySourceCitation": "Riso & Hudson (1996)" },
+        { "system": "tarot", "slug": "the-empress", "strength": "secondary", "confidence": "strong", "note": "III - generative embodiment (also primary in Creator)", "scholarlyCitation": "Nichols (1980)" },
+        { "system": "mbti", "slug": "esfj", "strength": "secondary", "confidence": "moderate", "note": "Fe-dom provider" },
+        { "system": "mbti", "slug": "isfj", "strength": "secondary", "confidence": "moderate", "note": "Si/Fe guardian" },
+        { "system": "mbti", "slug": "enfj", "strength": "secondary", "confidence": "moderate", "note": "Fe/Ni - harmonizer" },
+        { "system": "heros-journey", "slug": "ally", "strength": "secondary", "confidence": "speculative", "note": "Loyal support - but Ally is relational FUNCTION, not nurturant energy", "primarySourceCitation": "Vogler (2007)", "dissent": "Vogler: role a character wears, not type of energy. Weak fit." }
+      ]
+    },
+    {
+      "id": "jester",
+      "theme": "The Jester - Play, Lightness, Sacred Irreverence",
+      "description": "The holy fool. Punctures pretension with humor, reveals truth sideways, teaches that joy is also serious. Three theories of play held here: Jester (integration), Trickster (function), Fool (pre-initiation).",
+      "editorialNote": "Enthusiast demoted to secondary (double-primary with Explorer was too much).",
+      "archetypes": [
+        { "system": "jungian", "slug": "jester", "strength": "primary", "confidence": "canonical", "note": "Self cluster - played-through-the-fire lightness", "primarySourceCitation": "Pearson (1991)" },
+        { "system": "heros-journey", "slug": "trickster", "strength": "primary", "confidence": "strong", "note": "Sacred fool; boundary-crossing dramatic function", "primarySourceCitation": "Vogler (2007)", "scholarlyCitation": "Hyde, Trickster Makes This World (1998)" },
+        { "system": "tarot", "slug": "the-fool", "strength": "secondary", "confidence": "strong", "note": "0 - PRE-initiation unconditioned play", "editorialNote": "Fool and Jester are two ends of the innocence arc meeting as play." },
+        { "system": "enneagram", "slug": "enthusiast", "strength": "secondary", "confidence": "moderate", "note": "Type 7 - reframing-as-joy; fear-avoidance as lightness", "dissent": "Riso: Type 7's joy is partly defense." },
+        { "system": "mbti", "slug": "esfp", "strength": "secondary", "confidence": "moderate", "note": "Se/Fi - the stage-born entertainer" },
+        { "system": "mbti", "slug": "entp", "strength": "secondary", "confidence": "moderate", "note": "Ne/Ti - the witty provocateur" },
+        { "system": "mbti", "slug": "enfp", "strength": "secondary", "confidence": "moderate", "note": "Ne/Fi - the irrepressible enthusiast" }
+      ]
+    },
+    {
+      "id": "creator",
+      "theme": "The Creator - Imagination, Vision, Enduring Form",
+      "description": "The maker who brings something into being. Vision crystallized into form.",
+      "editorialNote": "EMPRESS added as primary - Mission 10 'clearest mapping error' corrected. Her coreTheme is generative embodiment: maker, not only mother.",
+      "archetypes": [
+        { "system": "jungian", "slug": "creator", "strength": "primary", "confidence": "canonical", "note": "Soul cluster - if you can imagine it, you can create it", "primarySourceCitation": "Pearson (1991)" },
+        { "system": "tarot", "slug": "the-empress", "strength": "primary", "confidence": "strong", "note": "III - GENERATIVE embodiment; maker as much as mother", "scholarlyCitation": "Nichols (1980); Pollack (1980)" },
+        { "system": "enneagram", "slug": "individualist", "strength": "primary", "confidence": "strong", "note": "Type 4 - unique expression, identity through making", "primarySourceCitation": "Riso & Hudson (1996)" },
+        { "system": "tarot", "slug": "the-magician", "strength": "secondary", "confidence": "strong", "note": "I - will shaping matter" },
+        { "system": "tarot", "slug": "the-star", "strength": "secondary", "confidence": "strong", "note": "XVII - creative faith, hope poured into form" },
+        { "system": "mbti", "slug": "infj", "strength": "secondary", "confidence": "moderate", "note": "Ni-dom visionary" },
+        { "system": "mbti", "slug": "infp", "strength": "secondary", "confidence": "moderate", "note": "Fi/Ne - interior world made into art" },
+        { "system": "mbti", "slug": "enfp", "strength": "secondary", "confidence": "moderate", "note": "Ne/Fi - generative enthusiast" }
+      ]
+    },
+    {
+      "id": "everyman",
+      "theme": "The Everyman - Belonging, Solidarity, Ordinariness",
+      "description": "The energy of the regular person. Refuses elevation, prizes fit with the group, honors the ordinary decencies.",
+      "editorialNote": "MBTI Sentinels (SJ) carry Keirsey's concrete-tradition theory under their own name; Pearson's Orphan/Everyman is Ego-cluster belonging. Partial overlap acknowledged.",
+      "archetypes": [
+        { "system": "jungian", "slug": "everyman", "strength": "primary", "confidence": "canonical", "note": "Ego cluster - all people are created equal", "primarySourceCitation": "Pearson (1991)" },
+        { "system": "enneagram", "slug": "loyalist", "strength": "primary", "confidence": "strong", "note": "Type 6 - bonds of trust, fidelity to the group", "primarySourceCitation": "Riso & Hudson (1996)" },
+        { "system": "enneagram", "slug": "peacemaker", "strength": "secondary", "confidence": "moderate", "note": "Type 9 - merges with the group" },
+        { "system": "mbti", "slug": "isfj", "strength": "secondary", "confidence": "moderate", "note": "Si/Fe - quiet backbone of community", "dissent": "Sentinel Si-dom tradition-keeper is its own theory." },
+        { "system": "mbti", "slug": "esfj", "strength": "secondary", "confidence": "moderate", "note": "Fe/Si - the host who remembers everyone's name" },
+        { "system": "mbti", "slug": "istj", "strength": "secondary", "confidence": "moderate", "note": "Si-dom - institutional-memory function", "dissent": "ISTJ is tradition-keeper; mapping to Everyman loses institutional-memory." }
+      ]
+    },
+    {
+      "id": "antagonists",
+      "theme": "The Antagonists - Archetypes Whose Primary Function is Opposition",
+      "description": "Narrow replacement for the old Shadow cluster: only figures whose core function is to oppose, obstruct, or bind. Shadow-as-TYPOLOGY (bipolar poles, unipolar distortion, reversal, stack-inversion) lives on /about/shadow-structures.",
+      "editorialNote": "Old Shadow cluster was a category error - mixing KWML's bipolar shadow STRUCTURE with Hero's-Journey Shadow as character-role with Tarot Devil as event-symbol with Enneagram disintegration as transit-state. DISSOLVED.",
+      "adversarialNote": "Most severe Mission 10 critique; conceded in full.",
+      "archetypes": [
+        { "system": "heros-journey", "slug": "shadow", "strength": "primary", "confidence": "canonical", "note": "The antagonist mask - the villain who mirrors the hero", "primarySourceCitation": "Vogler (2007); Campbell (1949)" },
+        { "system": "tarot", "slug": "the-devil", "strength": "primary", "confidence": "strong", "note": "XV - bound shadow; event-symbol of bondage", "scholarlyCitation": "Nichols (1980); Pollack (1980)" },
+        { "system": "tarot", "slug": "the-moon", "strength": "secondary", "confidence": "moderate", "note": "XVIII - dreaming unconscious; obstacle of uncertainty" }
+      ]
+    },
+    {
+      "id": "shapeshifter",
+      "theme": "The Shapeshifter - Ambiguity, Transformation, Anima/Animus",
+      "description": "The figure whose allegiance and form keep shifting. Jung/Campbell's anima/animus theory is critiqued as heterosexist (Hopcke 1989); framing retained with caveat surfaced.",
+      "editorialNote": "Added Lover (anima-paradigm in KWML and Pearson), added Wheel of Fortune. Demoted Achiever - Type 3 is image-adaptation, not liminal ambiguity.",
+      "archetypes": [
+        { "system": "heros-journey", "slug": "shapeshifter", "strength": "primary", "confidence": "canonical", "note": "Anima/animus projection - ally or adversary, unclear", "primarySourceCitation": "Vogler (2007); Campbell (1949)", "dissent": "Hopcke, Jung Jungians and Homosexuality (1989): anima/animus framing is heterosexist." },
+        { "system": "tarot", "slug": "the-moon", "strength": "primary", "confidence": "strong", "note": "XVIII - illusion, shifting form, dreamlike uncertainty", "scholarlyCitation": "Nichols (1980)" },
+        { "system": "tarot", "slug": "wheel-of-fortune", "strength": "secondary", "confidence": "moderate", "note": "X - fortune as shape-shifter of circumstance" },
+        { "system": "jungian", "slug": "lover", "strength": "secondary", "confidence": "moderate", "note": "Anima-paradigm in Jungian-Pearson; Hopcke caveat applies" },
+        { "system": "mbti", "slug": "enfp", "strength": "secondary", "confidence": "speculative", "note": "Ne/Fi - the fluid, context-adapting spirit" },
+        { "system": "mbti", "slug": "entp", "strength": "secondary", "confidence": "speculative", "note": "Ne/Ti - devil's-advocate shapeshifter of argument" }
+      ]
+    },
+    {
+      "id": "threshold-guardian",
+      "theme": "The Threshold Guardian - Tests, Gatekeeping, Rule-Enforcement",
+      "description": "The one who bars the gate - not to defeat the seeker but to test readiness. Rule-as-authority rather than authority-from-center.",
+      "editorialNote": "Added Justice (XI) and Reformer (Type 1). Both were routed elsewhere without noticing that rule-enforcement is threshold-function.",
+      "archetypes": [
+        { "system": "heros-journey", "slug": "threshold-guardian", "strength": "primary", "confidence": "canonical", "note": "Blocks the uncommitted, initiates the ready", "primarySourceCitation": "Vogler (2007); Campbell (1949)" },
+        { "system": "enneagram", "slug": "reformer", "strength": "primary", "confidence": "strong", "note": "Type 1 - moral authority DERIVED from compliance with a rule; gatekeeper-of-standards", "primarySourceCitation": "Riso & Hudson (1996)", "adversarialNote": "Horney-toward-the-rule, not toward-the-throne." },
+        { "system": "tarot", "slug": "justice", "strength": "primary", "confidence": "strong", "note": "XI - weighed boundary, the edge that cuts clean", "scholarlyCitation": "Pollack (1980)" },
+        { "system": "tarot", "slug": "strength", "strength": "secondary", "confidence": "moderate", "note": "VIII - taming the inner beast" },
+        { "system": "kwml", "slug": "the-hero", "strength": "secondary", "confidence": "moderate", "note": "Boy-Warrior - must be overcome for maturity" },
+        { "system": "enneagram", "slug": "loyalist", "strength": "secondary", "confidence": "moderate", "note": "Type 6 - the wary gatekeeper" },
+        { "system": "mbti", "slug": "istj", "strength": "secondary", "confidence": "moderate", "note": "Si/Te - rule-keeper at the gate" },
+        { "system": "mbti", "slug": "estj", "strength": "secondary", "confidence": "moderate", "note": "Te/Si - enforcer of standards" }
+      ]
+    },
+    {
+      "id": "herald",
+      "theme": "The Herald - The Call, Disruption of Homeostasis",
+      "description": "The messenger whose arrival shatters the ordinary. The call can be refused but never unheard.",
+      "editorialNote": "Added Tower (most violent herald in the deck). Campbell-derived frame; see /about/heros-journey for contested-Jungianism caveat.",
+      "archetypes": [
+        { "system": "heros-journey", "slug": "herald", "strength": "primary", "confidence": "canonical", "note": "Initiates the call, announces the change", "primarySourceCitation": "Vogler (2007); Campbell (1949)", "dissent": "Campbell's Jungian credentials contested (Segal, Rensma, IAJS)." },
+        { "system": "tarot", "slug": "judgement", "strength": "primary", "confidence": "strong", "note": "XX - the inner calling (dual-home with Death-Rebirth)", "scholarlyCitation": "Nichols (1980)" },
+        { "system": "tarot", "slug": "the-tower", "strength": "secondary", "confidence": "strong", "note": "XVI - violent herald; the call that cannot be refused" },
+        { "system": "tarot", "slug": "wheel-of-fortune", "strength": "secondary", "confidence": "moderate", "note": "X - change arrives, the wheel turns" },
+        { "system": "enneagram", "slug": "enthusiast", "strength": "secondary", "confidence": "speculative", "note": "Type 7 - answers every call immediately" },
+        { "system": "mbti", "slug": "enfj", "strength": "secondary", "confidence": "moderate", "note": "Fe/Ni - summons others" },
+        { "system": "mbti", "slug": "enfp", "strength": "secondary", "confidence": "moderate", "note": "Ne/Fi - enthusiastic awakener" }
+      ]
+    },
+    {
+      "id": "death-rebirth",
+      "theme": "Death & Rebirth - Necessary Ending, Transformation",
+      "description": "The passage that requires loss. KWML's death-rebirth is initiatory-developmental (boy→man); Tarot's Death is broadly transformational. Different theories, co-presented.",
+      "editorialNote": "Added Judgement (XX - coreTheme literally 'vocation, reckoning, rebirth'). Description names the KWML-developmental vs Tarot-general distinction.",
+      "archetypes": [
+        { "system": "kwml", "slug": "the-divine-child", "strength": "primary", "confidence": "canonical", "note": "INITIATION: the boy must die for the man to emerge", "primarySourceCitation": "Moore & Gillette (1990)" },
+        { "system": "kwml", "slug": "the-hero", "strength": "primary", "confidence": "canonical", "note": "INITIATION: striving ego surrenders to the Warrior" },
+        { "system": "kwml", "slug": "the-precocious-child", "strength": "primary", "confidence": "canonical", "note": "INITIATION: clever boy yields to the wise Magician" },
+        { "system": "kwml", "slug": "the-oedipal-child", "strength": "primary", "confidence": "canonical", "note": "INITIATION: hungry boy becomes the generous Lover" },
+        { "system": "tarot", "slug": "death", "strength": "primary", "confidence": "strong", "note": "XIII - GENERAL transformation: necessary ending", "scholarlyCitation": "Nichols (1980); Pollack (1980)" },
+        { "system": "tarot", "slug": "judgement", "strength": "primary", "confidence": "strong", "note": "XX - vocation, reckoning, rebirth", "scholarlyCitation": "Pollack (1980)" },
+        { "system": "tarot", "slug": "the-tower", "strength": "primary", "confidence": "strong", "note": "XVI - sudden structural collapse, forced rebirth" },
+        { "system": "tarot", "slug": "the-hanged-man", "strength": "secondary", "confidence": "strong", "note": "XII - willing surrender, world inverted" },
+        { "system": "enneagram", "slug": "individualist", "strength": "secondary", "confidence": "speculative", "note": "Integration arrow (to 1) - artist yields to discipline", "dissent": "Naranjo later disavowed the arrows. Associative edge." },
+        { "system": "mbti", "slug": "infj", "strength": "secondary", "confidence": "speculative", "note": "Ni-attunement to cycles - ASSOCIATIVE, not structural" },
+        { "system": "mbti", "slug": "intj", "strength": "secondary", "confidence": "speculative", "note": "Ni/Te - strategist of necessary demolition - associative" }
+      ]
+    },
+    {
+      "id": "integration",
+      "theme": "Integration & Wholeness - The Completed Self",
+      "description": "Opposites held together. Four systems, four different end-states (Pearson wholeness; Campbell return-with-boon; Riso Level 9; Tarot World). Axis continuous, destinations not identical.",
+      "editorialNote": "Added Temperance (LITERALLY named for alchemical integration), Emperor (integrated sovereign), Hierophant (integrated tradition-bearer).",
+      "archetypes": [
+        { "system": "kwml", "slug": "the-king", "strength": "primary", "confidence": "canonical", "note": "Quaternio in balance - King as integrating center", "primarySourceCitation": "Moore & Gillette (1990)" },
+        { "system": "kwml", "slug": "the-warrior", "strength": "primary", "confidence": "canonical", "note": "Warrior energy under sovereign service" },
+        { "system": "kwml", "slug": "the-magician", "strength": "primary", "confidence": "canonical", "note": "Magician energy under sovereign service" },
+        { "system": "kwml", "slug": "the-lover", "strength": "primary", "confidence": "canonical", "note": "Lover energy under sovereign service" },
+        { "system": "tarot", "slug": "the-world", "strength": "primary", "confidence": "strong", "note": "XXI - completion, the dance of the four in unity", "scholarlyCitation": "Nichols (1980); Pollack (1980)" },
+        { "system": "tarot", "slug": "temperance", "strength": "primary", "confidence": "strong", "note": "XIV - alchemical integration; LITERALLY named for this function", "scholarlyCitation": "Nichols (1980)" },
+        { "system": "tarot", "slug": "the-sun", "strength": "primary", "confidence": "strong", "note": "XIX - earned-innocence as integration (dual-home with Innocent)" },
+        { "system": "tarot", "slug": "the-emperor", "strength": "secondary", "confidence": "moderate", "note": "IV - integrated sovereign-at-the-boundary (third-phase reading)" },
+        { "system": "tarot", "slug": "the-hierophant", "strength": "secondary", "confidence": "moderate", "note": "V - integrated tradition-bearer" },
+        { "system": "jungian", "slug": "ruler", "strength": "secondary", "confidence": "strong", "note": "Self cluster - whole ordered around a mature center" }
+      ]
+    },
+    {
+      "id": "teacher",
+      "theme": "The Teacher - Transmission, Doctrine, Inherited Wisdom",
+      "description": "The lineage-bearer. Hands forward ritual, doctrine, method. Wisdom as tradition rather than as discovery.",
+      "editorialNote": "Retained as distinct from Sage-Magician because transmission is a specific function. Overlap named; merge declined with reason.",
+      "archetypes": [
+        { "system": "heros-journey", "slug": "mentor", "strength": "primary", "confidence": "canonical", "note": "Transmits the method, gives the talisman", "primarySourceCitation": "Vogler (2007); Campbell (1949) on the Wise Old Man" },
+        { "system": "tarot", "slug": "the-hierophant", "strength": "primary", "confidence": "strong", "note": "V - the true teacher, the inherited rite", "scholarlyCitation": "Nichols (1980); Pollack (1980)" },
+        { "system": "jungian", "slug": "sage", "strength": "secondary", "confidence": "moderate", "note": "Self cluster - wisdom shaped into doctrine" },
+        { "system": "enneagram", "slug": "reformer", "strength": "secondary", "confidence": "moderate", "note": "Type 1 - moral authority; dual-home with Threshold-Guardian" },
+        { "system": "mbti", "slug": "enfj", "strength": "secondary", "confidence": "moderate", "note": "Fe/Ni - natural pedagogue" },
+        { "system": "mbti", "slug": "estj", "strength": "secondary", "confidence": "moderate", "note": "Te/Si - institutional teacher" }
+      ]
+    },
+    {
+      "id": "boy-hero",
+      "theme": "The Boy-Hero - Proving, Striving, Pre-Initiation Ambition",
+      "description": "The un-initiated striver. Ambition without yet the ballast of maturity. The one cluster that honors developmental-stage as a structural axis.",
+      "editorialNote": "Jungian Hero and Achiever promoted to primary (both moved from Warrior). ENTJ removed (triple-assignment).",
+      "archetypes": [
+        { "system": "kwml", "slug": "the-hero", "strength": "primary", "confidence": "canonical", "note": "Boy in fullness (Warrior family) - striving before initiation", "primarySourceCitation": "Moore & Gillette (1990)" },
+        { "system": "jungian", "slug": "hero", "strength": "primary", "confidence": "canonical", "note": "Ego cluster - the young proving self before the return", "primarySourceCitation": "Pearson (1991)" },
+        { "system": "enneagram", "slug": "achiever", "strength": "primary", "confidence": "strong", "note": "Type 3 - shame-driven image-performance; proves worth through doing", "primarySourceCitation": "Riso & Hudson (1996)" },
+        { "system": "kwml", "slug": "the-precocious-child", "strength": "secondary", "confidence": "canonical", "note": "Boy in fullness (Magician family) - clever, untempered knower" },
+        { "system": "heros-journey", "slug": "hero", "strength": "secondary", "confidence": "strong", "note": "Before the ordeal - untested form" },
+        { "system": "tarot", "slug": "the-chariot", "strength": "secondary", "confidence": "strong", "note": "VII - young will, untested drive" },
+        { "system": "mbti", "slug": "estp", "strength": "secondary", "confidence": "moderate", "note": "Se/Ti - ambitious young operator" }
+      ]
+    },
+    {
+      "id": "liminal-territory",
+      "theme": "The Liminal Passage - The Between-Place Where Form Dissolves",
+      "description": "A structural region every system names but none owns. Between departure and return; where the ego cannot recognize itself; where form dissolves and reforms.",
+      "editorialNote": "NEW. Mission 8 feature-space finding + Mission 9 meta-pattern. A fourth pole alongside departure/ordeal/return. Members also dual-home in parent clusters.",
+      "adversarialNote": "Offered as hypothesis. If it doesn't hold up in use, it collapses back to Shapeshifter/Death-Rebirth.",
+      "archetypes": [
+        { "system": "tarot", "slug": "the-moon", "strength": "primary", "confidence": "strong", "note": "XVIII - the dream-country; form dissolving" },
+        { "system": "tarot", "slug": "the-hanged-man", "strength": "primary", "confidence": "strong", "note": "XII - willing suspension; the inverted viewpoint" },
+        { "system": "tarot", "slug": "wheel-of-fortune", "strength": "primary", "confidence": "strong", "note": "X - fortune's turn" },
+        { "system": "tarot", "slug": "death", "strength": "secondary", "confidence": "strong", "note": "XIII - the crossing itself" },
+        { "system": "tarot", "slug": "the-devil", "strength": "secondary", "confidence": "moderate", "note": "XV - bound in the passage" },
+        { "system": "tarot", "slug": "the-tower", "strength": "secondary", "confidence": "strong", "note": "XVI - the collapse that IS the liminal moment" },
+        { "system": "heros-journey", "slug": "shapeshifter", "strength": "primary", "confidence": "strong", "note": "The uncertain ally whose shape won't settle" },
+        { "system": "heros-journey", "slug": "trickster", "strength": "secondary", "confidence": "strong", "note": "Boundary-crossing function", "scholarlyCitation": "Hyde, Trickster Makes This World (1998)" },
+        { "system": "kwml", "slug": "the-divine-child", "strength": "secondary", "confidence": "canonical", "note": "At the initiation passage" },
+        { "system": "enneagram", "slug": "individualist", "strength": "secondary", "confidence": "speculative", "note": "Type 4's between-world feeling (phenomenology, not arrow-location)", "dissent": "Arrow-based membership rejected (Naranjo disavowal)." }
+      ]
+    }
+  ],
+
+  "axes": {
+    "developmentalStage": {
+      "label": "Developmental stage",
+      "note": "Continuous pre-initiation → striving → liminal → integrating → integrated. Masculine-coded in its dominant formulation; see /about/counter-canon.",
+      "endStates": {
+        "pearson": "wholeness",
+        "campbell": "return-with-boon",
+        "riso-hudson": "Level 9 liberation within type",
+        "tarot": "the World reopening to the Fool"
+      }
+    },
+    "affectCenter": {
+      "label": "Affect center (Enneagram, extended)",
+      "tints": ["anger (gut)", "shame (heart)", "fear (head)", "desire/eros (fourth tint; anchor: Lover)"],
+      "note": "Enneagram's three-center model leaves desire homeless without a fourth tint. Added per meta-pattern #8."
+    },
+    "relationalStance": {
+      "label": "Horney's three moves",
+      "values": ["toward", "against", "away"],
+      "note": "Karen Horney via Riso-Hudson; the single most portable structural unit in the corpus."
+    }
+  },
+
+  "openQuestions": [
+    "Does Liminal Territory hold up as a fourth structural pole, or collapse back to parent clusters?",
+    "Is the counter-canon (Bolen/Murdock/Estés) at true parity, or risks repeating the appendix-pattern Murdock named?",
+    "If the developmental arc is masculine-coded, is explicit labeling sufficient - or does presenting it at all harm non-male readers?",
+    "Should MBTI be demoted given its psychometric status? We retain it for pedagogical accessibility, with caveats.",
+    "Should Hero's-Journey cast be framed as Vogler's flexible functions throughout, or Campbell's character-types where tradition does?"
+  ],
+
+  "systemBlindSpots": {
+    "kwml": "Authored for mature men and explicitly restricted to that audience. Bipolar shadow theory contested in depth-psychology literature. Feminine quaternio had to be supplied by Stone, Bolen, and later authors.",
+    "jungian": "Primarily Pearson-Mark on this site - commercially adapted from Pearson's 1986 developmental Hero Within and 1991 twelve-archetype expansion into the 2001 brand wheel. The Drum (2025) calls the wheel 'pseudoscience' when marketed as Jungian. Brewster's Racial Complex (2020) names the focused-avoidance of race.",
+    "enneagram": "Disputed provenance (Ichazo, Naranjo, Sufi/Gurdjieff). RHETI underperforms against Big Five. 87% pre-test self-prediction creates Barnum risk. Integration/disintegration arrows were later disavowed by Naranjo.",
+    "mbti": "Most psychometrically contested system here. Type-stability across retests weaker than the system implies; corporate use widely criticized. Retained for pedagogical accessibility as a doorway to Jung's four functions.",
+    "heros-journey": "Sustained folklorist critique (Dundes, Toelken, Ellwood) of universality-by-cherry-picking. Campbell's Jungian credentials contested (Segal, Rensma, IAJS). Vogler's flexible-function framing preferred over character-type framing. Murdock's Heroine's Journey (1990) at /about/counter-canon as first-class parallel.",
+    "tarot": "Jung wrote essentially nothing on Tarot - one 1933 aside and a single experiment he reported as failed. 'Jungian Tarot' is a 1970–87 American retrofit (Gray, Nichols, Pollack, Arrien). Cardinality mismatches preclude principled 1-to-1 mapping. Pollack later complicated her own Jungian framing as a trans author."
+  }
+}

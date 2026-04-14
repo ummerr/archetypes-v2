@@ -2,9 +2,11 @@
 
 import dynamic from "next/dynamic";
 import { BLOB_CONFIGS } from "@/components/BlobScene";
+import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
 const BlobScene = dynamic(() => import("@/components/BlobScene"), {
   ssr: false,
+  loading: () => <CanvasSkeleton />,
 });
 
 export default function ArchetypeBlob({ slug }: { slug: string }) {

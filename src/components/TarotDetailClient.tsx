@@ -7,6 +7,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import TarotCard from "@/components/TarotCard";
 import TarotDeckArc from "@/components/TarotDeckArc";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getTarotExemplars } from "@/data/tarot/exemplars";
 
@@ -85,7 +86,10 @@ export default function TarotDetailClient({
         </div>
 
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 mb-6 animate-slide-up flex-wrap">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 mb-6 animate-slide-up flex-wrap"
+        >
           <Link
             href="/tarot"
             className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
@@ -100,10 +104,20 @@ export default function TarotDetailClient({
             {phase.label}
           </span>
           <span className="text-muted/40 font-mono text-[10px]">/</span>
-          <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+          <span
+            aria-current="page"
+            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase"
+          >
             Arcanum {archetype.numeral}
           </span>
-        </div>
+          <span className="text-muted/40 font-mono text-[10px] ml-1">·</span>
+          <Link
+            href="/tarot/about"
+            className="font-mono text-[9px] tracking-[0.25em] text-muted/80 uppercase hover:text-gold transition-colors"
+          >
+            About
+          </Link>
+        </nav>
 
         {/* Hero */}
         <div className="mb-12 animate-slide-up delay-100">
@@ -156,6 +170,8 @@ export default function TarotDetailClient({
                   </Link>
                 </div>
               )}
+
+              <CrossSystemResonanceInline system="tarot" slug={archetype.slug} />
             </div>
           </div>
         </div>

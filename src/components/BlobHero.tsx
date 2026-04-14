@@ -2,9 +2,11 @@
 
 import dynamic from "next/dynamic";
 import type { BlobConfig } from "@/components/BlobScene";
+import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
 const BlobScene = dynamic(() => import("@/components/BlobScene"), {
   ssr: false,
+  loading: () => <CanvasSkeleton />,
 });
 
 // Quiet outer man blob

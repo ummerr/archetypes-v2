@@ -5,10 +5,14 @@ import { useTheme } from "@/components/ThemeProvider";
 import {
   archetypeDisplayName,
   archetypeHref,
+  confidenceEdgeStyle,
+  debateSlugFor,
   getResonantArchetypes,
   systemAccent,
 } from "@/lib/resonance";
 import type { SystemId } from "@/data/resonance";
+import ConfidenceBadge from "@/components/shared/ConfidenceBadge";
+import CitationLine from "@/components/shared/CitationLine";
 
 interface Props {
   system: SystemId;
@@ -38,27 +42,65 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
         />
       </div>
 
-      <p className="font-serif text-base md:text-lg text-text-secondary/90 italic mb-8 max-w-2xl">
+      <p className="font-serif text-base md:text-lg text-text-secondary/90 italic mb-3 max-w-2xl">
         This archetype lives in {joinClusterNames(resonances.map((r) => r.cluster.theme))}. Each
-        cluster gathers figures across traditions that share the same underlying psychic energy.
+        cluster gathers figures across traditions that share an underlying resonance - with honesty
+        about where inference begins.
+      </p>
+      <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted/70 mb-8">
+        Mirrors to try on, not a diagnosis. See{" "}
+        <Link href="/about/methodology" className="underline underline-offset-2 hover:text-gold">
+          methodology
+        </Link>
+        .
       </p>
 
-      <div className="space-y-8">
-        {resonances.map(({ cluster, entries }) => (
+      <div className="space-y-10">
+        {resonances.map(({ cluster, self, entries }) => (
           <section key={cluster.id}>
-            <div className="mb-3">
-              <p
-                className="font-mono text-[9px] tracking-[0.3em] uppercase mb-1"
-                style={{ color: light ? systemAccent(system).accentLight : accentColor }}
-              >
-                Cluster
-              </p>
+            <div className="mb-4">
+              <div className="flex items-baseline gap-3 flex-wrap mb-1">
+                <p
+                  className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                  style={{ color: light ? systemAccent(system).accentLight : accentColor }}
+                >
+                  Cluster
+                </p>
+                <ConfidenceBadge tier={self.confidence} color={accentColor} />
+                {self.confidence === "contested" && (
+                  <Link
+                    href={`/atlas/debates/${debateSlugFor(cluster.id, system, slug)}`}
+                    className="font-mono text-[10px] tracking-[0.2em] uppercase text-amber-500 hover:text-amber-400 underline underline-offset-2"
+                  >
+                    See the debate →
+                  </Link>
+                )}
+              </div>
               <h3 className="font-serif text-xl md:text-2xl font-medium mb-1">
-                {cluster.theme}
+                <Link href={`/atlas/cluster/${cluster.id}`} className="hover:underline underline-offset-4 decoration-1">
+                  {cluster.theme}
+                </Link>
               </h3>
               <p className="font-serif text-sm md:text-base text-text-secondary/80 italic">
                 {cluster.description}
               </p>
+              {(cluster.editorialNote || cluster.adversarialNote) && (
+                <div className="mt-2 text-[12px] leading-snug text-text-secondary/70 space-y-1">
+                  {cluster.editorialNote && <p className="italic">{cluster.editorialNote}</p>}
+                  {cluster.adversarialNote && (
+                    <p className="italic text-muted/80">
+                      <span className="font-mono text-[9px] tracking-[0.2em] uppercase mr-1">Devil's advocate:</span>
+                      {cluster.adversarialNote}
+                    </p>
+                  )}
+                </div>
+              )}
+              {self.dissent && (
+                <div className="mt-3 rounded-sm border border-amber-500/30 bg-amber-500/[0.04] px-3 py-2 text-[12px] italic text-text-secondary/85">
+                  <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-amber-500/90 mr-1">Dissent:</span>
+                  {self.dissent}
+                </div>
+              )}
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -67,6 +109,7 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
                 const color = light ? accentLight : accent;
                 const primary = entry.strength === "primary";
                 const displayName = archetypeDisplayName(entry.system, entry.slug);
+                const edge = confidenceEdgeStyle(entry.confidence);
                 return (
                   <Link
                     key={`${entry.system}-${entry.slug}`}
@@ -74,9 +117,7 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
                     className="group block rounded-sm p-4 transition-all duration-300 hover:-translate-y-0.5"
                     style={{
                       background: `linear-gradient(145deg, ${color}${primary ? (light ? "10" : "08") : "05"}, transparent)`,
-                      border: primary
-                        ? `1px solid ${color}${light ? "40" : "28"}`
-                        : `1px dashed ${color}${light ? "30" : "1E"}`,
+                      border: `1px ${edge} ${color}${primary ? (light ? "40" : "28") : (light ? "30" : "1E")}`,
                     }}
                   >
                     <div className="flex items-baseline justify-between gap-2 mb-2">
@@ -86,11 +127,7 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
                       >
                         {systemName}
                       </p>
-                      {!primary && (
-                        <span className="font-mono text-[8px] tracking-[0.3em] uppercase text-muted/60">
-                          Facet
-                        </span>
-                      )}
+                      <ConfidenceBadge tier={entry.confidence} color={color} />
                     </div>
                     <p
                       className="font-serif text-lg font-medium mb-1 group-hover:underline decoration-1 underline-offset-4"
@@ -101,6 +138,13 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
                     <p className="text-sm text-text-primary/85 leading-snug font-light">
                       {entry.note}
                     </p>
+                    <CitationLine
+                      primarySource={entry.primarySourceCitation}
+                      scholarly={entry.scholarlyCitation}
+                      dissent={entry.dissent}
+                      adversarial={entry.adversarialNote}
+                      editorial={entry.editorialNote}
+                    />
                   </Link>
                 );
               })}

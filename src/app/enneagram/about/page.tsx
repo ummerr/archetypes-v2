@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ENNEAGRAM_TRIADS } from "@/data/enneagram/archetypes";
 import { buildPageMetadata, systemOgImage } from "@/lib/site";
+import BlindSpotsSection from "@/components/shared/BlindSpotsSection";
 
 export const metadata = buildPageMetadata({
   title: "About - Enneagram",
@@ -102,6 +103,8 @@ export default function EnneagramAbout() {
               into.
             </p>
           </section>
+
+          <BlindSpotsSection system="enneagram" />
         </div>
 
         <div className="mt-16 text-center animate-slide-up delay-500">

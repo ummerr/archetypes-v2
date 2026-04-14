@@ -13,10 +13,12 @@ import OppositeCard from "@/components/jungian/OppositeCard";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getJungianExemplars } from "@/data/jungian/exemplars";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
+import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
+import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
 const JungianTotemCanvas = dynamic(
   () => import("@/components/JungianTotemCanvas"),
-  { ssr: false }
+  { ssr: false, loading: () => <CanvasSkeleton /> }
 );
 
 interface Props {
@@ -40,7 +42,10 @@ export default function JungianDetailClient({
     <div className="min-h-screen px-6 pt-24 pb-24 md:pt-32">
       <div className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 mb-6 animate-slide-up">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 mb-6 animate-slide-up"
+        >
           <Link
             href="/jungian"
             className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
@@ -49,12 +54,20 @@ export default function JungianDetailClient({
           </Link>
           <span className="text-muted/40 font-mono text-[10px]">/</span>
           <span
+            aria-current="page"
             className="font-mono text-[9px] tracking-[0.25em] uppercase"
             style={{ color: cluster.color }}
           >
             {cluster.label}
           </span>
-        </div>
+          <span className="text-muted/40 font-mono text-[10px] ml-1">·</span>
+          <Link
+            href="/jungian/about"
+            className="font-mono text-[9px] tracking-[0.25em] text-muted/80 uppercase hover:text-gold transition-colors"
+          >
+            About
+          </Link>
+        </nav>
 
         {/* Hero */}
         <div className="mb-12 animate-slide-up delay-100">
@@ -96,6 +109,8 @@ export default function JungianDetailClient({
           <p className="text-text-secondary text-base md:text-lg leading-relaxed font-light max-w-2xl">
             {archetype.description}
           </p>
+
+          <CrossSystemResonanceInline system="jungian" slug={archetype.slug} />
         </div>
 
         {/* Core triad */}

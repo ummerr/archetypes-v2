@@ -56,12 +56,18 @@ export default function ResonanceConstellation({
     <div
       className="relative mx-auto"
       style={{ width: size, height: size }}
-      aria-hidden="true"
     >
+      <ul className="sr-only">
+        <li>Six archetype systems arranged in a resonance constellation:</li>
+        {nodes.map((n) => (
+          <li key={n.id}>{n.name}</li>
+        ))}
+      </ul>
       <svg
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}
+        aria-hidden="true"
         className="absolute inset-0 motion-safe:animate-breathe-subtle"
         style={{ animationDuration: "9s" }}
       >

@@ -10,10 +10,11 @@ import {
 } from "@/data/jungian/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
 import { JungianArchetype } from "@/types/jungian";
+import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
 const JungianTotemCanvas = dynamic(
   () => import("@/components/JungianTotemCanvas"),
-  { ssr: false }
+  { ssr: false, loading: () => <CanvasSkeleton /> }
 );
 
 export default function JungianHome() {

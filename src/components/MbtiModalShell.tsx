@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useModalA11y } from "@/components/shared/useModalA11y";
+
+const CLOSE_DURATION_MS = 220;
 
 export default function MbtiModalShell({
   children,
@@ -10,40 +13,36 @@ export default function MbtiModalShell({
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => setOpen(true));
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      cancelAnimationFrame(raf);
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => cancelAnimationFrame(raf);
   }, []);
+
+  useModalA11y(panelRef, closeRef);
+  closeRef.current = close;
 
   function close() {
     setOpen(false);
-    setTimeout(() => router.back(), 220);
+    setTimeout(() => router.back(), CLOSE_DURATION_MS);
   }
 
   return (
-    <div className="fixed inset-0 z-[100] overflow-y-auto">
+    <div className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain">
       <div
         onClick={close}
         aria-hidden
-        className="fixed inset-0 transition-opacity duration-[220ms] ease-out"
+        className="fixed inset-0 transition-opacity ease-out"
         style={{
+          transitionDuration: `${CLOSE_DURATION_MS}ms`,
           background: "rgba(6, 6, 10, 0.78)",
           opacity: open ? 1 : 0,
         }}
       />
       <div
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         onClick={(e) => {

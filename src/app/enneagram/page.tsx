@@ -10,10 +10,11 @@ import {
 import { useTheme } from "@/components/ThemeProvider";
 import { EnneagramArchetype } from "@/types/enneagram";
 import EnneagramSymbol from "@/components/EnneagramSymbol";
+import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
 const EnneagramTotemCanvas = dynamic(
   () => import("@/components/EnneagramTotemCanvas"),
-  { ssr: false }
+  { ssr: false, loading: () => <CanvasSkeleton /> }
 );
 
 export default function EnneagramHome() {

@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   ALL_INDEX_ENTRIES,
   SYSTEM_ORDER,
@@ -30,16 +31,19 @@ type GroupMode =
   | "valence"
   | "introversion";
 
-const GROUP_OPTIONS: { id: GroupMode; label: string }[] = [
-  { id: "system", label: "By System" },
-  { id: "inner", label: "By Group" },
-  { id: "alpha", label: "Alphabetical" },
-  { id: "age", label: "By Age" },
-  { id: "valence", label: "Light → Dark" },
-  { id: "introversion", label: "Inward → Outward" },
-  { id: "hue", label: "By Hue" },
-  { id: "shuffle", label: "Shuffle" },
+type OptionGroup = "order" | "dimension";
+const GROUP_OPTIONS: { id: GroupMode; label: string; group: OptionGroup }[] = [
+  { id: "system", label: "By System", group: "order" },
+  { id: "inner", label: "By Group", group: "order" },
+  { id: "alpha", label: "Alphabetical", group: "order" },
+  { id: "age", label: "By Age", group: "order" },
+  { id: "valence", label: "Light → Dark", group: "dimension" },
+  { id: "introversion", label: "Inward → Outward", group: "dimension" },
+  { id: "hue", label: "By Hue", group: "dimension" },
+  { id: "shuffle", label: "Shuffle", group: "dimension" },
 ];
+
+const VALID_MODES = new Set(GROUP_OPTIONS.map((o) => o.id));
 
 function hexToHue(hex: string): number {
   const h = hex.replace("#", "");
@@ -67,9 +71,28 @@ interface Section {
 export default function IndexView() {
   const { theme } = useTheme();
   const light = theme === "light";
-  const [mode, setMode] = useState<GroupMode>("system");
-  const [query, setQuery] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialMode = (() => {
+    const m = searchParams.get("sort");
+    return m && VALID_MODES.has(m as GroupMode) ? (m as GroupMode) : "system";
+  })();
+  const initialQuery = searchParams.get("q") ?? "";
+
+  const [mode, setMode] = useState<GroupMode>(initialMode);
+  const [query, setQuery] = useState(initialQuery);
   const [shuffleSeed, setShuffleSeed] = useState(0);
+
+  // Persist to URL without scroll
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (mode !== "system") params.set("sort", mode);
+    if (query.trim()) params.set("q", query.trim());
+    const qs = params.toString();
+    const next = qs ? `/archetypes?${qs}` : "/archetypes";
+    router.replace(next, { scroll: false });
+  }, [mode, query, router]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -164,7 +187,6 @@ export default function IndexView() {
     }
 
     if (mode === "shuffle") {
-      // seeded shuffle - stable per click
       const arr = [...filtered];
       let seed = shuffleSeed || 1;
       const rand = () => {
@@ -200,7 +222,6 @@ export default function IndexView() {
       return out;
     }
 
-    // inner-group mode: preserve SYSTEM_ORDER, then inner groups within
     const groups = new Map<string, Section>();
     for (const sysId of SYSTEM_ORDER) {
       for (const e of filtered.filter((x) => x.systemId === sysId)) {
@@ -222,6 +243,36 @@ export default function IndexView() {
   }, [filtered, mode, shuffleSeed]);
 
   const total = filtered.length;
+  const hasFilters = query.trim().length > 0 || mode !== "system";
+  const clearAll = useCallback(() => {
+    setQuery("");
+    setMode("system");
+  }, []);
+
+  const orderOpts = GROUP_OPTIONS.filter((o) => o.group === "order");
+  const dimensionOpts = GROUP_OPTIONS.filter((o) => o.group === "dimension");
+
+  const sortButton = (opt: (typeof GROUP_OPTIONS)[number]) => {
+    const active = mode === opt.id;
+    return (
+      <button
+        key={opt.id}
+        type="button"
+        aria-pressed={active}
+        onClick={() => {
+          setMode(opt.id);
+          if (opt.id === "shuffle") setShuffleSeed(Date.now());
+        }}
+        className={`font-mono text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-sm transition-colors duration-200 ${
+          active
+            ? "text-gold bg-gold/10 border border-gold/30"
+            : "text-muted hover:text-text-secondary border border-transparent"
+        }`}
+      >
+        {opt.label}
+      </button>
+    );
+  };
 
   return (
     <div className="min-h-screen">
@@ -246,43 +297,60 @@ export default function IndexView() {
 
       {/* Toolbar */}
       <div className="sticky top-14 z-30 px-6 py-3 backdrop-blur-xl bg-bg/80 border-b border-gold/10 transition-colors duration-300">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center gap-3 md:gap-5">
-          <div className="flex items-center gap-1">
-            {GROUP_OPTIONS.map((opt) => {
-              const active = mode === opt.id;
-              return (
+        <div className="max-w-6xl mx-auto flex flex-col gap-2">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="font-mono text-[8px] tracking-[0.35em] uppercase text-muted/70 shrink-0 w-16">
+              Order
+            </span>
+            <div role="group" aria-label="Order archetypes" className="flex flex-wrap items-center gap-1">
+              {orderOpts.map(sortButton)}
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="font-mono text-[8px] tracking-[0.35em] uppercase text-muted/70 shrink-0 w-16">
+              Dimension
+            </span>
+            <div role="group" aria-label="Arrange archetypes by dimension" className="flex flex-wrap items-center gap-1">
+              {dimensionOpts.map(sortButton)}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 pt-1">
+            <div className="relative flex-1 min-w-[180px]">
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search archetypes…"
+                aria-label="Search archetypes"
+                className="w-full bg-transparent border border-gold/15 focus:border-gold/40 rounded-sm px-3 py-2 pr-8 font-mono text-[11px] tracking-[0.1em] text-text-primary placeholder:text-muted/60 outline-none transition-colors duration-200"
+              />
+              {query && (
                 <button
-                  key={opt.id}
                   type="button"
-                  onClick={() => {
-                    setMode(opt.id);
-                    if (opt.id === "shuffle") setShuffleSeed(Date.now());
-                  }}
-                  className={`font-mono text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 rounded-sm transition-colors duration-200 ${
-                    active
-                      ? "text-gold bg-gold/10 border border-gold/30"
-                      : "text-muted hover:text-text-secondary border border-transparent"
-                  }`}
+                  onClick={() => setQuery("")}
+                  aria-label="Clear search"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center text-muted hover:text-gold transition-colors rounded-sm font-mono text-[11px]"
                 >
-                  {opt.label}
+                  ×
                 </button>
-              );
-            })}
-          </div>
+              )}
+            </div>
 
-          <div className="flex-1 min-w-[160px]">
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search archetypes…"
-              className="w-full bg-transparent border border-gold/15 focus:border-gold/40 rounded-sm px-3 py-1.5 font-mono text-[11px] tracking-[0.1em] text-text-primary placeholder:text-muted/60 outline-none transition-colors duration-200"
-            />
-          </div>
+            {hasFilters && (
+              <button
+                type="button"
+                onClick={clearAll}
+                className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted hover:text-gold transition-colors px-2 py-1"
+              >
+                Reset
+              </button>
+            )}
 
-          <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
-            {total} {total === 1 ? "Type" : "Types"}
-          </span>
+            <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+              {total} {total === 1 ? "Type" : "Types"}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -290,9 +358,24 @@ export default function IndexView() {
       <div className="px-6 pt-12 pb-24">
         <div className="max-w-6xl mx-auto space-y-16">
           {sections.length === 0 && (
-            <p className="font-mono text-xs text-muted uppercase tracking-[0.2em] text-center pt-12">
-              No archetypes match &ldquo;{query}&rdquo;.
-            </p>
+            <div className="pt-16 flex flex-col items-center text-center gap-4">
+              <span
+                aria-hidden
+                className="font-serif italic text-5xl text-muted/40"
+              >
+                ∅
+              </span>
+              <p className="font-mono text-xs text-muted uppercase tracking-[0.2em]">
+                No archetypes match &ldquo;{query}&rdquo;.
+              </p>
+              <button
+                type="button"
+                onClick={clearAll}
+                className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold border border-gold/30 hover:bg-gold/10 px-4 py-2 rounded-sm transition-colors"
+              >
+                Clear search
+              </button>
+            </div>
           )}
           {sections.map((section) => (
             <section key={section.key}>

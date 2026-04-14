@@ -6,15 +6,16 @@ import dynamic from "next/dynamic";
 import { ALL_HEROSJOURNEY } from "@/data/herosjourney/archetypes";
 import { JOURNEY_ACTS } from "@/data/herosjourney/stages";
 import { useTheme } from "@/components/ThemeProvider";
+import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
 const HeroJourneyWheel = dynamic(
   () => import("@/components/HeroJourneyWheel"),
-  { ssr: false }
+  { ssr: false, loading: () => <CanvasSkeleton /> }
 );
 
 const HeroJourneyTotemCanvas = dynamic(
   () => import("@/components/HeroJourneyTotemCanvas"),
-  { ssr: false }
+  { ssr: false, loading: () => <CanvasSkeleton /> }
 );
 
 export default function HerosJourneyHome() {

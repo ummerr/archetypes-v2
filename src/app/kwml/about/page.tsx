@@ -2,6 +2,7 @@ import PageTransition from "@/components/PageTransition";
 import { FAMILIES } from "@/data/kwml/archetypes";
 import Link from "next/link";
 import { buildPageMetadata, systemOgImage } from "@/lib/site";
+import BlindSpotsSection from "@/components/shared/BlindSpotsSection";
 
 export const metadata = buildPageMetadata({
   title: "About - KWML",
@@ -196,6 +197,8 @@ export default function AboutPage() {
               </blockquote>
             </div>
           </section>
+
+          <BlindSpotsSection system="kwml" className="mb-16" />
 
           {/* CTA */}
           <div className="relative pt-10">

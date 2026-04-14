@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { TAROT_PHASES } from "@/data/tarot/archetypes";
 import { buildPageMetadata, systemOgImage } from "@/lib/site";
+import BlindSpotsSection from "@/components/shared/BlindSpotsSection";
 
 export const metadata = buildPageMetadata({
   title: "About - Tarot",
@@ -141,6 +142,8 @@ export default function TarotAbout() {
               common grammar between systems.
             </p>
           </section>
+
+          <BlindSpotsSection system="tarot" />
         </div>
 
         <div className="mt-12 animate-slide-up delay-400">
