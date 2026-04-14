@@ -64,6 +64,20 @@ export default function Home() {
                 that shape human psyche. Explore one, or trace the shared
                 currents that run between them.
               </p>
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2">
+                <a
+                  href="#systems"
+                  className="font-mono text-[10px] tracking-[0.25em] uppercase text-gold hover:opacity-80 transition-opacity"
+                >
+                  Choose a system ↓
+                </a>
+                <Link
+                  href="/atlas"
+                  className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-secondary hover:text-gold transition-colors"
+                >
+                  Or see the whole map →
+                </Link>
+              </div>
             </div>
             <div className="animate-slide-up delay-200 w-full flex justify-center md:justify-end">
               <ResonanceConstellation
@@ -86,7 +100,7 @@ export default function Home() {
         />
 
         {/* Systems grid */}
-        <div className="px-6 pb-20">
+        <div id="systems" className="px-6 pb-20 scroll-mt-24">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-5">
             {SYSTEMS.map((system, i) => {
               const sid = system.id as SystemId;
@@ -206,7 +220,7 @@ export default function Home() {
             })}
           </div>
 
-          <div className="max-w-6xl mx-auto mt-16 text-center">
+          <div className="max-w-6xl mx-auto mt-10 text-center">
             <p className="font-mono text-[9px] tracking-[0.2em] text-muted uppercase">
               <span className="inline-block w-6 h-px bg-current align-middle mr-3" />
               {activeClusters && activeClusters.size > 0 && hover?.kind === "system"
@@ -216,8 +230,74 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="max-w-6xl mx-auto mt-16 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-            {[...ATLAS_LINKS, ABOUT_LINKS[0]].map((l) => (
+          {/* Atlas feature */}
+          <div className="max-w-6xl mx-auto mt-20">
+            <Link
+              href="/atlas"
+              className="group block relative overflow-hidden rounded-sm transition-all duration-500"
+              style={{
+                background: `linear-gradient(145deg, ${light ? "#8A6A200C" : "#D4AF3708"} 0%, var(--color-bg) 55%, var(--color-bg) 100%)`,
+                border: `1px solid ${light ? "#8A6A2030" : "#D4AF3720"}`,
+              }}
+            >
+              <div
+                className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${light ? "#8A6A2060" : "#D4AF3760"}, transparent)`,
+                }}
+              />
+              <div className="grid md:grid-cols-[1.3fr_1fr] gap-8 md:gap-12 p-8 md:p-12 items-center">
+                <div>
+                  <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
+                    The Atlas · Resonance Map
+                  </p>
+                  <h2 className="font-serif text-3xl md:text-5xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
+                    See where the systems{" "}
+                    <span className={light ? "text-text-primary italic" : "text-gold glow-text-subtle italic"}>
+                      rhyme
+                    </span>
+                  </h2>
+                  <p className="text-text-secondary text-base md:text-lg leading-relaxed font-light mb-6 max-w-xl">
+                    Jung&rsquo;s Warrior, the Enneagram Eight, KWML&rsquo;s King,
+                    the Emperor in tarot — six traditions keep circling the same
+                    figures. The Atlas lays them on one map: 20 thematic clusters,
+                    147 archetypes, every tie sourced or flagged as inference.
+                  </p>
+                  <p className="text-text-secondary text-sm leading-relaxed font-light mb-6 max-w-xl">
+                    Come here when you&rsquo;ve read one system and want to know
+                    what the others would call the same pattern — or when you want
+                    to see where practitioners genuinely disagree.
+                  </p>
+                  <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase text-gold group-hover:translate-x-0.5 transition-transform">
+                    Open the Atlas
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                      <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2 md:justify-end content-start">
+                  {CLUSTER_CHIPS.slice(0, 10).map((c) => (
+                    <span
+                      key={c.id}
+                      className="font-mono text-[10px] tracking-[0.15em] uppercase px-3 py-1.5 rounded-full border text-text-secondary"
+                      style={{
+                        borderColor: light ? "#8A6A2025" : "#D4AF3718",
+                        background: light ? "#8A6A2008" : "#D4AF3706",
+                      }}
+                    >
+                      {c.label}
+                    </span>
+                  ))}
+                  <span className="font-mono text-[10px] tracking-[0.15em] uppercase px-3 py-1.5 text-muted">
+                    + {CLUSTER_CHIPS.length - 10} more
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          <div className="max-w-6xl mx-auto mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+            {[ATLAS_LINKS[1], ATLAS_LINKS[2], ABOUT_LINKS[0]].map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
