@@ -1,0 +1,4410 @@
+{
+  "width": 1200,
+  "height": 900,
+  "generatedAt": "2026-04-14T12:37:48.319Z",
+  "nodes": [
+    {
+      "id": "kwml/the-king",
+      "system": "kwml",
+      "slug": "the-king",
+      "clusterIds": [
+        "sovereign",
+        "integration"
+      ],
+      "degree": 13,
+      "x": 767,
+      "y": 371.7
+    },
+    {
+      "id": "jungian/ruler",
+      "system": "jungian",
+      "slug": "ruler",
+      "clusterIds": [
+        "sovereign",
+        "integration"
+      ],
+      "degree": 13,
+      "x": 742.2,
+      "y": 332.9
+    },
+    {
+      "id": "tarot/the-emperor",
+      "system": "tarot",
+      "slug": "the-emperor",
+      "clusterIds": [
+        "sovereign",
+        "integration"
+      ],
+      "degree": 13,
+      "x": 781.8,
+      "y": 328.5
+    },
+    {
+      "id": "mbti/entj",
+      "system": "mbti",
+      "slug": "entj",
+      "clusterIds": [
+        "sovereign"
+      ],
+      "degree": 4,
+      "x": 836.7,
+      "y": 247.5
+    },
+    {
+      "id": "mbti/estj",
+      "system": "mbti",
+      "slug": "estj",
+      "clusterIds": [
+        "sovereign",
+        "threshold-guardian",
+        "teacher"
+      ],
+      "degree": 16,
+      "x": 683.4,
+      "y": 279.4
+    },
+    {
+      "id": "kwml/the-warrior",
+      "system": "kwml",
+      "slug": "the-warrior",
+      "clusterIds": [
+        "warrior",
+        "integration"
+      ],
+      "degree": 13,
+      "x": 667.4,
+      "y": 377.3
+    },
+    {
+      "id": "heros-journey/hero",
+      "system": "heros-journey",
+      "slug": "hero",
+      "clusterIds": [
+        "warrior",
+        "explorer",
+        "boy-hero"
+      ],
+      "degree": 18,
+      "x": 521.2,
+      "y": 431.9
+    },
+    {
+      "id": "tarot/the-chariot",
+      "system": "tarot",
+      "slug": "the-chariot",
+      "clusterIds": [
+        "warrior",
+        "boy-hero"
+      ],
+      "degree": 10,
+      "x": 598.2,
+      "y": 335.6
+    },
+    {
+      "id": "enneagram/challenger",
+      "system": "enneagram",
+      "slug": "challenger",
+      "clusterIds": [
+        "warrior",
+        "rebel"
+      ],
+      "degree": 10,
+      "x": 481.9,
+      "y": 339.7
+    },
+    {
+      "id": "mbti/estp",
+      "system": "mbti",
+      "slug": "estp",
+      "clusterIds": [
+        "warrior",
+        "rebel",
+        "boy-hero"
+      ],
+      "degree": 16,
+      "x": 523,
+      "y": 347.4
+    },
+    {
+      "id": "kwml/the-magician",
+      "system": "kwml",
+      "slug": "the-magician",
+      "clusterIds": [
+        "sage-magician",
+        "integration"
+      ],
+      "degree": 17,
+      "x": 753.8,
+      "y": 435.5
+    },
+    {
+      "id": "jungian/sage",
+      "system": "jungian",
+      "slug": "sage",
+      "clusterIds": [
+        "sage-magician",
+        "teacher"
+      ],
+      "degree": 13,
+      "x": 725.5,
+      "y": 420.6
+    },
+    {
+      "id": "jungian/magician",
+      "system": "jungian",
+      "slug": "magician",
+      "clusterIds": [
+        "sage-magician"
+      ],
+      "degree": 8,
+      "x": 774.9,
+      "y": 477.4
+    },
+    {
+      "id": "tarot/the-magician",
+      "system": "tarot",
+      "slug": "the-magician",
+      "clusterIds": [
+        "sage-magician",
+        "creator"
+      ],
+      "degree": 15,
+      "x": 725.5,
+      "y": 544
+    },
+    {
+      "id": "tarot/the-high-priestess",
+      "system": "tarot",
+      "slug": "the-high-priestess",
+      "clusterIds": [
+        "sage-magician"
+      ],
+      "degree": 8,
+      "x": 804.4,
+      "y": 464.9
+    },
+    {
+      "id": "tarot/the-hermit",
+      "system": "tarot",
+      "slug": "the-hermit",
+      "clusterIds": [
+        "sage-magician"
+      ],
+      "degree": 8,
+      "x": 794.4,
+      "y": 502.7
+    },
+    {
+      "id": "enneagram/investigator",
+      "system": "enneagram",
+      "slug": "investigator",
+      "clusterIds": [
+        "sage-magician",
+        "explorer"
+      ],
+      "degree": 16,
+      "x": 636.5,
+      "y": 489.8
+    },
+    {
+      "id": "mbti/intj",
+      "system": "mbti",
+      "slug": "intj",
+      "clusterIds": [
+        "sage-magician",
+        "death-rebirth"
+      ],
+      "degree": 18,
+      "x": 679.4,
+      "y": 455.6
+    },
+    {
+      "id": "mbti/intp",
+      "system": "mbti",
+      "slug": "intp",
+      "clusterIds": [
+        "sage-magician",
+        "explorer"
+      ],
+      "degree": 16,
+      "x": 603.5,
+      "y": 506.6
+    },
+    {
+      "id": "kwml/the-lover",
+      "system": "kwml",
+      "slug": "the-lover",
+      "clusterIds": [
+        "lover",
+        "integration"
+      ],
+      "degree": 16,
+      "x": 706.1,
+      "y": 473.8
+    },
+    {
+      "id": "jungian/lover",
+      "system": "jungian",
+      "slug": "lover",
+      "clusterIds": [
+        "lover",
+        "shapeshifter"
+      ],
+      "degree": 12,
+      "x": 625.8,
+      "y": 572.6
+    },
+    {
+      "id": "tarot/the-lovers",
+      "system": "tarot",
+      "slug": "the-lovers",
+      "clusterIds": [
+        "lover"
+      ],
+      "degree": 7,
+      "x": 721.7,
+      "y": 586.2
+    },
+    {
+      "id": "enneagram/individualist",
+      "system": "enneagram",
+      "slug": "individualist",
+      "clusterIds": [
+        "lover",
+        "creator",
+        "death-rebirth",
+        "liminal-territory"
+      ],
+      "degree": 33,
+      "x": 631.9,
+      "y": 521.4
+    },
+    {
+      "id": "enneagram/helper",
+      "system": "enneagram",
+      "slug": "helper",
+      "clusterIds": [
+        "lover",
+        "caregiver"
+      ],
+      "degree": 13,
+      "x": 675.5,
+      "y": 580.1
+    },
+    {
+      "id": "mbti/enfp",
+      "system": "mbti",
+      "slug": "enfp",
+      "clusterIds": [
+        "lover",
+        "explorer",
+        "jester",
+        "creator",
+        "shapeshifter",
+        "herald"
+      ],
+      "degree": 39,
+      "x": 559.2,
+      "y": 560.6
+    },
+    {
+      "id": "mbti/esfp",
+      "system": "mbti",
+      "slug": "esfp",
+      "clusterIds": [
+        "lover",
+        "jester"
+      ],
+      "degree": 13,
+      "x": 596.8,
+      "y": 537.8
+    },
+    {
+      "id": "mbti/isfp",
+      "system": "mbti",
+      "slug": "isfp",
+      "clusterIds": [
+        "lover",
+        "innocent"
+      ],
+      "degree": 14,
+      "x": 582.2,
+      "y": 587.4
+    },
+    {
+      "id": "kwml/the-divine-child",
+      "system": "kwml",
+      "slug": "the-divine-child",
+      "clusterIds": [
+        "innocent",
+        "death-rebirth",
+        "liminal-territory"
+      ],
+      "degree": 26,
+      "x": 540.4,
+      "y": 491.9
+    },
+    {
+      "id": "jungian/innocent",
+      "system": "jungian",
+      "slug": "innocent",
+      "clusterIds": [
+        "innocent"
+      ],
+      "degree": 7,
+      "x": 449.6,
+      "y": 575.9
+    },
+    {
+      "id": "tarot/the-fool",
+      "system": "tarot",
+      "slug": "the-fool",
+      "clusterIds": [
+        "innocent",
+        "explorer",
+        "jester"
+      ],
+      "degree": 21,
+      "x": 484.9,
+      "y": 522.7
+    },
+    {
+      "id": "tarot/the-sun",
+      "system": "tarot",
+      "slug": "the-sun",
+      "clusterIds": [
+        "innocent",
+        "integration"
+      ],
+      "degree": 16,
+      "x": 629.5,
+      "y": 451.1
+    },
+    {
+      "id": "enneagram/peacemaker",
+      "system": "enneagram",
+      "slug": "peacemaker",
+      "clusterIds": [
+        "innocent",
+        "everyman"
+      ],
+      "degree": 12,
+      "x": 475.7,
+      "y": 462.3
+    },
+    {
+      "id": "mbti/isfj",
+      "system": "mbti",
+      "slug": "isfj",
+      "clusterIds": [
+        "innocent",
+        "caregiver",
+        "everyman"
+      ],
+      "degree": 18,
+      "x": 537.7,
+      "y": 534.4
+    },
+    {
+      "id": "mbti/infp",
+      "system": "mbti",
+      "slug": "infp",
+      "clusterIds": [
+        "innocent",
+        "creator"
+      ],
+      "degree": 14,
+      "x": 564.6,
+      "y": 614.2
+    },
+    {
+      "id": "jungian/explorer",
+      "system": "jungian",
+      "slug": "explorer",
+      "clusterIds": [
+        "explorer"
+      ],
+      "degree": 8,
+      "x": 428.9,
+      "y": 519.5
+    },
+    {
+      "id": "enneagram/enthusiast",
+      "system": "enneagram",
+      "slug": "enthusiast",
+      "clusterIds": [
+        "explorer",
+        "jester",
+        "herald"
+      ],
+      "degree": 20,
+      "x": 469,
+      "y": 550.4
+    },
+    {
+      "id": "heros-journey/herald",
+      "system": "heros-journey",
+      "slug": "herald",
+      "clusterIds": [
+        "explorer",
+        "herald"
+      ],
+      "degree": 14,
+      "x": 492.9,
+      "y": 579.5
+    },
+    {
+      "id": "mbti/entp",
+      "system": "mbti",
+      "slug": "entp",
+      "clusterIds": [
+        "explorer",
+        "rebel",
+        "jester",
+        "shapeshifter"
+      ],
+      "degree": 25,
+      "x": 455.8,
+      "y": 487.3
+    },
+    {
+      "id": "jungian/rebel",
+      "system": "jungian",
+      "slug": "rebel",
+      "clusterIds": [
+        "rebel"
+      ],
+      "degree": 6,
+      "x": 413.3,
+      "y": 358.8
+    },
+    {
+      "id": "tarot/the-tower",
+      "system": "tarot",
+      "slug": "the-tower",
+      "clusterIds": [
+        "rebel",
+        "herald",
+        "death-rebirth",
+        "liminal-territory"
+      ],
+      "degree": 31,
+      "x": 507.7,
+      "y": 463.6
+    },
+    {
+      "id": "heros-journey/trickster",
+      "system": "heros-journey",
+      "slug": "trickster",
+      "clusterIds": [
+        "rebel",
+        "jester",
+        "liminal-territory"
+      ],
+      "degree": 21,
+      "x": 489.3,
+      "y": 433.3
+    },
+    {
+      "id": "tarot/the-devil",
+      "system": "tarot",
+      "slug": "the-devil",
+      "clusterIds": [
+        "rebel",
+        "antagonists",
+        "liminal-territory"
+      ],
+      "degree": 17,
+      "x": 456.7,
+      "y": 416.8
+    },
+    {
+      "id": "jungian/caregiver",
+      "system": "jungian",
+      "slug": "caregiver",
+      "clusterIds": [
+        "caregiver"
+      ],
+      "degree": 6,
+      "x": 610.1,
+      "y": 609.6
+    },
+    {
+      "id": "tarot/the-empress",
+      "system": "tarot",
+      "slug": "the-empress",
+      "clusterIds": [
+        "caregiver",
+        "creator"
+      ],
+      "degree": 13,
+      "x": 652.1,
+      "y": 614
+    },
+    {
+      "id": "mbti/esfj",
+      "system": "mbti",
+      "slug": "esfj",
+      "clusterIds": [
+        "caregiver",
+        "everyman"
+      ],
+      "degree": 11,
+      "x": 578.5,
+      "y": 486.7
+    },
+    {
+      "id": "mbti/enfj",
+      "system": "mbti",
+      "slug": "enfj",
+      "clusterIds": [
+        "caregiver",
+        "herald",
+        "teacher"
+      ],
+      "degree": 17,
+      "x": 608.2,
+      "y": 474.9
+    },
+    {
+      "id": "heros-journey/ally",
+      "system": "heros-journey",
+      "slug": "ally",
+      "clusterIds": [
+        "caregiver"
+      ],
+      "degree": 6,
+      "x": 592.3,
+      "y": 648
+    },
+    {
+      "id": "jungian/jester",
+      "system": "jungian",
+      "slug": "jester",
+      "clusterIds": [
+        "jester"
+      ],
+      "degree": 6,
+      "x": 539.5,
+      "y": 459.9
+    },
+    {
+      "id": "jungian/creator",
+      "system": "jungian",
+      "slug": "creator",
+      "clusterIds": [
+        "creator"
+      ],
+      "degree": 7,
+      "x": 684.8,
+      "y": 649.6
+    },
+    {
+      "id": "tarot/the-star",
+      "system": "tarot",
+      "slug": "the-star",
+      "clusterIds": [
+        "creator"
+      ],
+      "degree": 7,
+      "x": 709.2,
+      "y": 628.9
+    },
+    {
+      "id": "mbti/infj",
+      "system": "mbti",
+      "slug": "infj",
+      "clusterIds": [
+        "creator",
+        "death-rebirth"
+      ],
+      "degree": 17,
+      "x": 647.8,
+      "y": 549.2
+    },
+    {
+      "id": "jungian/everyman",
+      "system": "jungian",
+      "slug": "everyman",
+      "clusterIds": [
+        "everyman"
+      ],
+      "degree": 5,
+      "x": 522.7,
+      "y": 387.7
+    },
+    {
+      "id": "enneagram/loyalist",
+      "system": "enneagram",
+      "slug": "loyalist",
+      "clusterIds": [
+        "everyman",
+        "threshold-guardian"
+      ],
+      "degree": 12,
+      "x": 536.4,
+      "y": 301.5
+    },
+    {
+      "id": "mbti/istj",
+      "system": "mbti",
+      "slug": "istj",
+      "clusterIds": [
+        "everyman",
+        "threshold-guardian"
+      ],
+      "degree": 12,
+      "x": 576.4,
+      "y": 312.2
+    },
+    {
+      "id": "heros-journey/shadow",
+      "system": "heros-journey",
+      "slug": "shadow",
+      "clusterIds": [
+        "antagonists"
+      ],
+      "degree": 2,
+      "x": 385.8,
+      "y": 415.8
+    },
+    {
+      "id": "tarot/the-moon",
+      "system": "tarot",
+      "slug": "the-moon",
+      "clusterIds": [
+        "antagonists",
+        "shapeshifter",
+        "liminal-territory"
+      ],
+      "degree": 16,
+      "x": 489.8,
+      "y": 491
+    },
+    {
+      "id": "heros-journey/shapeshifter",
+      "system": "heros-journey",
+      "slug": "shapeshifter",
+      "clusterIds": [
+        "shapeshifter",
+        "liminal-territory"
+      ],
+      "degree": 14,
+      "x": 515.3,
+      "y": 511.6
+    },
+    {
+      "id": "tarot/wheel-of-fortune",
+      "system": "tarot",
+      "slug": "wheel-of-fortune",
+      "clusterIds": [
+        "shapeshifter",
+        "herald",
+        "liminal-territory"
+      ],
+      "degree": 20,
+      "x": 507.6,
+      "y": 545.2
+    },
+    {
+      "id": "heros-journey/threshold-guardian",
+      "system": "heros-journey",
+      "slug": "threshold-guardian",
+      "clusterIds": [
+        "threshold-guardian"
+      ],
+      "degree": 7,
+      "x": 616.8,
+      "y": 209.1
+    },
+    {
+      "id": "enneagram/reformer",
+      "system": "enneagram",
+      "slug": "reformer",
+      "clusterIds": [
+        "threshold-guardian",
+        "teacher"
+      ],
+      "degree": 12,
+      "x": 623.7,
+      "y": 280.1
+    },
+    {
+      "id": "tarot/justice",
+      "system": "tarot",
+      "slug": "justice",
+      "clusterIds": [
+        "threshold-guardian"
+      ],
+      "degree": 7,
+      "x": 567,
+      "y": 214.8
+    },
+    {
+      "id": "tarot/strength",
+      "system": "tarot",
+      "slug": "strength",
+      "clusterIds": [
+        "threshold-guardian"
+      ],
+      "degree": 7,
+      "x": 589.4,
+      "y": 192
+    },
+    {
+      "id": "kwml/the-hero",
+      "system": "kwml",
+      "slug": "the-hero",
+      "clusterIds": [
+        "threshold-guardian",
+        "death-rebirth",
+        "boy-hero"
+      ],
+      "degree": 23,
+      "x": 584.8,
+      "y": 374.8
+    },
+    {
+      "id": "tarot/judgement",
+      "system": "tarot",
+      "slug": "judgement",
+      "clusterIds": [
+        "herald",
+        "death-rebirth"
+      ],
+      "degree": 16,
+      "x": 562.9,
+      "y": 514.6
+    },
+    {
+      "id": "kwml/the-precocious-child",
+      "system": "kwml",
+      "slug": "the-precocious-child",
+      "clusterIds": [
+        "death-rebirth",
+        "boy-hero"
+      ],
+      "degree": 16,
+      "x": 580,
+      "y": 411.7
+    },
+    {
+      "id": "kwml/the-oedipal-child",
+      "system": "kwml",
+      "slug": "the-oedipal-child",
+      "clusterIds": [
+        "death-rebirth"
+      ],
+      "degree": 10,
+      "x": 601.8,
+      "y": 435.2
+    },
+    {
+      "id": "tarot/death",
+      "system": "tarot",
+      "slug": "death",
+      "clusterIds": [
+        "death-rebirth",
+        "liminal-territory"
+      ],
+      "degree": 19,
+      "x": 571.2,
+      "y": 455.5
+    },
+    {
+      "id": "tarot/the-hanged-man",
+      "system": "tarot",
+      "slug": "the-hanged-man",
+      "clusterIds": [
+        "death-rebirth",
+        "liminal-territory"
+      ],
+      "degree": 19,
+      "x": 553.1,
+      "y": 429.1
+    },
+    {
+      "id": "tarot/the-world",
+      "system": "tarot",
+      "slug": "the-world",
+      "clusterIds": [
+        "integration"
+      ],
+      "degree": 9,
+      "x": 702.2,
+      "y": 398.7
+    },
+    {
+      "id": "tarot/temperance",
+      "system": "tarot",
+      "slug": "temperance",
+      "clusterIds": [
+        "integration"
+      ],
+      "degree": 9,
+      "x": 729.7,
+      "y": 382.4
+    },
+    {
+      "id": "tarot/the-hierophant",
+      "system": "tarot",
+      "slug": "the-hierophant",
+      "clusterIds": [
+        "integration",
+        "teacher"
+      ],
+      "degree": 14,
+      "x": 690.3,
+      "y": 351.9
+    },
+    {
+      "id": "heros-journey/mentor",
+      "system": "heros-journey",
+      "slug": "mentor",
+      "clusterIds": [
+        "teacher"
+      ],
+      "degree": 5,
+      "x": 647.1,
+      "y": 341.3
+    },
+    {
+      "id": "jungian/hero",
+      "system": "jungian",
+      "slug": "hero",
+      "clusterIds": [
+        "boy-hero"
+      ],
+      "degree": 6,
+      "x": 550.1,
+      "y": 330.4
+    },
+    {
+      "id": "enneagram/achiever",
+      "system": "enneagram",
+      "slug": "achiever",
+      "clusterIds": [
+        "boy-hero"
+      ],
+      "degree": 6,
+      "x": 498,
+      "y": 367.4
+    }
+  ],
+  "edges": [
+    {
+      "source": "kwml/the-king",
+      "target": "jungian/ruler",
+      "clusterId": "sovereign",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "tarot/the-emperor",
+      "clusterId": "sovereign",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "mbti/entj",
+      "clusterId": "sovereign",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "mbti/estj",
+      "clusterId": "sovereign",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/ruler",
+      "target": "tarot/the-emperor",
+      "clusterId": "sovereign",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/ruler",
+      "target": "mbti/entj",
+      "clusterId": "sovereign",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/ruler",
+      "target": "mbti/estj",
+      "clusterId": "sovereign",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-emperor",
+      "target": "mbti/entj",
+      "clusterId": "sovereign",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-emperor",
+      "target": "mbti/estj",
+      "clusterId": "sovereign",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/entj",
+      "target": "mbti/estj",
+      "clusterId": "sovereign",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "heros-journey/hero",
+      "clusterId": "warrior",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "tarot/the-chariot",
+      "clusterId": "warrior",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "enneagram/challenger",
+      "clusterId": "warrior",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "mbti/estp",
+      "clusterId": "warrior",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "tarot/the-chariot",
+      "clusterId": "warrior",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "enneagram/challenger",
+      "clusterId": "warrior",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "mbti/estp",
+      "clusterId": "warrior",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-chariot",
+      "target": "enneagram/challenger",
+      "clusterId": "warrior",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-chariot",
+      "target": "mbti/estp",
+      "clusterId": "warrior",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/challenger",
+      "target": "mbti/estp",
+      "clusterId": "warrior",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "jungian/sage",
+      "clusterId": "sage-magician",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "jungian/magician",
+      "clusterId": "sage-magician",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "tarot/the-magician",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "tarot/the-high-priestess",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "tarot/the-hermit",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "enneagram/investigator",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "mbti/intj",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "mbti/intp",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/sage",
+      "target": "jungian/magician",
+      "clusterId": "sage-magician",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "jungian/sage",
+      "target": "tarot/the-magician",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/sage",
+      "target": "tarot/the-high-priestess",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/sage",
+      "target": "tarot/the-hermit",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/sage",
+      "target": "enneagram/investigator",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/sage",
+      "target": "mbti/intj",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/sage",
+      "target": "mbti/intp",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/magician",
+      "target": "tarot/the-magician",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/magician",
+      "target": "tarot/the-high-priestess",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/magician",
+      "target": "tarot/the-hermit",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/magician",
+      "target": "enneagram/investigator",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/magician",
+      "target": "mbti/intj",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/magician",
+      "target": "mbti/intp",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-magician",
+      "target": "tarot/the-high-priestess",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-magician",
+      "target": "tarot/the-hermit",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-magician",
+      "target": "enneagram/investigator",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-magician",
+      "target": "mbti/intj",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-magician",
+      "target": "mbti/intp",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-high-priestess",
+      "target": "tarot/the-hermit",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-high-priestess",
+      "target": "enneagram/investigator",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-high-priestess",
+      "target": "mbti/intj",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-high-priestess",
+      "target": "mbti/intp",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-hermit",
+      "target": "enneagram/investigator",
+      "clusterId": "sage-magician",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-hermit",
+      "target": "mbti/intj",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-hermit",
+      "target": "mbti/intp",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/investigator",
+      "target": "mbti/intj",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/investigator",
+      "target": "mbti/intp",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/intj",
+      "target": "mbti/intp",
+      "clusterId": "sage-magician",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "jungian/lover",
+      "clusterId": "lover",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "tarot/the-lovers",
+      "clusterId": "lover",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "enneagram/individualist",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "enneagram/helper",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "mbti/enfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "mbti/esfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "mbti/isfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/lover",
+      "target": "tarot/the-lovers",
+      "clusterId": "lover",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/lover",
+      "target": "enneagram/individualist",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/lover",
+      "target": "enneagram/helper",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/lover",
+      "target": "mbti/enfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/lover",
+      "target": "mbti/esfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/lover",
+      "target": "mbti/isfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-lovers",
+      "target": "enneagram/individualist",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-lovers",
+      "target": "enneagram/helper",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-lovers",
+      "target": "mbti/enfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-lovers",
+      "target": "mbti/esfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-lovers",
+      "target": "mbti/isfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "enneagram/helper",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "mbti/enfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "mbti/esfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "mbti/isfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/helper",
+      "target": "mbti/enfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/helper",
+      "target": "mbti/esfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/helper",
+      "target": "mbti/isfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/enfp",
+      "target": "mbti/esfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/enfp",
+      "target": "mbti/isfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/esfp",
+      "target": "mbti/isfp",
+      "clusterId": "lover",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "jungian/innocent",
+      "clusterId": "innocent",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "tarot/the-fool",
+      "clusterId": "innocent",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "tarot/the-sun",
+      "clusterId": "innocent",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "enneagram/peacemaker",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "mbti/isfj",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "mbti/infp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "mbti/isfp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/innocent",
+      "target": "tarot/the-fool",
+      "clusterId": "innocent",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/innocent",
+      "target": "tarot/the-sun",
+      "clusterId": "innocent",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/innocent",
+      "target": "enneagram/peacemaker",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/innocent",
+      "target": "mbti/isfj",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/innocent",
+      "target": "mbti/infp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/innocent",
+      "target": "mbti/isfp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "tarot/the-sun",
+      "clusterId": "innocent",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "enneagram/peacemaker",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "mbti/isfj",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "mbti/infp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "mbti/isfp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-sun",
+      "target": "enneagram/peacemaker",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-sun",
+      "target": "mbti/isfj",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-sun",
+      "target": "mbti/infp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-sun",
+      "target": "mbti/isfp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/peacemaker",
+      "target": "mbti/isfj",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/peacemaker",
+      "target": "mbti/infp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/peacemaker",
+      "target": "mbti/isfp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/isfj",
+      "target": "mbti/infp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/isfj",
+      "target": "mbti/isfp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/infp",
+      "target": "mbti/isfp",
+      "clusterId": "innocent",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/explorer",
+      "target": "heros-journey/hero",
+      "clusterId": "explorer",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/explorer",
+      "target": "tarot/the-fool",
+      "clusterId": "explorer",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/explorer",
+      "target": "enneagram/enthusiast",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/explorer",
+      "target": "enneagram/investigator",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/explorer",
+      "target": "heros-journey/herald",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/explorer",
+      "target": "mbti/entp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/explorer",
+      "target": "mbti/enfp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/explorer",
+      "target": "mbti/intp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "tarot/the-fool",
+      "clusterId": "explorer",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "enneagram/enthusiast",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "enneagram/investigator",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "heros-journey/herald",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "mbti/entp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "mbti/enfp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "mbti/intp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "enneagram/enthusiast",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "enneagram/investigator",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "heros-journey/herald",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "mbti/entp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "mbti/enfp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "mbti/intp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/enthusiast",
+      "target": "enneagram/investigator",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/enthusiast",
+      "target": "heros-journey/herald",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/enthusiast",
+      "target": "mbti/entp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/enthusiast",
+      "target": "mbti/enfp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/enthusiast",
+      "target": "mbti/intp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/investigator",
+      "target": "heros-journey/herald",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/investigator",
+      "target": "mbti/entp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/investigator",
+      "target": "mbti/enfp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/investigator",
+      "target": "mbti/intp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/herald",
+      "target": "mbti/entp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/herald",
+      "target": "mbti/enfp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/herald",
+      "target": "mbti/intp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/entp",
+      "target": "mbti/enfp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/entp",
+      "target": "mbti/intp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/enfp",
+      "target": "mbti/intp",
+      "clusterId": "explorer",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/rebel",
+      "target": "enneagram/challenger",
+      "clusterId": "rebel",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/rebel",
+      "target": "tarot/the-tower",
+      "clusterId": "rebel",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/rebel",
+      "target": "heros-journey/trickster",
+      "clusterId": "rebel",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/rebel",
+      "target": "tarot/the-devil",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/rebel",
+      "target": "mbti/entp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/rebel",
+      "target": "mbti/estp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/challenger",
+      "target": "tarot/the-tower",
+      "clusterId": "rebel",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "enneagram/challenger",
+      "target": "heros-journey/trickster",
+      "clusterId": "rebel",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "enneagram/challenger",
+      "target": "tarot/the-devil",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/challenger",
+      "target": "mbti/entp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/challenger",
+      "target": "mbti/estp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "heros-journey/trickster",
+      "clusterId": "rebel",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "tarot/the-devil",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "mbti/entp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "mbti/estp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/trickster",
+      "target": "tarot/the-devil",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/trickster",
+      "target": "mbti/entp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/trickster",
+      "target": "mbti/estp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-devil",
+      "target": "mbti/entp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-devil",
+      "target": "mbti/estp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/entp",
+      "target": "mbti/estp",
+      "clusterId": "rebel",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/caregiver",
+      "target": "enneagram/helper",
+      "clusterId": "caregiver",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "jungian/caregiver",
+      "target": "tarot/the-empress",
+      "clusterId": "caregiver",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/caregiver",
+      "target": "mbti/esfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/caregiver",
+      "target": "mbti/isfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/caregiver",
+      "target": "mbti/enfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/caregiver",
+      "target": "heros-journey/ally",
+      "clusterId": "caregiver",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "enneagram/helper",
+      "target": "tarot/the-empress",
+      "clusterId": "caregiver",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "enneagram/helper",
+      "target": "mbti/esfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/helper",
+      "target": "mbti/isfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/helper",
+      "target": "mbti/enfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/helper",
+      "target": "heros-journey/ally",
+      "clusterId": "caregiver",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-empress",
+      "target": "mbti/esfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-empress",
+      "target": "mbti/isfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-empress",
+      "target": "mbti/enfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-empress",
+      "target": "heros-journey/ally",
+      "clusterId": "caregiver",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "mbti/esfj",
+      "target": "mbti/isfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/esfj",
+      "target": "mbti/enfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/esfj",
+      "target": "heros-journey/ally",
+      "clusterId": "caregiver",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "mbti/isfj",
+      "target": "mbti/enfj",
+      "clusterId": "caregiver",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/isfj",
+      "target": "heros-journey/ally",
+      "clusterId": "caregiver",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "mbti/enfj",
+      "target": "heros-journey/ally",
+      "clusterId": "caregiver",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "jungian/jester",
+      "target": "heros-journey/trickster",
+      "clusterId": "jester",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/jester",
+      "target": "tarot/the-fool",
+      "clusterId": "jester",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/jester",
+      "target": "enneagram/enthusiast",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/jester",
+      "target": "mbti/esfp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/jester",
+      "target": "mbti/entp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/jester",
+      "target": "mbti/enfp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/trickster",
+      "target": "tarot/the-fool",
+      "clusterId": "jester",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/trickster",
+      "target": "enneagram/enthusiast",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/trickster",
+      "target": "mbti/esfp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/trickster",
+      "target": "mbti/entp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/trickster",
+      "target": "mbti/enfp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "enneagram/enthusiast",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "mbti/esfp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "mbti/entp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-fool",
+      "target": "mbti/enfp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/enthusiast",
+      "target": "mbti/esfp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/enthusiast",
+      "target": "mbti/entp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/enthusiast",
+      "target": "mbti/enfp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/esfp",
+      "target": "mbti/entp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/esfp",
+      "target": "mbti/enfp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/entp",
+      "target": "mbti/enfp",
+      "clusterId": "jester",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/creator",
+      "target": "tarot/the-empress",
+      "clusterId": "creator",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/creator",
+      "target": "enneagram/individualist",
+      "clusterId": "creator",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/creator",
+      "target": "tarot/the-magician",
+      "clusterId": "creator",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/creator",
+      "target": "tarot/the-star",
+      "clusterId": "creator",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/creator",
+      "target": "mbti/infj",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/creator",
+      "target": "mbti/infp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/creator",
+      "target": "mbti/enfp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-empress",
+      "target": "enneagram/individualist",
+      "clusterId": "creator",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-empress",
+      "target": "tarot/the-magician",
+      "clusterId": "creator",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-empress",
+      "target": "tarot/the-star",
+      "clusterId": "creator",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-empress",
+      "target": "mbti/infj",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-empress",
+      "target": "mbti/infp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-empress",
+      "target": "mbti/enfp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "tarot/the-magician",
+      "clusterId": "creator",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "tarot/the-star",
+      "clusterId": "creator",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "mbti/infj",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "mbti/infp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "mbti/enfp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-magician",
+      "target": "tarot/the-star",
+      "clusterId": "creator",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-magician",
+      "target": "mbti/infj",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-magician",
+      "target": "mbti/infp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-magician",
+      "target": "mbti/enfp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-star",
+      "target": "mbti/infj",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-star",
+      "target": "mbti/infp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-star",
+      "target": "mbti/enfp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/infj",
+      "target": "mbti/infp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/infj",
+      "target": "mbti/enfp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/infp",
+      "target": "mbti/enfp",
+      "clusterId": "creator",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/everyman",
+      "target": "enneagram/loyalist",
+      "clusterId": "everyman",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/everyman",
+      "target": "enneagram/peacemaker",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/everyman",
+      "target": "mbti/isfj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/everyman",
+      "target": "mbti/esfj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/everyman",
+      "target": "mbti/istj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/loyalist",
+      "target": "enneagram/peacemaker",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/loyalist",
+      "target": "mbti/isfj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/loyalist",
+      "target": "mbti/esfj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/loyalist",
+      "target": "mbti/istj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/peacemaker",
+      "target": "mbti/isfj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/peacemaker",
+      "target": "mbti/esfj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/peacemaker",
+      "target": "mbti/istj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/isfj",
+      "target": "mbti/esfj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/isfj",
+      "target": "mbti/istj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/esfj",
+      "target": "mbti/istj",
+      "clusterId": "everyman",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/shadow",
+      "target": "tarot/the-devil",
+      "clusterId": "antagonists",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/shadow",
+      "target": "tarot/the-moon",
+      "clusterId": "antagonists",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-devil",
+      "target": "tarot/the-moon",
+      "clusterId": "antagonists",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/shapeshifter",
+      "target": "tarot/the-moon",
+      "clusterId": "shapeshifter",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/shapeshifter",
+      "target": "tarot/wheel-of-fortune",
+      "clusterId": "shapeshifter",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/shapeshifter",
+      "target": "jungian/lover",
+      "clusterId": "shapeshifter",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/shapeshifter",
+      "target": "mbti/enfp",
+      "clusterId": "shapeshifter",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "heros-journey/shapeshifter",
+      "target": "mbti/entp",
+      "clusterId": "shapeshifter",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "tarot/wheel-of-fortune",
+      "clusterId": "shapeshifter",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "jungian/lover",
+      "clusterId": "shapeshifter",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "mbti/enfp",
+      "clusterId": "shapeshifter",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "mbti/entp",
+      "clusterId": "shapeshifter",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "jungian/lover",
+      "clusterId": "shapeshifter",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "mbti/enfp",
+      "clusterId": "shapeshifter",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "mbti/entp",
+      "clusterId": "shapeshifter",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "jungian/lover",
+      "target": "mbti/enfp",
+      "clusterId": "shapeshifter",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "jungian/lover",
+      "target": "mbti/entp",
+      "clusterId": "shapeshifter",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "mbti/enfp",
+      "target": "mbti/entp",
+      "clusterId": "shapeshifter",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "heros-journey/threshold-guardian",
+      "target": "enneagram/reformer",
+      "clusterId": "threshold-guardian",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/threshold-guardian",
+      "target": "tarot/justice",
+      "clusterId": "threshold-guardian",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/threshold-guardian",
+      "target": "tarot/strength",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/threshold-guardian",
+      "target": "kwml/the-hero",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/threshold-guardian",
+      "target": "enneagram/loyalist",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/threshold-guardian",
+      "target": "mbti/istj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/threshold-guardian",
+      "target": "mbti/estj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/reformer",
+      "target": "tarot/justice",
+      "clusterId": "threshold-guardian",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "enneagram/reformer",
+      "target": "tarot/strength",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/reformer",
+      "target": "kwml/the-hero",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/reformer",
+      "target": "enneagram/loyalist",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/reformer",
+      "target": "mbti/istj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/reformer",
+      "target": "mbti/estj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/justice",
+      "target": "tarot/strength",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/justice",
+      "target": "kwml/the-hero",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/justice",
+      "target": "enneagram/loyalist",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/justice",
+      "target": "mbti/istj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/justice",
+      "target": "mbti/estj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/strength",
+      "target": "kwml/the-hero",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/strength",
+      "target": "enneagram/loyalist",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/strength",
+      "target": "mbti/istj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/strength",
+      "target": "mbti/estj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "enneagram/loyalist",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "mbti/istj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "mbti/estj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/loyalist",
+      "target": "mbti/istj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/loyalist",
+      "target": "mbti/estj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/istj",
+      "target": "mbti/estj",
+      "clusterId": "threshold-guardian",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/herald",
+      "target": "tarot/judgement",
+      "clusterId": "herald",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/herald",
+      "target": "tarot/the-tower",
+      "clusterId": "herald",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/herald",
+      "target": "tarot/wheel-of-fortune",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/herald",
+      "target": "enneagram/enthusiast",
+      "clusterId": "herald",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "heros-journey/herald",
+      "target": "mbti/enfj",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/herald",
+      "target": "mbti/enfp",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/judgement",
+      "target": "tarot/the-tower",
+      "clusterId": "herald",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/judgement",
+      "target": "tarot/wheel-of-fortune",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/judgement",
+      "target": "enneagram/enthusiast",
+      "clusterId": "herald",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/judgement",
+      "target": "mbti/enfj",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/judgement",
+      "target": "mbti/enfp",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "tarot/wheel-of-fortune",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "enneagram/enthusiast",
+      "clusterId": "herald",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "mbti/enfj",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "mbti/enfp",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "enneagram/enthusiast",
+      "clusterId": "herald",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "mbti/enfj",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "mbti/enfp",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/enthusiast",
+      "target": "mbti/enfj",
+      "clusterId": "herald",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "enneagram/enthusiast",
+      "target": "mbti/enfp",
+      "clusterId": "herald",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "mbti/enfj",
+      "target": "mbti/enfp",
+      "clusterId": "herald",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "kwml/the-hero",
+      "clusterId": "death-rebirth",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "kwml/the-precocious-child",
+      "clusterId": "death-rebirth",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "kwml/the-oedipal-child",
+      "clusterId": "death-rebirth",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "tarot/death",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "tarot/judgement",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "tarot/the-tower",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "tarot/the-hanged-man",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "enneagram/individualist",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "mbti/infj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "mbti/intj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "kwml/the-precocious-child",
+      "clusterId": "death-rebirth",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "kwml/the-oedipal-child",
+      "clusterId": "death-rebirth",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "tarot/death",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "tarot/judgement",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "tarot/the-tower",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "tarot/the-hanged-man",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "enneagram/individualist",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "mbti/infj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "mbti/intj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "kwml/the-oedipal-child",
+      "clusterId": "death-rebirth",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "tarot/death",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "tarot/judgement",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "tarot/the-tower",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "tarot/the-hanged-man",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "enneagram/individualist",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "mbti/infj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "mbti/intj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-oedipal-child",
+      "target": "tarot/death",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-oedipal-child",
+      "target": "tarot/judgement",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-oedipal-child",
+      "target": "tarot/the-tower",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-oedipal-child",
+      "target": "tarot/the-hanged-man",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-oedipal-child",
+      "target": "enneagram/individualist",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-oedipal-child",
+      "target": "mbti/infj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-oedipal-child",
+      "target": "mbti/intj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/death",
+      "target": "tarot/judgement",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/death",
+      "target": "tarot/the-tower",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/death",
+      "target": "tarot/the-hanged-man",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/death",
+      "target": "enneagram/individualist",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/death",
+      "target": "mbti/infj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/death",
+      "target": "mbti/intj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/judgement",
+      "target": "tarot/the-tower",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/judgement",
+      "target": "tarot/the-hanged-man",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/judgement",
+      "target": "enneagram/individualist",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/judgement",
+      "target": "mbti/infj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/judgement",
+      "target": "mbti/intj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "tarot/the-hanged-man",
+      "clusterId": "death-rebirth",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "enneagram/individualist",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "mbti/infj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "mbti/intj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "enneagram/individualist",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "mbti/infj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "mbti/intj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "mbti/infj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "enneagram/individualist",
+      "target": "mbti/intj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "mbti/infj",
+      "target": "mbti/intj",
+      "clusterId": "death-rebirth",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "kwml/the-warrior",
+      "clusterId": "integration",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "kwml/the-magician",
+      "clusterId": "integration",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "kwml/the-lover",
+      "clusterId": "integration",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "tarot/the-world",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "tarot/temperance",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "tarot/the-sun",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "tarot/the-emperor",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "tarot/the-hierophant",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-king",
+      "target": "jungian/ruler",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "kwml/the-magician",
+      "clusterId": "integration",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "kwml/the-lover",
+      "clusterId": "integration",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "tarot/the-world",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "tarot/temperance",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "tarot/the-sun",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "tarot/the-emperor",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "tarot/the-hierophant",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-warrior",
+      "target": "jungian/ruler",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "kwml/the-lover",
+      "clusterId": "integration",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "tarot/the-world",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "tarot/temperance",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "tarot/the-sun",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "tarot/the-emperor",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "tarot/the-hierophant",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-magician",
+      "target": "jungian/ruler",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "tarot/the-world",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "tarot/temperance",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "tarot/the-sun",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "tarot/the-emperor",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "tarot/the-hierophant",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-lover",
+      "target": "jungian/ruler",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-world",
+      "target": "tarot/temperance",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-world",
+      "target": "tarot/the-sun",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-world",
+      "target": "tarot/the-emperor",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-world",
+      "target": "tarot/the-hierophant",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-world",
+      "target": "jungian/ruler",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/temperance",
+      "target": "tarot/the-sun",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/temperance",
+      "target": "tarot/the-emperor",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/temperance",
+      "target": "tarot/the-hierophant",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/temperance",
+      "target": "jungian/ruler",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-sun",
+      "target": "tarot/the-emperor",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-sun",
+      "target": "tarot/the-hierophant",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-sun",
+      "target": "jungian/ruler",
+      "clusterId": "integration",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-emperor",
+      "target": "tarot/the-hierophant",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-emperor",
+      "target": "jungian/ruler",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-hierophant",
+      "target": "jungian/ruler",
+      "clusterId": "integration",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/mentor",
+      "target": "tarot/the-hierophant",
+      "clusterId": "teacher",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/mentor",
+      "target": "jungian/sage",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/mentor",
+      "target": "enneagram/reformer",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/mentor",
+      "target": "mbti/enfj",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/mentor",
+      "target": "mbti/estj",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-hierophant",
+      "target": "jungian/sage",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-hierophant",
+      "target": "enneagram/reformer",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-hierophant",
+      "target": "mbti/enfj",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-hierophant",
+      "target": "mbti/estj",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/sage",
+      "target": "enneagram/reformer",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/sage",
+      "target": "mbti/enfj",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/sage",
+      "target": "mbti/estj",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/reformer",
+      "target": "mbti/enfj",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/reformer",
+      "target": "mbti/estj",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "mbti/enfj",
+      "target": "mbti/estj",
+      "clusterId": "teacher",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "jungian/hero",
+      "clusterId": "boy-hero",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "enneagram/achiever",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "kwml/the-precocious-child",
+      "clusterId": "boy-hero",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "heros-journey/hero",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "tarot/the-chariot",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-hero",
+      "target": "mbti/estp",
+      "clusterId": "boy-hero",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "jungian/hero",
+      "target": "enneagram/achiever",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/hero",
+      "target": "kwml/the-precocious-child",
+      "clusterId": "boy-hero",
+      "confidence": "canonical",
+      "weight": 1
+    },
+    {
+      "source": "jungian/hero",
+      "target": "heros-journey/hero",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/hero",
+      "target": "tarot/the-chariot",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "jungian/hero",
+      "target": "mbti/estp",
+      "clusterId": "boy-hero",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "enneagram/achiever",
+      "target": "kwml/the-precocious-child",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "enneagram/achiever",
+      "target": "heros-journey/hero",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "enneagram/achiever",
+      "target": "tarot/the-chariot",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "enneagram/achiever",
+      "target": "mbti/estp",
+      "clusterId": "boy-hero",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "heros-journey/hero",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "tarot/the-chariot",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "kwml/the-precocious-child",
+      "target": "mbti/estp",
+      "clusterId": "boy-hero",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "tarot/the-chariot",
+      "clusterId": "boy-hero",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/hero",
+      "target": "mbti/estp",
+      "clusterId": "boy-hero",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-chariot",
+      "target": "mbti/estp",
+      "clusterId": "boy-hero",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "tarot/the-hanged-man",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "tarot/wheel-of-fortune",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "tarot/death",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "tarot/the-devil",
+      "clusterId": "liminal-territory",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "tarot/the-tower",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "heros-journey/shapeshifter",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "heros-journey/trickster",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "kwml/the-divine-child",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-moon",
+      "target": "enneagram/individualist",
+      "clusterId": "liminal-territory",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "tarot/wheel-of-fortune",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "tarot/death",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "tarot/the-devil",
+      "clusterId": "liminal-territory",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "tarot/the-tower",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "heros-journey/shapeshifter",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "heros-journey/trickster",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "kwml/the-divine-child",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-hanged-man",
+      "target": "enneagram/individualist",
+      "clusterId": "liminal-territory",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "tarot/death",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "tarot/the-devil",
+      "clusterId": "liminal-territory",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "tarot/the-tower",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "heros-journey/shapeshifter",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "heros-journey/trickster",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "kwml/the-divine-child",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/wheel-of-fortune",
+      "target": "enneagram/individualist",
+      "clusterId": "liminal-territory",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/death",
+      "target": "tarot/the-devil",
+      "clusterId": "liminal-territory",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/death",
+      "target": "tarot/the-tower",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/death",
+      "target": "heros-journey/shapeshifter",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/death",
+      "target": "heros-journey/trickster",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/death",
+      "target": "kwml/the-divine-child",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/death",
+      "target": "enneagram/individualist",
+      "clusterId": "liminal-territory",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-devil",
+      "target": "tarot/the-tower",
+      "clusterId": "liminal-territory",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-devil",
+      "target": "heros-journey/shapeshifter",
+      "clusterId": "liminal-territory",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-devil",
+      "target": "heros-journey/trickster",
+      "clusterId": "liminal-territory",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-devil",
+      "target": "kwml/the-divine-child",
+      "clusterId": "liminal-territory",
+      "confidence": "moderate",
+      "weight": 0.5
+    },
+    {
+      "source": "tarot/the-devil",
+      "target": "enneagram/individualist",
+      "clusterId": "liminal-territory",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "heros-journey/shapeshifter",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "heros-journey/trickster",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "kwml/the-divine-child",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "tarot/the-tower",
+      "target": "enneagram/individualist",
+      "clusterId": "liminal-territory",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "heros-journey/shapeshifter",
+      "target": "heros-journey/trickster",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/shapeshifter",
+      "target": "kwml/the-divine-child",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/shapeshifter",
+      "target": "enneagram/individualist",
+      "clusterId": "liminal-territory",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "heros-journey/trickster",
+      "target": "kwml/the-divine-child",
+      "clusterId": "liminal-territory",
+      "confidence": "strong",
+      "weight": 0.75
+    },
+    {
+      "source": "heros-journey/trickster",
+      "target": "enneagram/individualist",
+      "clusterId": "liminal-territory",
+      "confidence": "speculative",
+      "weight": 0.3
+    },
+    {
+      "source": "kwml/the-divine-child",
+      "target": "enneagram/individualist",
+      "clusterId": "liminal-territory",
+      "confidence": "speculative",
+      "weight": 0.3
+    }
+  ]
+}

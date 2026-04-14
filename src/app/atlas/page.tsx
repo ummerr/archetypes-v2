@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CLUSTERS, OPEN_QUESTIONS, CONFIDENCE_TIERS, ATLAS_AXES, type ConfidenceTier } from "@/data/resonance";
+import { CLUSTERS, OPEN_QUESTIONS, CONFIDENCE_TIERS, ATLAS_AXES, type ConfidenceTier, type SystemId } from "@/data/resonance";
 import { archetypeDisplayName, archetypeHref, systemAccent } from "@/lib/resonance";
+import { SYSTEMS } from "@/data/systems";
 import { buildPageMetadata } from "@/lib/site";
 import HermeneuticCaveat from "@/components/shared/HermeneuticCaveat";
 import SectionHeading from "@/components/shared/SectionHeading";
 import ConfidenceBadge from "@/components/shared/ConfidenceBadge";
+import ResonanceConstellation, {
+  type ConstellationLayout,
+  type ConstellationNodeMeta,
+} from "@/components/viz/ResonanceConstellation";
+import constellationLayout from "@/data/constellation-layout.json";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "The Atlas — Cross-System Resonance Map",
@@ -27,12 +33,54 @@ export default function AtlasPage() {
   for (const c of CLUSTERS) for (const a of c.archetypes) distribution[a.confidence]++;
   const total = Object.values(distribution).reduce((s, n) => s + n, 0);
 
+  const layout = constellationLayout as unknown as ConstellationLayout;
+  const clusterThemeById: Record<string, string> = Object.fromEntries(
+    CLUSTERS.map((c) => [c.id, c.theme]),
+  );
+  const nodeMeta: Record<string, ConstellationNodeMeta> = {};
+  for (const n of layout.nodes) {
+    nodeMeta[n.id] = {
+      displayName: archetypeDisplayName(n.system as SystemId, n.slug) ?? n.slug,
+      clusterNames: n.clusterIds
+        .map((cid) => clusterThemeById[cid]?.split("—")[0].trim().split(" - ")[0].trim())
+        .filter(Boolean) as string[],
+    };
+  }
+  const constellationSystems = SYSTEMS.map((s) => ({
+    id: s.id as SystemId,
+    name: s.name,
+    accent: s.accent,
+  }));
+  const constellationClusters = CLUSTERS.map((c) => ({ id: c.id, theme: c.theme }));
+
   return (
     <div className="max-w-6xl mx-auto px-6 md:px-10 py-20">
       <SectionHeading kicker="Atlas" as="h1">
         The Cross-System Resonance Map
       </SectionHeading>
       <HermeneuticCaveat variant="banner" className="mb-10" />
+
+      <section className="mb-16">
+        <div className="mb-4 flex items-baseline justify-between flex-wrap gap-2">
+          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80">
+            The Constellation
+          </p>
+          <p className="font-serif italic text-xs text-text-secondary/70">
+            {layout.nodes.length} archetypes · {layout.edges.length} resonances · six traditions
+          </p>
+        </div>
+        <ResonanceConstellation
+          layout={layout}
+          systems={constellationSystems}
+          clusters={constellationClusters}
+          nodeMeta={nodeMeta}
+        />
+        <p className="mt-4 font-serif text-sm italic text-text-secondary/75 max-w-2xl">
+          Each point is an archetype, colored by its tradition and sized by how densely it converges with others.
+          Lines are intra-cluster resonances, weighted by the confidence we give the mapping. Hover a node to isolate
+          its neighborhood; hover a cluster label to see its constellation; tap to open the archetype.
+        </p>
+      </section>
 
       <section className="mb-16">
         <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
