@@ -3,9 +3,10 @@
 import { motion } from "framer-motion";
 import { CLUSTER_AXES } from "@/data/atlas-lens-axes";
 
-export type TotemSize = "sm" | "md" | "lg" | "hero";
+export type TotemSize = "xs" | "sm" | "md" | "lg" | "hero";
 
 const SIZE_PX: Record<TotemSize, number> = {
+  xs: 22,
   sm: 40,
   md: 72,
   lg: 120,

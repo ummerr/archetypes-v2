@@ -14,6 +14,7 @@ import ConfidenceBadge from "@/components/shared/ConfidenceBadge";
 import CitationLine from "@/components/shared/CitationLine";
 import SectionHeading from "@/components/shared/SectionHeading";
 import ClusterTotem from "@/components/viz/ClusterTotem";
+import ArchetypeMark from "@/components/shared/ArchetypeMark";
 import { CLUSTER_AXES, STAGE_LABELS, AFFECT_LABELS, STANCE_LABELS } from "@/data/atlas-lens-axes";
 
 export function generateStaticParams() {
@@ -102,10 +103,20 @@ export default async function ClusterPage({
               className="rounded-sm border p-4"
               style={{ borderColor: `${accent}30` }}
             >
-              <div className="flex items-baseline justify-between gap-2 mb-2">
-                <p className="font-mono text-[9px] tracking-[0.3em] uppercase" style={{ color: accent }}>
-                  {systemName}
-                </p>
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="shrink-0 inline-flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                    <ArchetypeMark
+                      system={entry.system}
+                      slug={entry.slug}
+                      color={accent}
+                      title={displayName}
+                    />
+                  </span>
+                  <p className="font-mono text-[9px] tracking-[0.3em] uppercase truncate" style={{ color: accent }}>
+                    {systemName}
+                  </p>
+                </div>
                 <ConfidenceBadge tier={entry.confidence} color={accent} />
               </div>
               <Link
