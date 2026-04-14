@@ -6,17 +6,20 @@ import { useTheme } from "@/components/ThemeProvider";
 export interface ExemplarBrand {
   name: string;
   note: string;
+  source?: string;
 }
 
 export interface ExemplarCultural {
   name: string;
   medium: string;
   note: string;
+  source?: string;
 }
 
 export interface ExemplarHistorical {
   name: string;
   note: string;
+  source?: string;
 }
 
 export interface ExemplarSet {
@@ -37,18 +40,18 @@ export default function ExemplarsTabs({ color, exemplars }: Props) {
   const light = theme === "light";
 
   const tabs: { key: TabKey; label: string }[] = [];
+  tabs.push({ key: "cultural", label: "Cultural" });
+  tabs.push({ key: "historical", label: "Historical" });
   if (exemplars.brands && exemplars.brands.length) {
     tabs.push({ key: "brands", label: "Brands" });
   }
-  tabs.push({ key: "cultural", label: "Cultural" });
-  tabs.push({ key: "historical", label: "Historical" });
 
   const [active, setActive] = useState<TabKey>(tabs[0].key);
 
   const renderRows = () => {
     if (active === "brands" && exemplars.brands) {
       return exemplars.brands.map((e) => (
-        <Row key={e.name} name={e.name} note={e.note} color={color} light={light} />
+        <Row key={e.name} name={e.name} note={e.note} source={e.source} color={color} light={light} />
       ));
     }
     if (active === "cultural") {
@@ -58,13 +61,14 @@ export default function ExemplarsTabs({ color, exemplars }: Props) {
           name={e.name}
           tag={e.medium}
           note={e.note}
+          source={e.source}
           color={color}
           light={light}
         />
       ));
     }
     return exemplars.historical.map((e) => (
-      <Row key={e.name} name={e.name} note={e.note} color={color} light={light} />
+      <Row key={e.name} name={e.name} note={e.note} source={e.source} color={color} light={light} />
     ));
   };
 
@@ -117,12 +121,14 @@ function Row({
   name,
   tag,
   note,
+  source,
   color,
   light,
 }: {
   name: string;
   tag?: string;
   note: string;
+  source?: string;
   color: string;
   light: boolean;
 }) {
@@ -153,6 +159,14 @@ function Row({
       <p className="text-text-secondary text-sm leading-relaxed font-light">
         {note}
       </p>
+      {source ? (
+        <p
+          className="mt-2 font-mono text-[9px] tracking-[0.2em] uppercase text-muted opacity-70"
+          style={{ borderTop: `1px dashed ${color}${light ? "18" : "0E"}`, paddingTop: "0.4rem" }}
+        >
+          {source}
+        </p>
+      ) : null}
     </div>
   );
 }

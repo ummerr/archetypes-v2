@@ -21,17 +21,20 @@ export interface JungianAwakening {
 export interface JungianBrandExemplar {
   name: string;
   note: string;
+  source?: string;
 }
 
 export interface JungianCulturalExemplar {
   name: string;
   medium: string;
   note: string;
+  source?: string;
 }
 
 export interface JungianHistoricalExemplar {
   name: string;
   note: string;
+  source?: string;
 }
 
 export interface JungianExemplars {
