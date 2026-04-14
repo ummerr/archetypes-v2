@@ -6,15 +6,37 @@ import {
   SYSTEM_ORDER,
   type IndexEntry,
 } from "@/data/allArchetypes";
+import {
+  AGE_ORDER,
+  AGE_LABEL,
+  AGE_COLOR,
+  VALENCE_ORDER,
+  VALENCE_LABEL,
+  VALENCE_COLOR,
+  INTROVERSION_ORDER,
+  INTROVERSION_LABEL,
+  INTROVERSION_COLOR,
+} from "@/data/indexTags";
 import ArchetypeIndexCard from "@/components/shared/ArchetypeIndexCard";
 import { useTheme } from "@/components/ThemeProvider";
 
-type GroupMode = "system" | "inner" | "alpha" | "hue" | "shuffle";
+type GroupMode =
+  | "system"
+  | "inner"
+  | "alpha"
+  | "hue"
+  | "shuffle"
+  | "age"
+  | "valence"
+  | "introversion";
 
 const GROUP_OPTIONS: { id: GroupMode; label: string }[] = [
   { id: "system", label: "By System" },
   { id: "inner", label: "By Group" },
   { id: "alpha", label: "Alphabetical" },
+  { id: "age", label: "By Age" },
+  { id: "valence", label: "Light → Dark" },
+  { id: "introversion", label: "Inward → Outward" },
   { id: "hue", label: "By Hue" },
   { id: "shuffle", label: "Shuffle" },
 ];
@@ -88,6 +110,57 @@ export default function IndexView() {
           entries: sorted,
         },
       ];
+    }
+
+    const tagSection = <K extends string>(
+      order: readonly K[],
+      labelMap: Record<K, string>,
+      colorMap: Record<K, string>,
+      prefix: string,
+      getter: (e: IndexEntry) => K
+    ): Section[] => {
+      return order
+        .map((key) => {
+          const entries = filtered.filter((e) => getter(e) === key);
+          if (entries.length === 0) return null;
+          return {
+            key: `${prefix}-${key}`,
+            label: labelMap[key],
+            color: colorMap[key],
+            entries,
+          } as Section;
+        })
+        .filter((s): s is Section => !!s);
+    };
+
+    if (mode === "age") {
+      return tagSection(
+        AGE_ORDER,
+        AGE_LABEL,
+        AGE_COLOR,
+        "age",
+        (e) => e.tags.age
+      );
+    }
+
+    if (mode === "valence") {
+      return tagSection(
+        VALENCE_ORDER,
+        VALENCE_LABEL,
+        VALENCE_COLOR,
+        "valence",
+        (e) => e.tags.valence
+      );
+    }
+
+    if (mode === "introversion") {
+      return tagSection(
+        INTROVERSION_ORDER,
+        INTROVERSION_LABEL,
+        INTROVERSION_COLOR,
+        "intro",
+        (e) => e.tags.introversion
+      );
     }
 
     if (mode === "shuffle") {

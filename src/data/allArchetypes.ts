@@ -1,4 +1,5 @@
 import { SYSTEMS } from "./systems";
+import { tagsFor, type IndexTagSet } from "./indexTags";
 import { ALL_JUNGIAN, JUNGIAN_CLUSTERS } from "./jungian/archetypes";
 import {
   ALL_ENNEAGRAM,
@@ -29,6 +30,7 @@ export interface IndexEntry {
   symbol?: string;
   accentColor: string;
   innerGroup: { id: string; label: string; color: string };
+  tags: IndexTagSet;
 }
 
 const sysByIdMap = Object.fromEntries(SYSTEMS.map((s) => [s.id, s]));
@@ -71,6 +73,7 @@ const jungianEntries: IndexEntry[] = ALL_JUNGIAN.map((a) => {
     symbol: a.symbol,
     accentColor: a.accentColor,
     innerGroup: { id: `jungian-${cluster.id}`, label: cluster.label, color: cluster.color },
+    tags: tagsFor("jungian", a.slug),
   };
 });
 
@@ -89,6 +92,7 @@ const enneagramEntries: IndexEntry[] = ALL_ENNEAGRAM.map((a) => {
     symbol: a.symbol,
     accentColor: a.accentColor,
     innerGroup: { id: `enneagram-${triad.id}`, label: triad.label, color: triad.color },
+    tags: tagsFor("enneagram", a.slug),
   };
 });
 
@@ -111,6 +115,7 @@ const kwmlEntries: IndexEntry[] = ALL_KWML.map((a) => {
       label: `${fam.label} · ${a.maturity === "man" ? "Man" : "Boy"}`,
       color: fam.color,
     },
+    tags: tagsFor("kwml", a.slug),
   };
 });
 
@@ -129,6 +134,7 @@ const mbtiEntries: IndexEntry[] = ALL_MBTI.map((a) => {
     symbol: a.code,
     accentColor: temp.primary,
     innerGroup: { id: `mbti-${temp.id}`, label: temp.label, color: temp.primary },
+    tags: tagsFor("mbti", a.slug),
   };
 });
 
@@ -146,6 +152,7 @@ const hjEntries: IndexEntry[] = ALL_HEROSJOURNEY.map((a) => {
     symbol: a.symbol,
     accentColor: a.accentColor,
     innerGroup: { id: `hj-${a.role}`, label: titleCase(a.role), color: a.accentColor },
+    tags: tagsFor("heros-journey", a.slug),
   };
 });
 
@@ -164,6 +171,7 @@ const tarotEntries: IndexEntry[] = ALL_TAROT.map((a) => {
     symbol: a.symbol,
     accentColor: a.accentColor,
     innerGroup: { id: `tarot-${phase.id}`, label: phase.label, color: phase.color },
+    tags: tagsFor("tarot", a.slug),
   };
 });
 
