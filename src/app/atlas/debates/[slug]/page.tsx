@@ -11,7 +11,14 @@ import {
   systemAccent,
 } from "@/lib/resonance";
 import { buildPageMetadata } from "@/lib/site";
-import { getMetaDebate, META_DEBATES } from "@/data/debates";
+import {
+  getMetaDebate,
+  META_DEBATES,
+  CONFIDENCE_LABEL,
+  IMPACT_LABEL,
+  STATUS_LABEL,
+  STATUS_COLOR,
+} from "@/data/debates";
 import SectionHeading from "@/components/shared/SectionHeading";
 import ConfidenceBadge from "@/components/shared/ConfidenceBadge";
 
@@ -149,6 +156,58 @@ function MetaDebateView({ debate }: { debate: ReturnType<typeof getMetaDebate> &
           {debate.heading}
         </SectionHeading>
       </div>
+
+      <dl className="mt-6 mb-10 grid grid-cols-1 sm:grid-cols-3 gap-4 border-y border-surface-light/40 py-4">
+        <div>
+          <dt className="font-mono text-[9px] tracking-[0.3em] uppercase text-muted/70 mb-1.5">
+            Site confidence
+          </dt>
+          <dd className="flex items-center gap-2">
+            <div className="flex gap-1">
+              {[1, 2, 3].map((i) => {
+                const v = debate.confidence === "high" ? 3 : debate.confidence === "moderate" ? 2 : 1;
+                return (
+                  <span
+                    key={i}
+                    className="block w-6 h-[3px] rounded-sm"
+                    style={{ background: i <= v ? "var(--gold, #c9a961)" : "rgba(255,255,255,0.08)" }}
+                  />
+                );
+              })}
+            </div>
+            <span className="font-serif italic text-[13px] text-text-secondary/85">
+              {CONFIDENCE_LABEL[debate.confidence]}
+            </span>
+          </dd>
+        </div>
+        <div>
+          <dt className="font-mono text-[9px] tracking-[0.3em] uppercase text-muted/70 mb-1.5">
+            Impact on map
+          </dt>
+          <dd className="font-serif italic text-[13px] text-text-secondary/85">
+            {IMPACT_LABEL[debate.impact]}
+            {debate.impact === "structural" ? " — shapes the frame" : " — local to one system"}
+          </dd>
+        </div>
+        <div>
+          <dt className="font-mono text-[9px] tracking-[0.3em] uppercase text-muted/70 mb-1.5">
+            Status
+          </dt>
+          <dd className="inline-flex items-center gap-2">
+            <span
+              aria-hidden
+              className="w-2 h-2 rounded-full"
+              style={{
+                background: STATUS_COLOR[debate.status],
+                boxShadow: `0 0 0 3px ${STATUS_COLOR[debate.status]}1f`,
+              }}
+            />
+            <span className="font-serif italic text-[13px] text-text-secondary/85">
+              {STATUS_LABEL[debate.status]}
+            </span>
+          </dd>
+        </div>
+      </dl>
 
       <section className="mb-10">
         <h2 className="font-serif text-xl font-medium mb-2">The case for</h2>

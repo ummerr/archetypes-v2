@@ -10,8 +10,6 @@ export const SITE_TAGLINE =
 
 export const SITE_AUTHOR = "ummerr";
 
-export const DEFAULT_OG_IMAGE = "/og/default.png";
-
 export function absoluteUrl(path: string): string {
   if (!path.startsWith("/")) path = `/${path}`;
   return `${SITE_URL}${path === "/" ? "" : path}`;
