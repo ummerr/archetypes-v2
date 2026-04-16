@@ -16,6 +16,11 @@ import SectionHeading from "@/components/shared/SectionHeading";
 import ClusterTotem from "@/components/viz/ClusterTotem";
 import ArchetypeMark from "@/components/shared/ArchetypeMark";
 import { CLUSTER_AXES, STAGE_LABELS, AFFECT_LABELS, STANCE_LABELS } from "@/data/atlas-lens-axes";
+import { CLUSTER_PEDAGOGY } from "@/data/cluster-pedagogy";
+import ClusterVignettes from "@/components/atlas/ClusterVignettes";
+import ClusterExemplarGrid from "@/components/atlas/ClusterExemplarGrid";
+import ClusterDevelopmentalArc from "@/components/atlas/ClusterDevelopmentalArc";
+import ClusterShadowFaces from "@/components/atlas/ClusterShadowFaces";
 
 export function generateStaticParams() {
   return CLUSTERS.map((c) => ({ id: c.id }));
@@ -93,7 +98,29 @@ export default async function ClusterPage({
         </p>
       )}
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+      {(() => {
+        const ped = CLUSTER_PEDAGOGY[cluster.id];
+        const motif = CLUSTER_AXES[cluster.id]?.motifColor ?? "#d4af37";
+        return (
+          <div className="mt-10">
+            {ped?.vignettes && (
+              <ClusterVignettes vignettes={ped.vignettes} color={motif} />
+            )}
+            <ClusterExemplarGrid clusterId={cluster.id} />
+            {ped?.developmentalArc && (
+              <ClusterDevelopmentalArc arc={ped.developmentalArc} color={motif} />
+            )}
+            {ped?.shadowFaces && (
+              <ClusterShadowFaces faces={ped.shadowFaces} color={motif} />
+            )}
+          </div>
+        );
+      })()}
+
+      <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mt-4 mb-3">
+        Archetypes across six systems
+      </p>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {cluster.archetypes.map((entry) => {
           const { accent, name: systemName } = systemAccent(entry.system);
           const displayName = archetypeDisplayName(entry.system, entry.slug) ?? entry.slug;

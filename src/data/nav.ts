@@ -63,6 +63,7 @@ export const INDEX_LINK: NavLink = {
 export const ATLAS_LINKS: NavLink[] = [
   { label: "The Atlas", href: "/atlas", desc: "Cross-system constellation" },
   { label: "Debates", href: "/atlas/debates", desc: "Contested mappings" },
+  { label: "Figures", href: "/atlas/exemplars", desc: "The figures each tradition reads" },
   INDEX_LINK,
 ];
 
