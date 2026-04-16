@@ -1,17 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { CLUSTER_AXES } from "@/data/atlas-lens-axes";
+import { TOTEM_PX, type TotemSize } from "@/lib/totem-sizes";
+import { spin, breath, pulse, shimmer } from "@/lib/motion-primitives";
 
-export type TotemSize = "xs" | "sm" | "md" | "lg" | "hero";
-
-const SIZE_PX: Record<TotemSize, number> = {
-  xs: 22,
-  sm: 40,
-  md: 72,
-  lg: 120,
-  hero: 200,
-};
+export type { TotemSize };
 
 interface Props {
   id: string;
@@ -30,9 +24,11 @@ export default function ClusterTotem({
   className,
   title,
 }: Props) {
+  const prefersReducedMotion = useReducedMotion();
+  const motionOn = animated && !prefersReducedMotion;
   const axes = CLUSTER_AXES[id];
   const stroke = color ?? axes?.motifColor ?? "#c9b884";
-  const px = SIZE_PX[size];
+  const px = TOTEM_PX[size];
   const Motif = MOTIFS[id] ?? MOTIFS.default;
 
   return (
@@ -45,30 +41,10 @@ export default function ClusterTotem({
       aria-label={title}
       style={{ color: stroke }}
     >
-      <Motif animated={animated} />
+      <Motif animated={motionOn} />
     </svg>
   );
 }
-
-// ---------- Shared primitives ----------
-
-const spin = (duration = 14) => ({
-  rotate: 360,
-  transition: { duration, ease: "linear" as const, repeat: Infinity },
-});
-const breath = (duration = 4) => ({
-  scale: [1, 1.05, 1],
-  transition: { duration, ease: "easeInOut" as const, repeat: Infinity },
-});
-const pulse = (duration = 2.2) => ({
-  opacity: [0.55, 1, 0.55],
-  transition: { duration, ease: "easeInOut" as const, repeat: Infinity },
-});
-const shimmer = (duration = 3) => ({
-  pathLength: [0, 1, 1],
-  opacity: [0, 1, 0.5],
-  transition: { duration, ease: "easeInOut" as const, repeat: Infinity },
-});
 
 type MotifProps = { animated: boolean };
 const S = { cx: 50, cy: 50 };

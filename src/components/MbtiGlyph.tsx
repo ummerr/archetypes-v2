@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { MbtiArchetype, CognitiveFunction } from "@/types/mbti";
 import { getFunction } from "@/data/mbti/functions";
 import { getTemperament } from "@/data/mbti/archetypes";
@@ -16,6 +16,11 @@ interface Props {
   ambient?: boolean;
 }
 
+/**
+ * MBTI glyph pixel map. Calibrated denser than the canonical TotemSize
+ * scale because the cognitive-geometry primitives need the space to
+ * read. See DESIGN.md §3 note on MBTI sizing.
+ */
 const DIMS: Record<Size, number> = { sm: 72, md: 128, lg: 200 };
 
 /**
@@ -34,6 +39,8 @@ export default function MbtiGlyph({
 }: Props) {
   const { theme } = useTheme();
   const light = theme === "light";
+  const prefersReducedMotion = useReducedMotion();
+  const motionOn = !prefersReducedMotion;
   const dim = DIMS[size];
   const temp = getTemperament(archetype.temperament);
   const primary = light ? temp.secondary : temp.primary;
@@ -53,7 +60,7 @@ export default function MbtiGlyph({
         height={dim}
         className="overflow-visible"
         whileHover={interactive ? { scale: 1.04 } : undefined}
-        animate={{ scale: [1, 1.015, 1] }}
+        animate={motionOn ? { scale: [1, 1.015, 1] } : undefined}
         transition={{
           scale: { duration: 7, repeat: Infinity, ease: "easeInOut" },
           default: { type: "spring", stiffness: 220, damping: 18 },
@@ -69,7 +76,7 @@ export default function MbtiGlyph({
           strokeOpacity={light ? 0.18 : 0.14}
           strokeWidth={0.4}
           strokeDasharray="1 4"
-          animate={{ rotate: 360 }}
+          animate={motionOn ? { rotate: 360 } : undefined}
           transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
           style={{ transformOrigin: "50px 50px" }}
         />
@@ -81,6 +88,7 @@ export default function MbtiGlyph({
           opacity={light ? 0.5 : 0.42}
           strokeWidth={0.8}
           weight="aux"
+          motionOn={motionOn}
         />
 
         {/* Dominant layer (foreground, heavier) */}
@@ -90,6 +98,7 @@ export default function MbtiGlyph({
           opacity={light ? 0.95 : 0.9}
           strokeWidth={1.4}
           weight="dom"
+          motionOn={motionOn}
         />
       </motion.svg>
     </div>
@@ -102,60 +111,31 @@ function FunctionPrimitive({
   opacity,
   strokeWidth,
   weight,
+  motionOn,
 }: {
   fn: CognitiveFunction;
   color: string;
   opacity: number;
   strokeWidth: number;
   weight: "dom" | "aux";
+  motionOn: boolean;
 }) {
   const outward = fn.attitude === "e";
   const scale = weight === "dom" ? (outward ? 1.0 : 0.64) : outward ? 0.9 : 0.52;
   const speedMul = weight === "dom" ? 1 : 1.8;
 
   const common = { stroke: color, strokeOpacity: opacity, fill: "none" as const };
+  const shared = { strokeWidth, scale, outward, speedMul, motionOn };
 
   switch (fn.process) {
     case "N":
-      return (
-        <NodeBurst
-          {...common}
-          strokeWidth={strokeWidth}
-          scale={scale}
-          outward={outward}
-          speedMul={speedMul}
-        />
-      );
+      return <NodeBurst {...common} {...shared} />;
     case "S":
-      return (
-        <SquareStack
-          {...common}
-          strokeWidth={strokeWidth}
-          scale={scale}
-          outward={outward}
-          speedMul={speedMul}
-        />
-      );
+      return <SquareStack {...common} {...shared} />;
     case "T":
-      return (
-        <GridCross
-          {...common}
-          strokeWidth={strokeWidth}
-          scale={scale}
-          outward={outward}
-          speedMul={speedMul}
-        />
-      );
+      return <GridCross {...common} {...shared} />;
     case "F":
-      return (
-        <CircleRings
-          {...common}
-          strokeWidth={strokeWidth}
-          scale={scale}
-          outward={outward}
-          speedMul={speedMul}
-        />
-      );
+      return <CircleRings {...common} {...shared} />;
   }
 }
 
@@ -167,9 +147,10 @@ type PrimProps = {
   scale: number;
   outward: boolean;
   speedMul: number;
+  motionOn: boolean;
 };
 
-function NodeBurst({ scale, outward, speedMul, ...p }: PrimProps) {
+function NodeBurst({ scale, outward, speedMul, motionOn, ...p }: PrimProps) {
   const r = 32 * scale;
   const cx = 50;
   const cy = 50;
@@ -178,7 +159,7 @@ function NodeBurst({ scale, outward, speedMul, ...p }: PrimProps) {
   const spinDur = (outward ? 28 : 44) * speedMul;
   return (
     <motion.g
-      animate={{ rotate: outward ? 360 : -360 }}
+      animate={motionOn ? { rotate: outward ? 360 : -360 } : undefined}
       transition={{ duration: spinDur, repeat: Infinity, ease: "linear" }}
       style={{ transformOrigin: "50px 50px" }}
     >
@@ -195,10 +176,14 @@ function NodeBurst({ scale, outward, speedMul, ...p }: PrimProps) {
             y2={cy + Math.sin(a) * outerBase}
             {...p}
             strokeLinecap="round"
-            animate={{
-              pathLength: outward ? [0.7, 1, 0.7] : [1, 0.75, 1],
-              opacity: [p.strokeOpacity * 0.75, p.strokeOpacity, p.strokeOpacity * 0.75],
-            }}
+            animate={
+              motionOn
+                ? {
+                    pathLength: outward ? [0.7, 1, 0.7] : [1, 0.75, 1],
+                    opacity: [p.strokeOpacity * 0.75, p.strokeOpacity, p.strokeOpacity * 0.75],
+                  }
+                : undefined
+            }
             transition={{
               duration: pulseDur,
               repeat: Infinity,
@@ -215,7 +200,7 @@ function NodeBurst({ scale, outward, speedMul, ...p }: PrimProps) {
         {...p}
         fill={p.stroke}
         fillOpacity={p.strokeOpacity * 0.4}
-        animate={{ scale: [1, outward ? 1.25 : 0.75, 1] }}
+        animate={motionOn ? { scale: [1, outward ? 1.25 : 0.75, 1] } : undefined}
         transition={{ duration: pulseDur, repeat: Infinity, ease: "easeInOut" }}
         style={{ transformOrigin: "50px 50px" }}
       />
@@ -223,7 +208,7 @@ function NodeBurst({ scale, outward, speedMul, ...p }: PrimProps) {
   );
 }
 
-function SquareStack({ scale, outward, speedMul, ...p }: PrimProps) {
+function SquareStack({ scale, outward, speedMul, motionOn, ...p }: PrimProps) {
   const s = 54 * scale;
   const cx = 50;
   const cy = 50;
@@ -238,13 +223,13 @@ function SquareStack({ scale, outward, speedMul, ...p }: PrimProps) {
         height={s}
         {...p}
         strokeLinejoin="miter"
-        animate={{ scale: [1, outward ? 1.03 : 0.96, 1] }}
+        animate={motionOn ? { scale: [1, outward ? 1.03 : 0.96, 1] } : undefined}
         transition={{ duration: dur, repeat: Infinity, ease: "easeInOut" }}
         style={{ transformOrigin: "50px 50px" }}
       />
       {outward ? (
         <motion.g
-          animate={{ x: [-2, 2, -2] }}
+          animate={motionOn ? { x: [-2, 2, -2] } : undefined}
           transition={{ duration: dur * 1.2, repeat: Infinity, ease: "easeInOut" }}
         >
           <line
@@ -272,7 +257,7 @@ function SquareStack({ scale, outward, speedMul, ...p }: PrimProps) {
           height={s * 0.55}
           {...p}
           strokeOpacity={p.strokeOpacity * 0.7}
-          animate={{ scale: [1, 0.82, 1], rotate: [0, 45, 0] }}
+          animate={motionOn ? { scale: [1, 0.82, 1], rotate: [0, 45, 0] } : undefined}
           transition={{ duration: dur * 1.5, repeat: Infinity, ease: "easeInOut" }}
           style={{ transformOrigin: "50px 50px" }}
         />
@@ -281,7 +266,7 @@ function SquareStack({ scale, outward, speedMul, ...p }: PrimProps) {
   );
 }
 
-function GridCross({ scale, outward, speedMul, ...p }: PrimProps) {
+function GridCross({ scale, outward, speedMul, motionOn, ...p }: PrimProps) {
   const s = 52 * scale;
   const cx = 50;
   const cy = 50;
@@ -302,13 +287,17 @@ function GridCross({ scale, outward, speedMul, ...p }: PrimProps) {
             y2={pos}
             {...p}
             strokeLinecap="round"
-            animate={{
-              opacity: [
-                p.strokeOpacity * 0.4,
-                p.strokeOpacity,
-                p.strokeOpacity * 0.4,
-              ],
-            }}
+            animate={
+              motionOn
+                ? {
+                    opacity: [
+                      p.strokeOpacity * 0.4,
+                      p.strokeOpacity,
+                      p.strokeOpacity * 0.4,
+                    ],
+                  }
+                : undefined
+            }
             transition={{
               duration: dur,
               repeat: Infinity,
@@ -330,13 +319,17 @@ function GridCross({ scale, outward, speedMul, ...p }: PrimProps) {
             y2={cy + half}
             {...p}
             strokeLinecap="round"
-            animate={{
-              opacity: [
-                p.strokeOpacity,
-                p.strokeOpacity * 0.4,
-                p.strokeOpacity,
-              ],
-            }}
+            animate={
+              motionOn
+                ? {
+                    opacity: [
+                      p.strokeOpacity,
+                      p.strokeOpacity * 0.4,
+                      p.strokeOpacity,
+                    ],
+                  }
+                : undefined
+            }
             transition={{
               duration: dur,
               repeat: Infinity,
@@ -350,7 +343,7 @@ function GridCross({ scale, outward, speedMul, ...p }: PrimProps) {
   );
 }
 
-function CircleRings({ scale, outward, speedMul, ...p }: PrimProps) {
+function CircleRings({ scale, outward, speedMul, motionOn, ...p }: PrimProps) {
   const r = 30 * scale;
   const cx = 50;
   const cy = 50;
@@ -359,7 +352,7 @@ function CircleRings({ scale, outward, speedMul, ...p }: PrimProps) {
     const offset = r * 0.55;
     return (
       <motion.g
-        animate={{ rotate: 360 }}
+        animate={motionOn ? { rotate: 360 } : undefined}
         transition={{ duration: 24 * speedMul, repeat: Infinity, ease: "linear" }}
         style={{ transformOrigin: "50px 50px" }}
       >
@@ -368,7 +361,7 @@ function CircleRings({ scale, outward, speedMul, ...p }: PrimProps) {
           cy={cy}
           r={r}
           {...p}
-          animate={{ scale: [1, 1.05, 1] }}
+          animate={motionOn ? { scale: [1, 1.05, 1] } : undefined}
           transition={{ duration: dur, repeat: Infinity, ease: "easeInOut" }}
           style={{ transformOrigin: `${cx - offset}px ${cy}px` }}
         />
@@ -377,7 +370,7 @@ function CircleRings({ scale, outward, speedMul, ...p }: PrimProps) {
           cy={cy}
           r={r}
           {...p}
-          animate={{ scale: [1.05, 1, 1.05] }}
+          animate={motionOn ? { scale: [1.05, 1, 1.05] } : undefined}
           transition={{ duration: dur, repeat: Infinity, ease: "easeInOut" }}
           style={{ transformOrigin: `${cx + offset}px ${cy}px` }}
         />
@@ -387,7 +380,7 @@ function CircleRings({ scale, outward, speedMul, ...p }: PrimProps) {
           r={r * 0.75}
           {...p}
           strokeOpacity={p.strokeOpacity * 0.7}
-          animate={{ scale: [0.95, 1.08, 0.95] }}
+          animate={motionOn ? { scale: [0.95, 1.08, 0.95] } : undefined}
           transition={{ duration: dur * 1.1, repeat: Infinity, ease: "easeInOut" }}
           style={{ transformOrigin: `${cx}px ${cy - offset}px` }}
         />
@@ -401,7 +394,7 @@ function CircleRings({ scale, outward, speedMul, ...p }: PrimProps) {
         cy={cy}
         r={r}
         {...p}
-        animate={{ scale: [1, 1.06, 1] }}
+        animate={motionOn ? { scale: [1, 1.06, 1] } : undefined}
         transition={{ duration: dur, repeat: Infinity, ease: "easeInOut" }}
         style={{ transformOrigin: "50px 50px" }}
       />
@@ -411,7 +404,7 @@ function CircleRings({ scale, outward, speedMul, ...p }: PrimProps) {
         r={r * 0.66}
         {...p}
         strokeOpacity={p.strokeOpacity * 0.75}
-        animate={{ scale: [1, 0.88, 1] }}
+        animate={motionOn ? { scale: [1, 0.88, 1] } : undefined}
         transition={{ duration: dur, repeat: Infinity, ease: "easeInOut", delay: dur * 0.2 }}
         style={{ transformOrigin: "50px 50px" }}
       />
@@ -421,7 +414,7 @@ function CircleRings({ scale, outward, speedMul, ...p }: PrimProps) {
         r={r * 0.33}
         {...p}
         strokeOpacity={p.strokeOpacity * 0.5}
-        animate={{ scale: [1, 1.25, 1] }}
+        animate={motionOn ? { scale: [1, 1.25, 1] } : undefined}
         transition={{ duration: dur, repeat: Infinity, ease: "easeInOut", delay: dur * 0.4 }}
         style={{ transformOrigin: "50px 50px" }}
       />

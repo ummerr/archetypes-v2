@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
+import { useMotionFrame } from "@/lib/usePrefersReducedMotion";
 import * as THREE from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import type { ArchetypeFamily } from "@/types/archetype";
@@ -59,7 +60,7 @@ function KingTotem({ color, intensity }: { color: string; intensity: number }) {
     );
   }, []);
 
-  useFrame((state) => {
+  useMotionFrame((state) => {
     const t = state.clock.elapsedTime;
     if (group.current) {
       group.current.rotation.y = t * 0.2;
@@ -160,7 +161,7 @@ function WarriorTotem({ color, intensity }: { color: string; intensity: number }
     return geo;
   }, []);
 
-  useFrame((state) => {
+  useMotionFrame((state) => {
     const t = state.clock.elapsedTime;
     if (group.current) {
       group.current.rotation.y = t * 0.3;
@@ -247,7 +248,7 @@ function MagicianTotem({ color, intensity }: { color: string; intensity: number 
   const coreRef = useRef<THREE.Mesh>(null);
   const group = useRef<THREE.Group>(null);
 
-  useFrame((state) => {
+  useMotionFrame((state) => {
     const t = state.clock.elapsedTime;
     if (outerRef.current) {
       outerRef.current.rotation.y = t * 0.15;
@@ -326,7 +327,7 @@ function LoverTotem({ color, intensity }: { color: string; intensity: number }) 
   const knotRef = useRef<THREE.Mesh>(null);
   const petalsRef = useRef<THREE.Group>(null);
 
-  useFrame((state) => {
+  useMotionFrame((state) => {
     const t = state.clock.elapsedTime;
     if (group.current) {
       group.current.position.y = Math.sin(t * 0.4) * 0.06;
@@ -407,7 +408,7 @@ function ShadowOrbiters({
   const activeRef = useRef<THREE.Mesh>(null);
   const passiveRef = useRef<THREE.Mesh>(null);
 
-  useFrame((state) => {
+  useMotionFrame((state) => {
     const t = state.clock.elapsedTime;
     // Active shadow - jittery, aggressive orbit
     if (activeRef.current) {

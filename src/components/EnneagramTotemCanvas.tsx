@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
+import { useMotionFrame } from "@/lib/usePrefersReducedMotion";
 import * as THREE from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import type { EnneagramArchetype } from "@/types/enneagram";
@@ -13,7 +14,7 @@ function ReformerTotem({ color, intensity }: { color: string; intensity: number 
   const group = useRef<THREE.Group>(null);
   const bob = useRef<THREE.Mesh>(null);
   const level = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (bob.current) bob.current.position.y = -0.5 + Math.sin(t * 1.3) * 0.015;
     if (level.current) level.current.rotation.z = Math.sin(t * 0.6) * 0.04;
@@ -65,7 +66,7 @@ function HelperTotem({ color, intensity }: { color: string; intensity: number })
     () => new THREE.SphereGeometry(0.5, 20, 14, 0, Math.PI, 0, Math.PI / 2),
     []
   );
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (heart.current) {
       const k = 0.2 + Math.sin(t * 1.8) * 0.03;
@@ -123,7 +124,7 @@ function AchieverTotem({ color, intensity }: { color: string; intensity: number 
   const prism = useRef<THREE.Mesh>(null);
   const spotlight = useRef<THREE.Mesh>(null);
   const star = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (prism.current) {
       prism.current.rotation.y = t * 0.5;
@@ -176,7 +177,7 @@ function IndividualistTotem({ color, intensity }: { color: string; intensity: nu
     const g = new THREE.IcosahedronGeometry(0.5, 0);
     return g;
   }, []);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (gem.current) {
       gem.current.rotation.y = t * 0.2;
@@ -229,7 +230,7 @@ function InvestigatorTotem({ color, intensity }: { color: string; intensity: num
   const r2 = useRef<THREE.Mesh>(null);
   const r3 = useRef<THREE.Mesh>(null);
   const core = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (r1.current) r1.current.rotation.y = t * 0.3;
     if (r2.current) {
@@ -276,7 +277,7 @@ function LoyalistTotem({ color, intensity }: { color: string; intensity: number 
   const group = useRef<THREE.Group>(null);
   const lattice = useRef<THREE.Group>(null);
   const sentinels = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (lattice.current) {
       lattice.current.rotation.z = Math.sin(t * 0.5) * 0.05;
@@ -333,7 +334,7 @@ function EnthusiastTotem({ color, intensity }: { color: string; intensity: numbe
   const group = useRef<THREE.Group>(null);
   const scatter = useRef<THREE.Group>(null);
   const core = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (scatter.current) {
       scatter.current.children.forEach((c, i) => {
@@ -387,7 +388,7 @@ function ChallengerTotem({ color, intensity }: { color: string; intensity: numbe
   const group = useRef<THREE.Group>(null);
   const wedge = useRef<THREE.Mesh>(null);
   const shoulders = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (wedge.current) {
       wedge.current.rotation.x = 0.15 + Math.sin(t * 1.8) * 0.03;
@@ -433,7 +434,7 @@ function PeacemakerTotem({ color, intensity }: { color: string; intensity: numbe
   const group = useRef<THREE.Group>(null);
   const rings = useRef<THREE.Group>(null);
   const still = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (rings.current) {
       rings.current.children.forEach((c, i) => {

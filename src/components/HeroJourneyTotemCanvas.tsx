@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
+import { useMotionFrame } from "@/lib/usePrefersReducedMotion";
 import * as THREE from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import type { HeroJourneyArchetype } from "@/types/herosjourney";
@@ -40,7 +41,7 @@ function HeroTotem({ color, intensity }: { color: string; intensity: number }) {
     g.computeVertexNormals();
     return g;
   }, []);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (blade.current) {
       blade.current.rotation.y = t * 0.7;
@@ -157,7 +158,7 @@ function MentorTotem({ color, intensity }: { color: string; intensity: number })
   const runes = useRef<THREE.Group>(null);
   const core = useRef<THREE.Mesh>(null);
   const flame = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (lantern.current) {
       lantern.current.rotation.z = Math.sin(t * 0.8) * 0.08;
@@ -304,7 +305,7 @@ function HeraldTotem({ color, intensity }: { color: string; intensity: number })
   const shock3 = useRef<THREE.Mesh>(null);
   const sparks = useRef<THREE.Group>(null);
   const flash = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (horn.current) {
       horn.current.rotation.z = Math.sin(t * 0.8) * 0.15 - 0.2;
@@ -419,7 +420,7 @@ function GuardianTotem({ color, intensity }: { color: string; intensity: number 
   const chainR = useRef<THREE.Group>(null);
   const key = useRef<THREE.Group>(null);
   const runes = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (eye.current) {
       const mat = eye.current.material as THREE.MeshStandardMaterial;
@@ -556,7 +557,7 @@ function ShapeshifterTotem({ color, intensity }: { color: string; intensity: num
     () => new THREE.Color(color).lerp(new THREE.Color("#E8B041"), 0.7).getStyle(),
     [color]
   );
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (maskA.current) {
       maskA.current.position.x = Math.cos(t * 0.8) * 0.46;
@@ -690,7 +691,7 @@ function ShadowTotem({ color, intensity }: { color: string; intensity: number })
   const doppel = useRef<THREE.Group>(null);
   const warmCorona = "#E8A94A";
   const crimson = "#8A1F2E";
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (corona.current) {
       const m = corona.current.material as THREE.MeshBasicMaterial;
@@ -801,7 +802,7 @@ function TricksterTotem({ color, intensity }: { color: string; intensity: number
   const mask = useRef<THREE.Group>(null);
   const confetti = useRef<THREE.Group>(null);
   const marotte = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (coin.current) {
       coin.current.rotation.x = t * 3.5;
@@ -913,7 +914,7 @@ function AllyTotem({ color, intensity }: { color: string; intensity: number }) {
   const flame = useRef<THREE.Mesh>(null);
   const core = useRef<THREE.Mesh>(null);
   const banner = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (shield.current) {
       shield.current.rotation.y = Math.sin(t * 0.3) * 0.1;

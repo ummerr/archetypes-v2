@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
+import { useMotionFrame } from "@/lib/usePrefersReducedMotion";
 import * as THREE from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import type { JungianArchetype } from "@/types/jungian";
@@ -36,7 +37,7 @@ function InnocentTotem({ color, intensity }: { color: string; intensity: number 
     ]);
     return new THREE.TubeGeometry(curve, 24, 0.018, 8, false);
   }, []);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     // leaves unfold and re-fold gently, like a waking bud
     const open = 0.65 + Math.sin(t * 0.6) * 0.35; // 0.3..1.0
@@ -99,7 +100,7 @@ function InnocentTotem({ color, intensity }: { color: string; intensity: number 
 function EverymanTotem({ color, intensity }: { color: string; intensity: number }) {
   const group = useRef<THREE.Group>(null);
   const ring = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (ring.current) {
       ring.current.rotation.y = t * 0.12;
@@ -148,7 +149,7 @@ function HeroTotem({ color, intensity }: { color: string; intensity: number }) {
     g.computeVertexNormals();
     return g;
   }, []);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (group.current) {
       group.current.rotation.y = t * 0.35;
@@ -186,7 +187,7 @@ function CaregiverTotem({ color, intensity }: { color: string; intensity: number
   const heart = useRef<THREE.Mesh>(null);
   const petals = useRef<THREE.Group>(null);
   const bowlGeo = useMemo(() => new THREE.SphereGeometry(0.7, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), []);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (group.current) group.current.rotation.z = Math.sin(t * 0.5) * 0.08;
     if (heart.current) {
@@ -229,7 +230,7 @@ function ExplorerTotem({ color, intensity }: { color: string; intensity: number 
   const group = useRef<THREE.Group>(null);
   const needle = useRef<THREE.Group>(null);
   const waypoints = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (needle.current) needle.current.rotation.y = t * 0.9;
     if (waypoints.current) {
@@ -280,7 +281,7 @@ function RebelTotem({ color, intensity }: { color: string; intensity: number }) 
   const group = useRef<THREE.Group>(null);
   const shards = useRef<THREE.Group>(null);
   const cross = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (shards.current) {
       shards.current.children.forEach((c, i) => {
@@ -335,7 +336,7 @@ function LoverJungianTotem({ color, intensity }: { color: string; intensity: num
   const a = useRef<THREE.Group>(null);
   const b = useRef<THREE.Group>(null);
   const heart = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (a.current) {
       a.current.rotation.x = Math.PI / 2 + t * 0.4;
@@ -389,7 +390,7 @@ function CreatorTotem({ color, intensity }: { color: string; intensity: number }
   const outer = useRef<THREE.Mesh>(null);
   const inner = useRef<THREE.Mesh>(null);
   const sparks = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (outer.current) {
       outer.current.rotation.y = t * 0.18;
@@ -452,7 +453,7 @@ function JesterTotem({ color, intensity }: { color: string; intensity: number })
   const group = useRef<THREE.Group>(null);
   const jugglers = useRef<THREE.Group>(null);
   const diamond = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (jugglers.current) {
       jugglers.current.children.forEach((c, i) => {
@@ -505,7 +506,7 @@ function SageTotem({ color, intensity }: { color: string; intensity: number }) {
   const r1 = useRef<THREE.Group>(null);
   const r2 = useRef<THREE.Group>(null);
   const r3 = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (r1.current) r1.current.rotation.y = t * 0.22;
     if (r2.current) r2.current.rotation.x = t * 0.18;
@@ -548,7 +549,7 @@ function MagicianJungianTotem({ color, intensity }: { color: string; intensity: 
   const group = useRef<THREE.Group>(null);
   const flower = useRef<THREE.Group>(null);
   const filament = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (flower.current) flower.current.rotation.z = t * 0.08;
     if (filament.current) {
@@ -595,7 +596,7 @@ function RulerTotem({ color, intensity }: { color: string; intensity: number }) 
   const group = useRef<THREE.Group>(null);
   const ring = useRef<THREE.Mesh>(null);
   const jewel = useRef<THREE.Mesh>(null);
-  useFrame((s) => {
+  useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (ring.current) ring.current.rotation.y = t * 0.15;
     if (jewel.current) jewel.current.rotation.y = t * 0.4;
