@@ -1,5 +1,6 @@
 import { getArchetypeBySlug } from "@/data/kwml/archetypes";
 import { renderOgCard, ogSize, ogContentType } from "@/lib/og-card";
+import { ogTotem } from "@/lib/og-totems";
 import { truncate } from "@/lib/site";
 
 export const size = ogSize;
@@ -18,5 +19,6 @@ export default async function Image({
     title: a.name,
     subtitle: truncate(a.description, 180),
     accent: a.accentColor,
+    totem: ogTotem("kwml", slug, a.accentColor, { kwmlFamily: a.family }),
   });
 }
