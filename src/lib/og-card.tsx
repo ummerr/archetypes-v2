@@ -36,8 +36,9 @@ export async function renderOgCard(opts: {
   accent: string;
   resonances?: OgResonance[];
   format?: OgFormat;
+  totem?: React.ReactElement | null;
 }) {
-  const { eyebrow, title, subtitle, accent, resonances, format = "wide" } = opts;
+  const { eyebrow, title, subtitle, accent, resonances, format = "wide", totem } = opts;
   const size = SIZES[format];
   const isSquare = format === "square";
 
@@ -89,6 +90,23 @@ export async function renderOgCard(opts: {
             display: "flex",
           }}
         />
+        {/* Totem glyph */}
+        {totem ? (
+          <div
+            style={{
+              position: "absolute",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              ...(isSquare
+                ? { top: padY + 60, left: 0, right: 0 }
+                : { top: padY + 40, right: padX }),
+              opacity: 0.55,
+            }}
+          >
+            {totem}
+          </div>
+        ) : null}
         {/* Top accent bar */}
         <div
           style={{

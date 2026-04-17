@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { MbtiArchetype, TemperamentGroup } from "@/types/mbti";
 import { getFunction } from "@/data/mbti/functions";
 import { useTheme } from "@/components/ThemeProvider";
@@ -10,6 +11,12 @@ import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getMbtiExemplars } from "@/data/mbti/exemplars";
+import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
+
+const MbtiTotemCanvas = dynamic(
+  () => import("@/components/MbtiTotemCanvas"),
+  { ssr: false, loading: () => <CanvasSkeleton /> }
+);
 
 interface Props {
   archetype: MbtiArchetype;
@@ -84,7 +91,14 @@ export default function MbtiDetailClient({
         {/* Hero */}
         <div className="mb-14 animate-slide-up delay-100">
           <div className="flex flex-col md:flex-row gap-8 md:gap-10 items-start">
-            <div className="flex-shrink-0 mx-auto md:mx-0">
+            <div className="flex-shrink-0 mx-auto md:mx-0 flex flex-col items-center gap-4">
+              <div className="w-40 h-40 md:w-48 md:h-48" aria-hidden>
+                <MbtiTotemCanvas
+                  stack={archetype.stack}
+                  color={color}
+                  isHovered
+                />
+              </div>
               <MbtiGlyph archetype={archetype} size="lg" ambient />
             </div>
 

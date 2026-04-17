@@ -15,6 +15,13 @@ import MbtiGlyph from "@/components/MbtiGlyph";
 import ArchetypeSymbol from "@/components/ArchetypeSymbol";
 import { HeroJourneyArchetypeIcon } from "@/components/HeroJourneyArchetypeIcon";
 import { registerTotem } from "@/data/totem-registry";
+import { useTheme } from "@/components/ThemeProvider";
+import {
+  emissiveTextShadow,
+  emissiveBoxShadow,
+  emissiveHaloGradient,
+  emissiveBorder,
+} from "@/lib/emissive-style";
 import type { IndexEntry } from "@/data/allArchetypes";
 
 const CELL = 52;
@@ -62,6 +69,8 @@ function HeroJourneyRenderer({ entry, hovered }: { entry: IndexEntry; hovered: b
 
 function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean }) {
   const prefersReducedMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const light = theme === "light";
   const motionOn = !prefersReducedMotion;
   const color = entry.accentColor;
   const char = entry.symbol ?? "✶";
@@ -76,7 +85,7 @@ function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean
       <motion.span
         className="absolute inset-[-4px] rounded-full"
         style={{
-          background: `radial-gradient(circle, ${color}${hovered ? "33" : "1E"} 0%, transparent 65%)`,
+          background: emissiveHaloGradient(color, { light, hovered }),
         }}
         animate={motionOn ? { scale: [1, 1.08, 1], opacity: [0.75, 1, 0.75] } : undefined}
         transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
@@ -84,14 +93,14 @@ function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean
       {/* slow-rotating solid ring */}
       <motion.span
         className="absolute inset-0 rounded-full"
-        style={{ border: `1px solid ${color}${hovered ? "66" : "38"}` }}
+        style={{ border: emissiveBorder(color, { light, hovered }) }}
         animate={motionOn ? { rotate: 360 } : undefined}
         transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
       />
       {/* counter-rotating dashed ring */}
       <motion.span
         className="absolute inset-[5px] rounded-full"
-        style={{ border: `1px dashed ${color}${hovered ? "55" : "28"}` }}
+        style={{ border: `1px dashed ${color}${light ? (hovered ? "35" : "18") : (hovered ? "55" : "28")}` }}
         animate={motionOn ? { rotate: -360 } : undefined}
         transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
       />
@@ -110,7 +119,7 @@ function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean
             left: CELL / 2 - 1.5,
             top: -1.5,
             background: color,
-            boxShadow: `0 0 6px ${color}`,
+            boxShadow: emissiveBoxShadow(color, { light, hovered }),
             opacity: hovered ? 0.95 : 0.6,
           }}
         />
@@ -120,7 +129,7 @@ function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean
         className="relative font-serif leading-none"
         style={{ color, fontSize: 26 }}
         animate={
-          motionOn
+          motionOn && !light
             ? {
                 textShadow: [
                   `0 0 6px ${color}40`,
@@ -143,6 +152,8 @@ function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean
 }
 
 function GlyphRingRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean }) {
+  const { theme } = useTheme();
+  const light = theme === "light";
   const color = entry.accentColor;
   const char = entry.symbol ?? "◯";
   return (
@@ -155,17 +166,15 @@ function GlyphRingRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boo
       <span
         className="absolute inset-0 rounded-full transition-all duration-700 ease-out"
         style={{
-          border: `1px solid ${color}${hovered ? "55" : "28"}`,
-          background: hovered
-            ? `radial-gradient(circle, ${color}18 0%, transparent 70%)`
-            : "transparent",
+          border: emissiveBorder(color, { light, hovered }),
+          background: emissiveHaloGradient(color, { light, hovered }),
           transform: hovered ? "scale(1.08)" : "scale(1)",
         }}
       />
       <span
         className="absolute inset-[6px] rounded-full transition-opacity duration-1000"
         style={{
-          border: `1px dashed ${color}${hovered ? "40" : "18"}`,
+          border: `1px dashed ${color}${light ? (hovered ? "30" : "14") : (hovered ? "40" : "18")}`,
           opacity: hovered ? 1 : 0.55,
           animation: hovered ? "slow-spin 14s linear infinite" : "none",
         }}
@@ -175,7 +184,7 @@ function GlyphRingRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boo
         style={{
           color,
           fontSize: 26,
-          textShadow: hovered ? `0 0 12px ${color}80` : "none",
+          textShadow: emissiveTextShadow(color, { light, hovered }),
           transform: hovered ? "scale(1.08)" : "scale(1)",
         }}
       >

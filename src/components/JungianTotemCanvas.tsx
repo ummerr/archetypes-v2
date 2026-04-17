@@ -5,17 +5,27 @@ import { Canvas } from "@react-three/fiber";
 import { useMotionFrame } from "@/lib/usePrefersReducedMotion";
 import * as THREE from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
+import { useTheme } from "@/components/ThemeProvider";
+import { materialParams, wireframeParams, solidOpacity, bloomAccent } from "@/lib/inversion-palette";
 import type { JungianArchetype } from "@/types/jungian";
 
 type Slug = JungianArchetype["slug"];
 
+interface TotemProps {
+  color: string;
+  intensity: number;
+  light: boolean;
+}
+
 /* ─── INNOCENT - sprout cradling a seed ──────────────── */
-function InnocentTotem({ color, intensity }: { color: string; intensity: number }) {
+function InnocentTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const leafL = useRef<THREE.Group>(null);
   const leafR = useRef<THREE.Group>(null);
   const seed = useRef<THREE.Mesh>(null);
   const stem = useRef<THREE.Mesh>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   // cotyledon: flattened half-sphere shell
   const leafGeo = useMemo(() => {
     const g = new THREE.SphereGeometry(0.55, 20, 14, 0, Math.PI, 0, Math.PI);
@@ -65,41 +75,43 @@ function InnocentTotem({ color, intensity }: { color: string; intensity: number 
     <group ref={group}>
       {/* stem — matte, no emissive */}
       <mesh ref={stem} geometry={stemGeo}>
-        <meshStandardMaterial color={seedColor} metalness={0.0} roughness={0.85} />
+        <meshStandardMaterial color={seedColor} metalness={mp.metalness} roughness={mp.roughness} />
       </mesh>
       {/* left cotyledon */}
       <group ref={leafL} position={[-0.04, 0.15, 0]}>
         <mesh geometry={leafGeo}>
-          <meshStandardMaterial color={leafColor} metalness={0.0} roughness={0.9} transparent opacity={0.55} side={THREE.DoubleSide} />
+          <meshStandardMaterial color={leafColor} metalness={mp.metalness} roughness={mp.roughness} transparent opacity={solidOpacity(0.55, light)} side={THREE.DoubleSide} />
         </mesh>
         <mesh geometry={leafGeo}>
-          <meshBasicMaterial color={leafColor} wireframe transparent opacity={0.45 * intensity} side={THREE.DoubleSide} />
+          <meshBasicMaterial color={wp?.color ?? leafColor} wireframe transparent opacity={wp?.opacity ?? 0.45 * intensity} side={THREE.DoubleSide} />
         </mesh>
       </group>
       {/* right cotyledon */}
       <group ref={leafR} position={[0.04, 0.15, 0]}>
         <mesh geometry={leafGeo}>
-          <meshStandardMaterial color={leafColor} metalness={0.0} roughness={0.9} transparent opacity={0.55} side={THREE.DoubleSide} />
+          <meshStandardMaterial color={leafColor} metalness={mp.metalness} roughness={mp.roughness} transparent opacity={solidOpacity(0.55, light)} side={THREE.DoubleSide} />
         </mesh>
         <mesh geometry={leafGeo}>
-          <meshBasicMaterial color={leafColor} wireframe transparent opacity={0.45 * intensity} side={THREE.DoubleSide} />
+          <meshBasicMaterial color={wp?.color ?? leafColor} wireframe transparent opacity={wp?.opacity ?? 0.45 * intensity} side={THREE.DoubleSide} />
         </mesh>
       </group>
       {/* seed — matte pearl, no emissive, no halo, no rays */}
       <mesh ref={seed} position={[0, 0.08, 0]}>
         <sphereGeometry args={[0.11, 20, 20]} />
-        <meshStandardMaterial color={seedColor} metalness={0.15} roughness={0.55} />
+        <meshStandardMaterial color={seedColor} metalness={mp.metalness} roughness={mp.roughness} />
       </mesh>
       {/* quiet fill light so it reads without bloom */}
-      <pointLight color="#FFFFFF" intensity={0.55 * intensity} distance={3} decay={2} position={[0.6, 0.8, 0.8]} />
+      {!light && <pointLight color="#FFFFFF" intensity={0.55 * intensity} distance={3} decay={2} position={[0.6, 0.8, 0.8]} />}
     </group>
   );
 }
 
 /* ─── EVERYMAN - ring of twelve ──────────────────────── */
-function EverymanTotem({ color, intensity }: { color: string; intensity: number }) {
+function EverymanTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const ring = useRef<THREE.Group>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (ring.current) {
@@ -115,7 +127,7 @@ function EverymanTotem({ color, intensity }: { color: string; intensity: number 
       {/* grounded disk */}
       <mesh position={[0, -0.3, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.55, 0.75, 48]} />
-        <meshBasicMaterial color={color} transparent opacity={0.35 * intensity} side={THREE.DoubleSide} />
+        <meshBasicMaterial color={wp?.color ?? color} transparent opacity={wp?.opacity ?? 0.35 * intensity} side={THREE.DoubleSide} />
       </mesh>
       <group ref={ring}>
         {Array.from({ length: 12 }).map((_, i) => {
@@ -123,20 +135,22 @@ function EverymanTotem({ color, intensity }: { color: string; intensity: number 
           return (
             <mesh key={i} position={[Math.cos(a) * 0.65, 0, Math.sin(a) * 0.65]}>
               <sphereGeometry args={[0.075, 10, 10]} />
-              <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.8 * intensity} />
+              <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 0.8 * intensity} {...mp} />
             </mesh>
           );
         })}
       </group>
-      <pointLight color={color} intensity={1.1 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color={color} intensity={1.1 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── HERO - forward spear + laurel ──────────────────── */
-function HeroTotem({ color, intensity }: { color: string; intensity: number }) {
+function HeroTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const laurel = useRef<THREE.Group>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   const spearGeo = useMemo(() => {
     const g = new THREE.OctahedronGeometry(1, 0);
     const p = g.attributes.position;
@@ -160,10 +174,10 @@ function HeroTotem({ color, intensity }: { color: string; intensity: number }) {
   return (
     <group ref={group}>
       <mesh geometry={spearGeo}>
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.5 * intensity} metalness={0.85} roughness={0.15} transparent opacity={0.22} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 0.5 * intensity} metalness={mp.metalness} roughness={mp.roughness} transparent opacity={solidOpacity(0.22, light)} />
       </mesh>
       <mesh geometry={spearGeo}>
-        <meshBasicMaterial color={color} wireframe transparent opacity={0.8 * intensity} />
+        <meshBasicMaterial color={wp?.color ?? color} wireframe transparent opacity={wp?.opacity ?? 0.8 * intensity} />
       </mesh>
       <group ref={laurel}>
         {Array.from({ length: 5 }).map((_, i) => {
@@ -171,21 +185,23 @@ function HeroTotem({ color, intensity }: { color: string; intensity: number }) {
           return (
             <mesh key={i} position={[Math.cos(a) * 0.75, -0.1, Math.sin(a) * 0.75]} rotation={[Math.PI / 2, 0, a]}>
               <torusGeometry args={[0.08, 0.015, 6, 12, Math.PI]} />
-              <meshBasicMaterial color={color} transparent opacity={0.7 * intensity} />
+              <meshBasicMaterial color={wp?.color ?? color} transparent opacity={wp?.opacity ?? 0.7 * intensity} />
             </mesh>
           );
         })}
       </group>
-      <pointLight color={color} intensity={1.3 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color={color} intensity={1.3 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── CAREGIVER - cupping bowl ───────────────────────── */
-function CaregiverTotem({ color, intensity }: { color: string; intensity: number }) {
+function CaregiverTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const heart = useRef<THREE.Mesh>(null);
   const petals = useRef<THREE.Group>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   const bowlGeo = useMemo(() => new THREE.SphereGeometry(0.7, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), []);
   useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
@@ -200,14 +216,14 @@ function CaregiverTotem({ color, intensity }: { color: string; intensity: number
   return (
     <group ref={group} rotation={[Math.PI, 0, 0]}>
       <mesh geometry={bowlGeo}>
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.35 * intensity} metalness={0.3} roughness={0.6} transparent opacity={0.28} side={THREE.DoubleSide} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 0.35 * intensity} metalness={mp.metalness} roughness={mp.roughness} transparent opacity={solidOpacity(0.28, light)} side={THREE.DoubleSide} />
       </mesh>
       <mesh geometry={bowlGeo}>
-        <meshBasicMaterial color={color} wireframe transparent opacity={0.55 * intensity} side={THREE.DoubleSide} />
+        <meshBasicMaterial color={wp?.color ?? color} wireframe transparent opacity={wp?.opacity ?? 0.55 * intensity} side={THREE.DoubleSide} />
       </mesh>
       <mesh ref={heart} rotation={[Math.PI, 0, 0]}>
         <sphereGeometry args={[1, 14, 14]} />
-        <meshStandardMaterial color="#FFE0E8" emissive={color} emissiveIntensity={1.5 * intensity} />
+        <meshStandardMaterial color={bloomAccent(color, light)} emissive={color} emissiveIntensity={light ? 0 : 1.5 * intensity} {...mp} />
       </mesh>
       <group ref={petals} rotation={[Math.PI, 0, 0]}>
         {Array.from({ length: 6 }).map((_, i) => {
@@ -215,21 +231,23 @@ function CaregiverTotem({ color, intensity }: { color: string; intensity: number
           return (
             <mesh key={i} position={[Math.cos(a) * 0.72, 0.02, Math.sin(a) * 0.72]}>
               <sphereGeometry args={[0.028, 6, 6]} />
-              <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.2 * intensity} />
+              <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 1.2 * intensity} {...mp} />
             </mesh>
           );
         })}
       </group>
-      <pointLight color={color} intensity={1.2 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color={color} intensity={1.2 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── EXPLORER - compass ─────────────────────────────── */
-function ExplorerTotem({ color, intensity }: { color: string; intensity: number }) {
+function ExplorerTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const needle = useRef<THREE.Group>(null);
   const waypoints = useRef<THREE.Group>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (needle.current) needle.current.rotation.y = t * 0.9;
@@ -247,40 +265,42 @@ function ExplorerTotem({ color, intensity }: { color: string; intensity: number 
     <group ref={group}>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[0.85, 0.015, 8, 64]} />
-        <meshBasicMaterial color={color} transparent opacity={0.6 * intensity} />
+        <meshBasicMaterial color={wp?.color ?? color} transparent opacity={wp?.opacity ?? 0.6 * intensity} />
       </mesh>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[0.5, 0.01, 8, 48]} />
-        <meshBasicMaterial color={color} transparent opacity={0.35 * intensity} />
+        <meshBasicMaterial color={wp?.color ?? color} transparent opacity={wp?.opacity ?? 0.35 * intensity} />
       </mesh>
       <group ref={needle}>
         <mesh>
           <coneGeometry args={[0.05, 0.75, 4]} />
-          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.2 * intensity} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 1.2 * intensity} {...mp} />
         </mesh>
         <mesh rotation={[Math.PI, 0, 0]}>
           <coneGeometry args={[0.04, 0.4, 4]} />
-          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.5 * intensity} transparent opacity={0.5} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 0.5 * intensity} transparent opacity={solidOpacity(0.5, light)} {...mp} />
         </mesh>
       </group>
       <group ref={waypoints}>
         {[0, 1, 2].map((i) => (
           <mesh key={i}>
             <sphereGeometry args={[0.035, 8, 8]} />
-            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.4 * intensity} />
+            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 1.4 * intensity} {...mp} />
           </mesh>
         ))}
       </group>
-      <pointLight color={color} intensity={1.1 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color={color} intensity={1.1 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── REBEL - fracturing cube ────────────────────────── */
-function RebelTotem({ color, intensity }: { color: string; intensity: number }) {
+function RebelTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const shards = useRef<THREE.Group>(null);
   const cross = useRef<THREE.Group>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (shards.current) {
@@ -311,31 +331,33 @@ function RebelTotem({ color, intensity }: { color: string; intensity: number }) 
         {Array.from({ length: 8 }).map((_, i) => (
           <mesh key={i}>
             <tetrahedronGeometry args={[0.16, 0]} />
-            <meshStandardMaterial color={shardColor} emissive={shardColor} emissiveIntensity={0.7 * intensity} transparent opacity={0.7} />
+            <meshStandardMaterial color={shardColor} emissive={shardColor} emissiveIntensity={light ? 0 : 0.7 * intensity} transparent opacity={solidOpacity(0.7, light)} {...mp} />
           </mesh>
         ))}
       </group>
       <group ref={cross}>
         <mesh rotation={[0, 0, Math.PI / 4]}>
           <boxGeometry args={[1.4, 0.03, 0.03]} />
-          <meshBasicMaterial color="#FF4444" transparent opacity={0.85 * intensity} />
+          <meshBasicMaterial color={wp?.color ?? "#FF4444"} transparent opacity={wp?.opacity ?? 0.85 * intensity} />
         </mesh>
         <mesh rotation={[0, 0, -Math.PI / 4]}>
           <boxGeometry args={[1.4, 0.03, 0.03]} />
-          <meshBasicMaterial color="#FF4444" transparent opacity={0.85 * intensity} />
+          <meshBasicMaterial color={wp?.color ?? "#FF4444"} transparent opacity={wp?.opacity ?? 0.85 * intensity} />
         </mesh>
       </group>
-      <pointLight color="#FF4444" intensity={1.3 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color="#FF4444" intensity={1.3 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── LOVER (Jungian) - Hopf link ────────────────────── */
-function LoverJungianTotem({ color, intensity }: { color: string; intensity: number }) {
+function LoverJungianTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const a = useRef<THREE.Group>(null);
   const b = useRef<THREE.Group>(null);
   const heart = useRef<THREE.Mesh>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (a.current) {
@@ -358,38 +380,40 @@ function LoverJungianTotem({ color, intensity }: { color: string; intensity: num
       <group ref={a} position={[-0.2, 0, 0]}>
         <mesh>
           <torusGeometry args={[0.55, 0.08, 10, 48]} />
-          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.55 * intensity} metalness={0.5} roughness={0.4} transparent opacity={0.45} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 0.55 * intensity} metalness={mp.metalness} roughness={mp.roughness} transparent opacity={solidOpacity(0.45, light)} />
         </mesh>
         <mesh>
           <torusGeometry args={[0.55, 0.08, 10, 48]} />
-          <meshBasicMaterial color={color} wireframe transparent opacity={0.45 * intensity} />
+          <meshBasicMaterial color={wp?.color ?? color} wireframe transparent opacity={wp?.opacity ?? 0.45 * intensity} />
         </mesh>
       </group>
       <group ref={b} position={[0.2, 0, 0]}>
         <mesh>
           <torusGeometry args={[0.55, 0.08, 10, 48]} />
-          <meshStandardMaterial color={warmColor} emissive={warmColor} emissiveIntensity={0.55 * intensity} metalness={0.5} roughness={0.4} transparent opacity={0.45} />
+          <meshStandardMaterial color={warmColor} emissive={warmColor} emissiveIntensity={light ? 0 : 0.55 * intensity} metalness={mp.metalness} roughness={mp.roughness} transparent opacity={solidOpacity(0.45, light)} />
         </mesh>
         <mesh>
           <torusGeometry args={[0.55, 0.08, 10, 48]} />
-          <meshBasicMaterial color={warmColor} wireframe transparent opacity={0.45 * intensity} />
+          <meshBasicMaterial color={wp?.color ?? warmColor} wireframe transparent opacity={wp?.opacity ?? 0.45 * intensity} />
         </mesh>
       </group>
       <mesh ref={heart}>
         <sphereGeometry args={[1, 12, 12]} />
-        <meshStandardMaterial color="#FFFFFF" emissive={warmColor} emissiveIntensity={2.0} />
+        <meshStandardMaterial color={bloomAccent(warmColor, light)} emissive={warmColor} emissiveIntensity={light ? 0 : 2.0} {...mp} />
       </mesh>
-      <pointLight color={warmColor} intensity={1.4 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color={warmColor} intensity={1.4 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── CREATOR - emerging crystal ─────────────────────── */
-function CreatorTotem({ color, intensity }: { color: string; intensity: number }) {
+function CreatorTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const outer = useRef<THREE.Mesh>(null);
   const inner = useRef<THREE.Mesh>(null);
   const sparks = useRef<THREE.Group>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (outer.current) {
@@ -429,30 +453,31 @@ function CreatorTotem({ color, intensity }: { color: string; intensity: number }
   return (
     <group ref={group}>
       <mesh ref={outer} geometry={dodeGeo}>
-        <meshBasicMaterial color={color} wireframe transparent opacity={0.55 * intensity} />
+        <meshBasicMaterial color={wp?.color ?? color} wireframe transparent opacity={wp?.opacity ?? 0.55 * intensity} />
       </mesh>
       <mesh ref={inner}>
         <icosahedronGeometry args={[0.48, 0]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.8 * intensity} metalness={0.4} roughness={0.5} transparent opacity={0.3} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 0.8 * intensity} metalness={mp.metalness} roughness={mp.roughness} transparent opacity={solidOpacity(0.3, light)} />
       </mesh>
       <group ref={sparks}>
         {vertices.map((v, i) => (
           <mesh key={i} position={v}>
             <sphereGeometry args={[0.035, 8, 8]} />
-            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.5} />
+            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 0.5} {...mp} />
           </mesh>
         ))}
       </group>
-      <pointLight color={color} intensity={1.3 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color={color} intensity={1.3 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── JESTER - juggling lemniscate ───────────────────── */
-function JesterTotem({ color, intensity }: { color: string; intensity: number }) {
+function JesterTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const jugglers = useRef<THREE.Group>(null);
   const diamond = useRef<THREE.Mesh>(null);
+  const mp = materialParams(light);
   useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (jugglers.current) {
@@ -479,33 +504,35 @@ function JesterTotem({ color, intensity }: { color: string; intensity: number })
     <group ref={group}>
       <mesh ref={diamond}>
         <octahedronGeometry args={[0.25, 0]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.0 * intensity} metalness={0.6} roughness={0.3} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 1.0 * intensity} {...mp} />
       </mesh>
       <group ref={jugglers}>
         <mesh>
           <tetrahedronGeometry args={[0.11, 0]} />
-          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.2 * intensity} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 1.2 * intensity} {...mp} />
         </mesh>
         <mesh>
           <boxGeometry args={[0.16, 0.16, 0.16]} />
-          <meshStandardMaterial color="#E84C3D" emissive="#E84C3D" emissiveIntensity={1.0 * intensity} />
+          <meshStandardMaterial color="#E84C3D" emissive="#E84C3D" emissiveIntensity={light ? 0 : 1.0 * intensity} {...mp} />
         </mesh>
         <mesh>
           <octahedronGeometry args={[0.12, 0]} />
-          <meshStandardMaterial color="#5DADE2" emissive="#5DADE2" emissiveIntensity={1.0 * intensity} />
+          <meshStandardMaterial color="#5DADE2" emissive="#5DADE2" emissiveIntensity={light ? 0 : 1.0 * intensity} {...mp} />
         </mesh>
       </group>
-      <pointLight color={color} intensity={1.3 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color={color} intensity={1.3 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── SAGE - astrolabe ───────────────────────────────── */
-function SageTotem({ color, intensity }: { color: string; intensity: number }) {
+function SageTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const r1 = useRef<THREE.Group>(null);
   const r2 = useRef<THREE.Group>(null);
   const r3 = useRef<THREE.Group>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (r1.current) r1.current.rotation.y = t * 0.22;
@@ -517,14 +544,14 @@ function SageTotem({ color, intensity }: { color: string; intensity: number }) {
     <>
       <mesh>
         <torusGeometry args={[radius, 0.008, 8, 64]} />
-        <meshBasicMaterial color={color} transparent opacity={opacity * intensity} />
+        <meshBasicMaterial color={wp?.color ?? color} transparent opacity={wp?.opacity ?? opacity * intensity} />
       </mesh>
       {Array.from({ length: tickCount }).map((_, i) => {
         const a = (i / tickCount) * Math.PI * 2;
         return (
           <mesh key={i} position={[Math.cos(a) * radius, Math.sin(a) * radius, 0]}>
             <boxGeometry args={[0.025, 0.025, 0.025]} />
-            <meshBasicMaterial color={color} transparent opacity={opacity * intensity} />
+            <meshBasicMaterial color={wp?.color ?? color} transparent opacity={wp?.opacity ?? opacity * intensity} />
           </mesh>
         );
       })}
@@ -537,18 +564,20 @@ function SageTotem({ color, intensity }: { color: string; intensity: number }) {
       <group ref={r3} rotation={[Math.PI / 4, 0, 0]}>{ringWithTicks(0.45, 8, 0.45)}</group>
       <mesh>
         <sphereGeometry args={[0.12, 16, 16]} />
-        <meshStandardMaterial color="#FFFFFF" emissive={color} emissiveIntensity={2.0} />
+        <meshStandardMaterial color={bloomAccent(color, light)} emissive={color} emissiveIntensity={light ? 0 : 2.0} {...mp} />
       </mesh>
-      <pointLight color={color} intensity={1.2 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color={color} intensity={1.2 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── MAGICIAN (Jungian) - seed of life ──────────────── */
-function MagicianJungianTotem({ color, intensity }: { color: string; intensity: number }) {
+function MagicianJungianTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const flower = useRef<THREE.Group>(null);
   const filament = useRef<THREE.Mesh>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (flower.current) flower.current.rotation.z = t * 0.08;
@@ -568,7 +597,7 @@ function MagicianJungianTotem({ color, intensity }: { color: string; intensity: 
         {/* center circle */}
         <mesh>
           <torusGeometry args={[r, 0.012, 8, 48]} />
-          <meshBasicMaterial color={color} transparent opacity={0.7 * intensity} />
+          <meshBasicMaterial color={wp?.color ?? color} transparent opacity={wp?.opacity ?? 0.7 * intensity} />
         </mesh>
         {/* 6 petals */}
         {Array.from({ length: 6 }).map((_, i) => {
@@ -576,7 +605,7 @@ function MagicianJungianTotem({ color, intensity }: { color: string; intensity: 
           return (
             <mesh key={i} position={[Math.cos(a) * r, Math.sin(a) * r, 0]}>
               <torusGeometry args={[r, 0.012, 8, 48]} />
-              <meshBasicMaterial color={color} transparent opacity={0.55 * intensity} />
+              <meshBasicMaterial color={wp?.color ?? color} transparent opacity={wp?.opacity ?? 0.55 * intensity} />
             </mesh>
           );
         })}
@@ -584,18 +613,20 @@ function MagicianJungianTotem({ color, intensity }: { color: string; intensity: 
       {/* vertical filament */}
       <mesh ref={filament}>
         <torusKnotGeometry args={[0.1, 0.015, 48, 6, 1, 3]} />
-        <meshStandardMaterial color="#FFFFFF" emissive={color} emissiveIntensity={2.2} />
+        <meshStandardMaterial color={bloomAccent(color, light)} emissive={color} emissiveIntensity={light ? 0 : 2.2} {...mp} />
       </mesh>
-      <pointLight color={color} intensity={1.4 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color={color} intensity={1.4 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── RULER - throne ─────────────────────────────────── */
-function RulerTotem({ color, intensity }: { color: string; intensity: number }) {
+function RulerTotem({ color, intensity, light }: TotemProps) {
   const group = useRef<THREE.Group>(null);
   const ring = useRef<THREE.Mesh>(null);
   const jewel = useRef<THREE.Mesh>(null);
+  const mp = materialParams(light);
+  const wp = wireframeParams(light);
   useMotionFrame((s) => {
     const t = s.clock.elapsedTime;
     if (ring.current) ring.current.rotation.y = t * 0.15;
@@ -607,11 +638,11 @@ function RulerTotem({ color, intensity }: { color: string; intensity: number }) 
       {/* base column */}
       <mesh position={[0, -0.35, 0]}>
         <cylinderGeometry args={[0.45, 0.55, 0.25, 24]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3 * intensity} metalness={0.7} roughness={0.3} transparent opacity={0.35} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 0.3 * intensity} metalness={mp.metalness} roughness={mp.roughness} transparent opacity={solidOpacity(0.35, light)} />
       </mesh>
       <mesh position={[0, -0.35, 0]}>
         <cylinderGeometry args={[0.45, 0.55, 0.25, 24]} />
-        <meshBasicMaterial color={color} wireframe transparent opacity={0.5 * intensity} />
+        <meshBasicMaterial color={wp?.color ?? color} wireframe transparent opacity={wp?.opacity ?? 0.5 * intensity} />
       </mesh>
       {/* four cardinal pillars */}
       {[0, 1, 2, 3].map((i) => {
@@ -619,27 +650,27 @@ function RulerTotem({ color, intensity }: { color: string; intensity: number }) 
         return (
           <mesh key={i} position={[Math.cos(a) * 0.4, 0, Math.sin(a) * 0.4]}>
             <boxGeometry args={[0.08, 0.55, 0.08]} />
-            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.4 * intensity} metalness={0.8} roughness={0.2} transparent opacity={0.5} />
+            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 0.4 * intensity} metalness={mp.metalness} roughness={mp.roughness} transparent opacity={solidOpacity(0.5, light)} />
           </mesh>
         );
       })}
       {/* sovereignty ring */}
       <mesh ref={ring} position={[0, 0.35, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[0.5, 0.022, 8, 48]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.0 * intensity} metalness={0.9} roughness={0.1} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={light ? 0 : 1.0 * intensity} {...mp} />
       </mesh>
       {/* apex jewel */}
       <mesh ref={jewel} position={[0, 0.55, 0]}>
         <octahedronGeometry args={[0.09, 0]} />
-        <meshStandardMaterial color="#F0D060" emissive="#F0D060" emissiveIntensity={1.8} />
+        <meshStandardMaterial color={bloomAccent(color, light)} emissive={bloomAccent(color, light)} emissiveIntensity={light ? 0 : 1.8} {...mp} />
       </mesh>
-      <pointLight color={color} intensity={1.3 * intensity} distance={4} decay={2} />
+      {!light && <pointLight color={color} intensity={1.3 * intensity} distance={4} decay={2} />}
     </group>
   );
 }
 
 /* ─── Canvas wrapper ─────────────────────────────────── */
-const TOTEMS: Record<Slug, React.ComponentType<{ color: string; intensity: number }>> = {
+const TOTEMS: Record<Slug, React.ComponentType<TotemProps>> = {
   innocent: InnocentTotem,
   everyman: EverymanTotem,
   hero: HeroTotem,
@@ -663,6 +694,8 @@ export default function JungianTotemCanvas({
   color: string;
   isHovered: boolean;
 }) {
+  const { theme } = useTheme();
+  const light = theme === "light";
   const intensity = isHovered ? 1.4 : 1.0;
   const Totem = TOTEMS[slug];
   return (
@@ -673,18 +706,29 @@ export default function JungianTotemCanvas({
         style={{ background: "transparent" }}
         dpr={[1, 1.5]}
       >
-        <ambientLight intensity={0.05} />
-        <directionalLight position={[2, 3, 2]} intensity={0.2} color="#F0D060" />
-        <directionalLight position={[-1, -2, 1]} intensity={0.08} color="#4488AA" />
-        {Totem && <Totem color={color} intensity={intensity} />}
-        <EffectComposer>
-          <Bloom
-            intensity={isHovered ? 0.85 : 0.55}
-            luminanceThreshold={0.15}
-            luminanceSmoothing={0.9}
-            mipmapBlur
-          />
-        </EffectComposer>
+        {light ? (
+          <>
+            <ambientLight intensity={0.6} />
+            <directionalLight position={[2, 3, 2]} intensity={0.4} color="#FFFFFF" />
+          </>
+        ) : (
+          <>
+            <ambientLight intensity={0.05} />
+            <directionalLight position={[2, 3, 2]} intensity={0.2} color="#F0D060" />
+            <directionalLight position={[-1, -2, 1]} intensity={0.08} color="#4488AA" />
+          </>
+        )}
+        {Totem && <Totem color={color} intensity={intensity} light={light} />}
+        {!light && (
+          <EffectComposer>
+            <Bloom
+              intensity={isHovered ? 0.85 : 0.55}
+              luminanceThreshold={0.15}
+              luminanceSmoothing={0.9}
+              mipmapBlur
+            />
+          </EffectComposer>
+        )}
       </Canvas>
     </div>
   );
