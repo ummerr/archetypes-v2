@@ -17,6 +17,7 @@ export default async function Image({
   return renderOgCard({
     eyebrow: `Major Arcanum ${a.numeral}`,
     title: a.name,
+    motto: a.motto,
     subtitle: truncate(a.description, 180),
     accent: a.accentColor,
     totem: ogTotem("tarot", slug, a.accentColor, { symbol: a.symbol }),

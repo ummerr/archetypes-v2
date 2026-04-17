@@ -20,6 +20,7 @@ export default async function Image({
   return renderOgCard({
     eyebrow: `${a.code} · ${a.temperament}`,
     title: a.nickname,
+    motto: a.motto,
     subtitle: truncate(a.tagline, 180),
     accent,
     totem: ogTotem("mbti", slug, accent, { mbtiCode: a.code }),

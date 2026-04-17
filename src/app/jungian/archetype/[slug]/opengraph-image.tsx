@@ -17,6 +17,7 @@ export default async function Image({
   return renderOgCard({
     eyebrow: "Jungian Archetype",
     title: a.name,
+    motto: a.motto,
     subtitle: truncate(a.description, 180),
     accent: a.accentColor,
     totem: ogTotem("jungian", slug, a.accentColor, { symbol: a.symbol }),

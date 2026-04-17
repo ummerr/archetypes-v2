@@ -1,7 +1,7 @@
 import type { SystemId } from "@/data/resonance";
 
-const S = 240;
-const HJ_S = 240;
+const S = 200;
+const HJ_S = 200;
 const HJ_VB = "0 0 32 32";
 
 type TotemJsx = React.ReactElement;
@@ -104,7 +104,7 @@ const kwmlIcons: Record<string, (c: string) => TotemJsx> = {
   ),
 };
 
-function glyphRing(char: string, color: string): TotemJsx {
+function glyphRing(_char: string, color: string): TotemJsx {
   return (
     <div
       style={{
@@ -136,17 +136,18 @@ function glyphRing(char: string, color: string): TotemJsx {
           display: "flex",
         }}
       />
+      {/* Center mark — a filled circle, since Unicode symbols don't
+          render reliably in OG ImageResponse's limited font stack */}
       <div
         style={{
-          fontSize: 96,
-          color,
-          fontFamily: "Georgia, serif",
-          lineHeight: 1,
+          width: 16,
+          height: 16,
+          borderRadius: "50%",
+          background: color,
+          opacity: 0.6,
           display: "flex",
         }}
-      >
-        {char}
-      </div>
+      />
     </div>
   );
 }
@@ -166,7 +167,7 @@ function mbtiCode(code: string, color: string): TotemJsx {
     >
       <div
         style={{
-          fontSize: 88,
+          fontSize: 72,
           fontFamily: "Georgia, serif",
           fontWeight: 500,
           letterSpacing: 8,
