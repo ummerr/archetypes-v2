@@ -53,16 +53,16 @@ export default function Home() {
               <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
                 Archetypal Systems
               </p>
-              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
-                Maps of the{" "}
-                <span className={light ? "text-text-primary" : "text-gold glow-text-subtle animate-flicker"}>
-                  Inner World
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-text-primary tracking-tight leading-[1.08] mb-5">
+                Six traditions keep circling the same{" "}
+                <span className={light ? "text-text-primary italic" : "text-gold glow-text-subtle animate-flicker italic"}>
+                  figures
                 </span>
+                .
               </h1>
-              <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl font-light">
-                Each system offers a different lens onto the universal patterns
-                that shape human psyche. Explore one, or trace the shared
-                currents that run between them.
+              <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-xl font-light">
+                147 mappings across 20 clusters — every one carrying its
+                citations, dissent, and confidence tier.
               </p>
               <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2">
                 <a
@@ -258,10 +258,11 @@ export default function Home() {
                     </span>
                   </h2>
                   <p className="text-text-secondary text-base md:text-lg leading-relaxed font-light mb-6 max-w-xl">
-                    Jung&rsquo;s Warrior, the Enneagram Eight, KWML&rsquo;s King,
-                    the Emperor in tarot — six traditions keep circling the same
-                    figures. The Atlas lays them on one map: 20 thematic clusters,
-                    147 archetypes, every tie sourced or flagged as inference.
+                    Jung&rsquo;s Warrior. The Enneagram Eight. KWML&rsquo;s King.
+                    The Emperor in tarot. Four traditions pointing at one
+                    recurring figure — and that&rsquo;s one of twenty clusters on
+                    the Atlas. Every tie sourced to its author or flagged as
+                    inference.
                   </p>
                   <p className="text-text-secondary text-sm leading-relaxed font-light mb-6 max-w-xl">
                     Come here when you&rsquo;ve read one system and want to know
