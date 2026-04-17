@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { SYSTEMS } from "@/data/systems";
 import type { SystemId } from "@/data/resonance";
 import { clusterCoincidence } from "@/lib/home-resonance";
@@ -10,6 +10,7 @@ interface Props {
   focusSystem: SystemId | null;
   activeSystems: Set<SystemId> | null;
   onHoverSystem: (id: SystemId | null) => void;
+  /** Intrinsic viewBox size; visual size is container-driven. */
   size?: number;
 }
 
@@ -21,6 +22,7 @@ export default function ResonanceConstellation({
 }: Props) {
   const { theme } = useTheme();
   const light = theme === "light";
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   const nodes = useMemo(() => {
     const r = size * 0.38;
@@ -52,10 +54,24 @@ export default function ResonanceConstellation({
   const maxW = Math.max(...edges.map((e) => e.w), 1);
   const dim = activeSystems !== null;
 
+  // On touch, a pointer down anywhere outside a node clears the focus so
+  // the constellation doesn't get stuck "hovered" after the user taps.
+  useEffect(() => {
+    const handler = (e: PointerEvent) => {
+      if (e.pointerType !== "touch") return;
+      const target = e.target as Node | null;
+      if (!wrapRef.current || !target) return;
+      if (!wrapRef.current.contains(target)) onHoverSystem(null);
+    };
+    document.addEventListener("pointerdown", handler);
+    return () => document.removeEventListener("pointerdown", handler);
+  }, [onHoverSystem]);
+
   return (
     <div
-      className="relative mx-auto"
-      style={{ width: size, height: size }}
+      ref={wrapRef}
+      className="relative mx-auto w-full"
+      style={{ maxWidth: size, aspectRatio: "1 / 1" }}
     >
       <ul className="sr-only">
         <li>Six archetype systems arranged in a resonance constellation:</li>
@@ -64,11 +80,10 @@ export default function ResonanceConstellation({
         ))}
       </ul>
       <svg
-        width={size}
-        height={size}
         viewBox={`0 0 ${size} ${size}`}
+        preserveAspectRatio="xMidYMid meet"
         aria-hidden="true"
-        className="absolute inset-0 motion-safe:animate-breathe-subtle"
+        className="absolute inset-0 w-full h-full motion-safe:animate-breathe-subtle"
         style={{ animationDuration: "9s" }}
       >
         <defs>
@@ -119,8 +134,19 @@ export default function ResonanceConstellation({
               }}
               onMouseEnter={() => onHoverSystem(n.id)}
               onMouseLeave={() => onHoverSystem(null)}
-              onTouchStart={() => onHoverSystem(n.id)}
+              onTouchStart={(e) => {
+                e.stopPropagation();
+                onHoverSystem(n.id);
+              }}
             >
+              {/* Larger invisible hit area for touch reliability */}
+              <circle
+                cx={n.x}
+                cy={n.y}
+                r={24}
+                fill="transparent"
+                pointerEvents="all"
+              />
               <circle
                 cx={n.x}
                 cy={n.y}
@@ -128,6 +154,7 @@ export default function ResonanceConstellation({
                 fill={n.accent}
                 opacity={isFocus ? 0.18 : 0}
                 style={{ transition: "opacity 400ms ease, r 400ms ease" }}
+                pointerEvents="none"
               />
               <circle
                 cx={n.x}
@@ -135,6 +162,7 @@ export default function ResonanceConstellation({
                 r={outer}
                 fill={n.accent}
                 style={{ transition: "r 400ms ease" }}
+                pointerEvents="none"
               />
               <circle
                 cx={n.x}
@@ -144,6 +172,7 @@ export default function ResonanceConstellation({
                 stroke={n.accent}
                 strokeWidth={0.6}
                 opacity={0.35}
+                pointerEvents="none"
               />
               <text
                 x={n.x}
@@ -151,12 +180,13 @@ export default function ResonanceConstellation({
                 textAnchor="middle"
                 className="font-mono"
                 style={{
-                  fontSize: 8,
+                  fontSize: 9,
                   letterSpacing: "0.2em",
                   textTransform: "uppercase",
-                  fill: isFocus || isActive ? n.accent : light ? "#00000066" : "#ffffff55",
+                  fill: isFocus || isActive ? n.accent : light ? "#00000088" : "#ffffff66",
                   transition: "fill 400ms ease",
                 }}
+                pointerEvents="none"
               >
                 {n.name}
               </text>

@@ -44,27 +44,27 @@ export default function Home() {
     <div className="min-h-screen relative">
       <div className="relative">
         {/* Hero */}
-        <div className="px-6 pt-24 pb-10 md:pt-32 md:pb-14 relative">
+        <div className="px-5 sm:px-6 pt-16 pb-8 md:pt-32 md:pb-14 relative">
           <div className="absolute inset-0 pointer-events-none opacity-60 motion-safe:block motion-reduce:hidden">
             <Particles color={light ? "#8A6A20" : "#D4AF37"} count={18} />
           </div>
-          <div className="max-w-6xl mx-auto grid md:grid-cols-[1.2fr_1fr] gap-10 md:gap-14 items-center relative">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-[1.2fr_1fr] gap-8 md:gap-14 items-center relative">
             <div className="animate-slide-up">
               <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
                 Archetypal Systems
               </p>
-              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-text-primary tracking-tight leading-[1.08] mb-5">
+              <h1 className="font-serif text-[2rem] leading-[1.1] sm:text-5xl md:text-6xl md:leading-[1.08] font-medium text-text-primary tracking-tight mb-4 md:mb-5">
                 Six traditions keep circling the same{" "}
                 <span className={light ? "text-text-primary italic" : "text-gold glow-text-subtle animate-flicker italic"}>
                   figures
                 </span>
                 .
               </h1>
-              <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-xl font-light">
+              <p className="text-text-secondary text-[15px] md:text-lg leading-relaxed max-w-xl font-light">
                 147 mappings across 20 clusters — every one carrying its
                 citations, dissent, and confidence tier.
               </p>
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2">
+              <div className="mt-6 md:mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <a
                   href="#systems"
                   className="font-mono text-[10px] tracking-[0.25em] uppercase text-gold hover:opacity-80 transition-opacity"
@@ -80,13 +80,15 @@ export default function Home() {
               </div>
             </div>
             <div className="animate-slide-up delay-200 w-full flex justify-center md:justify-end">
-              <ResonanceConstellation
-                focusSystem={focusSystem}
-                activeSystems={activeSystems}
-                onHoverSystem={(id) =>
-                  setHover(id ? { kind: "system", id } : null)
-                }
-              />
+              <div className="w-full max-w-[320px] sm:max-w-[360px]">
+                <ResonanceConstellation
+                  focusSystem={focusSystem}
+                  activeSystems={activeSystems}
+                  onHoverSystem={(id) =>
+                    setHover(id ? { kind: "system", id } : null)
+                  }
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -100,8 +102,8 @@ export default function Home() {
         />
 
         {/* Systems grid */}
-        <div id="systems" className="px-6 pb-20 scroll-mt-24">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-5">
+        <div id="systems" className="px-5 sm:px-6 pb-16 md:pb-20 scroll-mt-24">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-4 md:gap-5">
             {SYSTEMS.map((system, i) => {
               const sid = system.id as SystemId;
               const isFocused = focusSystem === sid;
@@ -138,19 +140,19 @@ export default function Home() {
                     }}
                   />
 
-                  <div className="p-6 md:p-8 flex flex-col h-full">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="font-mono text-[8px] tracking-[0.25em] text-muted uppercase">
+                  <div className="p-5 sm:p-6 md:p-8 flex flex-col h-full">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-3 md:mb-4">
+                      <span className="font-mono text-[8px] tracking-[0.22em] sm:tracking-[0.25em] text-muted uppercase whitespace-nowrap">
                         {system.framework}
                       </span>
                       <div
-                        className="h-px flex-1"
+                        className="h-px flex-1 min-w-[12px]"
                         style={{
                           background: `linear-gradient(90deg, ${accent}${light ? "30" : "15"}, transparent)`,
                         }}
                       />
                       <span
-                        className="font-mono text-[8px] tracking-[0.2em] uppercase"
+                        className="font-mono text-[8px] tracking-[0.2em] uppercase whitespace-nowrap"
                         style={{ color: isLive ? accent : "var(--color-muted)" }}
                       >
                         {isLive ? `${system.count} types` : "Coming Soon"}
@@ -158,7 +160,7 @@ export default function Home() {
                     </div>
 
                     <h2
-                      className="font-serif text-4xl md:text-5xl font-medium tracking-tight mb-2 transition-all duration-300"
+                      className="font-serif text-[2rem] sm:text-4xl md:text-5xl font-medium tracking-tight leading-[1.05] mb-2 transition-all duration-300"
                       style={{
                         color: light ? "var(--color-text-primary)" : accent,
                         textShadow:
@@ -168,15 +170,15 @@ export default function Home() {
                       {system.name}
                     </h2>
 
-                    <p className="font-serif text-lg text-text-secondary italic mb-3">
+                    <p className="font-serif text-base sm:text-lg text-text-secondary italic mb-3">
                       {system.subtitle}
                     </p>
 
-                    <p className="text-text-secondary text-sm leading-relaxed mb-5 font-light">
+                    <p className="text-text-secondary text-[14px] sm:text-sm leading-relaxed mb-4 sm:mb-5 font-light">
                       {system.description}
                     </p>
 
-                    <div className="mt-auto pt-4 border-t border-surface-light/30 flex items-center justify-between">
+                    <div className="mt-auto pt-3 sm:pt-4 border-t border-surface-light/30 flex items-center justify-between">
                       <span className="font-mono text-[9px] tracking-[0.2em] text-muted uppercase">
                         {isLive ? "Enter system" : "In development"}
                       </span>
@@ -231,7 +233,7 @@ export default function Home() {
           </div>
 
           {/* Atlas feature */}
-          <div className="max-w-6xl mx-auto mt-20">
+          <div className="max-w-6xl mx-auto mt-16 md:mt-20">
             <Link
               href="/atlas"
               className="group block relative overflow-hidden rounded-sm transition-all duration-500"
@@ -246,18 +248,18 @@ export default function Home() {
                   background: `linear-gradient(90deg, transparent, ${light ? "#8A6A2060" : "#D4AF3760"}, transparent)`,
                 }}
               />
-              <div className="grid md:grid-cols-[1.3fr_1fr] gap-8 md:gap-12 p-8 md:p-12 items-center">
+              <div className="grid md:grid-cols-[1.3fr_1fr] gap-6 md:gap-12 p-6 sm:p-8 md:p-12 items-center">
                 <div>
-                  <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
+                  <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-3 md:mb-4">
                     The Atlas · Resonance Map
                   </p>
-                  <h2 className="font-serif text-3xl md:text-5xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
+                  <h2 className="font-serif text-[1.75rem] leading-[1.1] sm:text-3xl md:text-5xl md:leading-[1.05] font-medium text-text-primary tracking-tight mb-4 md:mb-5">
                     See where the systems{" "}
                     <span className={light ? "text-text-primary italic" : "text-gold glow-text-subtle italic"}>
                       rhyme
                     </span>
                   </h2>
-                  <p className="text-text-secondary text-base md:text-lg leading-relaxed font-light mb-6 max-w-xl">
+                  <p className="text-text-secondary text-[15px] md:text-lg leading-relaxed font-light mb-5 md:mb-6 max-w-xl">
                     Jung&rsquo;s Warrior. The Enneagram Eight. KWML&rsquo;s King.
                     The Emperor in tarot. Four traditions pointing at one
                     recurring figure — and that&rsquo;s one of twenty clusters on

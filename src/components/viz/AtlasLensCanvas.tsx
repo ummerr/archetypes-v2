@@ -272,14 +272,14 @@ export default function AtlasLensCanvas({
               type="button"
               onClick={() => setLens(t.id)}
               aria-pressed={active}
-              className="relative font-mono text-[10px] tracking-[0.25em] uppercase px-3 py-2 rounded-sm border transition-all"
+              className="relative font-mono text-[10px] tracking-[0.22em] sm:tracking-[0.25em] uppercase px-2.5 sm:px-3 py-2 rounded-sm border transition-all"
               style={{
                 borderColor: active ? "var(--color-gold)" : "rgba(255,255,255,0.12)",
                 color: active ? "var(--color-gold)" : "var(--color-muted)",
                 background: active ? "rgba(230,196,122,0.08)" : "transparent",
               }}
             >
-              <span className="opacity-60 mr-2">{t.kicker}</span>
+              <span className="hidden sm:inline opacity-60 mr-2">{t.kicker}</span>
               <span>{t.label}</span>
             </button>
           );
@@ -332,19 +332,27 @@ export default function AtlasLensCanvas({
         )}
       </div>
 
-      {/* Canvas */}
+      {/* Canvas — on mobile, the canvas is fixed-height and horizontally
+          scrollable so nodes stay legible; on md+ it fills its column at
+          1000/640 aspect. */}
       <div
         className="relative w-full rounded-sm border border-surface-light/30 overflow-hidden"
         style={{
-          aspectRatio: `${W} / ${H}`,
           background:
             "radial-gradient(ellipse at center, rgba(14,14,20,0.95) 0%, rgba(6,6,10,1) 80%)",
         }}
       >
+        <div
+          className="relative overflow-x-auto md:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          {/* Mobile: fixed height + intrinsic 1000/640 width forces horizontal scroll.
+              md+: fills parent width with correct aspect ratio. */}
+          <div className="relative h-[440px] w-[687px] md:h-auto md:w-full md:aspect-[1000/640]">
         <svg
           viewBox={`0 0 ${W} ${H}`}
           preserveAspectRatio="xMidYMid meet"
-          className="no-contrast-boost w-full h-full select-none"
+          className="no-contrast-boost w-full h-full select-none block"
         >
           <defs>
             <filter id="lens-glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -386,24 +394,30 @@ export default function AtlasLensCanvas({
                   style={{ cursor: "pointer" }}
                   onMouseEnter={() => setHoverNode(n.id)}
                   onMouseLeave={() => setHoverNode(null)}
+                  onTouchStart={(e) => {
+                    e.stopPropagation();
+                    setHoverNode(n.id);
+                  }}
                   onClick={() => router.push(`/${n.system}/archetype/${n.slug}`)}
                 >
-                  <circle r={r + 4} fill={accent} opacity={isHover ? 0.35 : 0.1} filter="url(#lens-glow)" />
-                  <circle r={r} fill={accent} filter="url(#lens-glow)" />
+                  {/* Invisible touch target */}
+                  <circle r={14} fill="transparent" pointerEvents="all" />
+                  <circle r={r + 4} fill={accent} opacity={isHover ? 0.35 : 0.1} filter="url(#lens-glow)" pointerEvents="none" />
+                  <circle r={r} fill={accent} filter="url(#lens-glow)" pointerEvents="none" />
                 </motion.g>
               );
             })}
           </g>
         </svg>
 
-        {/* Tooltip */}
+        {/* Tooltip — clamped so it never clips the left/right edges */}
         {hoveredNode && hoveredMeta && hoveredPos ? (
           <div
             className="pointer-events-none absolute z-10 rounded-sm border border-surface-light/50 bg-surface/95 backdrop-blur-sm px-3 py-2 shadow-xl"
             style={{
-              left: `${(hoveredPos.x / W) * 100}%`,
+              left: `clamp(6px, ${(hoveredPos.x / W) * 100}% - 130px, calc(100% - 266px))`,
               top: `${(hoveredPos.y / H) * 100}%`,
-              transform: "translate(-50%, calc(-100% - 14px))",
+              transform: "translateY(calc(-100% - 14px))",
               minWidth: 180,
               maxWidth: 260,
             }}
@@ -424,9 +438,23 @@ export default function AtlasLensCanvas({
             ) : null}
           </div>
         ) : null}
+          </div>
+        </div>
 
+        {/* Edge fades: hint at horizontal overflow on mobile */}
+        <div
+          aria-hidden
+          className="md:hidden pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[rgba(6,6,10,0.9)] to-transparent"
+        />
+        <div
+          aria-hidden
+          className="md:hidden pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[rgba(6,6,10,0.9)] to-transparent"
+        />
+
+        {/* Pinned caption — stays over the visible viewport, not the scrolled SVG */}
         <div className="absolute bottom-2 right-3 font-mono text-[8px] tracking-[0.25em] uppercase text-muted/60 pointer-events-none">
-          {layout.nodes.length} archetypes · {clusters.length} clusters
+          <span className="md:hidden">← swipe · {layout.nodes.length} archetypes</span>
+          <span className="hidden md:inline">{layout.nodes.length} archetypes · {clusters.length} clusters</span>
         </div>
       </div>
     </div>

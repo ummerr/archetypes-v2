@@ -90,7 +90,7 @@ export default function AtlasPage() {
   }));
 
   return (
-    <div className="max-w-6xl mx-auto px-6 md:px-10 py-20">
+    <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-10 py-12 md:py-20">
       <SectionHeading kicker="Atlas" as="h1">
         The Cross-System Resonance Map
       </SectionHeading>
@@ -118,9 +118,9 @@ export default function AtlasPage() {
         </p>
       </section>
 
-      <section className="mb-16">
+      <section className="mb-12 md:mb-16">
         <SectionHeading kicker="Legend">How to read the atlas</SectionHeading>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-6">
           <div className="rounded-sm border border-surface-light/40 p-5">
             <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
               The four lenses
@@ -146,7 +146,7 @@ export default function AtlasPage() {
             <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
               Vocabulary
             </p>
-            <div className="grid grid-cols-3 gap-4 text-[13px]">
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 text-[12px] sm:text-[13px]">
               <div>
                 <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/60 mb-2">
                   Stage

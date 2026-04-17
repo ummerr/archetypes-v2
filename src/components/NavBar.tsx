@@ -20,10 +20,12 @@ export default function NavBar() {
   const { theme, toggle } = useTheme();
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = useState<GroupId | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setOpen(null);
+    setMobileOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -41,6 +43,21 @@ export default function NavBar() {
       document.removeEventListener("keydown", onKey);
     };
   }, [open]);
+
+  // Lock body scroll while mobile sheet is open.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [mobileOpen]);
 
   const activeSystem = systemFromPath(pathname);
   const inAtlas = pathname.startsWith("/atlas") || pathname.startsWith("/archetypes");
@@ -76,11 +93,11 @@ export default function NavBar() {
       />
       <div
         ref={wrapRef}
-        className="relative max-w-5xl mx-auto px-6 h-14 flex items-center justify-between"
+        className="relative max-w-5xl mx-auto px-5 sm:px-6 h-14 flex items-center justify-between gap-3"
       >
-        <div className="flex items-center gap-5">
-          <Link href="/" className="group flex items-center gap-3">
-            <span className="font-mono text-sm font-bold tracking-[0.25em] text-gold transition-colors duration-200 group-hover:text-gold-bright glow-text-subtle">
+        <div className="flex items-center gap-5 min-w-0">
+          <Link href="/" className="group flex items-center min-w-0">
+            <span className="font-mono font-bold text-gold glow-text-subtle transition-colors duration-200 group-hover:text-gold-bright whitespace-nowrap text-[10px] tracking-[0.18em] sm:text-sm sm:tracking-[0.25em]">
               MAPS OF THE INNER WORLD
             </span>
           </Link>
@@ -95,7 +112,7 @@ export default function NavBar() {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1 sm:gap-3">
           <div className="relative hidden md:block">
             <GroupTrigger id="about" label="About" open={open} setOpen={setOpen} active={groupActive("about")} />
             {open === "about" && <LinkListPanel links={ABOUT_LINKS} pathname={pathname} align="right" />}
@@ -103,7 +120,7 @@ export default function NavBar() {
           <button
             onClick={toggle}
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-            className="relative w-8 h-8 flex items-center justify-center text-muted hover:text-text-secondary transition-colors duration-200"
+            className="relative w-10 h-10 flex items-center justify-center text-muted hover:text-text-secondary transition-colors duration-200"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`absolute transition-all duration-300 ${theme === "dark" ? "opacity-100 rotate-0 scale-100" : "opacity-0 rotate-90 scale-75"}`}>
               <circle cx="8" cy="8" r="3" />
@@ -113,11 +130,38 @@ export default function NavBar() {
               <path d="M13.5 8.5a5.5 5.5 0 1 1-6-6 4.5 4.5 0 0 0 6 6z" />
             </svg>
           </button>
+          <button
+            type="button"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav-sheet"
+            className="md:hidden relative w-10 h-10 flex items-center justify-center text-text-secondary hover:text-gold transition-colors"
+          >
+            <span className="sr-only">Menu</span>
+            <span
+              aria-hidden
+              className={`absolute h-px w-5 bg-current transition-transform duration-300 ${mobileOpen ? "rotate-45" : "-translate-y-[5px]"}`}
+            />
+            <span
+              aria-hidden
+              className={`absolute h-px w-5 bg-current transition-opacity duration-200 ${mobileOpen ? "opacity-0" : "opacity-100"}`}
+            />
+            <span
+              aria-hidden
+              className={`absolute h-px w-5 bg-current transition-transform duration-300 ${mobileOpen ? "-rotate-45" : "translate-y-[5px]"}`}
+            />
+          </button>
         </div>
 
       </div>
 
       <SecondaryBar pathname={pathname} />
+      <MobileSheet
+        open={mobileOpen}
+        pathname={pathname}
+        onClose={() => setMobileOpen(false)}
+      />
     </nav>
     </>
   );
@@ -250,7 +294,10 @@ function SecondaryBar({ pathname }: { pathname: string }) {
 function barWrap(children: React.ReactNode) {
   return (
     <div className="relative border-b border-gold/10 bg-bg/70 backdrop-blur-xl">
-      <div className="max-w-5xl mx-auto px-6 h-10 flex items-center gap-4 overflow-x-auto">
+      <div
+        className="max-w-5xl mx-auto px-5 sm:px-6 h-10 flex items-center gap-4 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
         {children}
       </div>
     </div>
@@ -380,5 +427,333 @@ function SystemSecondaryBar({
         </div>
       )}
     </>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// Mobile sheet
+// ─────────────────────────────────────────────────────────────
+
+function MobileSheet({
+  open,
+  pathname,
+  onClose,
+}: {
+  open: boolean;
+  pathname: string;
+  onClose: () => void;
+}) {
+  const [section, setSection] = useState<"root" | "systems" | "atlas" | "about">("root");
+
+  useEffect(() => {
+    if (!open) setSection("root");
+  }, [open]);
+
+  return (
+    <div
+      id="mobile-nav-sheet"
+      aria-hidden={!open}
+      className={`md:hidden fixed inset-x-0 top-14 bottom-0 z-40 transition-opacity duration-300 ${
+        open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}
+    >
+      <button
+        type="button"
+        aria-label="Close menu"
+        onClick={onClose}
+        className="absolute inset-0 bg-bg/70 backdrop-blur-xl"
+      />
+      <div
+        className={`relative h-full overflow-y-auto transition-transform duration-300 ease-out ${
+          open ? "translate-y-0" : "-translate-y-3"
+        }`}
+      >
+        <div className="max-w-md mx-auto px-6 pt-8 pb-16">
+          {section === "root" ? (
+            <RootSheet
+              pathname={pathname}
+              onSelect={setSection}
+              onNavigate={onClose}
+            />
+          ) : (
+            <SubSheet
+              section={section}
+              pathname={pathname}
+              onBack={() => setSection("root")}
+              onNavigate={onClose}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RootSheet({
+  pathname,
+  onSelect,
+  onNavigate,
+}: {
+  pathname: string;
+  onSelect: (s: "systems" | "atlas" | "about") => void;
+  onNavigate: () => void;
+}) {
+  const inSystems = systemFromPath(pathname) !== null;
+  const inAtlas = pathname.startsWith("/atlas") || pathname.startsWith("/archetypes");
+  const inAbout = pathname.startsWith("/about");
+
+  return (
+    <div className="animate-slide-up" style={{ animationDuration: "400ms" }}>
+      <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-gold/80 mb-5">
+        Navigate
+      </p>
+      <nav className="divide-y divide-gold/10 border-y border-gold/10">
+        <SheetRow
+          label="Home"
+          href="/"
+          active={pathname === "/"}
+          onNavigate={onNavigate}
+          leading="01"
+        />
+        <SheetGroupRow
+          label="Systems"
+          caption="Six traditions"
+          active={inSystems}
+          onClick={() => onSelect("systems")}
+          leading="02"
+        />
+        <SheetGroupRow
+          label="Atlas"
+          caption="The resonance map"
+          active={inAtlas}
+          onClick={() => onSelect("atlas")}
+          leading="03"
+        />
+        <SheetGroupRow
+          label="About"
+          caption="Method & sources"
+          active={inAbout}
+          onClick={() => onSelect("about")}
+          leading="04"
+        />
+      </nav>
+    </div>
+  );
+}
+
+function SubSheet({
+  section,
+  pathname,
+  onBack,
+  onNavigate,
+}: {
+  section: "systems" | "atlas" | "about";
+  pathname: string;
+  onBack: () => void;
+  onNavigate: () => void;
+}) {
+  return (
+    <div className="animate-slide-up" style={{ animationDuration: "350ms" }}>
+      <button
+        type="button"
+        onClick={onBack}
+        className="group flex items-center gap-2 mb-5 font-mono text-[9px] tracking-[0.3em] uppercase text-text-secondary hover:text-gold transition-colors"
+      >
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:-translate-x-0.5">
+          <path d="M6 2L3 5l3 3" />
+        </svg>
+        Back
+      </button>
+      <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-gold/80 mb-5">
+        {section === "systems" ? "Six Systems" : section === "atlas" ? "The Atlas" : "About"}
+      </p>
+      {section === "systems" && (
+        <SystemsList pathname={pathname} onNavigate={onNavigate} />
+      )}
+      {section === "atlas" && (
+        <LinksList links={ATLAS_LINKS} pathname={pathname} onNavigate={onNavigate} />
+      )}
+      {section === "about" && (
+        <LinksList links={ABOUT_LINKS} pathname={pathname} onNavigate={onNavigate} />
+      )}
+    </div>
+  );
+}
+
+function SheetRow({
+  label,
+  href,
+  active,
+  onNavigate,
+  leading,
+}: {
+  label: string;
+  href: string;
+  active: boolean;
+  onNavigate: () => void;
+  leading?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onNavigate}
+      className="flex items-center gap-4 py-5 group"
+    >
+      {leading && (
+        <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted/60 w-6">
+          {leading}
+        </span>
+      )}
+      <span
+        className={`font-serif text-2xl tracking-tight transition-colors ${
+          active ? "text-gold" : "text-text-primary group-hover:text-gold"
+        }`}
+      >
+        {label}
+      </span>
+      <span className="ml-auto text-muted/60 group-hover:text-gold transition-colors">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 4l4 4-4 4" />
+        </svg>
+      </span>
+    </Link>
+  );
+}
+
+function SheetGroupRow({
+  label,
+  caption,
+  active,
+  onClick,
+  leading,
+}: {
+  label: string;
+  caption: string;
+  active: boolean;
+  onClick: () => void;
+  leading?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="w-full flex items-center gap-4 py-5 text-left group"
+    >
+      {leading && (
+        <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted/60 w-6">
+          {leading}
+        </span>
+      )}
+      <span className="flex-1 min-w-0">
+        <span
+          className={`block font-serif text-2xl tracking-tight transition-colors ${
+            active ? "text-gold" : "text-text-primary group-hover:text-gold"
+          }`}
+        >
+          {label}
+        </span>
+        <span className="block font-serif italic text-[13px] text-muted mt-0.5">
+          {caption}
+        </span>
+      </span>
+      <span className="text-muted/60 group-hover:text-gold transition-colors">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 4l4 4-4 4" />
+        </svg>
+      </span>
+    </button>
+  );
+}
+
+function SystemsList({ pathname, onNavigate }: { pathname: string; onNavigate: () => void }) {
+  return (
+    <ul className="divide-y divide-gold/10 border-y border-gold/10">
+      {NAV_SYSTEMS.map((s) => {
+        const active = pathname === s.href || pathname.startsWith(s.href + "/");
+        return (
+          <li key={s.id}>
+            <Link
+              href={s.href}
+              onClick={onNavigate}
+              className="flex items-start gap-4 py-5 group"
+            >
+              <span
+                aria-hidden
+                className="mt-3 w-2 h-2 rounded-full shrink-0"
+                style={{
+                  background: s.accent,
+                  boxShadow: `0 0 10px ${s.accent}80`,
+                }}
+              />
+              <span className="flex-1 min-w-0">
+                <span
+                  className="block font-serif text-2xl tracking-tight transition-colors"
+                  style={{
+                    color: active ? s.accent : "var(--color-text-primary)",
+                  }}
+                >
+                  {s.name}
+                </span>
+                <span className="block font-serif italic text-[13px] text-muted mt-0.5">
+                  {s.tagline}
+                </span>
+              </span>
+              <span className="mt-2 text-muted/60 group-hover:text-gold transition-colors shrink-0">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 4l4 4-4 4" />
+                </svg>
+              </span>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function LinksList({
+  links,
+  pathname,
+  onNavigate,
+}: {
+  links: NavLink[];
+  pathname: string;
+  onNavigate: () => void;
+}) {
+  return (
+    <ul className="divide-y divide-gold/10 border-y border-gold/10">
+      {links.map((l) => {
+        const active = pathname === l.href || pathname.startsWith(l.href + "/");
+        return (
+          <li key={l.href}>
+            <Link
+              href={l.href}
+              onClick={onNavigate}
+              className="flex items-start gap-4 py-5 group"
+            >
+              <span className="flex-1 min-w-0">
+                <span
+                  className={`block font-serif text-2xl tracking-tight transition-colors ${
+                    active ? "text-gold" : "text-text-primary group-hover:text-gold"
+                  }`}
+                >
+                  {l.label}
+                </span>
+                {l.desc && (
+                  <span className="block font-serif italic text-[13px] text-muted mt-0.5">
+                    {l.desc}
+                  </span>
+                )}
+              </span>
+              <span className="mt-2 text-muted/60 group-hover:text-gold transition-colors shrink-0">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 4l4 4-4 4" />
+                </svg>
+              </span>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
