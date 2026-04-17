@@ -126,6 +126,7 @@ export default function TarotCard({
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
+            pointerEvents: flipped ? "none" : "auto",
             background: baseBg,
             border: `1px solid ${borderColor}`,
             boxShadow: light
@@ -222,6 +223,7 @@ export default function TarotCard({
             transform: "rotateY(180deg)",
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
+            pointerEvents: flipped ? "auto" : "none",
             background: baseBg,
             border: `1px solid ${borderColor}`,
             boxShadow: light
