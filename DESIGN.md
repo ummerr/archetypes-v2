@@ -76,7 +76,7 @@ Every card composes three layers:
 KWML          →  ArchetypeSymbol    TotemCanvas (3D platonic)
 Jungian       →  glyph + ring       JungianTotemCanvas (3D organic)
 Enneagram     →  numeral + ring     EnneagramTotemCanvas (3D instrument)
-MBTI          →  MbtiGlyph sm       MbtiTotemCanvas (3D cognitive stack)
+MBTI          →  MbtiGlyph sm       MbtiGlyph lg (same glyph, scaled up)
 Tarot         →  halo + glyph       TarotCard (flip + foil)
 Hero's Journey → HeroJourneyIcon    [gap — see §8]
 Atlas cluster →  ClusterTotem       ClusterTotem hero
