@@ -72,7 +72,7 @@ export default function EnneagramSymbol() {
   return (
     <div className="w-full flex flex-col items-center gap-4">
       {/* Mode toggle */}
-      <div className="flex items-center gap-1 font-mono text-[9px] tracking-[0.25em] uppercase">
+      <div className="flex items-center gap-1 font-mono text-kicker tracking-kicker uppercase">
         {(["integration", "disintegration"] as Mode[]).map((m) => {
           const on = mode === m;
           const c = m === "integration" ? "#6FAA7F" : "#B86A6A";
@@ -344,7 +344,7 @@ export default function EnneagramSymbol() {
             </div>
             <div className="flex-1 min-w-0">
               <div
-                className="font-mono text-[9px] tracking-[0.25em] uppercase mb-0.5"
+                className="font-mono text-kicker tracking-kicker uppercase mb-0.5"
                 style={{ color: mode === "integration" ? "#6FAA7F" : "#B86A6A" }}
               >
                 {mode === "integration"
@@ -357,13 +357,13 @@ export default function EnneagramSymbol() {
               >
                 {active.name}
               </div>
-              <div className="font-mono text-[10px] italic text-text-secondary/80 truncate">
+              <div className="font-mono text-label italic text-text-secondary/80 truncate">
                 &ldquo;{active.motto}&rdquo;
               </div>
             </div>
             <Link
               href={`/enneagram/archetype/${active.slug}`}
-              className="shrink-0 font-mono text-[9px] tracking-[0.2em] uppercase px-3 py-2 rounded-sm border transition-colors duration-300"
+              className="shrink-0 font-mono text-kicker tracking-label uppercase px-3 py-2 rounded-sm border transition-colors duration-300"
               style={{
                 borderColor: `${active.accentColor}50`,
                 color: active.accentColor,
@@ -373,7 +373,7 @@ export default function EnneagramSymbol() {
             </Link>
           </div>
         ) : (
-          <p className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase text-center pt-6">
+          <p className="font-mono text-kicker tracking-kicker text-muted uppercase text-center pt-6">
             tap a point to see its arrows
           </p>
         )}

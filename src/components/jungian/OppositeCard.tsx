@@ -17,7 +17,7 @@ export default function OppositeCard({ opposite, fromColor }: Props) {
   return (
     <section className="mb-16">
       <div className="flex items-center gap-4 mb-6">
-        <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-muted">
+        <span className="font-mono text-label tracking-display uppercase text-muted">
           The Opposite · Your Blind Spot
         </span>
         <div
@@ -51,7 +51,7 @@ export default function OppositeCard({ opposite, fromColor }: Props) {
           </span>
           <div className="flex-1 min-w-0">
             <p
-              className="font-mono text-[9px] tracking-[0.4em] uppercase mb-1"
+              className="font-mono text-kicker tracking-display uppercase mb-1"
               style={{ color: toColor + "CC" }}
             >
               Complement

@@ -43,10 +43,10 @@ export default function ConfidenceDistribution() {
       className="my-8"
     >
       <div className="flex items-baseline justify-between mb-3">
-        <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80">
+        <p className="font-mono text-label tracking-kicker uppercase text-gold/80">
           {total} grounded mappings
         </p>
-        <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-text-secondary/50">
+        <p className="font-mono text-kicker tracking-label uppercase text-text-secondary/50">
           across {CLUSTERS.length} clusters
         </p>
       </div>
@@ -77,25 +77,25 @@ export default function ConfidenceDistribution() {
                 aria-hidden="true"
               />
               <span
-                className="font-mono text-[10px] tracking-[0.25em] uppercase shrink-0"
+                className="font-mono text-label tracking-kicker uppercase shrink-0"
                 style={{ color: TIER_TINT[t] }}
               >
                 {t}
               </span>
-              <span className="font-serif text-[14px] text-text-primary tabular-nums shrink-0">
+              <span className="font-serif text-body-sm text-text-primary tabular-nums shrink-0">
                 {counts[t]}
               </span>
-              <span className="font-mono text-[9px] tracking-[0.15em] text-text-secondary/45 tabular-nums shrink-0">
+              <span className="font-mono text-kicker tracking-label text-text-secondary/45 tabular-nums shrink-0">
                 {pct.toFixed(0)}%
               </span>
-              <span className="font-serif italic text-[13px] text-text-secondary/70 truncate">
+              <span className="font-serif italic text-xs text-text-secondary/70 truncate">
                 {CONFIDENCE_TIERS[t]}
               </span>
             </li>
           );
         })}
       </ul>
-      <figcaption className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/50 mt-4">
+      <figcaption className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/50 mt-4">
         Fig. 3 - Live distribution computed from grounded-resonance-map.json.
       </figcaption>
     </figure>

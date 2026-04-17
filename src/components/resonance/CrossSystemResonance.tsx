@@ -31,7 +31,7 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
   return (
     <div className={`mb-16 animate-slide-up ${delay}`}>
       <div className="flex items-center gap-4 mb-5">
-        <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+        <span className="font-mono text-label tracking-kicker text-gold/80 uppercase">
           Cross-System Resonance
         </span>
         <div
@@ -47,7 +47,7 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
         cluster gathers figures across traditions that share an underlying resonance - with honesty
         about where inference begins.
       </p>
-      <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted/70 mb-8">
+      <p className="font-mono text-label tracking-label uppercase text-muted/70 mb-8">
         Mirrors to try on, not a diagnosis. See{" "}
         <Link href="/about/methodology" className="underline underline-offset-2 hover:text-gold">
           methodology
@@ -61,7 +61,7 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
             <div className="mb-4">
               <div className="flex items-baseline gap-3 flex-wrap mb-1">
                 <p
-                  className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                  className="font-mono text-kicker tracking-kicker uppercase"
                   style={{ color: light ? systemAccent(system).accentLight : accentColor }}
                 >
                   Cluster
@@ -70,7 +70,7 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
                 {self.confidence === "contested" && (
                   <Link
                     href={`/atlas/debates/${debateSlugFor(cluster.id, system, slug)}`}
-                    className="font-mono text-[10px] tracking-[0.2em] uppercase text-amber-500 hover:text-amber-400 underline underline-offset-2"
+                    className="font-mono text-label tracking-label uppercase text-amber-500 hover:text-amber-400 underline underline-offset-2"
                   >
                     See the debate →
                   </Link>
@@ -85,19 +85,19 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
                 {cluster.description}
               </p>
               {(cluster.editorialNote || cluster.adversarialNote) && (
-                <div className="mt-2 text-[12px] leading-snug text-text-secondary/70 space-y-1">
+                <div className="mt-2 text-xs leading-snug text-text-secondary/70 space-y-1">
                   {cluster.editorialNote && <p className="italic">{cluster.editorialNote}</p>}
                   {cluster.adversarialNote && (
                     <p className="italic text-muted/80">
-                      <span className="font-mono text-[9px] tracking-[0.2em] uppercase mr-1">Devil's advocate:</span>
+                      <span className="font-mono text-kicker tracking-label uppercase mr-1">Devil's advocate:</span>
                       {cluster.adversarialNote}
                     </p>
                   )}
                 </div>
               )}
               {self.dissent && (
-                <div className="mt-3 rounded-sm border border-amber-500/30 bg-amber-500/[0.04] px-3 py-2 text-[12px] italic text-text-secondary/85">
-                  <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-amber-500/90 mr-1">Dissent:</span>
+                <div className="mt-3 rounded-sm border border-amber-500/30 bg-amber-500/[0.04] px-3 py-2 text-xs italic text-text-secondary/85">
+                  <span className="font-mono text-kicker tracking-kicker uppercase text-amber-500/90 mr-1">Dissent:</span>
                   {self.dissent}
                 </div>
               )}
@@ -122,7 +122,7 @@ export default function CrossSystemResonance({ system, slug, accentColor, delay 
                   >
                     <div className="flex items-baseline justify-between gap-2 mb-2">
                       <p
-                        className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                        className="font-mono text-kicker tracking-kicker uppercase"
                         style={{ color }}
                       >
                         {systemName}

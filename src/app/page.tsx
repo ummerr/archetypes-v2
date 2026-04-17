@@ -50,30 +50,30 @@ export default function Home() {
           </div>
           <div className="max-w-6xl mx-auto grid md:grid-cols-[1.2fr_1fr] gap-8 md:gap-14 items-center relative">
             <div className="animate-slide-up">
-              <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
+              <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4">
                 Archetypal Systems
               </p>
-              <h1 className="font-serif text-[2rem] leading-[1.1] sm:text-5xl md:text-6xl md:leading-[1.08] font-medium text-text-primary tracking-tight mb-4 md:mb-5">
+              <h1 className="font-serif text-[2rem] sm:text-5xl md:text-6xl leading-display font-medium text-text-primary tracking-tight mb-4 md:mb-5">
                 Six traditions keep circling the same{" "}
                 <span className={light ? "text-text-primary italic" : "text-gold glow-text-subtle animate-flicker italic"}>
                   figures
                 </span>
                 .
               </h1>
-              <p className="text-text-secondary text-[15px] md:text-lg leading-relaxed max-w-xl font-light">
+              <p className="text-text-secondary text-body md:text-lg leading-relaxed max-w-xl font-light">
                 147 mappings across 20 clusters — every one carrying its
                 citations, dissent, and confidence tier.
               </p>
               <div className="mt-6 md:mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <a
                   href="#systems"
-                  className="font-mono text-[10px] tracking-[0.25em] uppercase text-gold hover:opacity-80 transition-opacity"
+                  className="font-mono text-label tracking-kicker uppercase text-gold hover:opacity-80 transition-opacity"
                 >
                   Choose a system ↓
                 </a>
                 <Link
                   href="/atlas"
-                  className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-secondary hover:text-gold transition-colors"
+                  className="font-mono text-label tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
                 >
                   Or see the whole map →
                 </Link>
@@ -142,7 +142,7 @@ export default function Home() {
 
                   <div className="p-5 sm:p-6 md:p-8 flex flex-col h-full">
                     <div className="flex items-center gap-2 sm:gap-3 mb-3 md:mb-4">
-                      <span className="font-mono text-[8px] tracking-[0.22em] sm:tracking-[0.25em] text-muted uppercase whitespace-nowrap">
+                      <span className="font-mono text-kicker tracking-kicker text-muted uppercase whitespace-nowrap">
                         {system.framework}
                       </span>
                       <div
@@ -152,7 +152,7 @@ export default function Home() {
                         }}
                       />
                       <span
-                        className="font-mono text-[8px] tracking-[0.2em] uppercase whitespace-nowrap"
+                        className="font-mono text-kicker tracking-label uppercase whitespace-nowrap"
                         style={{ color: isLive ? accent : "var(--color-muted)" }}
                       >
                         {isLive ? `${system.count} types` : "Coming Soon"}
@@ -160,7 +160,7 @@ export default function Home() {
                     </div>
 
                     <h2
-                      className="font-serif text-[2rem] sm:text-4xl md:text-5xl font-medium tracking-tight leading-[1.05] mb-2 transition-all duration-300"
+                      className="font-serif text-[2rem] sm:text-4xl md:text-5xl font-medium tracking-tight leading-display mb-2 transition-all duration-300"
                       style={{
                         color: light ? "var(--color-text-primary)" : accent,
                         textShadow:
@@ -174,12 +174,12 @@ export default function Home() {
                       {system.subtitle}
                     </p>
 
-                    <p className="text-text-secondary text-[14px] sm:text-sm leading-relaxed mb-4 sm:mb-5 font-light">
+                    <p className="text-text-secondary text-body-sm leading-relaxed mb-4 sm:mb-5 font-light">
                       {system.description}
                     </p>
 
                     <div className="mt-auto pt-3 sm:pt-4 border-t border-surface-light/30 flex items-center justify-between">
-                      <span className="font-mono text-[9px] tracking-[0.2em] text-muted uppercase">
+                      <span className="font-mono text-kicker tracking-label text-muted uppercase">
                         {isLive ? "Enter system" : "In development"}
                       </span>
                       {isLive && (
@@ -223,7 +223,7 @@ export default function Home() {
           </div>
 
           <div className="max-w-6xl mx-auto mt-10 text-center">
-            <p className="font-mono text-[9px] tracking-[0.2em] text-muted uppercase">
+            <p className="font-mono text-kicker tracking-label text-muted uppercase">
               <span className="inline-block w-6 h-px bg-current align-middle mr-3" />
               {activeClusters && activeClusters.size > 0 && hover?.kind === "system"
                 ? `${CLUSTER_CHIPS.filter((c) => activeClusters.has(c.id)).length} shared currents`
@@ -250,16 +250,16 @@ export default function Home() {
               />
               <div className="grid md:grid-cols-[1.3fr_1fr] gap-6 md:gap-12 p-6 sm:p-8 md:p-12 items-center">
                 <div>
-                  <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-3 md:mb-4">
+                  <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-3 md:mb-4">
                     The Atlas · Resonance Map
                   </p>
-                  <h2 className="font-serif text-[1.75rem] leading-[1.1] sm:text-3xl md:text-5xl md:leading-[1.05] font-medium text-text-primary tracking-tight mb-4 md:mb-5">
+                  <h2 className="font-serif text-h2 sm:text-3xl md:text-5xl leading-display font-medium text-text-primary tracking-tight mb-4 md:mb-5">
                     See where the systems{" "}
                     <span className={light ? "text-text-primary italic" : "text-gold glow-text-subtle italic"}>
                       rhyme
                     </span>
                   </h2>
-                  <p className="text-text-secondary text-[15px] md:text-lg leading-relaxed font-light mb-5 md:mb-6 max-w-xl">
+                  <p className="text-text-secondary text-body md:text-lg leading-relaxed font-light mb-5 md:mb-6 max-w-xl">
                     Jung&rsquo;s Warrior. The Enneagram Eight. KWML&rsquo;s King.
                     The Emperor in tarot. Four traditions pointing at one
                     recurring figure — and that&rsquo;s one of twenty clusters on
@@ -271,7 +271,7 @@ export default function Home() {
                     what the others would call the same pattern — or when you want
                     to see where practitioners genuinely disagree.
                   </p>
-                  <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase text-gold group-hover:translate-x-0.5 transition-transform">
+                  <span className="inline-flex items-center gap-2 font-mono text-label tracking-kicker uppercase text-gold group-hover:translate-x-0.5 transition-transform">
                     Open the Atlas
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                       <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -282,7 +282,7 @@ export default function Home() {
                   {CLUSTER_CHIPS.slice(0, 10).map((c) => (
                     <span
                       key={c.id}
-                      className="font-mono text-[10px] tracking-[0.15em] uppercase px-3 py-1.5 rounded-full border text-text-secondary"
+                      className="font-mono text-label tracking-label uppercase px-3 py-1.5 rounded-full border text-text-secondary"
                       style={{
                         borderColor: light ? "#8A6A2025" : "#D4AF3718",
                         background: light ? "#8A6A2008" : "#D4AF3706",
@@ -291,7 +291,7 @@ export default function Home() {
                       {c.label}
                     </span>
                   ))}
-                  <span className="font-mono text-[10px] tracking-[0.15em] uppercase px-3 py-1.5 text-muted">
+                  <span className="font-mono text-label tracking-label uppercase px-3 py-1.5 text-muted">
                     + {CLUSTER_CHIPS.length - 10} more
                   </span>
                 </div>
@@ -304,7 +304,7 @@ export default function Home() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-secondary hover:text-gold transition-colors"
+                className="font-mono text-label tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
               >
                 {l.label} →
               </Link>

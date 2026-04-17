@@ -68,21 +68,21 @@ export default function MbtiDetailClient({
         >
           <Link
             href="/mbti"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
+            className="font-mono text-kicker tracking-kicker text-muted uppercase hover:text-gold transition-colors"
           >
             Myers-Briggs
           </Link>
-          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <span className="text-muted/40 font-mono text-label">/</span>
           <span
-            className="font-mono text-[9px] tracking-[0.25em] uppercase"
+            className="font-mono text-kicker tracking-kicker uppercase"
             style={{ color }}
           >
             {temperament.label}
           </span>
-          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <span className="text-muted/40 font-mono text-label">/</span>
           <span
             aria-current="page"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase"
+            className="font-mono text-kicker tracking-kicker text-muted uppercase"
           >
             {archetype.code}
           </span>
@@ -91,26 +91,23 @@ export default function MbtiDetailClient({
         {/* Hero */}
         <div className="mb-14 animate-slide-up delay-100">
           <div className="flex flex-col md:flex-row gap-8 md:gap-10 items-start">
-            <div className="flex-shrink-0 mx-auto md:mx-0 flex flex-col items-center gap-4">
-              <div className="w-40 h-40 md:w-48 md:h-48" aria-hidden>
-                <MbtiTotemCanvas
-                  stack={archetype.stack}
-                  color={color}
-                  isHovered
-                />
-              </div>
-              <MbtiGlyph archetype={archetype} size="lg" ambient />
+            <div className="flex-shrink-0 mx-auto md:mx-0 w-40 h-40 md:w-48 md:h-48" aria-hidden>
+              <MbtiTotemCanvas
+                stack={archetype.stack}
+                color={color}
+                isHovered
+              />
             </div>
 
             <div className="flex-1 min-w-0 pt-1">
               <p
-                className="font-mono text-[10px] tracking-[0.35em] uppercase mb-2"
+                className="font-mono text-label tracking-kicker uppercase mb-2"
                 style={{ color: color + (light ? "DD" : "CC") }}
               >
                 {temperament.label} · {temperament.letters}
               </p>
               <h1
-                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-[1.05]"
+                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-display"
                 style={{
                   color: light ? "var(--color-text-primary)" : color,
                   textShadow: !light ? `0 0 24px ${color}40` : "none",
@@ -139,7 +136,7 @@ export default function MbtiDetailClient({
                     >
                       {letter}
                     </span>
-                    <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-muted">
+                    <span className="font-mono text-kicker tracking-label uppercase text-muted">
                       {label}
                     </span>
                   </span>
@@ -162,7 +159,7 @@ export default function MbtiDetailClient({
         <div className="mb-16 animate-slide-up delay-200">
           <div className="flex items-center gap-4 mb-6">
             <span
-              className="font-mono text-[10px] tracking-[0.35em] uppercase"
+              className="font-mono text-label tracking-kicker uppercase"
               style={{ color }}
             >
               Cognitive Stack
@@ -173,7 +170,7 @@ export default function MbtiDetailClient({
                 background: `linear-gradient(90deg, ${color}${light ? "30" : "18"}, transparent)`,
               }}
             />
-            <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+            <span className="font-mono text-kicker tracking-kicker text-muted uppercase">
               Jungian Type Dynamics
             </span>
           </div>
@@ -196,7 +193,7 @@ export default function MbtiDetailClient({
                 >
                   <div className="flex-shrink-0 flex flex-col items-center w-20">
                     <span
-                      className="font-mono text-[8px] tracking-[0.3em] uppercase text-muted"
+                      className="font-mono text-kicker tracking-kicker uppercase text-muted"
                     >
                       {entry.position}
                     </span>
@@ -210,7 +207,7 @@ export default function MbtiDetailClient({
 
                   <div className="flex-1 min-w-0">
                     <p
-                      className="font-mono text-[9px] tracking-[0.25em] uppercase mb-1"
+                      className="font-mono text-kicker tracking-kicker uppercase mb-1"
                       style={{ color: color + (light ? "CC" : "AA") }}
                     >
                       {ROLE_LABEL[entry.role]}
@@ -238,7 +235,7 @@ export default function MbtiDetailClient({
             }}
           >
             <p
-              className="font-mono text-[9px] tracking-[0.3em] uppercase mb-3"
+              className="font-mono text-kicker tracking-kicker uppercase mb-3"
               style={{ color: color + (light ? "EE" : "CC") }}
             >
               Strengths
@@ -261,7 +258,7 @@ export default function MbtiDetailClient({
             }}
           >
             <p
-              className="font-mono text-[9px] tracking-[0.3em] uppercase mb-3"
+              className="font-mono text-kicker tracking-kicker uppercase mb-3"
               style={{ color: light ? "#7E2018" : "#E74C3C" }}
             >
               Shadows
@@ -305,7 +302,7 @@ export default function MbtiDetailClient({
         <div className="mb-16 animate-slide-up delay-400">
           <div className="flex items-center gap-4 mb-5">
             <span
-              className="font-mono text-[10px] tracking-[0.35em] uppercase"
+              className="font-mono text-label tracking-kicker uppercase"
               style={{ color }}
             >
               The Sixteen
@@ -328,7 +325,7 @@ export default function MbtiDetailClient({
                   background: `linear-gradient(145deg, ${color}08, transparent)`,
                 }}
               >
-                <p className="font-mono text-[8px] tracking-[0.3em] text-muted uppercase mb-2">
+                <p className="font-mono text-kicker tracking-kicker text-muted uppercase mb-2">
                   ← Previous Type
                 </p>
                 <p
@@ -351,7 +348,7 @@ export default function MbtiDetailClient({
                   background: `linear-gradient(145deg, ${color}08, transparent)`,
                 }}
               >
-                <p className="font-mono text-[8px] tracking-[0.3em] text-muted uppercase mb-2">
+                <p className="font-mono text-kicker tracking-kicker text-muted uppercase mb-2">
                   Next Type →
                 </p>
                 <p
@@ -372,7 +369,7 @@ export default function MbtiDetailClient({
           <div className="animate-slide-up delay-500">
             <div className="flex items-center gap-4 mb-5">
               <span
-                className="font-mono text-[10px] tracking-[0.35em] uppercase"
+                className="font-mono text-label tracking-kicker uppercase"
                 style={{ color }}
               >
                 Other {temperament.label}
@@ -399,7 +396,7 @@ export default function MbtiDetailClient({
                     <MbtiGlyph archetype={s} size="sm" />
                     <div className="min-w-0">
                       <p
-                        className="font-mono text-[8px] tracking-[0.3em] uppercase mb-0.5"
+                        className="font-mono text-kicker tracking-kicker uppercase mb-0.5"
                         style={{ color: color + "CC" }}
                       >
                         {s.code}

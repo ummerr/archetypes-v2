@@ -706,7 +706,7 @@ function PossessionSlider({
       {/* Labels */}
       <div className="flex justify-between mt-3">
         <span
-          className="font-mono text-[8px] tracking-[0.2em] uppercase"
+          className="font-mono text-kicker tracking-label uppercase"
           style={{
             color: value < 0.3 ? color : "var(--color-muted)",
             opacity: value < 0.3 ? 0.9 : 0.3,
@@ -716,7 +716,7 @@ function PossessionSlider({
           Integrated
         </span>
         <span
-          className="font-mono text-[8px] tracking-[0.2em] uppercase"
+          className="font-mono text-kicker tracking-label uppercase"
           style={{
             color: value > 0.7 ? "#C0392B" : "var(--color-muted)",
             opacity: value > 0.7 ? 0.9 : 0.3,
@@ -775,10 +775,10 @@ export default function BoySteeringMan() {
         <div className="px-6 pt-24 pb-8 md:pt-32 md:pb-12">
           <div className="max-w-3xl mx-auto">
             <div className="animate-slide-up">
-              <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
+              <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4">
                 Moore &amp; Gillette - The Nested Psyche
               </p>
-              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-text-primary tracking-tight leading-display mb-5">
                 The Boy{" "}
                 <span className="text-gold glow-text-subtle animate-flicker">
                   Within
@@ -812,7 +812,7 @@ export default function BoySteeringMan() {
                       setSelectedFamily(f.id);
                       setPossession(0);
                     }}
-                    className="group flex-1 py-3 rounded-sm font-mono text-[9px] tracking-[0.2em] uppercase relative overflow-hidden"
+                    className="group flex-1 py-3 rounded-sm font-mono text-kicker tracking-label uppercase relative overflow-hidden"
                     style={{
                       backgroundColor: active
                         ? `${f.color}${light ? "14" : "0E"}`
@@ -924,7 +924,7 @@ export default function BoySteeringMan() {
                   />
                   <div className="relative">
                     <p
-                      className="font-mono text-[7px] tracking-[0.25em] uppercase mb-3"
+                      className="font-mono text-kicker tracking-kicker uppercase mb-3"
                       style={{
                         color: possession > 0.5 ? "var(--color-crimson-light)" : family.color,
                         opacity: 0.5,
@@ -986,7 +986,7 @@ export default function BoySteeringMan() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 8 }}
                       transition={{ duration: 0.35, ease: [0.19, 1, 0.22, 1] }}
-                      className="font-mono text-[9px] tracking-[0.25em] uppercase font-medium"
+                      className="font-mono text-kicker tracking-kicker uppercase font-medium"
                       style={{ color: possession < 0.5 ? family.color : "#C0392B" }}
                     >
                       {phase.label}
@@ -1022,7 +1022,7 @@ export default function BoySteeringMan() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.4, ease: [0.19, 1, 0.22, 1] }}
-                    className="text-text-secondary text-sm md:text-[15px] leading-relaxed font-light mb-5"
+                    className="text-text-secondary text-sm md:text-body leading-relaxed font-light mb-5"
                   >
                     {phase.description}
                   </motion.p>
@@ -1030,7 +1030,7 @@ export default function BoySteeringMan() {
 
                 <div>
                   <p
-                    className="font-mono text-[7px] tracking-[0.2em] uppercase mb-3"
+                    className="font-mono text-kicker tracking-label uppercase mb-3"
                     style={{
                       color: possession < 0.5 ? family.color : "var(--color-crimson-light)",
                       opacity: 0.5,
@@ -1090,7 +1090,7 @@ export default function BoySteeringMan() {
                       border: "1px solid rgba(192,57,43,0.1)",
                     }}
                   >
-                    <p className="font-mono text-[8px] tracking-[0.2em] text-crimson-light/60 uppercase mb-4">
+                    <p className="font-mono text-kicker tracking-label text-crimson-light/60 uppercase mb-4">
                       How the boy&apos;s shadow becomes the man&apos;s shadow
                     </p>
                     <div className="space-y-3">
@@ -1100,7 +1100,7 @@ export default function BoySteeringMan() {
                         </span>
                         <div className="flex items-center gap-1.5">
                           <div className="w-4 h-px bg-crimson-light/20" />
-                          <span className="font-mono text-[7px] tracking-wider text-crimson-light/40 uppercase">
+                          <span className="font-mono text-kicker tracking-wider text-crimson-light/40 uppercase">
                             matures into
                           </span>
                           <div className="w-4 h-px bg-crimson-light/20" />
@@ -1118,7 +1118,7 @@ export default function BoySteeringMan() {
                         </span>
                         <div className="flex items-center gap-1.5">
                           <div className="w-4 h-px bg-muted/15" />
-                          <span className="font-mono text-[7px] tracking-wider text-muted/40 uppercase">
+                          <span className="font-mono text-kicker tracking-wider text-muted/40 uppercase">
                             matures into
                           </span>
                           <div className="w-4 h-px bg-muted/15" />
@@ -1146,7 +1146,7 @@ export default function BoySteeringMan() {
               style={{ background: `linear-gradient(90deg, transparent, var(--color-gold)${light ? "25" : "12"}, transparent)` }}
             />
             <div className="text-center mb-12">
-              <p className="font-mono text-[9px] tracking-[0.35em] text-gold/50 uppercase mb-3">
+              <p className="font-mono text-kicker tracking-kicker text-gold/50 uppercase mb-3">
                 The Way Through
               </p>
               <h2 className="font-serif text-2xl md:text-3xl font-medium text-text-primary tracking-tight mb-5">
@@ -1191,13 +1191,13 @@ export default function BoySteeringMan() {
                     {f.man.name}
                   </p>
                   <div className="flex items-center justify-center gap-1.5">
-                    <span className="font-mono text-[6px] tracking-wider text-muted/50 uppercase">
+                    <span className="font-mono text-kicker tracking-wider text-muted/50 uppercase">
                       {f.boy.name}
                     </span>
                     <svg width="5" height="6" viewBox="0 0 6 8" fill="none" className="text-muted/20">
                       <path d="M1 1L5 4L1 7" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
                     </svg>
-                    <span className="font-mono text-[6px] tracking-wider uppercase" style={{ color: `${f.color}80` }}>
+                    <span className="font-mono text-kicker tracking-wider uppercase" style={{ color: `${f.color}80` }}>
                       {f.man.name}
                     </span>
                   </div>
@@ -1208,7 +1208,7 @@ export default function BoySteeringMan() {
             <div className="mt-12 text-center">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-muted uppercase hover:text-gold transition-colors duration-300"
+                className="inline-flex items-center gap-2 font-mono text-kicker tracking-label text-muted uppercase hover:text-gold transition-colors duration-300"
               >
                 <span className="w-6 h-px bg-current" />
                 Back to Archetypes

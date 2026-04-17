@@ -156,7 +156,7 @@ export default function TarotDeckArc({
 
                   <div className="absolute inset-0 flex flex-col items-center justify-between px-1 py-2">
                     <span
-                      className="font-mono text-[7px] tracking-[0.3em] uppercase"
+                      className="font-mono text-kicker tracking-kicker uppercase"
                       style={{ color: color + (light ? "DD" : "CC") }}
                     >
                       {card.numeral}
@@ -172,7 +172,7 @@ export default function TarotDeckArc({
                       {card.symbol}
                     </span>
                     <span
-                      className="font-serif text-[8px] tracking-tight leading-tight text-center px-0.5"
+                      className="font-serif text-kicker tracking-tight leading-tight text-center px-0.5"
                       style={{ color: light ? "var(--color-text-primary)" : color }}
                     >
                       {card.name.replace(/^The /, "")}
@@ -206,7 +206,7 @@ export default function TarotDeckArc({
               return (
                 <div className="animate-slide-up">
                   <p
-                    className="font-mono text-[9px] tracking-[0.35em] uppercase mb-0.5"
+                    className="font-mono text-kicker tracking-kicker uppercase mb-0.5"
                     style={{ color: color + "CC" }}
                   >
                     Arcanum {card.numeral}
@@ -234,12 +234,12 @@ export default function TarotDeckArc({
                 aria-hidden
               />
               <span
-                className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                className="font-mono text-kicker tracking-kicker uppercase"
                 style={{ color: phase.color + (light ? "EE" : "CC") }}
               >
                 {phase.label}
               </span>
-              <span className="font-mono text-[8px] tracking-[0.2em] text-muted/70 uppercase">
+              <span className="font-mono text-kicker tracking-label text-muted/70 uppercase">
                 {phase.range}
               </span>
             </div>

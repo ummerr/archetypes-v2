@@ -68,17 +68,17 @@ export default function TarotModalShell({
                 "linear-gradient(180deg, var(--color-bg, #0A0A0F) 70%, transparent)",
             }}
           >
-            <span className="font-mono text-[9px] tracking-[0.4em] text-gold/70 uppercase">
+            <span className="font-mono text-kicker tracking-display text-gold/70 uppercase">
               Major Arcanum
             </span>
             <button
               type="button"
               onClick={close}
               aria-label="Close"
-              className="group inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.3em] uppercase text-muted hover:text-gold transition-colors"
+              className="group inline-flex items-center gap-2 font-mono text-kicker tracking-kicker uppercase text-muted hover:text-gold transition-colors"
             >
               <span>close</span>
-              <span className="text-[8px] opacity-60 group-hover:opacity-100">esc</span>
+              <span className="text-kicker opacity-60 group-hover:opacity-100">esc</span>
               <span className="w-4 h-px bg-current" />
             </button>
           </div>

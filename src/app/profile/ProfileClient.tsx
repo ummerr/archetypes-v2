@@ -157,7 +157,7 @@ export default function ProfileClient() {
 
   return (
     <div>
-      <p className="italic text-[14px] text-text-secondary/75 mb-6 font-serif">
+      <p className="italic text-body-sm text-text-secondary/75 mb-6 font-serif">
         A snapshot of one reading, not a diagnosis. Return and re-pick as your reading changes.
       </p>
 
@@ -168,7 +168,7 @@ export default function ProfileClient() {
           return (
             <label key={s.id} className="block">
               <span
-                className="font-mono text-[10px] tracking-[0.3em] uppercase mb-2 block"
+                className="font-mono text-label tracking-kicker uppercase mb-2 block"
                 style={{ color: accent }}
               >
                 {s.name}
@@ -176,7 +176,7 @@ export default function ProfileClient() {
               <select
                 value={sel[sid] ?? ""}
                 onChange={(e) => setSel((prev) => ({ ...prev, [sid]: e.target.value || undefined }))}
-                className="w-full bg-transparent border border-surface-light/40 rounded-sm px-3 py-2 font-serif text-[15px]"
+                className="w-full bg-transparent border border-surface-light/40 rounded-sm px-3 py-2 font-serif text-body"
               >
                 <option value="">— select —</option>
                 {OPTIONS[sid].map((o) => (
@@ -193,17 +193,17 @@ export default function ProfileClient() {
       <div className="flex flex-wrap gap-3 mb-12">
         <button
           onClick={exportJson}
-          className="font-mono text-[10px] tracking-[0.3em] uppercase border border-gold/40 px-4 py-2 rounded-sm hover:border-gold hover:text-gold"
+          className="font-mono text-label tracking-kicker uppercase border border-gold/40 px-4 py-2 rounded-sm hover:border-gold hover:text-gold"
         >
           Export JSON
         </button>
-        <label className="font-mono text-[10px] tracking-[0.3em] uppercase border border-surface-light/40 px-4 py-2 rounded-sm cursor-pointer hover:border-gold">
+        <label className="font-mono text-label tracking-kicker uppercase border border-surface-light/40 px-4 py-2 rounded-sm cursor-pointer hover:border-gold">
           Import JSON
           <input type="file" accept="application/json" onChange={importJson} className="hidden" />
         </label>
         <button
           onClick={() => setSel({})}
-          className="font-mono text-[10px] tracking-[0.3em] uppercase border border-surface-light/40 px-4 py-2 rounded-sm hover:border-red-500/50 hover:text-red-400"
+          className="font-mono text-label tracking-kicker uppercase border border-surface-light/40 px-4 py-2 rounded-sm hover:border-red-500/50 hover:text-red-400"
         >
           Reset
         </button>
@@ -230,11 +230,11 @@ export default function ProfileClient() {
               >
                 <Link
                   href={`/atlas/cluster/${cluster.id}`}
-                  className="font-serif text-[15px] hover:underline underline-offset-2"
+                  className="font-serif text-body hover:underline underline-offset-2"
                 >
                   {cluster.theme}
                 </Link>
-                <span className="font-mono text-[10px] tracking-[0.2em] text-text-secondary/70">
+                <span className="font-mono text-label tracking-label text-text-secondary/70">
                   score {score}
                 </span>
               </li>
@@ -246,7 +246,7 @@ export default function ProfileClient() {
       {filled >= 2 && distribution.total > 0 && (
         <section className="mb-12">
           <h2 className="font-serif text-xl font-medium mb-1">The shape of your picks</h2>
-          <p className="italic text-text-secondary/75 mb-6 font-serif text-[14px]">
+          <p className="italic text-text-secondary/75 mb-6 font-serif text-body-sm">
             Your selections distributed across the three structural axes. Not a score — a profile of
             which poles your reading is drawn to, and which it passes over.
           </p>
@@ -260,10 +260,10 @@ export default function ProfileClient() {
 
       {blindSpot && (
         <section className="mb-12 border border-amber-500/30 rounded-sm p-5">
-          <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-amber-400/80 mb-2">
+          <p className="font-mono text-kicker tracking-kicker uppercase text-amber-400/80 mb-2">
             Blind spot
           </p>
-          <p className="font-serif text-[15px] text-text-primary/90 mb-3">
+          <p className="font-serif text-body text-text-primary/90 mb-3">
             Nothing in your picks lands in the{" "}
             <span className="text-amber-300">{blindSpot.label}</span> pole (
             {AXIS_VALUES[blindSpot.axis].length === 0
@@ -277,7 +277,7 @@ export default function ProfileClient() {
               <li key={c.id}>
                 <Link
                   href={`/atlas/cluster/${c.id}`}
-                  className="inline-block font-mono text-[10px] tracking-[0.2em] uppercase border border-amber-500/30 px-3 py-1 rounded-sm hover:border-amber-400 hover:text-amber-300"
+                  className="inline-block font-mono text-label tracking-label uppercase border border-amber-500/30 px-3 py-1 rounded-sm hover:border-amber-400 hover:text-amber-300"
                 >
                   {c.theme.split(" — ")[0].replace(/^The\s+/i, "")}
                 </Link>
@@ -290,7 +290,7 @@ export default function ProfileClient() {
       {tensions.length > 0 && (
         <section className="mb-12">
           <h2 className="font-serif text-xl font-medium mb-1">Tensions in your picks</h2>
-          <p className="italic text-text-secondary/75 mb-5 font-serif text-[14px]">
+          <p className="italic text-text-secondary/75 mb-5 font-serif text-body-sm">
             The psyche isn't coherent. Pairs of your selections that diverge on a structural axis —
             these tensions are often the profile, not a flaw to resolve.
           </p>
@@ -308,17 +308,17 @@ export default function ProfileClient() {
                   className="grid grid-cols-[1fr_auto_1fr] gap-3 items-baseline border border-surface-light/30 rounded-sm px-3 py-2"
                 >
                   <div>
-                    <span className="font-serif text-[14px]">{t.a.label}</span>
-                    <span className="block font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/60">
+                    <span className="font-serif text-body-sm">{t.a.label}</span>
+                    <span className="block font-mono text-kicker tracking-kicker uppercase text-text-secondary/60">
                       {(labels as Record<string, string>)[t.aValue]}
                     </span>
                   </div>
-                  <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/55">
+                  <span className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/55">
                     {t.axis} ↔
                   </span>
                   <div className="text-right">
-                    <span className="font-serif text-[14px]">{t.b.label}</span>
-                    <span className="block font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/60">
+                    <span className="font-serif text-body-sm">{t.b.label}</span>
+                    <span className="block font-mono text-kicker tracking-kicker uppercase text-text-secondary/60">
                       {(labels as Record<string, string>)[t.bValue]}
                     </span>
                   </div>
@@ -332,14 +332,14 @@ export default function ProfileClient() {
       {readingList.length > 0 && blindSpot && (
         <section className="mb-12">
           <h2 className="font-serif text-xl font-medium mb-1">Reading toward the blind spot</h2>
-          <p className="italic text-text-secondary/75 mb-5 font-serif text-[14px]">
+          <p className="italic text-text-secondary/75 mb-5 font-serif text-body-sm">
             If you want to extend your vocabulary into the{" "}
             <span className="text-amber-300">{blindSpot.label}</span> pole, these are where to start.
           </p>
           <ul className="space-y-3">
             {readingList.map((r) => (
               <li key={r.text} className="border border-surface-light/30 rounded-sm p-3">
-                <p className="font-serif text-[15px] font-medium mb-1">
+                <p className="font-serif text-body font-medium mb-1">
                   {r.href ? (
                     <a
                       href={r.href}
@@ -353,7 +353,7 @@ export default function ProfileClient() {
                     r.text
                   )}
                 </p>
-                <p className="italic text-[13px] text-text-secondary/80">{r.note}</p>
+                <p className="italic text-xs text-text-secondary/80">{r.note}</p>
               </li>
             ))}
           </ul>

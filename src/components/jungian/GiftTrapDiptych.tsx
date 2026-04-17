@@ -15,7 +15,7 @@ export default function GiftTrapDiptych({ color, gift, trap }: Props) {
   return (
     <div className="mb-16">
       <div className="flex items-center gap-4 mb-5">
-        <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+        <span className="font-mono text-label tracking-kicker text-gold/80 uppercase">
           Gift & Trap
         </span>
         <div
@@ -35,7 +35,7 @@ export default function GiftTrapDiptych({ color, gift, trap }: Props) {
           }}
         >
           <p
-            className="font-mono text-[9px] tracking-[0.4em] uppercase mb-3"
+            className="font-mono text-kicker tracking-display uppercase mb-3"
             style={{ color: color + "DD" }}
           >
             Gift
@@ -53,7 +53,7 @@ export default function GiftTrapDiptych({ color, gift, trap }: Props) {
           }}
         >
           <p
-            className="font-mono text-[9px] tracking-[0.4em] uppercase mb-3 text-muted"
+            className="font-mono text-kicker tracking-display uppercase mb-3 text-muted"
           >
             Trap
           </p>

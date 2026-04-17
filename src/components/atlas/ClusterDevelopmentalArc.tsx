@@ -13,13 +13,13 @@ export default function ClusterDevelopmentalArc({ arc, color }: Props) {
   return (
     <details className="mb-12 group">
       <summary
-        className="cursor-pointer font-mono text-[10px] tracking-[0.3em] uppercase mb-4 list-none flex items-center gap-2"
+        className="cursor-pointer font-mono text-label tracking-kicker uppercase mb-4 list-none flex items-center gap-2"
         style={{ color }}
       >
         <span>Developmental arc</span>
         <span className="text-text-secondary/50 group-open:rotate-90 transition-transform">›</span>
       </summary>
-      <p className="font-serif italic text-[14px] text-text-secondary/75 mb-5 max-w-prose">
+      <p className="font-serif italic text-body-sm text-text-secondary/75 mb-5 max-w-prose">
         Every cluster has depth. What it looks like at four stages of the long developmental arc —
         not a ladder to climb, a sequence readers pass through and revisit.
       </p>
@@ -37,15 +37,15 @@ export default function ClusterDevelopmentalArc({ arc, color }: Props) {
               className="rounded-sm border p-4 relative"
               style={{ borderColor: `${color}30` }}
             >
-              <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-text-secondary/60 mb-1">
+              <p className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/60 mb-1">
                 {STAGE_LABELS[stage.stage]}
               </p>
-              <p className="font-serif text-[15px] font-medium mb-1">{stage.name}</p>
-              <p className="text-[13px] text-text-secondary/85 leading-snug italic">{stage.note}</p>
+              <p className="font-serif text-body font-medium mb-1">{stage.name}</p>
+              <p className="text-xs text-text-secondary/85 leading-snug italic">{stage.note}</p>
               {stage.exemplarRef && exemplarName && (
                 <Link
                   href={archetypeHref(stage.exemplarRef.system, stage.exemplarRef.slug)}
-                  className="block mt-3 font-mono text-[10px] tracking-[0.2em] uppercase hover:underline"
+                  className="block mt-3 font-mono text-label tracking-label uppercase hover:underline"
                   style={{ color: exemplarAccent }}
                 >
                   → {exemplarName}

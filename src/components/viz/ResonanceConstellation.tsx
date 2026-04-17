@@ -234,7 +234,7 @@ export default function ResonanceConstellation({
               type="button"
               onClick={() => toggleSystem(s.id)}
               aria-pressed={!off}
-              className="font-mono text-[9px] tracking-[0.25em] uppercase px-2.5 py-1 rounded-sm border transition-all"
+              className="font-mono text-kicker tracking-kicker uppercase px-2.5 py-1 rounded-sm border transition-all"
               style={{
                 borderColor: off ? "rgba(255,255,255,0.12)" : s.accent,
                 color: off ? "var(--color-muted)" : s.accent,
@@ -259,7 +259,7 @@ export default function ResonanceConstellation({
             setOffSystems(new Set());
             setPinnedNode(null);
           }}
-          className="font-mono text-[9px] tracking-[0.25em] uppercase px-2.5 py-1 rounded-sm border border-surface-light/40 text-text-secondary/70 hover:border-gold/40 hover:text-gold transition-colors ml-auto"
+          className="font-mono text-kicker tracking-kicker uppercase px-2.5 py-1 rounded-sm border border-surface-light/40 text-text-secondary/70 hover:border-gold/40 hover:text-gold transition-colors ml-auto"
         >
           Reset
         </button>
@@ -423,7 +423,7 @@ export default function ResonanceConstellation({
             }}
           >
             <div
-              className="font-mono text-[9px] tracking-[0.25em] uppercase mb-1"
+              className="font-mono text-kicker tracking-kicker uppercase mb-1"
               style={{ color: systemAccent[tooltipNode.system] ?? "var(--color-gold)" }}
             >
               {systems.find((s) => s.id === tooltipNode.system)?.name ?? tooltipNode.system}
@@ -432,7 +432,7 @@ export default function ResonanceConstellation({
               {tooltipMeta.displayName}
             </div>
             {tooltipMeta.clusterNames.length > 0 ? (
-              <div className="mt-1.5 font-serif italic text-[11px] text-text-secondary/80 leading-snug">
+              <div className="mt-1.5 font-serif italic text-label text-text-secondary/80 leading-snug">
                 {tooltipMeta.clusterNames.slice(0, 3).join(" · ")}
               </div>
             ) : null}
@@ -440,7 +440,7 @@ export default function ResonanceConstellation({
         ) : null}
 
         {/* Zoom hint */}
-        <div className="absolute bottom-2 right-3 font-mono text-[8px] tracking-[0.25em] uppercase text-muted/60 pointer-events-none">
+        <div className="absolute bottom-2 right-3 font-mono text-kicker tracking-kicker uppercase text-muted/60 pointer-events-none">
           scroll · zoom   drag · pan
         </div>
       </div>

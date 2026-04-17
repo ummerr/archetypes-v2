@@ -22,10 +22,10 @@ export default function Home() {
         <div className="px-6 pt-24 pb-12 md:pt-32 md:pb-16">
           <div className="max-w-6xl mx-auto">
             <div className="animate-slide-up">
-              <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
+              <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4">
                 Moore &amp; Gillette - Archetypal Framework
               </p>
-              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
+              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-display mb-5">
                 Archetypes of the{" "}
                 <span className={`${light ? "text-text-primary" : "text-gold glow-text-subtle animate-flicker"}`}>
                   Mature Masculine
@@ -93,7 +93,7 @@ export default function Home() {
                         <div>
                           {/* Family + maturity badge */}
                           <div className="flex items-center gap-3 mb-3">
-                            <span className="font-mono text-[8px] tracking-[0.25em] text-muted uppercase">
+                            <span className="font-mono text-kicker tracking-kicker text-muted uppercase">
                               Man Psychology
                             </span>
                             <div
@@ -136,12 +136,12 @@ export default function Home() {
                         {/* Footer - Boy → Man evolution */}
                         <div className="flex items-center justify-between pt-3 border-t border-surface-light/30">
                           <div className="flex items-center gap-2.5">
-                            <span className="font-mono text-[8px] tracking-wider text-muted uppercase">
+                            <span className="font-mono text-kicker tracking-wider text-muted uppercase">
                               {family.boy.name}
                             </span>
                             <div className="flex items-center gap-1">
                               <div className="w-5 h-px bg-muted/15" />
-                              <span className="font-mono text-[7px] tracking-[0.15em] text-gold/60 uppercase">
+                              <span className="font-mono text-kicker tracking-label text-gold/60 uppercase">
                                 initiation
                               </span>
                               <div className="w-5 h-px bg-muted/15" />
@@ -162,7 +162,7 @@ export default function Home() {
                               </svg>
                             </div>
                             <span
-                              className="font-mono text-[8px] tracking-wider uppercase"
+                              className="font-mono text-kicker tracking-wider uppercase"
                               style={{ color: family.color + "CC" }}
                             >
                               {family.man.name}
@@ -216,7 +216,7 @@ export default function Home() {
                 <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-5">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="font-mono text-[8px] tracking-[0.25em] text-gold/80 uppercase">
+                      <span className="font-mono text-kicker tracking-kicker text-gold/80 uppercase">
                         Interactive
                       </span>
                       <div
@@ -245,7 +245,7 @@ export default function Home() {
                       triangles, shadow voices, behavioral signs.
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-gold uppercase shrink-0 group-hover:translate-x-0.5 transition-transform duration-300">
+                  <div className="flex items-center gap-2 font-mono text-kicker tracking-label text-gold uppercase shrink-0 group-hover:translate-x-0.5 transition-transform duration-300">
                     Enter experience
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                       <path
@@ -272,7 +272,7 @@ export default function Home() {
                     background: `linear-gradient(90deg, transparent, var(--color-gold)${light ? "30" : "15"}, transparent)`,
                   }}
                 />
-                <p className="font-mono text-[9px] tracking-[0.4em] text-gold/60 uppercase">
+                <p className="font-mono text-kicker tracking-display text-gold/60 uppercase">
                   Before Initiation
                 </p>
                 <div
@@ -282,7 +282,7 @@ export default function Home() {
                   }}
                 />
               </div>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium text-text-primary tracking-tight leading-[1.05] mb-3 text-center">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium text-text-primary tracking-tight leading-display mb-3 text-center">
                 Boy{" "}
                 <span
                   className={light ? "" : "animate-flicker"}
@@ -342,7 +342,7 @@ export default function Home() {
                       <div className="p-5 md:p-6">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-3">
-                          <span className="font-mono text-[8px] tracking-[0.25em] text-muted/70 uppercase">
+                          <span className="font-mono text-kicker tracking-kicker text-muted/70 uppercase">
                             Boy Psychology
                           </span>
                           <div
@@ -352,7 +352,7 @@ export default function Home() {
                             }}
                           />
                           <span
-                            className="font-mono text-[7px] tracking-[0.15em] uppercase"
+                            className="font-mono text-kicker tracking-label uppercase"
                             style={{ color: `${family.color}60` }}
                           >
                             {family.label} Family
@@ -393,14 +393,14 @@ export default function Home() {
                         <div className="flex items-center justify-between pt-3 border-t border-surface-light/30">
                           <div className="flex items-center gap-2.5">
                             <span
-                              className="font-mono text-[8px] tracking-wider uppercase"
+                              className="font-mono text-kicker tracking-wider uppercase"
                               style={{ color: `${family.color}99` }}
                             >
                               {boy.name}
                             </span>
                             <div className="flex items-center gap-1">
                               <div className="w-5 h-px bg-muted/15" />
-                              <span className="font-mono text-[7px] tracking-[0.15em] text-gold/60 uppercase">
+                              <span className="font-mono text-kicker tracking-label text-gold/60 uppercase">
                                 initiation
                               </span>
                               <div className="w-5 h-px bg-muted/15" />
@@ -420,7 +420,7 @@ export default function Home() {
                                 />
                               </svg>
                             </div>
-                            <span className="font-mono text-[8px] tracking-wider text-muted uppercase">
+                            <span className="font-mono text-kicker tracking-wider text-muted uppercase">
                               {family.man.name}
                             </span>
                           </div>
@@ -455,7 +455,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto mt-8 text-center">
             <Link
               href="/kwml/about"
-              className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-muted uppercase hover:text-gold transition-colors duration-300"
+              className="inline-flex items-center gap-2 font-mono text-kicker tracking-label text-muted uppercase hover:text-gold transition-colors duration-300"
             >
               <span className="w-6 h-px bg-current" />
               Explore the full quaternary system

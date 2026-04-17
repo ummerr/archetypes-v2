@@ -54,7 +54,7 @@ export default async function ClusterPage({
     <div className="max-w-5xl mx-auto px-6 md:px-10 py-20">
       <Link
         href="/atlas"
-        className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted/80 hover:text-gold"
+        className="font-mono text-label tracking-kicker uppercase text-muted/80 hover:text-gold"
       >
         ← Atlas
       </Link>
@@ -73,7 +73,7 @@ export default async function ClusterPage({
             {cluster.theme}
           </SectionHeading>
           {CLUSTER_AXES[cluster.id] ? (
-            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10px] tracking-[0.25em] uppercase text-text-secondary/70">
+            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-label tracking-kicker uppercase text-text-secondary/70">
               <span>Stage · {STAGE_LABELS[CLUSTER_AXES[cluster.id].stage]}</span>
               <span>Affect · {AFFECT_LABELS[CLUSTER_AXES[cluster.id].affect]}</span>
               <span>Stance · {STANCE_LABELS[CLUSTER_AXES[cluster.id].stance]}</span>
@@ -85,13 +85,13 @@ export default async function ClusterPage({
         {cluster.description}
       </p>
       {cluster.editorialNote && (
-        <p className="font-serif text-[15px] italic text-text-secondary/75 mb-2 max-w-3xl">
+        <p className="font-serif text-body italic text-text-secondary/75 mb-2 max-w-3xl">
           {cluster.editorialNote}
         </p>
       )}
       {cluster.adversarialNote && (
-        <p className="font-serif text-[14px] italic text-muted/80 mb-8 max-w-3xl">
-          <span className="font-mono text-[9px] tracking-[0.25em] uppercase mr-2">
+        <p className="font-serif text-body-sm italic text-muted/80 mb-8 max-w-3xl">
+          <span className="font-mono text-kicker tracking-kicker uppercase mr-2">
             Devil's advocate:
           </span>
           {cluster.adversarialNote}
@@ -117,7 +117,7 @@ export default async function ClusterPage({
         );
       })()}
 
-      <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mt-4 mb-3">
+      <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mt-4 mb-3">
         Archetypes across six systems
       </p>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
@@ -140,7 +140,7 @@ export default async function ClusterPage({
                       title={displayName}
                     />
                   </span>
-                  <p className="font-mono text-[9px] tracking-[0.3em] uppercase truncate" style={{ color: accent }}>
+                  <p className="font-mono text-kicker tracking-kicker uppercase truncate" style={{ color: accent }}>
                     {systemName}
                   </p>
                 </div>
@@ -164,7 +164,7 @@ export default async function ClusterPage({
               {entry.confidence === "contested" && (
                 <Link
                   href={`/atlas/debates/${debateSlugFor(cluster.id, entry.system, entry.slug)}`}
-                  className="mt-3 inline-block font-mono text-[10px] tracking-[0.25em] uppercase text-amber-500 hover:text-amber-400 underline underline-offset-2"
+                  className="mt-3 inline-block font-mono text-label tracking-kicker uppercase text-amber-500 hover:text-amber-400 underline underline-offset-2"
                 >
                   Debate →
                 </Link>

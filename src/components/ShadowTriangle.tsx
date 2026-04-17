@@ -353,7 +353,7 @@ function TriangleLabels({ archetype }: { archetype: Archetype }) {
       <Html position={[0, 1.55, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
-            className="font-sans text-[7px] tracking-[0.12em] uppercase"
+            className="font-sans text-kicker tracking-label uppercase"
             style={{ color: `${color}80`, }}
           >
             Fullness
@@ -377,7 +377,7 @@ function TriangleLabels({ archetype }: { archetype: Archetype }) {
             {archetype.activeShadow.name}
           </p>
           <p
-            className="font-sans text-[6px] tracking-[0.12em] uppercase mt-0.5"
+            className="font-sans text-kicker tracking-label uppercase mt-0.5"
             style={{ color: "var(--color-crimson)", opacity: 0.5 }}
           >
             Active Shadow
@@ -395,7 +395,7 @@ function TriangleLabels({ archetype }: { archetype: Archetype }) {
             {archetype.passiveShadow.name}
           </p>
           <p
-            className="font-sans text-[6px] tracking-[0.12em] uppercase mt-0.5"
+            className="font-sans text-kicker tracking-label uppercase mt-0.5"
             style={{ color: "var(--color-muted)", opacity: 0.5 }}
           >
             Passive Shadow

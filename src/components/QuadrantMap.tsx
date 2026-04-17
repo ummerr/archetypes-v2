@@ -391,7 +391,7 @@ export default function QuadrantMap() {
         >
           <div className="absolute w-24 h-24 rounded-full bg-gold/[0.03] animate-breathe" />
           <div className="relative w-14 h-14 rounded-full border border-gold/20 bg-bg flex items-center justify-center">
-            <span className="font-serif text-xs text-gold tracking-[0.12em]">
+            <span className="font-serif text-xs text-gold tracking-label">
               Self
             </span>
           </div>
@@ -436,7 +436,7 @@ export default function QuadrantMap() {
               >
                 {family.label}
               </h3>
-              <p className="text-[11px] text-muted mt-0.5">
+              <p className="text-label text-muted mt-0.5">
                 {family.boy.name} → {family.man.name}
               </p>
             </div>

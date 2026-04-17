@@ -67,17 +67,17 @@ export default function MbtiModalShell({
                 "linear-gradient(180deg, var(--color-bg, #0A0A0F) 70%, transparent)",
             }}
           >
-            <span className="font-mono text-[9px] tracking-[0.4em] uppercase" style={{ color: "#8FA7C2" }}>
+            <span className="font-mono text-kicker tracking-display uppercase" style={{ color: "#8FA7C2" }}>
               Cognitive Pattern
             </span>
             <button
               type="button"
               onClick={close}
               aria-label="Close"
-              className="group inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.3em] uppercase text-muted hover:text-gold transition-colors"
+              className="group inline-flex items-center gap-2 font-mono text-kicker tracking-kicker uppercase text-muted hover:text-gold transition-colors"
             >
               <span>close</span>
-              <span className="text-[8px] opacity-60 group-hover:opacity-100">esc</span>
+              <span className="text-kicker opacity-60 group-hover:opacity-100">esc</span>
               <span className="w-4 h-px bg-current" />
             </button>
           </div>

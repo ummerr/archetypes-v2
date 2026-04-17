@@ -15,7 +15,7 @@ export default function ShadowPanel({ color, shadow }: Props) {
   return (
     <section className="mb-16">
       <div className="flex items-center gap-4 mb-6">
-        <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-muted">
+        <span className="font-mono text-label tracking-display uppercase text-muted">
           The Shadow
         </span>
         <div
@@ -37,7 +37,7 @@ export default function ShadowPanel({ color, shadow }: Props) {
         }}
       >
         <p
-          className="font-mono text-[9px] tracking-[0.4em] uppercase mb-2"
+          className="font-mono text-kicker tracking-display uppercase mb-2"
           style={{ color: color + "CC" }}
         >
           Shadow Face
@@ -57,7 +57,7 @@ export default function ShadowPanel({ color, shadow }: Props) {
         </p>
 
         <div className="mb-7">
-          <p className="font-mono text-[9px] tracking-[0.35em] uppercase mb-3 text-muted">
+          <p className="font-mono text-kicker tracking-kicker uppercase mb-3 text-muted">
             Signs
           </p>
           <ul className="space-y-2">
@@ -79,7 +79,7 @@ export default function ShadowPanel({ color, shadow }: Props) {
           className="pt-5 border-t"
           style={{ borderColor: `${color}${light ? "22" : "14"}` }}
         >
-          <p className="font-mono text-[9px] tracking-[0.35em] uppercase mb-2 text-gold/80">
+          <p className="font-mono text-kicker tracking-kicker uppercase mb-2 text-gold/80">
             Integration
           </p>
           <p className="font-serif text-base md:text-lg italic leading-relaxed text-text-primary">

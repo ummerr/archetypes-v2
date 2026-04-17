@@ -20,7 +20,7 @@ export default function AwakeningList({
   return (
     <section className="mb-16">
       <div className="flex items-center gap-4 mb-6">
-        <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-muted">
+        <span className="font-mono text-label tracking-display uppercase text-muted">
           The Awakening
         </span>
         <div
@@ -53,7 +53,7 @@ export default function AwakeningList({
 
       {awakening.ageOrStage ? (
         <p
-          className="font-mono text-[10px] tracking-[0.3em] uppercase"
+          className="font-mono text-label tracking-kicker uppercase"
           style={{ color: color + "AA" }}
         >
           Typical stage · {awakening.ageOrStage}

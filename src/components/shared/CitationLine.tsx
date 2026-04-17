@@ -16,7 +16,7 @@ export default function CitationLine({
   const hasAny = primarySource || scholarly || dissent || adversarial || editorial;
   if (!hasAny) return null;
   return (
-    <div className="mt-2 space-y-1 text-[11px] leading-snug text-text-secondary/70">
+    <div className="mt-2 space-y-1 text-label leading-snug text-text-secondary/70">
       {primarySource && (
         <p className="font-mono">
           <span className="text-muted/70">src · </span>
@@ -34,7 +34,7 @@ export default function CitationLine({
       )}
       {dissent && (
         <details className="group">
-          <summary className="cursor-pointer font-mono text-[10px] tracking-[0.2em] uppercase text-amber-600/80 hover:text-amber-500">
+          <summary className="cursor-pointer font-mono text-label tracking-label uppercase text-amber-600/80 hover:text-amber-500">
             Dissent ▾
           </summary>
           <p className="mt-1 italic text-text-secondary/85">{dissent}</p>
@@ -42,7 +42,7 @@ export default function CitationLine({
       )}
       {adversarial && (
         <details className="group">
-          <summary className="cursor-pointer font-mono text-[10px] tracking-[0.2em] uppercase text-muted/70 hover:text-text-secondary">
+          <summary className="cursor-pointer font-mono text-label tracking-label uppercase text-muted/70 hover:text-text-secondary">
             Devil's advocate ▾
           </summary>
           <p className="mt-1 italic text-text-secondary/80">{adversarial}</p>

@@ -147,7 +147,7 @@ export default function TarotCard({
           <div className="absolute inset-0 flex flex-col items-center justify-between px-6 py-7">
             <div className="flex flex-col items-center gap-1">
               <span
-                className="font-mono text-[9px] tracking-[0.4em] uppercase"
+                className="font-mono text-kicker tracking-display uppercase"
                 style={{ color: color + (light ? "DD" : "CC") }}
               >
                 {archetype.numeral}
@@ -184,7 +184,7 @@ export default function TarotCard({
                 {archetype.name}
               </h3>
               <p
-                className="font-mono text-[8px] tracking-[0.3em] uppercase mt-1 line-clamp-1"
+                className="font-mono text-kicker tracking-kicker uppercase mt-1 line-clamp-1"
                 style={{ color: light ? "var(--color-muted)" : "var(--color-text-secondary)" }}
               >
                 {archetype.coreTheme.split("-")[0].trim()}
@@ -237,7 +237,7 @@ export default function TarotCard({
           <div className="relative flex-1 flex flex-col px-5 py-6 gap-3 overflow-hidden">
             <div className="flex items-center justify-between">
               <span
-                className="font-mono text-[8px] tracking-[0.35em] uppercase"
+                className="font-mono text-kicker tracking-kicker uppercase"
                 style={{ color: color + (light ? "CC" : "AA") }}
               >
                 {archetype.numeral} · {archetype.name}
@@ -267,13 +267,13 @@ export default function TarotCard({
                 >
                   <div className="flex items-baseline justify-between gap-2 mb-1">
                     <p
-                      className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                      className="font-mono text-kicker tracking-kicker uppercase"
                       style={{ color: row.tint + (light ? "EE" : "CC") }}
                     >
                       {row.label}
                     </p>
                     <p
-                      className="font-serif italic text-[10px] leading-none"
+                      className="font-serif italic text-label leading-none"
                       style={{
                         color: row.tint + (light ? "88" : "66"),
                         letterSpacing: "0.02em",
@@ -283,7 +283,7 @@ export default function TarotCard({
                     </p>
                   </div>
                   <p
-                    className="font-serif text-[13px] leading-snug line-clamp-3"
+                    className="font-serif text-xs leading-snug line-clamp-3"
                     style={{
                       color: light ? "var(--color-text-primary)" : "var(--color-text-secondary)",
                     }}
@@ -298,7 +298,7 @@ export default function TarotCard({
               <Link
                 href={href}
                 onClick={(e) => e.stopPropagation()}
-                className="group/enter mt-auto inline-flex items-center justify-center gap-2 font-mono text-[8px] tracking-[0.35em] uppercase py-2 rounded-sm transition-colors duration-300"
+                className="group/enter mt-auto inline-flex items-center justify-center gap-2 font-mono text-kicker tracking-kicker uppercase py-2 rounded-sm transition-colors duration-300"
                 style={{
                   color: color + (light ? "EE" : "DD"),
                   background: light ? `${color}12` : `${color}18`,

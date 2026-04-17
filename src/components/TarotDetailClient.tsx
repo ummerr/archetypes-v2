@@ -93,28 +93,28 @@ export default function TarotDetailClient({
         >
           <Link
             href="/tarot"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
+            className="font-mono text-kicker tracking-kicker text-muted uppercase hover:text-gold transition-colors"
           >
             Tarot
           </Link>
-          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <span className="text-muted/40 font-mono text-label">/</span>
           <span
-            className="font-mono text-[9px] tracking-[0.25em] uppercase"
+            className="font-mono text-kicker tracking-kicker uppercase"
             style={{ color: phase.color }}
           >
             {phase.label}
           </span>
-          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <span className="text-muted/40 font-mono text-label">/</span>
           <span
             aria-current="page"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase"
+            className="font-mono text-kicker tracking-kicker text-muted uppercase"
           >
             Arcanum {archetype.numeral}
           </span>
-          <span className="text-muted/40 font-mono text-[10px] ml-1">·</span>
+          <span className="text-muted/40 font-mono text-label ml-1">·</span>
           <Link
             href="/tarot/about"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted/80 uppercase hover:text-gold transition-colors"
+            className="font-mono text-kicker tracking-kicker text-muted/80 uppercase hover:text-gold transition-colors"
           >
             About
           </Link>
@@ -125,20 +125,20 @@ export default function TarotDetailClient({
           <div className="flex flex-col md:flex-row gap-8 md:gap-10 items-start">
             <div className="flex-shrink-0 mx-auto md:mx-0">
               <TarotCard archetype={archetype} size="lg" />
-              <p className="mt-3 text-center font-mono text-[8px] tracking-[0.3em] text-muted uppercase">
+              <p className="mt-3 text-center font-mono text-kicker tracking-kicker text-muted uppercase">
                 Click to flip
               </p>
             </div>
 
             <div className="flex-1 min-w-0 pt-1">
               <p
-                className="font-mono text-[10px] tracking-[0.35em] uppercase mb-2"
+                className="font-mono text-label tracking-kicker uppercase mb-2"
                 style={{ color: color + (light ? "DD" : "CC") }}
               >
                 {phase.label} · Arcanum {archetype.numeral}
               </p>
               <h1
-                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-[1.05]"
+                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-display"
                 style={{
                   color: light ? "var(--color-text-primary)" : color,
                   textShadow: !light ? `0 0 24px ${color}40` : "none",
@@ -150,7 +150,7 @@ export default function TarotDetailClient({
                 &ldquo;{archetype.motto}&rdquo;
               </p>
               <p
-                className="font-mono text-[9px] tracking-[0.3em] uppercase mb-5"
+                className="font-mono text-kicker tracking-kicker uppercase mb-5"
                 style={{ color: color + (light ? "BB" : "AA") }}
               >
                 {archetype.coreTheme}
@@ -163,7 +163,7 @@ export default function TarotDetailClient({
                 <div className="mt-5">
                   <Link
                     href={`/jungian/archetype/${archetype.jungianSlug}`}
-                    className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.25em] uppercase text-muted hover:text-gold transition-colors"
+                    className="inline-flex items-center gap-2 font-mono text-kicker tracking-kicker uppercase text-muted hover:text-gold transition-colors"
                   >
                     <span className="w-4 h-px bg-current" />
                     Jungian correlation: {archetype.jungianCorrelation}
@@ -180,7 +180,7 @@ export default function TarotDetailClient({
         {/* Bipolar Shadow Poles */}
         <div className="mb-16 animate-slide-up delay-200">
           <div className="flex items-center gap-4 mb-6">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+            <span className="font-mono text-label tracking-kicker text-gold/80 uppercase">
               Bipolar Shadow
             </span>
             <div
@@ -189,7 +189,7 @@ export default function TarotDetailClient({
                 background: `linear-gradient(90deg, ${color}${light ? "30" : "18"}, transparent)`,
               }}
             />
-            <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+            <span className="font-mono text-kicker tracking-kicker text-muted uppercase">
               Enantiodromia
             </span>
           </div>
@@ -207,13 +207,13 @@ export default function TarotDetailClient({
                 }}
               >
                 <p
-                  className="font-mono text-[9px] tracking-[0.3em] uppercase mb-1"
+                  className="font-mono text-kicker tracking-kicker uppercase mb-1"
                   style={{ color: row.tint + (light ? "EE" : "CC") }}
                 >
                   {row.label}
                 </p>
                 <p
-                  className="font-mono text-[8px] tracking-[0.2em] text-muted uppercase mb-3 leading-snug"
+                  className="font-mono text-kicker tracking-label text-muted uppercase mb-3 leading-snug"
                 >
                   {row.kicker}
                 </p>
@@ -260,7 +260,7 @@ export default function TarotDetailClient({
         {/* Previous / Next - the Fool's Journey sequence */}
         <div className="mb-16 animate-slide-up delay-300">
           <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+            <span className="font-mono text-label tracking-kicker text-gold/80 uppercase">
               The Fool&rsquo;s Journey
             </span>
             <div
@@ -283,7 +283,7 @@ export default function TarotDetailClient({
                     : `linear-gradient(145deg, ${phaseColorFor(previous.id)}08, transparent)`,
                 }}
               >
-                <p className="font-mono text-[8px] tracking-[0.3em] text-muted uppercase mb-2">
+                <p className="font-mono text-kicker tracking-kicker text-muted uppercase mb-2">
                   ← Previous Arcanum
                 </p>
                 <p
@@ -308,7 +308,7 @@ export default function TarotDetailClient({
                     : `linear-gradient(145deg, ${phaseColorFor(next.id)}08, transparent)`,
                 }}
               >
-                <p className="font-mono text-[8px] tracking-[0.3em] text-muted uppercase mb-2">
+                <p className="font-mono text-kicker tracking-kicker text-muted uppercase mb-2">
                   Next Arcanum →
                 </p>
                 <p
@@ -329,7 +329,7 @@ export default function TarotDetailClient({
           <div className="animate-slide-up delay-400">
             <div className="flex items-center gap-4 mb-5">
               <span
-                className="font-mono text-[10px] tracking-[0.35em] uppercase"
+                className="font-mono text-label tracking-kicker uppercase"
                 style={{ color: phase.color }}
               >
                 Other Arcana in {phase.label}
@@ -353,7 +353,7 @@ export default function TarotDetailClient({
                   }}
                 >
                   <p
-                    className="font-mono text-[8px] tracking-[0.3em] uppercase mb-1"
+                    className="font-mono text-kicker tracking-kicker uppercase mb-1"
                     style={{ color: phase.color + "CC" }}
                   >
                     {s.numeral}
@@ -366,7 +366,7 @@ export default function TarotDetailClient({
                   >
                     {s.name}
                   </p>
-                  <p className="font-mono text-[8px] text-muted/80 mt-1 line-clamp-1">
+                  <p className="font-mono text-kicker text-muted/80 mt-1 line-clamp-1">
                     {s.symbol} {s.coreTheme.split("-")[0].trim()}
                   </p>
                 </Link>

@@ -547,13 +547,13 @@ function PolarityLabels({
       <Html position={[0, 1.12, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
-            className="font-mono text-[6px] tracking-[0.1em] uppercase"
+            className="font-mono text-kicker tracking-label uppercase"
             style={{ color: `${color}70` }}
           >
             Fullness
           </p>
           <p
-            className="font-serif text-[10px] font-medium mt-px"
+            className="font-serif text-label font-medium mt-px"
             style={{ color, textShadow: `0 0 10px ${color}60` }}
           >
             {fullnessName}
@@ -565,7 +565,7 @@ function PolarityLabels({
       <Html position={[-0.85, -0.86, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
-            className="font-serif text-[9px] font-medium"
+            className="font-serif text-kicker font-medium"
             style={{
               color: "var(--color-crimson-light)",
               textShadow: "0 0 10px rgba(231,76,60,0.4)",
@@ -574,7 +574,7 @@ function PolarityLabels({
             {activeShadowName}
           </p>
           <p
-            className="font-mono text-[5px] tracking-[0.1em] uppercase mt-px"
+            className="font-mono text-kicker tracking-label uppercase mt-px"
             style={{ color: "var(--color-crimson)", opacity: 0.5 }}
           >
             Active Shadow
@@ -586,7 +586,7 @@ function PolarityLabels({
       <Html position={[0.85, -0.86, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
           <p
-            className="font-serif text-[9px] font-medium"
+            className="font-serif text-kicker font-medium"
             style={{
               color: "var(--color-muted)",
               opacity: 0.8,
@@ -596,7 +596,7 @@ function PolarityLabels({
             {passiveShadowName}
           </p>
           <p
-            className="font-mono text-[5px] tracking-[0.1em] uppercase mt-px"
+            className="font-mono text-kicker tracking-label uppercase mt-px"
             style={{ color: "var(--color-muted)", opacity: 0.5 }}
           >
             Passive Shadow

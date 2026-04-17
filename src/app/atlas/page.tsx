@@ -98,7 +98,7 @@ export default function AtlasPage() {
 
       <section className="mb-16">
         <div className="mb-4 flex items-baseline justify-between flex-wrap gap-2">
-          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80">
+          <p className="font-mono text-label tracking-kicker uppercase text-gold/80">
             Four Lenses · One Atlas
           </p>
           <p className="font-serif italic text-xs text-text-secondary/70">
@@ -122,19 +122,19 @@ export default function AtlasPage() {
         <SectionHeading kicker="Legend">How to read the atlas</SectionHeading>
         <div className="grid md:grid-cols-2 gap-4 md:gap-6">
           <div className="rounded-sm border border-surface-light/40 p-5">
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
+            <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-3">
               The four lenses
             </p>
             <ul className="space-y-3">
               {LENS_LEGEND.map((l) => (
                 <li key={l.label}>
-                  <p className="font-serif text-[15px] text-text-secondary/90">
+                  <p className="font-serif text-body text-text-secondary/90">
                     <span className="text-gold/90">{l.label}</span>
-                    <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-secondary/60 ml-2">
+                    <span className="font-mono text-label tracking-kicker uppercase text-text-secondary/60 ml-2">
                       {l.kicker}
                     </span>
                   </p>
-                  <p className="font-serif text-[13px] italic text-text-secondary/70 leading-relaxed">
+                  <p className="font-serif text-xs italic text-text-secondary/70 leading-relaxed">
                     {l.note}
                   </p>
                 </li>
@@ -143,12 +143,12 @@ export default function AtlasPage() {
           </div>
 
           <div className="rounded-sm border border-surface-light/40 p-5">
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
+            <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-3">
               Vocabulary
             </p>
-            <div className="grid grid-cols-3 gap-3 sm:gap-4 text-[12px] sm:text-[13px]">
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-xs">
               <div>
-                <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/60 mb-2">
+                <p className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/60 mb-2">
                   Stage
                 </p>
                 <ul className="space-y-1 font-serif text-text-secondary/85">
@@ -158,7 +158,7 @@ export default function AtlasPage() {
                 </ul>
               </div>
               <div>
-                <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/60 mb-2">
+                <p className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/60 mb-2">
                   Affect
                 </p>
                 <ul className="space-y-1 font-serif text-text-secondary/85">
@@ -175,7 +175,7 @@ export default function AtlasPage() {
                 </ul>
               </div>
               <div>
-                <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/60 mb-2">
+                <p className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/60 mb-2">
                   Stance
                 </p>
                 <ul className="space-y-1 font-serif text-text-secondary/85">
@@ -188,14 +188,14 @@ export default function AtlasPage() {
           </div>
 
           <div className="rounded-sm border border-surface-light/40 p-5">
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
+            <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-3">
               Confidence tiers
             </p>
             <ul className="space-y-2">
               {TIER_ORDER.map((t) => (
                 <li key={t} className="flex items-baseline gap-3">
                   <ConfidenceBadge tier={t} />
-                  <span className="font-serif text-[13px] italic text-text-secondary/75 leading-relaxed">
+                  <span className="font-serif text-xs italic text-text-secondary/75 leading-relaxed">
                     {CONFIDENCE_TIERS[t]}
                   </span>
                 </li>
@@ -204,10 +204,10 @@ export default function AtlasPage() {
           </div>
 
           <div className="rounded-sm border border-surface-light/40 p-5">
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
+            <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-3">
               Cluster totems
             </p>
-            <p className="font-serif text-[14px] italic text-text-secondary/80 leading-relaxed">
+            <p className="font-serif text-body-sm italic text-text-secondary/80 leading-relaxed">
               Each cluster carries a small SVG motif — shape is unique to the cluster, color
               derives from its primary affect. Totems appear on cluster tiles and inside the map,
               so a shape you learn here stays consistent wherever that cluster shows up.
@@ -217,7 +217,7 @@ export default function AtlasPage() {
       </section>
 
       <section className="mb-16">
-        <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
+        <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-3">
           Confidence Distribution
         </p>
         <div className="flex flex-wrap gap-3">

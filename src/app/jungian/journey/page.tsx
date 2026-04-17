@@ -45,22 +45,22 @@ export default function JungianJourneyPage() {
           <div className="flex items-center gap-2 mb-6 animate-slide-up">
             <Link
               href="/jungian"
-              className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
+              className="font-mono text-kicker tracking-kicker text-muted uppercase hover:text-gold transition-colors"
             >
               Jungian
             </Link>
-            <span className="text-muted/40 font-mono text-[10px]">/</span>
-            <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-gold/80">
+            <span className="text-muted/40 font-mono text-label">/</span>
+            <span className="font-mono text-kicker tracking-kicker uppercase text-gold/80">
               The Journey
             </span>
           </div>
 
           {/* Lede */}
           <header className="mb-10 animate-slide-up delay-100 max-w-2xl">
-            <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-muted mb-3">
+            <p className="font-mono text-label tracking-display uppercase text-muted mb-3">
               Ego · Soul · Self
             </p>
-            <h1 className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-[1.05] mb-5">
+            <h1 className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-display mb-5">
               The Journey
             </h1>
             <p className="font-serif text-xl md:text-2xl italic text-text-secondary/90 mb-5">
@@ -95,7 +95,7 @@ export default function JungianJourneyPage() {
                 }}
               >
                 <p
-                  className="font-mono text-[9px] tracking-[0.4em] uppercase mb-2"
+                  className="font-mono text-kicker tracking-display uppercase mb-2"
                   style={{ color: c.color }}
                 >
                   {c.label}

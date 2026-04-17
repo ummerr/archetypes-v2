@@ -76,7 +76,7 @@ Every card composes three layers:
 KWML          →  ArchetypeSymbol    TotemCanvas (3D platonic)
 Jungian       →  glyph + ring       JungianTotemCanvas (3D organic)
 Enneagram     →  numeral + ring     EnneagramTotemCanvas (3D instrument)
-MBTI          →  MbtiGlyph sm       MbtiGlyph lg  [+ future 3D stack]
+MBTI          →  MbtiGlyph sm       MbtiTotemCanvas (3D cognitive stack)
 Tarot         →  halo + glyph       TarotCard (flip + foil)
 Hero's Journey → HeroJourneyIcon    [gap — see §8]
 Atlas cluster →  ClusterTotem       ClusterTotem hero
@@ -114,10 +114,9 @@ One-off / bespoke animation (Tarot flip, 3D `useFrame` loops) is exempt from the
 Listed in impact order. These are not in scope for the current pass; this document records the intent.
 
 1. **Hero's Journey motion.** Eight static SVGs in `HeroJourneyArchetypeIcon.tsx`. Commit to the "sketched myth" dialect and animate with `shimmer` — trace each outline on scroll-into-view, or breathe the linework.
-2. **MBTI 3D totem.** The only cognitive-functions system without a hero-scale 3D piece. Concept: a four-tier cognitive stack (Dominant brightest, Inferior dimmest), each tier a geometric primitive keyed to N/S/T/F.
-3. **Light-mode totem strategy.** Emissive glows collapse on the light palette. Audit every totem and implement the inversion (filled silhouettes, no bloom) as a deliberate second pose, not a hack.
-4. **Share-card alignment.** OG images at `src/app/api/card/[system]/[slug]/route.ts` should pull from the same totem registry so social previews match the live dialect.
-5. **Accessible names everywhere.** Walk every totem component; remove blanket `aria-hidden`, add proper `aria-label` grounded in archetype + system.
+2. **Light-mode totem strategy.** Emissive glows collapse on the light palette. Audit every totem and implement the inversion (filled silhouettes, no bloom) as a deliberate second pose, not a hack.
+3. **Share-card alignment.** OG images at `src/app/api/card/[system]/[slug]/route.ts` should pull from the same totem registry so social previews match the live dialect.
+4. **Accessible names everywhere.** Walk every totem component; remove blanket `aria-hidden`, add proper `aria-label` grounded in archetype + system.
 
 ---
 

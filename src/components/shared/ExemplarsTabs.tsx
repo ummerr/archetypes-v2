@@ -75,7 +75,7 @@ export default function ExemplarsTabs({ color, exemplars }: Props) {
   return (
     <section className="mb-16">
       <div className="flex items-center gap-4 mb-6">
-        <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-muted">
+        <span className="font-mono text-label tracking-display uppercase text-muted">
           Exemplars
         </span>
         <div
@@ -96,7 +96,7 @@ export default function ExemplarsTabs({ color, exemplars }: Props) {
               role="tab"
               aria-selected={isActive}
               onClick={() => setActive(t.key)}
-              className="font-mono text-[10px] tracking-[0.35em] uppercase px-3 py-2 rounded-sm transition-all"
+              className="font-mono text-label tracking-kicker uppercase px-3 py-2 rounded-sm transition-all"
               style={{
                 color: isActive ? color : undefined,
                 background: isActive
@@ -149,7 +149,7 @@ function Row({
         </p>
         {tag ? (
           <span
-            className="font-mono text-[8px] tracking-[0.3em] uppercase shrink-0"
+            className="font-mono text-kicker tracking-kicker uppercase shrink-0"
             style={{ color: color + "99" }}
           >
             {tag}
@@ -161,7 +161,7 @@ function Row({
       </p>
       {source ? (
         <p
-          className="mt-2 font-mono text-[9px] tracking-[0.2em] uppercase text-muted opacity-70"
+          className="mt-2 font-mono text-kicker tracking-label uppercase text-muted opacity-70"
           style={{ borderTop: `1px dashed ${color}${light ? "18" : "0E"}`, paddingTop: "0.4rem" }}
         >
           {source}

@@ -31,14 +31,14 @@ export default function ArchetypeIndexCard({
       index={index}
       metaLeft={
         <span
-          className="font-mono text-[8px] tracking-[0.3em] uppercase"
+          className="font-mono text-kicker tracking-kicker uppercase"
           style={{ color: `${c}${light ? "" : "CC"}`, opacity: light ? 0.85 : 1 }}
         >
           {entry.systemName}
         </span>
       }
       metaRight={
-        <span className="flex items-center gap-1.5 font-mono text-[8px] tracking-[0.25em] uppercase text-muted/80">
+        <span className="flex items-center gap-1.5 font-mono text-kicker tracking-kicker uppercase text-muted/80">
           <span
             className="inline-block w-1.5 h-1.5 rounded-full"
             style={{ background: entry.innerGroup.color }}
@@ -50,7 +50,7 @@ export default function ArchetypeIndexCard({
       token={(hovered) => <ArchetypeCardVisual entry={entry} hovered={hovered} />}
       title={(hovered) => (
         <h3
-          className="font-serif text-xl md:text-[1.4rem] font-medium tracking-tight leading-tight transition-all duration-300 flex-1"
+          className="font-serif text-xl md:text-h3 font-medium tracking-tight leading-tight transition-all duration-300 flex-1"
           style={{
             color: light ? "var(--color-text-primary)" : c,
             textShadow: hovered && !light ? `0 0 16px ${c}40` : "none",
@@ -61,7 +61,7 @@ export default function ArchetypeIndexCard({
       )}
       subtitle={
         entry.motto ? (
-          <p className="font-serif italic text-[13px] md:text-sm text-text-secondary/85 leading-snug">
+          <p className="font-serif italic text-xs md:text-sm text-text-secondary/85 leading-snug">
             &ldquo;{entry.motto}&rdquo;
           </p>
         ) : undefined

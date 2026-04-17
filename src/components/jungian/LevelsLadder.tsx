@@ -21,7 +21,7 @@ export default function LevelsLadder({ color, levels }: Props) {
   return (
     <section className="mb-16">
       <div className="flex items-center gap-4 mb-6">
-        <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-muted">
+        <span className="font-mono text-label tracking-display uppercase text-muted">
           Levels of Expression
         </span>
         <div
@@ -68,7 +68,7 @@ export default function LevelsLadder({ color, levels }: Props) {
                   />
                 </span>
                 <p
-                  className="font-mono text-[9px] tracking-[0.4em] uppercase mb-1.5"
+                  className="font-mono text-kicker tracking-display uppercase mb-1.5"
                   style={{ color: color + hex }}
                 >
                   {r.label}

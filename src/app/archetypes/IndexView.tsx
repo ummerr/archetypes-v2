@@ -263,7 +263,7 @@ export default function IndexView() {
           setMode(opt.id);
           if (opt.id === "shuffle") setShuffleSeed(Date.now());
         }}
-        className={`font-mono text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-sm transition-colors duration-200 ${
+        className={`font-mono text-label tracking-label uppercase px-3 py-2 rounded-sm transition-colors duration-200 ${
           active
             ? "text-gold bg-gold/10 border border-gold/30"
             : "text-muted hover:text-text-secondary border border-transparent"
@@ -278,10 +278,10 @@ export default function IndexView() {
     <div className="min-h-screen">
       <div className="px-6 pt-24 pb-8 md:pt-32 md:pb-10">
         <div className="max-w-6xl mx-auto animate-slide-up">
-          <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
+          <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4">
             The Index
           </p>
-          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
+          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-display mb-5">
             All{" "}
             <span className={light ? "text-text-primary" : "text-gold glow-text-subtle animate-flicker"}>
               Archetypes
@@ -299,7 +299,7 @@ export default function IndexView() {
       <div className="sticky top-14 z-30 px-6 py-3 backdrop-blur-xl bg-bg/80 border-b border-gold/10 transition-colors duration-300">
         <div className="max-w-6xl mx-auto flex flex-col gap-2">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span className="font-mono text-[8px] tracking-[0.35em] uppercase text-muted/70 shrink-0 w-16">
+            <span className="font-mono text-kicker tracking-kicker uppercase text-muted/70 shrink-0 w-16">
               Order
             </span>
             <div role="group" aria-label="Order archetypes" className="flex flex-wrap items-center gap-1">
@@ -307,7 +307,7 @@ export default function IndexView() {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span className="font-mono text-[8px] tracking-[0.35em] uppercase text-muted/70 shrink-0 w-16">
+            <span className="font-mono text-kicker tracking-kicker uppercase text-muted/70 shrink-0 w-16">
               Dimension
             </span>
             <div role="group" aria-label="Arrange archetypes by dimension" className="flex flex-wrap items-center gap-1">
@@ -323,14 +323,14 @@ export default function IndexView() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search archetypes…"
                 aria-label="Search archetypes"
-                className="w-full bg-transparent border border-gold/15 focus:border-gold/40 rounded-sm px-3 py-2 pr-8 font-mono text-[11px] tracking-[0.1em] text-text-primary placeholder:text-muted/60 outline-none transition-colors duration-200"
+                className="w-full bg-transparent border border-gold/15 focus:border-gold/40 rounded-sm px-3 py-2 pr-8 font-mono text-label tracking-label text-text-primary placeholder:text-muted/60 outline-none transition-colors duration-200"
               />
               {query && (
                 <button
                   type="button"
                   onClick={() => setQuery("")}
                   aria-label="Clear search"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center text-muted hover:text-gold transition-colors rounded-sm font-mono text-[11px]"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center text-muted hover:text-gold transition-colors rounded-sm font-mono text-label"
                 >
                   ×
                 </button>
@@ -341,13 +341,13 @@ export default function IndexView() {
               <button
                 type="button"
                 onClick={clearAll}
-                className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted hover:text-gold transition-colors px-2 py-1"
+                className="font-mono text-kicker tracking-kicker uppercase text-muted hover:text-gold transition-colors px-2 py-1"
               >
                 Reset
               </button>
             )}
 
-            <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+            <span className="font-mono text-kicker tracking-kicker text-muted uppercase">
               {total} {total === 1 ? "Type" : "Types"}
             </span>
           </div>
@@ -365,13 +365,13 @@ export default function IndexView() {
               >
                 ∅
               </span>
-              <p className="font-mono text-xs text-muted uppercase tracking-[0.2em]">
+              <p className="font-mono text-xs text-muted uppercase tracking-label">
                 No archetypes match &ldquo;{query}&rdquo;.
               </p>
               <button
                 type="button"
                 onClick={clearAll}
-                className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold border border-gold/30 hover:bg-gold/10 px-4 py-2 rounded-sm transition-colors"
+                className="font-mono text-label tracking-kicker uppercase text-gold border border-gold/30 hover:bg-gold/10 px-4 py-2 rounded-sm transition-colors"
               >
                 Clear search
               </button>
@@ -381,7 +381,7 @@ export default function IndexView() {
             <section key={section.key}>
               <div className="mb-6 flex items-center gap-4">
                 <span
-                  className="font-mono text-[10px] tracking-[0.35em] uppercase"
+                  className="font-mono text-label tracking-kicker uppercase"
                   style={{ color: section.color }}
                 >
                   {section.label}
@@ -392,7 +392,7 @@ export default function IndexView() {
                     background: `linear-gradient(90deg, ${section.color}${light ? "35" : "22"}, transparent)`,
                   }}
                 />
-                <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+                <span className="font-mono text-kicker tracking-kicker text-muted uppercase">
                   {section.entries.length}
                 </span>
               </div>

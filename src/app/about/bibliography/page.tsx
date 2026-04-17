@@ -59,7 +59,7 @@ function List({ heading, items }: { heading: string; items: Entry[] }) {
       <h2 className="font-serif text-xl font-medium mb-3">{heading}</h2>
       <ul className="space-y-2">
         {items.map((i) => (
-          <li key={i.text} className="italic text-[15px]">
+          <li key={i.text} className="italic text-body">
             -{" "}
             {i.href ? (
               <a

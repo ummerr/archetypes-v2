@@ -17,7 +17,7 @@ export default function Footer() {
               <li key={s.id}>
                 <Link
                   href={s.href}
-                  className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-secondary hover:text-gold transition-colors"
+                  className="font-mono text-label tracking-label uppercase text-text-secondary hover:text-gold transition-colors"
                 >
                   {s.name}
                 </Link>
@@ -37,10 +37,10 @@ export default function Footer() {
       </div>
       <div className="border-t border-gold/10">
         <div className="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between">
-          <p className="font-mono text-[9px] tracking-[0.1em] text-muted uppercase">
+          <p className="font-mono text-kicker tracking-label text-muted uppercase">
             An atlas of archetypal systems
           </p>
-          <p className="font-mono text-[9px] tracking-[0.25em] text-gold/40">
+          <p className="font-mono text-kicker tracking-kicker text-gold/40">
             MAPS OF THE INNER WORLD
           </p>
         </div>
@@ -52,7 +52,7 @@ export default function Footer() {
 function Column({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="font-mono text-[9px] tracking-[0.3em] uppercase text-gold mb-4">
+      <h3 className="font-mono text-kicker tracking-kicker uppercase text-gold mb-4">
         {title}
       </h3>
       {children}
@@ -66,20 +66,20 @@ function LinkList({ links, comingSoon }: { links: NavLink[]; comingSoon?: boolea
       {links.map((l) => (
         <li key={l.href}>
           {comingSoon ? (
-            <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted/60 cursor-default">
+            <span className="font-mono text-label tracking-label uppercase text-muted/60 cursor-default">
               {l.label}
-              <span className="ml-2 text-[8px] tracking-[0.25em] text-gold/40">— soon</span>
+              <span className="ml-2 text-kicker tracking-kicker text-gold/40">— soon</span>
             </span>
           ) : (
             <Link
               href={l.href}
-              className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-secondary hover:text-gold transition-colors"
+              className="font-mono text-label tracking-label uppercase text-text-secondary hover:text-gold transition-colors"
             >
               {l.label}
             </Link>
           )}
           {l.desc && (
-            <div className={`font-serif italic text-[11px] ${comingSoon ? "text-muted/50" : "text-muted"}`}>{l.desc}</div>
+            <div className={`font-serif italic text-xs ${comingSoon ? "text-muted/50" : "text-muted"}`}>{l.desc}</div>
           )}
         </li>
       ))}

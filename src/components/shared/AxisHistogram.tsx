@@ -14,7 +14,7 @@ export default function AxisHistogram({ axis, counts, values, max }: Props) {
   const labels = AXIS_LABELS[axis] as Record<string, string>;
   return (
     <div>
-      <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-text-secondary/70 mb-2">
+      <p className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/70 mb-2">
         {AXIS_TITLES[axis]}
       </p>
       <ul className="space-y-1.5">
@@ -25,7 +25,7 @@ export default function AxisHistogram({ axis, counts, values, max }: Props) {
             axis === "affect" ? AFFECT_ACCENT[v as Affect] ?? "#888" : "#d4af37";
           return (
             <li key={v} className="flex items-center gap-3">
-              <span className="font-mono text-[10px] text-text-secondary/80 w-28 shrink-0">
+              <span className="font-mono text-label text-text-secondary/80 w-28 shrink-0">
                 {labels[v] ?? v}
               </span>
               <span
@@ -37,7 +37,7 @@ export default function AxisHistogram({ axis, counts, values, max }: Props) {
                   opacity: c > 0 ? 0.85 : 0,
                 }}
               />
-              <span className="font-mono text-[9px] text-text-secondary/60 ml-auto">{c}</span>
+              <span className="font-mono text-kicker text-text-secondary/60 ml-auto">{c}</span>
             </li>
           );
         })}

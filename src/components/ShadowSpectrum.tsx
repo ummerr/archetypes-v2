@@ -57,7 +57,7 @@ export default function ShadowSpectrum({
           onMouseEnter={() => setHoveredPole("active")}
           onMouseLeave={() => setHoveredPole(null)}
         >
-          <p className="font-mono text-[8px] tracking-[0.2em] uppercase text-crimson-light/60 mb-0.5">
+          <p className="font-mono text-kicker tracking-label uppercase text-crimson-light/60 mb-0.5">
             Active
           </p>
           <p
@@ -79,7 +79,7 @@ export default function ShadowSpectrum({
           onMouseLeave={() => setHoveredPole(null)}
         >
           <p
-            className="font-mono text-[8px] tracking-[0.2em] uppercase mb-0.5 transition-colors duration-300"
+            className="font-mono text-kicker tracking-label uppercase mb-0.5 transition-colors duration-300"
             style={{ color: `${color}99` }}
           >
             Fullness
@@ -103,7 +103,7 @@ export default function ShadowSpectrum({
           onMouseEnter={() => setHoveredPole("passive")}
           onMouseLeave={() => setHoveredPole(null)}
         >
-          <p className="font-mono text-[8px] tracking-[0.2em] uppercase text-muted/60 mb-0.5">
+          <p className="font-mono text-kicker tracking-label uppercase text-muted/60 mb-0.5">
             Passive
           </p>
           <p
@@ -158,7 +158,7 @@ export default function ShadowSpectrum({
 
       {/* Oscillation insight */}
       <motion.p
-        className="text-center font-mono text-[9px] tracking-[0.15em] uppercase mt-4 text-muted/50"
+        className="text-center font-mono text-kicker tracking-label uppercase mt-4 text-muted/50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}

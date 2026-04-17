@@ -272,7 +272,7 @@ export default function AtlasLensCanvas({
               type="button"
               onClick={() => setLens(t.id)}
               aria-pressed={active}
-              className="relative font-mono text-[10px] tracking-[0.22em] sm:tracking-[0.25em] uppercase px-2.5 sm:px-3 py-2 rounded-sm border transition-all"
+              className="relative font-mono text-label tracking-label sm:tracking-kicker uppercase px-2.5 sm:px-3 py-2 rounded-sm border transition-all"
               style={{
                 borderColor: active ? "var(--color-gold)" : "rgba(255,255,255,0.12)",
                 color: active ? "var(--color-gold)" : "var(--color-muted)",
@@ -299,7 +299,7 @@ export default function AtlasLensCanvas({
               type="button"
               onClick={() => toggleSystem(s.id)}
               aria-pressed={!off}
-              className="font-mono text-[9px] tracking-[0.25em] uppercase px-2.5 py-1 rounded-sm border transition-all"
+              className="font-mono text-kicker tracking-kicker uppercase px-2.5 py-1 rounded-sm border transition-all"
               style={{
                 borderColor: off ? "rgba(255,255,255,0.12)" : s.accent,
                 color: off ? "var(--color-muted)" : s.accent,
@@ -325,7 +325,7 @@ export default function AtlasLensCanvas({
               setOffSystems(new Set());
               setHoverCluster(null);
             }}
-            className="font-mono text-[9px] tracking-[0.25em] uppercase px-2.5 py-1 rounded-sm border border-surface-light/40 text-text-secondary/70 hover:border-gold/40 hover:text-gold transition-colors ml-auto"
+            className="font-mono text-kicker tracking-kicker uppercase px-2.5 py-1 rounded-sm border border-surface-light/40 text-text-secondary/70 hover:border-gold/40 hover:text-gold transition-colors ml-auto"
           >
             Reset
           </button>
@@ -423,7 +423,7 @@ export default function AtlasLensCanvas({
             }}
           >
             <div
-              className="font-mono text-[9px] tracking-[0.25em] uppercase mb-1"
+              className="font-mono text-kicker tracking-kicker uppercase mb-1"
               style={{ color: systemAccent[hoveredNode.system] ?? "var(--color-gold)" }}
             >
               {systems.find((s) => s.id === hoveredNode.system)?.name ?? hoveredNode.system}
@@ -432,7 +432,7 @@ export default function AtlasLensCanvas({
               {hoveredMeta.displayName}
             </div>
             {hoveredMeta.clusterNames.length > 0 ? (
-              <div className="mt-1.5 font-serif italic text-[11px] text-text-secondary/80 leading-snug">
+              <div className="mt-1.5 font-serif italic text-label text-text-secondary/80 leading-snug">
                 {hoveredMeta.clusterNames.slice(0, 3).join(" · ")}
               </div>
             ) : null}
@@ -452,7 +452,7 @@ export default function AtlasLensCanvas({
         />
 
         {/* Pinned caption — stays over the visible viewport, not the scrolled SVG */}
-        <div className="absolute bottom-2 right-3 font-mono text-[8px] tracking-[0.25em] uppercase text-muted/60 pointer-events-none">
+        <div className="absolute bottom-2 right-3 font-mono text-kicker tracking-kicker uppercase text-muted/60 pointer-events-none">
           <span className="md:hidden">← swipe · {layout.nodes.length} archetypes</span>
           <span className="hidden md:inline">{layout.nodes.length} archetypes · {clusters.length} clusters</span>
         </div>

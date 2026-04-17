@@ -23,14 +23,14 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function MethodologyPage() {
   return (
-    <article className="max-w-3xl mx-auto px-6 md:px-10 py-20 font-serif text-[17px] leading-[1.7] text-text-secondary/90">
+    <article className="max-w-3xl mx-auto px-6 md:px-10 py-20 font-serif text-body-lg leading-article text-text-secondary/90">
       <SectionHeading kicker="About" as="h1">
         Methodology
       </SectionHeading>
 
       <HermeneuticCaveat variant="banner" className="mb-10" />
 
-      <p className="font-serif italic text-[18px] text-text-secondary/85 mb-8">
+      <p className="font-serif italic text-body-lg text-text-secondary/85 mb-8">
         This page is the long-form account of how the resonance map was built - the pipeline
         that produced it, the anatomy of a single mapping, the counter-canon that corrects it,
         and the five different theories of shadow it refuses to flatten.
@@ -66,7 +66,7 @@ export default function MethodologyPage() {
       <h2 className="font-serif text-2xl font-medium mt-12 mb-3">The pipeline</h2>
       <p>
         Eleven missions across four phases. Each mission wrote one structured JSON file to{" "}
-        <code className="font-mono text-[13px] text-gold/80">/research/</code> so the work is
+        <code className="font-mono text-xs text-gold/80">/research/</code> so the work is
         independently resumable and the evidence is auditable.
       </p>
 
@@ -95,7 +95,7 @@ export default function MethodologyPage() {
         A single ruthless mission whose job was to attack every proposed mapping: over-fits, false
         equivalences, cherry-picked evidence, category errors, and the question of whether the
         comparative project itself is flawed. The output is preserved at{" "}
-        <code className="font-mono text-[13px] text-gold/80">research/10-adversarial.json</code>{" "}
+        <code className="font-mono text-xs text-gold/80">research/10-adversarial.json</code>{" "}
         and fed directly into synthesis.
       </p>
 
@@ -104,7 +104,7 @@ export default function MethodologyPage() {
         Mission 11 triangulated everything: confidence assigned per entry, every adversarial
         critique either modified, caveated, or rebutted (never ignored), citations attached,
         dissent preserved on the record. The output is{" "}
-        <code className="font-mono text-[13px] text-gold/80">src/data/grounded-resonance-map.json</code>
+        <code className="font-mono text-xs text-gold/80">src/data/grounded-resonance-map.json</code>
         , which is what this site renders.
       </p>
 
@@ -138,7 +138,7 @@ export default function MethodologyPage() {
       <ul className="mt-3 space-y-2">
         {(Object.keys(CONFIDENCE_TIERS) as (keyof typeof CONFIDENCE_TIERS)[]).map((t) => (
           <li key={t}>
-            <span className="font-mono text-[11px] tracking-[0.25em] uppercase mr-2 text-gold/90">
+            <span className="font-mono text-label tracking-kicker uppercase mr-2 text-gold/90">
               {t}
             </span>
             <span className="italic">{CONFIDENCE_TIERS[t]}</span>
@@ -224,9 +224,9 @@ export default function MethodologyPage() {
       <h2 className="font-serif text-2xl font-medium mt-16 mb-3">What&apos;s in the repo</h2>
       <p>
         The eleven mission outputs live under{" "}
-        <code className="font-mono text-[13px] text-gold/80">/research/</code>. The synthesised
+        <code className="font-mono text-xs text-gold/80">/research/</code>. The synthesised
         atlas is{" "}
-        <code className="font-mono text-[13px] text-gold/80">src/data/grounded-resonance-map.json</code>
+        <code className="font-mono text-xs text-gold/80">src/data/grounded-resonance-map.json</code>
         . Citations are collected at{" "}
         <Link href="/about/bibliography" className="underline decoration-gold/60 underline-offset-4">
           /about/bibliography

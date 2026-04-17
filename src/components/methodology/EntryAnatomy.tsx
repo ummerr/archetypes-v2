@@ -60,7 +60,7 @@ export default function EntryAnatomy() {
       <div className="border border-gold/30 rounded-sm bg-surface/40">
         <header className="p-5 md:p-6 border-b border-gold/20">
           <div className="flex items-baseline justify-between gap-3 mb-2">
-            <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-gold/70">
+            <p className="font-mono text-kicker tracking-kicker uppercase text-gold/70">
               kwml / the-king
             </p>
             <ConfidenceBadge tier="canonical" />
@@ -68,10 +68,10 @@ export default function EntryAnatomy() {
           <h3 className="font-serif text-xl md:text-2xl font-medium text-text-primary mb-1">
             The King
           </h3>
-          <p className="font-serif italic text-[14px] text-text-secondary/85">
+          <p className="font-serif italic text-body-sm text-text-secondary/85">
             &ldquo;Fullness - the blessing centered self.&rdquo;
           </p>
-          <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-text-secondary/50 mt-2">
+          <p className="font-mono text-kicker tracking-label uppercase text-text-secondary/50 mt-2">
             In the <span className="text-gold/70">Sovereign</span> cluster
           </p>
         </header>
@@ -83,23 +83,23 @@ export default function EntryAnatomy() {
             >
               <dt className="flex flex-col gap-1">
                 <span
-                  className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                  className="font-mono text-kicker tracking-kicker uppercase"
                   style={{ color: TONE_COLOR[f.tone] }}
                 >
                   {f.label}
                 </span>
-                <code className="font-mono text-[10px] text-text-secondary/45 truncate">
+                <code className="font-mono text-label text-text-secondary/45 truncate">
                   {f.key}
                 </code>
               </dt>
-              <dd className="font-serif text-[14px] leading-[1.6] text-text-primary/90">
+              <dd className="font-serif text-body-sm leading-relaxed text-text-primary/90">
                 {f.value}
               </dd>
             </div>
           ))}
         </dl>
       </div>
-      <figcaption className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/50 mt-3">
+      <figcaption className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/50 mt-3">
         Fig. 4 - Every mapping carries citation, dissent, adversarial, and editorial fields.
       </figcaption>
     </figure>

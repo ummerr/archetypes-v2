@@ -301,7 +301,7 @@ function Labels({
             {manName}
           </p>
           <p
-            className="font-sans text-[7px] tracking-[0.2em] uppercase mt-0.5"
+            className="font-sans text-kicker tracking-label uppercase mt-0.5"
             style={{ color, opacity: 0.3 }}
           >
             Man
@@ -323,7 +323,7 @@ function Labels({
             {boyName}
           </p>
           <p
-            className="font-sans text-[6px] tracking-[0.2em] uppercase mt-0.5"
+            className="font-sans text-kicker tracking-label uppercase mt-0.5"
             style={{ color, opacity: 0.25 }}
           >
             Boy
@@ -334,10 +334,10 @@ function Labels({
       {/* Active shadow label */}
       <Html position={[-1.35, -0.25, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
-          <p className="font-sans text-[6px] tracking-[0.15em] uppercase" style={{ color: "var(--color-crimson-light)", opacity: 0.6 }}>
+          <p className="font-sans text-kicker tracking-label uppercase" style={{ color: "var(--color-crimson-light)", opacity: 0.6 }}>
             Active
           </p>
-          <p className="font-serif text-[9px]" style={{ color: "var(--color-crimson-light)", opacity: 0.55 }}>
+          <p className="font-serif text-kicker" style={{ color: "var(--color-crimson-light)", opacity: 0.55 }}>
             {manShadowActive}
           </p>
         </div>
@@ -346,10 +346,10 @@ function Labels({
       {/* Passive shadow label */}
       <Html position={[1.35, -0.25, 0]} center>
         <div className="pointer-events-none select-none text-center whitespace-nowrap">
-          <p className="font-sans text-[6px] tracking-[0.15em] uppercase" style={{ color: "var(--color-muted)", opacity: 0.6 }}>
+          <p className="font-sans text-kicker tracking-label uppercase" style={{ color: "var(--color-muted)", opacity: 0.6 }}>
             Passive
           </p>
-          <p className="font-serif text-[9px]" style={{ color: "var(--color-muted)", opacity: 0.55 }}>
+          <p className="font-serif text-kicker" style={{ color: "var(--color-muted)", opacity: 0.55 }}>
             {manShadowPassive}
           </p>
         </div>
@@ -358,7 +358,7 @@ function Labels({
       {/* Bottom annotation */}
       <Html position={[0, -1.55, 0]} center>
         <p
-          className="pointer-events-none select-none font-sans text-[7px] tracking-[0.25em] uppercase whitespace-nowrap"
+          className="pointer-events-none select-none font-sans text-kicker tracking-kicker uppercase whitespace-nowrap"
           style={{ color, opacity: 0.2 }}
         >
           {maturity === "boy" ? "The seed within the man" : "The boy he carries within"}

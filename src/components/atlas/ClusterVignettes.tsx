@@ -10,7 +10,7 @@ export default function ClusterVignettes({ vignettes, color }: Props) {
   return (
     <section className="mb-12">
       <p
-        className="font-mono text-[10px] tracking-[0.3em] uppercase mb-4"
+        className="font-mono text-label tracking-kicker uppercase mb-4"
         style={{ color }}
       >
         When you meet this
@@ -22,11 +22,11 @@ export default function ClusterVignettes({ vignettes, color }: Props) {
             className="border-l-2 pl-5 max-w-2xl"
             style={{ borderColor: `${color}40` }}
           >
-            <p className="font-serif text-[16px] leading-relaxed italic text-text-primary/90">
+            <p className="font-serif text-base leading-relaxed italic text-text-primary/90">
               {v.note}
             </p>
             {v.source && (
-              <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-text-secondary/55 mt-2">
+              <p className="font-mono text-kicker tracking-label uppercase text-text-secondary/55 mt-2">
                 {v.source}
               </p>
             )}

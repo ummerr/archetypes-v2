@@ -16,10 +16,10 @@ export default function TarotHome() {
       <div className="px-6 pt-24 pb-10 md:pt-32 md:pb-12">
         <div className="max-w-6xl mx-auto">
           <div className="animate-slide-up">
-            <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
+            <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4">
               Major Arcana - The Fool&rsquo;s Journey
             </p>
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
+            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-display mb-5">
               Twenty-Two{" "}
               <span
                 className={
@@ -66,7 +66,7 @@ export default function TarotHome() {
                 <div className="mb-8">
                   <div className="flex items-center gap-4 mb-3 flex-wrap">
                     <span
-                      className="font-mono text-[10px] tracking-[0.35em] uppercase"
+                      className="font-mono text-label tracking-kicker uppercase"
                       style={{ color: phase.color }}
                     >
                       {phase.label} · {phase.tagline}
@@ -77,7 +77,7 @@ export default function TarotHome() {
                         background: `linear-gradient(90deg, ${phase.color}${light ? "30" : "18"}, transparent)`,
                       }}
                     />
-                    <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+                    <span className="font-mono text-kicker tracking-kicker text-muted uppercase">
                       {phase.range}
                     </span>
                   </div>
@@ -127,7 +127,7 @@ export default function TarotHome() {
           <div className="text-center pt-6">
             <Link
               href="/tarot/about"
-              className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-muted uppercase hover:text-gold transition-colors duration-300"
+              className="inline-flex items-center gap-2 font-mono text-kicker tracking-label text-muted uppercase hover:text-gold transition-colors duration-300"
             >
               <span className="w-6 h-px bg-current" />
               The framework behind the twenty-two

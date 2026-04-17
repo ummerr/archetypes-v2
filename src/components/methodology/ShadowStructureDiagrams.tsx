@@ -171,7 +171,7 @@ function DiagramFrame({
     >
       <div className="flex items-baseline justify-between mb-3">
         <p
-          className="font-mono text-[9px] tracking-[0.3em] uppercase"
+          className="font-mono text-kicker tracking-kicker uppercase"
           style={{ color: tint }}
         >
           shape — {SHAPE_LABEL[variant]}
@@ -189,7 +189,7 @@ function DiagramFrame({
           {children}
         </svg>
       </div>
-      <figcaption className="font-serif italic text-[12px] text-text-secondary/70 mt-3 text-center">
+      <figcaption className="font-serif italic text-xs text-text-secondary/70 mt-3 text-center">
         {caption}
       </figcaption>
     </figure>
@@ -548,7 +548,7 @@ export function ShadowShapeOverview() {
             }}
           >
             <p
-              className="font-mono text-[9px] tracking-[0.25em] uppercase"
+              className="font-mono text-kicker tracking-kicker uppercase"
               style={{ color: TINT[variant] }}
             >
               {label}
@@ -556,13 +556,13 @@ export function ShadowShapeOverview() {
             <div className="w-full px-2">
               <MiniShape variant={variant} />
             </div>
-            <p className="font-serif italic text-[11px] text-text-secondary/70">
+            <p className="font-serif italic text-label text-text-secondary/70">
               {shape}
             </p>
           </div>
         ))}
       </div>
-      <figcaption className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/50 mt-3 text-center">
+      <figcaption className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/50 mt-3 text-center">
         Fig. — Five traditions, five different shapes. The old Shadow cluster treated these as one.
       </figcaption>
     </figure>

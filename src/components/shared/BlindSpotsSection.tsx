@@ -11,14 +11,14 @@ export default function BlindSpotsSection({ system, className = "" }: Props) {
   if (!text) return null;
   return (
     <section className={`mt-16 border-t border-surface-light/30 pt-10 ${className}`}>
-      <p className="font-mono text-[10px] tracking-[0.35em] uppercase text-amber-500/80 mb-3">
+      <p className="font-mono text-label tracking-kicker uppercase text-amber-500/80 mb-3">
         Limitations
       </p>
       <h2 className="font-serif text-xl font-medium mb-3">What this system does not see well</h2>
-      <p className="font-serif text-[15px] italic leading-relaxed text-text-secondary/85 max-w-2xl">
+      <p className="font-serif text-body italic leading-relaxed text-text-secondary/85 max-w-2xl">
         {text}
       </p>
-      <p className="mt-4 font-mono text-[10px] tracking-[0.25em] uppercase text-muted/70">
+      <p className="mt-4 font-mono text-label tracking-kicker uppercase text-muted/70">
         <Link href="/about/methodology" className="underline underline-offset-2 hover:text-gold">
           How the map handles blind spots →
         </Link>

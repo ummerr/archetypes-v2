@@ -44,7 +44,7 @@ export default function EnneagramWings({ archetype, wingTargets }: Props) {
   return (
     <div className="mb-16 animate-slide-up delay-350">
       <div className="flex items-center gap-4 mb-5">
-        <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+        <span className="font-mono text-label tracking-kicker text-gold/80 uppercase">
           Wings
         </span>
         <div
@@ -53,7 +53,7 @@ export default function EnneagramWings({ archetype, wingTargets }: Props) {
             background: `linear-gradient(90deg, ${color}${light ? "30" : "18"}, transparent)`,
           }}
         />
-        <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+        <span className="font-mono text-kicker tracking-kicker text-muted uppercase">
           Adjacent Flavors
         </span>
       </div>
@@ -185,7 +185,7 @@ export default function EnneagramWings({ archetype, wingTargets }: Props) {
                 <button
                   key={w.number}
                   onClick={() => setActiveIdx(i)}
-                  className="px-4 py-2 font-mono text-[10px] tracking-[0.25em] uppercase transition-all duration-300 rounded-sm"
+                  className="px-4 py-2 font-mono text-label tracking-kicker uppercase transition-all duration-300 rounded-sm"
                   style={{
                     color: isActive ? "#FFFFFF" : "var(--color-muted)",
                     background: isActive ? c : "transparent",
@@ -199,7 +199,7 @@ export default function EnneagramWings({ archetype, wingTargets }: Props) {
           </div>
 
           <p
-            className="font-mono text-[9px] tracking-[0.3em] uppercase mb-1"
+            className="font-mono text-kicker tracking-kicker uppercase mb-1"
             style={{ color: activeColor + "CC" }}
           >
             {archetype.number}w{activeWing.number} ·{" "}
@@ -216,7 +216,7 @@ export default function EnneagramWings({ archetype, wingTargets }: Props) {
           </p>
           <Link
             href={`/enneagram/archetype/${activeTarget.slug}`}
-            className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.25em] uppercase text-muted hover:text-gold transition-colors"
+            className="inline-flex items-center gap-2 font-mono text-kicker tracking-kicker uppercase text-muted hover:text-gold transition-colors"
           >
             <span className="w-4 h-px bg-current" />
             Visit Type {activeTarget.number} · {activeTarget.name}

@@ -27,7 +27,7 @@ export default function MbtiTemperamentGrid() {
             <div className="mb-6">
               <div className="flex items-center gap-4 mb-3 flex-wrap">
                 <span
-                  className="font-mono text-[10px] tracking-[0.35em] uppercase"
+                  className="font-mono text-label tracking-kicker uppercase"
                   style={{ color }}
                 >
                   {group.label} · {group.letters}
@@ -38,7 +38,7 @@ export default function MbtiTemperamentGrid() {
                     background: `linear-gradient(90deg, ${color}${light ? "30" : "18"}, transparent)`,
                   }}
                 />
-                <span className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase">
+                <span className="font-mono text-kicker tracking-kicker text-muted uppercase">
                   {group.tagline}
                 </span>
               </div>
@@ -71,7 +71,7 @@ export default function MbtiTemperamentGrid() {
                     <MbtiGlyph archetype={a} size="md" interactive />
 
                     <p
-                      className="mt-4 font-mono text-[10px] tracking-[0.35em] uppercase"
+                      className="mt-4 font-mono text-label tracking-kicker uppercase"
                       style={{ color: color + (light ? "DD" : "CC") }}
                     >
                       {a.code}

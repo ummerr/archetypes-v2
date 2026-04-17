@@ -21,7 +21,7 @@ export default function ConfidenceBadge({ tier, color, className = "" }: Props) 
   const ring = tier === "canonical" || tier === "strong" || tier === "moderate" ? color ?? s.ring : s.ring;
   return (
     <span
-      className={`inline-flex items-center font-mono text-[8px] tracking-[0.25em] uppercase px-1.5 py-0.5 rounded-sm ${className}`}
+      className={`inline-flex items-center font-mono text-kicker tracking-kicker uppercase px-1.5 py-0.5 rounded-sm ${className}`}
       style={{
         color: fg,
         background: s.bg,

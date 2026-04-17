@@ -88,15 +88,15 @@ export default function ArchetypeShareCard({
       className={`rounded-sm border border-surface-light/40 px-5 py-4 flex flex-wrap items-center gap-4 ${className}`}
     >
       <div className="flex flex-col gap-1 mr-auto">
-        <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-gold/80">
+        <p className="font-mono text-kicker tracking-kicker uppercase text-gold/80">
           Share
         </p>
-        <p className="font-serif italic text-[13px] text-text-secondary/80">
+        <p className="font-serif italic text-xs text-text-secondary/80">
           Download or share a card for {displayName}.
         </p>
       </div>
 
-      <div className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.25em] uppercase">
+      <div className="flex items-center gap-1.5 font-mono text-kicker tracking-kicker uppercase">
         <button
           type="button"
           onClick={() => setFormat("wide")}
@@ -128,7 +128,7 @@ export default function ArchetypeShareCard({
           type="button"
           onClick={handleDownload}
           disabled={downloadStatus === "loading"}
-          className="font-mono text-[10px] tracking-[0.25em] uppercase px-3 py-1.5 rounded-sm border border-gold/40 text-gold hover:bg-gold/10 transition-colors disabled:opacity-50"
+          className="font-mono text-label tracking-kicker uppercase px-3 py-1.5 rounded-sm border border-gold/40 text-gold hover:bg-gold/10 transition-colors disabled:opacity-50"
         >
           {label("Download PNG", downloadStatus)}
         </button>
@@ -136,14 +136,14 @@ export default function ArchetypeShareCard({
           type="button"
           onClick={handleCopy}
           disabled={copyStatus === "loading"}
-          className="font-mono text-[10px] tracking-[0.25em] uppercase px-3 py-1.5 rounded-sm border border-surface-light/40 text-text-secondary/80 hover:border-gold/40 hover:text-gold transition-colors disabled:opacity-50"
+          className="font-mono text-label tracking-kicker uppercase px-3 py-1.5 rounded-sm border border-surface-light/40 text-text-secondary/80 hover:border-gold/40 hover:text-gold transition-colors disabled:opacity-50"
         >
           {label("Copy Image", copyStatus)}
         </button>
         <button
           type="button"
           onClick={handleShare}
-          className="font-mono text-[10px] tracking-[0.25em] uppercase px-3 py-1.5 rounded-sm border border-surface-light/40 text-text-secondary/80 hover:border-gold/40 hover:text-gold transition-colors"
+          className="font-mono text-label tracking-kicker uppercase px-3 py-1.5 rounded-sm border border-surface-light/40 text-text-secondary/80 hover:border-gold/40 hover:text-gold transition-colors"
         >
           Share to X
         </button>

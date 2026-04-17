@@ -28,10 +28,10 @@ export default function JungianHome() {
       <div className="px-6 pt-24 pb-12 md:pt-32 md:pb-16">
         <div className="max-w-6xl mx-auto">
           <div className="animate-slide-up">
-            <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
+            <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4">
               Pearson &amp; Marr - Jungian Framework
             </p>
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
+            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-display mb-5">
               Twelve{" "}
               <span className={light ? "text-text-primary" : "text-gold glow-text-subtle animate-flicker"}>
                 Heroic Archetypes
@@ -61,7 +61,7 @@ export default function JungianHome() {
                 <div className="mb-8">
                   <div className="flex items-center gap-4 mb-3">
                     <span
-                      className="font-mono text-[10px] tracking-[0.35em] uppercase"
+                      className="font-mono text-label tracking-kicker uppercase"
                       style={{ color: cluster.color }}
                     >
                       {cluster.label} Cluster
@@ -115,7 +115,7 @@ export default function JungianHome() {
 
                           <div className="flex items-start justify-between mb-2">
                             <span className="sr-only">{a.symbol}</span>
-                            <span className="font-mono text-[7px] tracking-[0.25em] text-muted/70 uppercase ml-auto">
+                            <span className="font-mono text-kicker tracking-kicker text-muted/70 uppercase ml-auto">
                               {cluster.label}
                             </span>
                           </div>
@@ -141,12 +141,12 @@ export default function JungianHome() {
                             {a.name}
                           </h3>
 
-                          <p className="font-mono text-[10px] italic text-text-secondary/80 mb-3 leading-relaxed">
+                          <p className="font-mono text-label italic text-text-secondary/80 mb-3 leading-relaxed">
                             &ldquo;{a.motto}&rdquo;
                           </p>
 
                           <div className="pt-3 border-t border-surface-light/30">
-                            <p className="font-mono text-[8px] tracking-[0.2em] text-muted uppercase mb-1">
+                            <p className="font-mono text-kicker tracking-label text-muted uppercase mb-1">
                               Core Desire
                             </p>
                             <p className="text-xs text-text-secondary leading-snug line-clamp-2">
@@ -165,7 +165,7 @@ export default function JungianHome() {
           <div className="text-center pt-6">
             <Link
               href="/jungian/about"
-              className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-muted uppercase hover:text-gold transition-colors duration-300"
+              className="inline-flex items-center gap-2 font-mono text-kicker tracking-label text-muted uppercase hover:text-gold transition-colors duration-300"
             >
               <span className="w-6 h-px bg-current" />
               The framework behind the twelve

@@ -36,7 +36,7 @@ export default function CrossSystemResonanceInline({
 
   return (
     <div className="flex flex-wrap items-center gap-2 mt-3">
-      <span className="font-mono text-[8px] tracking-[0.35em] uppercase text-muted/70 mr-1">
+      <span className="font-mono text-kicker tracking-kicker uppercase text-muted/70 mr-1">
         Resonates with
       </span>
       {chips.map(({ entry }) => {
@@ -54,7 +54,7 @@ export default function CrossSystemResonanceInline({
             }}
           >
             <span
-              className="font-mono text-[8px] tracking-[0.3em] uppercase"
+              className="font-mono text-kicker tracking-kicker uppercase"
               style={{ color: `${color}${light ? "" : "CC"}` }}
             >
               {systemName}

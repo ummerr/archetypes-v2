@@ -38,13 +38,13 @@ export default function TodayPage() {
       <SectionHeading kicker="Today" as="h1">
         {name}
       </SectionHeading>
-      <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-6" style={{ color: accent }}>
+      <p className="font-mono text-label tracking-kicker uppercase mb-6" style={{ color: accent }}>
         {systemName} · {cluster.theme.split(" — ")[0].replace(/^The\s+/i, "")}
       </p>
 
       <p className="font-serif text-lg italic text-text-secondary/85 mb-8">{entry.note}</p>
       {entry.editorialNote && (
-        <p className="font-serif text-[15px] italic text-text-secondary/75 mb-8">
+        <p className="font-serif text-body italic text-text-secondary/75 mb-8">
           {entry.editorialNote}
         </p>
       )}
@@ -52,7 +52,7 @@ export default function TodayPage() {
       <div className="mb-8">
         <Link
           href={archetypeHref(entry.system, entry.slug)}
-          className="font-mono text-[10px] tracking-[0.3em] uppercase underline underline-offset-4"
+          className="font-mono text-label tracking-kicker uppercase underline underline-offset-4"
           style={{ color: accent }}
         >
           Read {name} →

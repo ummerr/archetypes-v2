@@ -37,7 +37,7 @@ export default function DebatesPage() {
       <SectionHeading kicker="Atlas" as="h1">
         Debates
       </SectionHeading>
-      <p className="font-serif italic text-[17px] leading-[1.7] text-text-secondary/85 mt-4 mb-8 max-w-3xl">
+      <p className="font-serif italic text-body-lg leading-article text-text-secondary/85 mt-4 mb-8 max-w-3xl">
         Not every mapping on this site is settled. Some are editorial bets the canon does not
         obviously support; others are structural choices working practitioners dispute. These are
         the ones worth arguing about — with the case for, the case against, and where this site
@@ -47,7 +47,7 @@ export default function DebatesPage() {
 
       <section className="mb-16">
         <h2 className="font-serif text-xl font-medium mb-1">Where the arguments sit</h2>
-        <p className="font-serif italic text-text-secondary/70 text-[14px] mb-6">
+        <p className="font-serif italic text-text-secondary/70 text-body-sm mb-6">
           Each debate placed by the site's confidence in its stance and how much of the map rides
           on it.
         </p>
@@ -57,7 +57,7 @@ export default function DebatesPage() {
 
       <section className="mb-16">
         <h2 className="font-serif text-xl font-medium mb-2">Structural meta-debates</h2>
-        <p className="font-serif italic text-text-secondary/70 text-[14px] mb-5">
+        <p className="font-serif italic text-text-secondary/70 text-body-sm mb-5">
           Arguments about the shape of the map itself, not individual mappings.
         </p>
         <ul className="space-y-3">
@@ -71,16 +71,16 @@ export default function DebatesPage() {
 
       <section className="mb-16">
         <h2 className="font-serif text-xl font-medium mb-2">What the map does not resolve</h2>
-        <p className="font-serif italic text-text-secondary/70 text-[14px] mb-5">
+        <p className="font-serif italic text-text-secondary/70 text-body-sm mb-5">
           Open questions the site carries without deciding — surfaced so readers can weigh them.
         </p>
         <ol className="space-y-4 max-w-3xl list-none">
           {OPEN_QUESTIONS.map((q, i) => (
             <li
               key={i}
-              className="grid grid-cols-[2.5rem_1fr] gap-4 items-baseline font-serif text-[15px] italic text-text-secondary/85 leading-relaxed"
+              className="grid grid-cols-[2.5rem_1fr] gap-4 items-baseline font-serif text-body italic text-text-secondary/85 leading-relaxed"
             >
-              <span className="font-mono not-italic text-[10px] tracking-[0.25em] text-muted/70 pt-1">
+              <span className="font-mono not-italic text-label tracking-kicker text-muted/70 pt-1">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span>{q}</span>
@@ -92,7 +92,7 @@ export default function DebatesPage() {
       {contested.length > 0 && (
         <section>
           <h2 className="font-serif text-xl font-medium mb-2">Contested mappings</h2>
-          <p className="font-serif italic text-text-secondary/70 text-[14px] mb-5">
+          <p className="font-serif italic text-text-secondary/70 text-body-sm mb-5">
             Individual placements flagged as contested in the resonance data.
           </p>
           <ul className="space-y-3">
@@ -111,7 +111,7 @@ export default function DebatesPage() {
                       style={{ background: accent }}
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-amber-500/90 mb-1">
+                      <p className="font-mono text-label tracking-kicker uppercase text-amber-500/90 mb-1">
                         {cluster.theme.split(" — ")[0].replace(/^The\s+/i, "")}
                       </p>
                       <p className="font-serif text-lg">
@@ -124,7 +124,7 @@ export default function DebatesPage() {
               );
             })}
           </ul>
-          <p className="mt-4 font-mono text-[10px] tracking-[0.25em] uppercase text-muted/70">
+          <p className="mt-4 font-mono text-label tracking-kicker uppercase text-muted/70">
             Tier meaning:{" "}
             {(["canonical", "strong", "moderate", "speculative", "contested"] as const)
               .map((t) => confidenceLabel(t).toLowerCase())
@@ -144,7 +144,7 @@ function MetaDebateCard({ debate }: { debate: MetaDebate }) {
     >
       <div className="min-w-0">
         <p className="font-serif text-lg mb-2 leading-snug">{debate.heading}</p>
-        <p className="font-serif italic text-[14px] leading-[1.6] text-text-secondary/75">
+        <p className="font-serif italic text-body-sm leading-relaxed text-text-secondary/75">
           {debate.stance}
         </p>
       </div>
@@ -160,7 +160,7 @@ function MetaDebateCard({ debate }: { debate: MetaDebate }) {
 function ConfidenceMeter({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col gap-1 md:items-end">
-      <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted/70">
+      <span className="font-mono text-kicker tracking-kicker uppercase text-muted/70">
         {label}
       </span>
       <div className="flex gap-1" aria-label={label}>
@@ -182,7 +182,7 @@ function ImpactChip({ impact }: { impact: MetaDebate["impact"] }) {
   const structural = impact === "structural";
   return (
     <span
-      className="inline-flex items-center font-mono text-[9px] tracking-[0.25em] uppercase px-1.5 py-0.5 rounded-sm"
+      className="inline-flex items-center font-mono text-kicker tracking-kicker uppercase px-1.5 py-0.5 rounded-sm"
       style={{
         color: structural ? "var(--gold, #c9a961)" : "rgba(var(--text-secondary-rgb, 200 200 200) / 0.8)",
         border: `1px solid ${structural ? "rgba(201, 169, 97, 0.45)" : "rgba(255,255,255,0.18)"}`,
@@ -203,7 +203,7 @@ function StatusDot({ status }: { status: MetaDebate["status"] }) {
         className="w-2 h-2 rounded-full"
         style={{ background: color, boxShadow: `0 0 0 3px ${color}1f` }}
       />
-      <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/75">
+      <span className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/75">
         {STATUS_LABEL[status]}
       </span>
     </span>
@@ -220,7 +220,7 @@ function DebateMatrix({ debates }: { debates: MetaDebate[] }) {
         {cols.map((c) => (
           <div
             key={c}
-            className="font-mono text-[9px] tracking-[0.3em] uppercase text-muted/70 text-center pb-3"
+            className="font-mono text-kicker tracking-kicker uppercase text-muted/70 text-center pb-3"
           >
             {IMPACT_LABEL[c]} impact
           </div>
@@ -228,7 +228,7 @@ function DebateMatrix({ debates }: { debates: MetaDebate[] }) {
         {rows.map((r, ri) => (
           <Fragment key={r}>
             <div
-              className="font-mono text-[9px] tracking-[0.3em] uppercase text-muted/70 pr-4 flex items-center justify-end"
+              className="font-mono text-kicker tracking-kicker uppercase text-muted/70 pr-4 flex items-center justify-end"
             >
               {r === "high" ? "High conf." : r === "moderate" ? "Mod." : "Low conf."}
             </div>
@@ -254,7 +254,7 @@ function DebateMatrix({ debates }: { debates: MetaDebate[] }) {
                         className="w-1.5 h-1.5 rounded-full shrink-0"
                         style={{ background: STATUS_COLOR[d.status] }}
                       />
-                      <span className="font-serif italic text-[13px] leading-snug text-text-secondary/85 group-hover:text-gold transition-colors truncate">
+                      <span className="font-serif italic text-xs leading-snug text-text-secondary/85 group-hover:text-gold transition-colors truncate">
                         {shortTitle(d.slug)}
                       </span>
                     </Link>
@@ -284,7 +284,7 @@ function StatusLegend() {
             className="w-1.5 h-1.5 rounded-full"
             style={{ background: STATUS_COLOR[s] }}
           />
-          <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted/70">
+          <span className="font-mono text-kicker tracking-kicker uppercase text-muted/70">
             {STATUS_LABEL[s]}
           </span>
         </span>

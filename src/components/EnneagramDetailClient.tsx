@@ -68,28 +68,28 @@ export default function EnneagramDetailClient({
         >
           <Link
             href="/enneagram"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
+            className="font-mono text-kicker tracking-kicker text-muted uppercase hover:text-gold transition-colors"
           >
             Enneagram
           </Link>
-          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <span className="text-muted/40 font-mono text-label">/</span>
           <span
-            className="font-mono text-[9px] tracking-[0.25em] uppercase"
+            className="font-mono text-kicker tracking-kicker uppercase"
             style={{ color: triad.color }}
           >
             {triad.label} Triad
           </span>
-          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <span className="text-muted/40 font-mono text-label">/</span>
           <span
             aria-current="page"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase"
+            className="font-mono text-kicker tracking-kicker text-muted uppercase"
           >
             Type {archetype.number}
           </span>
-          <span className="text-muted/40 font-mono text-[10px] ml-1">·</span>
+          <span className="text-muted/40 font-mono text-label ml-1">·</span>
           <Link
             href="/enneagram/about"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted/80 uppercase hover:text-gold transition-colors"
+            className="font-mono text-kicker tracking-kicker text-muted/80 uppercase hover:text-gold transition-colors"
           >
             About
           </Link>
@@ -110,13 +110,13 @@ export default function EnneagramDetailClient({
             </div>
             <div className="flex-1 pt-1">
               <p
-                className="font-mono text-[10px] tracking-[0.35em] uppercase mb-2"
+                className="font-mono text-label tracking-kicker uppercase mb-2"
                 style={{ color: color + "CC" }}
               >
                 {triad.label} Triad · {triad.dominantEmotion}
               </p>
               <h1
-                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-[1.05]"
+                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-display"
                 style={{
                   color,
                   textShadow: !light ? `0 0 24px ${color}30` : "none",
@@ -125,7 +125,7 @@ export default function EnneagramDetailClient({
                 {archetype.name}
               </h1>
               <p
-                className="font-mono text-[11px] tracking-[0.3em] uppercase mt-2"
+                className="font-mono text-label tracking-kicker uppercase mt-2"
                 style={{ color: color + "AA" }}
               >
                 Type {archetype.number}
@@ -145,7 +145,7 @@ export default function EnneagramDetailClient({
             <div className="mt-5">
               <Link
                 href={`/jungian/archetype/${archetype.jungianSlug}`}
-                className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.25em] uppercase text-muted hover:text-gold transition-colors"
+                className="inline-flex items-center gap-2 font-mono text-kicker tracking-kicker uppercase text-muted hover:text-gold transition-colors"
               >
                 <span className="w-4 h-px bg-current" />
                 Jungian correlation: {archetype.jungianCorrelation}
@@ -169,7 +169,7 @@ export default function EnneagramDetailClient({
               }}
             >
               <p
-                className="font-mono text-[9px] tracking-[0.3em] uppercase mb-2"
+                className="font-mono text-kicker tracking-kicker uppercase mb-2"
                 style={{ color: color + "CC" }}
               >
                 {f.label}
@@ -187,7 +187,7 @@ export default function EnneagramDetailClient({
         {/* State toggle + arrows */}
         <div className="mb-16 animate-slide-up delay-300">
           <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+            <span className="font-mono text-label tracking-kicker text-gold/80 uppercase">
               Movement
             </span>
             <div
@@ -217,7 +217,7 @@ export default function EnneagramDetailClient({
                 <button
                   key={opt.id}
                   onClick={() => setState(opt.id)}
-                  className="px-4 py-2 font-mono text-[10px] tracking-[0.25em] uppercase transition-all duration-300 rounded-sm"
+                  className="px-4 py-2 font-mono text-label tracking-kicker uppercase transition-all duration-300 rounded-sm"
                   style={{
                     color: isActive ? "#FFFFFF" : "var(--color-muted)",
                     background: isActive ? opt.c : "transparent",
@@ -242,7 +242,7 @@ export default function EnneagramDetailClient({
               {/* Current */}
               <div className="flex flex-col items-start">
                 <span
-                  className="font-mono text-[8px] tracking-[0.3em] uppercase mb-1"
+                  className="font-mono text-kicker tracking-kicker uppercase mb-1"
                   style={{ color: color + "AA" }}
                 >
                   You Are
@@ -258,7 +258,7 @@ export default function EnneagramDetailClient({
               {/* Arrow */}
               <div className="flex flex-col items-center flex-1 min-w-[120px]">
                 <span
-                  className="font-mono text-[8px] tracking-[0.3em] uppercase mb-1"
+                  className="font-mono text-kicker tracking-kicker uppercase mb-1"
                   style={{ color: activeColor }}
                 >
                   {state === "thriving" ? "Integration" : "Disintegration"}
@@ -291,7 +291,7 @@ export default function EnneagramDetailClient({
                 className="flex flex-col items-end group"
               >
                 <span
-                  className="font-mono text-[8px] tracking-[0.3em] uppercase mb-1"
+                  className="font-mono text-kicker tracking-kicker uppercase mb-1"
                   style={{ color: activeTarget.accentColor + "AA" }}
                 >
                   Move Toward
@@ -314,7 +314,7 @@ export default function EnneagramDetailClient({
         {/* Characteristics */}
         <div className="mb-16 animate-slide-up delay-400">
           <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+            <span className="font-mono text-label tracking-kicker text-gold/80 uppercase">
               Key Characteristics
             </span>
             <div
@@ -366,7 +366,7 @@ export default function EnneagramDetailClient({
         {/* Triad siblings */}
         <div className="animate-slide-up delay-500">
           <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-muted uppercase">
+            <span className="font-mono text-label tracking-kicker text-muted uppercase">
               Other {triad.label} Types
             </span>
             <div
@@ -402,7 +402,7 @@ export default function EnneagramDetailClient({
                     >
                       {s.name}
                     </p>
-                    <p className="font-mono text-[9px] italic text-muted mt-0.5">
+                    <p className="font-mono text-kicker italic text-muted mt-0.5">
                       &ldquo;{s.motto}&rdquo;
                     </p>
                   </div>

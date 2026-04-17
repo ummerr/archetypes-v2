@@ -15,10 +15,10 @@ export default function EnneagramAbout() {
   return (
     <div className="min-h-screen px-6 pt-24 pb-20 md:pt-32">
       <div className="max-w-3xl mx-auto">
-        <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4 animate-slide-up">
+        <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4 animate-slide-up">
           About the System
         </p>
-        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-text-primary tracking-tight leading-[1.05] mb-10 animate-slide-up">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-text-primary tracking-tight leading-display mb-10 animate-slide-up">
           The Motor Beneath{" "}
           <span className="text-gold glow-text-subtle">the Mask</span>
         </h1>
@@ -63,10 +63,10 @@ export default function EnneagramAbout() {
                     >
                       {c.label}
                     </h3>
-                    <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">
+                    <span className="font-mono text-label tracking-label text-muted uppercase">
                       {c.tagline} · Types {c.numbers.join(", ")}
                     </span>
-                    <span className="font-mono text-[10px] tracking-[0.2em] uppercase ml-auto" style={{ color: c.color + "CC" }}>
+                    <span className="font-mono text-label tracking-label uppercase ml-auto" style={{ color: c.color + "CC" }}>
                       {c.dominantEmotion}
                     </span>
                   </div>
@@ -110,7 +110,7 @@ export default function EnneagramAbout() {
         <div className="mt-16 text-center animate-slide-up delay-500">
           <Link
             href="/enneagram"
-            className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-muted uppercase hover:text-gold transition-colors duration-300"
+            className="inline-flex items-center gap-2 font-mono text-kicker tracking-label text-muted uppercase hover:text-gold transition-colors duration-300"
           >
             <span className="w-6 h-px bg-current" />
             Back to the nine

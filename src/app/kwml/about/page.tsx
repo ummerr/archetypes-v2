@@ -20,7 +20,7 @@ export default function AboutPage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full blur-[150px] bg-gold/[0.04]" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-surface-light to-transparent" />
         <div className="relative max-w-2xl mx-auto">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-muted mb-4">
+          <p className="text-label uppercase tracking-kicker text-muted mb-4">
             Framework
           </p>
           <h1 className="font-serif text-5xl md:text-6xl font-medium text-gold tracking-tight mb-6">

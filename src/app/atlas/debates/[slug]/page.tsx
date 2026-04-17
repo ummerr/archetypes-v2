@@ -81,12 +81,12 @@ export default async function DebatePage({
     <div className="max-w-3xl mx-auto px-6 md:px-10 py-20">
       <Link
         href="/atlas/debates"
-        className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted/80 hover:text-gold"
+        className="font-mono text-label tracking-kicker uppercase text-muted/80 hover:text-gold"
       >
         ← Debates
       </Link>
       <div className="mt-6 flex items-center gap-3 flex-wrap">
-        <p className="font-mono text-[10px] tracking-[0.3em] uppercase" style={{ color: accent }}>
+        <p className="font-mono text-label tracking-kicker uppercase" style={{ color: accent }}>
           {systemName}
         </p>
         <ConfidenceBadge tier={entry.confidence} color={accent} />
@@ -108,12 +108,12 @@ export default async function DebatePage({
         <h2 className="font-serif text-xl font-medium mb-2">The case for</h2>
         <p className="leading-relaxed text-text-secondary/90">{entry.note}</p>
         {entry.primarySourceCitation && (
-          <p className="mt-2 font-mono text-[11px] italic text-text-secondary/70">
+          <p className="mt-2 font-mono text-label italic text-text-secondary/70">
             src · {entry.primarySourceCitation}
           </p>
         )}
         {entry.scholarlyCitation && (
-          <p className="font-mono text-[11px] italic text-text-secondary/70">
+          <p className="font-mono text-label italic text-text-secondary/70">
             lit · {entry.scholarlyCitation}
           </p>
         )}
@@ -133,7 +133,7 @@ export default async function DebatePage({
         </section>
       )}
 
-      <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-muted/70">
+      <p className="font-mono text-label tracking-kicker uppercase text-muted/70">
         <Link href="/about/methodology" className="underline underline-offset-2 hover:text-gold">
           What does "contested" mean?
         </Link>
@@ -147,7 +147,7 @@ function MetaDebateView({ debate }: { debate: ReturnType<typeof getMetaDebate> &
     <div className="max-w-3xl mx-auto px-6 md:px-10 py-20">
       <Link
         href="/atlas/debates"
-        className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted/80 hover:text-gold"
+        className="font-mono text-label tracking-kicker uppercase text-muted/80 hover:text-gold"
       >
         ← Debates
       </Link>
@@ -159,7 +159,7 @@ function MetaDebateView({ debate }: { debate: ReturnType<typeof getMetaDebate> &
 
       <dl className="mt-6 mb-10 grid grid-cols-1 sm:grid-cols-3 gap-4 border-y border-surface-light/40 py-4">
         <div>
-          <dt className="font-mono text-[9px] tracking-[0.3em] uppercase text-muted/70 mb-1.5">
+          <dt className="font-mono text-kicker tracking-kicker uppercase text-muted/70 mb-1.5">
             Site confidence
           </dt>
           <dd className="flex items-center gap-2">
@@ -175,22 +175,22 @@ function MetaDebateView({ debate }: { debate: ReturnType<typeof getMetaDebate> &
                 );
               })}
             </div>
-            <span className="font-serif italic text-[13px] text-text-secondary/85">
+            <span className="font-serif italic text-xs text-text-secondary/85">
               {CONFIDENCE_LABEL[debate.confidence]}
             </span>
           </dd>
         </div>
         <div>
-          <dt className="font-mono text-[9px] tracking-[0.3em] uppercase text-muted/70 mb-1.5">
+          <dt className="font-mono text-kicker tracking-kicker uppercase text-muted/70 mb-1.5">
             Impact on map
           </dt>
-          <dd className="font-serif italic text-[13px] text-text-secondary/85">
+          <dd className="font-serif italic text-xs text-text-secondary/85">
             {IMPACT_LABEL[debate.impact]}
             {debate.impact === "structural" ? " — shapes the frame" : " — local to one system"}
           </dd>
         </div>
         <div>
-          <dt className="font-mono text-[9px] tracking-[0.3em] uppercase text-muted/70 mb-1.5">
+          <dt className="font-mono text-kicker tracking-kicker uppercase text-muted/70 mb-1.5">
             Status
           </dt>
           <dd className="inline-flex items-center gap-2">
@@ -202,7 +202,7 @@ function MetaDebateView({ debate }: { debate: ReturnType<typeof getMetaDebate> &
                 boxShadow: `0 0 0 3px ${STATUS_COLOR[debate.status]}1f`,
               }}
             />
-            <span className="font-serif italic text-[13px] text-text-secondary/85">
+            <span className="font-serif italic text-xs text-text-secondary/85">
               {STATUS_LABEL[debate.status]}
             </span>
           </dd>
@@ -213,7 +213,7 @@ function MetaDebateView({ debate }: { debate: ReturnType<typeof getMetaDebate> &
         <h2 className="font-serif text-xl font-medium mb-2">The case for</h2>
         <p className="leading-relaxed text-text-secondary/90">{debate.caseFor}</p>
         {debate.citationsFor && (
-          <ul className="mt-2 space-y-1 font-mono text-[11px] italic text-text-secondary/70">
+          <ul className="mt-2 space-y-1 font-mono text-label italic text-text-secondary/70">
             {debate.citationsFor.map((c) => {
               const text = typeof c === "string" ? c : c.text;
               const href = typeof c === "string" ? undefined : c.href;
@@ -243,7 +243,7 @@ function MetaDebateView({ debate }: { debate: ReturnType<typeof getMetaDebate> &
         <h2 className="font-serif text-xl font-medium mb-2">The case against</h2>
         <p className="leading-relaxed text-text-secondary/90">{debate.caseAgainst}</p>
         {debate.citationsAgainst && (
-          <ul className="mt-2 space-y-1 font-mono text-[11px] italic text-text-secondary/70">
+          <ul className="mt-2 space-y-1 font-mono text-label italic text-text-secondary/70">
             {debate.citationsAgainst.map((c) => {
               const text = typeof c === "string" ? c : c.text;
               const href = typeof c === "string" ? undefined : c.href;

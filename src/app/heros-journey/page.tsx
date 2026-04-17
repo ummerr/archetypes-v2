@@ -29,10 +29,10 @@ export default function HerosJourneyHome() {
       <div className="px-6 pt-24 pb-10 md:pt-32 md:pb-12">
         <div className="max-w-6xl mx-auto">
           <div className="animate-slide-up">
-            <p className="font-mono text-[9px] tracking-[0.4em] text-gold/80 uppercase mb-4">
+            <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4">
               Campbell &amp; Vogler - The Monomyth
             </p>
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-[1.05] mb-5">
+            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-display mb-5">
               The{" "}
               <span
                 className={
@@ -57,7 +57,7 @@ export default function HerosJourneyHome() {
       <div className="px-6 pb-6 animate-slide-up" style={{ animationDelay: "200ms" }}>
         <div className="max-w-6xl mx-auto">
           <HeroJourneyWheel />
-          <p className="text-center font-mono text-[9px] tracking-[0.25em] text-muted uppercase mt-2">
+          <p className="text-center font-mono text-kicker tracking-kicker text-muted uppercase mt-2">
             Tap or hover a numbered stage → the masks that act there light up · tap or hover a mask → the stages it appears in · tap a selected mask again to open it
           </p>
         </div>
@@ -76,7 +76,7 @@ export default function HerosJourneyHome() {
               }}
             >
               <p
-                className="font-mono text-[10px] tracking-[0.3em] uppercase mb-2"
+                className="font-mono text-label tracking-kicker uppercase mb-2"
                 style={{ color: act.color }}
               >
                 {act.label}
@@ -99,7 +99,7 @@ export default function HerosJourneyHome() {
       <div className="px-6 pb-24">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-4 mb-6">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+            <span className="font-mono text-label tracking-kicker text-gold/80 uppercase">
               Eight Masks
             </span>
             <div
@@ -144,7 +144,7 @@ export default function HerosJourneyHome() {
 
                     <div className="flex items-start justify-between mb-2">
                       <span className="sr-only">{a.symbol}</span>
-                      <span className="font-mono text-[7px] tracking-[0.25em] text-muted/70 uppercase ml-auto">
+                      <span className="font-mono text-kicker tracking-kicker text-muted/70 uppercase ml-auto">
                         {a.role.replace("-", " ")}
                       </span>
                     </div>
@@ -170,12 +170,12 @@ export default function HerosJourneyHome() {
                       {a.name}
                     </h3>
 
-                    <p className="font-mono text-[10px] italic text-text-secondary/80 mb-3 leading-relaxed line-clamp-2">
+                    <p className="font-mono text-label italic text-text-secondary/80 mb-3 leading-relaxed line-clamp-2">
                       &ldquo;{a.motto}&rdquo;
                     </p>
 
                     <div className="pt-3 border-t border-surface-light/30">
-                      <p className="font-mono text-[8px] tracking-[0.2em] text-muted uppercase mb-1">
+                      <p className="font-mono text-kicker tracking-label text-muted uppercase mb-1">
                         Core Desire
                       </p>
                       <p className="text-xs text-text-secondary leading-snug line-clamp-2">
@@ -191,7 +191,7 @@ export default function HerosJourneyHome() {
           <div className="text-center pt-12">
             <Link
               href="/heros-journey/about"
-              className="inline-flex items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-muted uppercase hover:text-gold transition-colors duration-300"
+              className="inline-flex items-center gap-2 font-mono text-kicker tracking-label text-muted uppercase hover:text-gold transition-colors duration-300"
             >
               <span className="w-6 h-px bg-current" />
               Campbell, Vogler, and the critiques

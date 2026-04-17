@@ -20,7 +20,7 @@ function MiniCard({ archetype, side, light }: { archetype: Archetype; side: "fro
         background: `linear-gradient(135deg, ${archetype.accentColor}${light ? "0A" : "06"} 0%, transparent 60%)`,
       }}
     >
-      <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-2">
+      <p className="text-label uppercase tracking-label text-muted mb-2">
         {side === "from" ? "Boy Psychology" : "Man Psychology"}
       </p>
       <h4
@@ -91,7 +91,7 @@ export default function EvolutionArrow({ from, to }: Props) {
             />
           </svg>
         </motion.div>
-        <span className="text-[9px] uppercase tracking-[0.15em] text-muted">
+        <span className="text-kicker uppercase tracking-label text-muted">
           Initiation
         </span>
       </div>

@@ -24,10 +24,10 @@ export default function CounterCanonLinks({ parent, className = "" }: Props) {
     <aside
       className={`mt-12 mb-4 rounded-sm border border-gold/20 bg-gold/[0.03] p-5 md:p-6 ${className}`}
     >
-      <p className="font-mono text-[10px] tracking-[0.35em] uppercase text-gold/80 mb-3">
+      <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-3">
         Counter-canon
       </p>
-      <p className="font-serif text-[15px] leading-relaxed text-text-secondary/90 italic mb-4 max-w-2xl">
+      <p className="font-serif text-body leading-relaxed text-text-secondary/90 italic mb-4 max-w-2xl">
         {INTRO[parent]}
       </p>
       <ul className="space-y-1.5 mb-4">
@@ -40,7 +40,7 @@ export default function CounterCanonLinks({ parent, className = "" }: Props) {
       </ul>
       <Link
         href="/about/counter-canon"
-        className="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-gold hover:text-gold/80 underline underline-offset-4 decoration-1"
+        className="inline-block font-mono text-label tracking-kicker uppercase text-gold hover:text-gold/80 underline underline-offset-4 decoration-1"
       >
         Read the counter-canon →
       </Link>

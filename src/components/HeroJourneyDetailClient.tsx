@@ -51,22 +51,22 @@ export default function HeroJourneyDetailClient({
         >
           <Link
             href="/heros-journey"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
+            className="font-mono text-kicker tracking-kicker text-muted uppercase hover:text-gold transition-colors"
           >
             Hero&rsquo;s Journey
           </Link>
-          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <span className="text-muted/40 font-mono text-label">/</span>
           <span
             aria-current="page"
-            className="font-mono text-[9px] tracking-[0.25em] uppercase"
+            className="font-mono text-kicker tracking-kicker uppercase"
             style={{ color }}
           >
             {archetype.role.replace("-", " ")}
           </span>
-          <span className="text-muted/40 font-mono text-[10px] ml-1">·</span>
+          <span className="text-muted/40 font-mono text-label ml-1">·</span>
           <Link
             href="/heros-journey/about"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted/80 uppercase hover:text-gold transition-colors"
+            className="font-mono text-kicker tracking-kicker text-muted/80 uppercase hover:text-gold transition-colors"
           >
             About
           </Link>
@@ -87,13 +87,13 @@ export default function HeroJourneyDetailClient({
             </div>
             <div className="flex-1 pt-1">
               <p
-                className="font-mono text-[10px] tracking-[0.35em] uppercase mb-2"
+                className="font-mono text-label tracking-kicker uppercase mb-2"
                 style={{ color: color + "CC" }}
               >
                 Campbell &amp; Vogler · Mask of the Monomyth
               </p>
               <h1
-                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-[1.05]"
+                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-display"
                 style={{
                   color,
                   textShadow: !light ? `0 0 24px ${color}30` : "none",
@@ -127,7 +127,7 @@ export default function HeroJourneyDetailClient({
               }}
             >
               <p
-                className="font-mono text-[9px] tracking-[0.3em] uppercase mb-2"
+                className="font-mono text-kicker tracking-kicker uppercase mb-2"
                 style={{ color: color + "CC" }}
               >
                 {f.label}
@@ -142,7 +142,7 @@ export default function HeroJourneyDetailClient({
         {/* Characteristics */}
         <div className="mb-16 animate-slide-up delay-300">
           <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+            <span className="font-mono text-label tracking-kicker text-gold/80 uppercase">
               Key Characteristics
             </span>
             <div
@@ -170,7 +170,7 @@ export default function HeroJourneyDetailClient({
         {/* Primary Stages */}
         <div className="mb-16 animate-slide-up delay-300">
           <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-gold/80 uppercase">
+            <span className="font-mono text-label tracking-kicker text-gold/80 uppercase">
               Where This Mask Acts
             </span>
             <div
@@ -192,7 +192,7 @@ export default function HeroJourneyDetailClient({
               >
                 <div className="flex items-baseline gap-3 mb-1">
                   <span
-                    className="font-mono text-[10px] tracking-[0.25em]"
+                    className="font-mono text-label tracking-kicker"
                     style={{ color: color + "CC" }}
                   >
                     Stage {s.number}
@@ -222,7 +222,7 @@ export default function HeroJourneyDetailClient({
             }}
           >
             <p
-              className="font-mono text-[9px] tracking-[0.3em] uppercase mb-2 text-muted"
+              className="font-mono text-kicker tracking-kicker uppercase mb-2 text-muted"
             >
               Shadow Pole - the inverted mask
             </p>
@@ -258,7 +258,7 @@ export default function HeroJourneyDetailClient({
         {/* Siblings */}
         <div className="animate-slide-up delay-500">
           <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-muted uppercase">
+            <span className="font-mono text-label tracking-kicker text-muted uppercase">
               Other Masks on the Journey
             </span>
             <div
@@ -297,7 +297,7 @@ export default function HeroJourneyDetailClient({
                     >
                       {s.name}
                     </p>
-                    <p className="font-mono text-[9px] italic text-muted mt-0.5 line-clamp-1">
+                    <p className="font-mono text-kicker italic text-muted mt-0.5 line-clamp-1">
                       &ldquo;{s.motto.split(",")[0]}&rdquo;
                     </p>
                   </div>

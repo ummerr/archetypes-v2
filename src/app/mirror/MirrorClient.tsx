@@ -157,11 +157,11 @@ export default function MirrorClient() {
   return (
     <div>
       <form onSubmit={run} className="mb-10">
-        <label className="block font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-3">
+        <label className="block font-mono text-label tracking-kicker uppercase text-gold/80 mb-3">
           What are you navigating?
         </label>
         {reframeIndex >= 0 && (
-          <p className="font-serif italic text-[14px] text-text-secondary/80 mb-2">
+          <p className="font-serif italic text-body-sm text-text-secondary/80 mb-2">
             {REFRAME_PROMPTS[reframeIndex]}
           </p>
         )}
@@ -169,12 +169,12 @@ export default function MirrorClient() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={5}
-          className="w-full bg-transparent border border-surface-light/40 rounded-sm p-4 font-serif text-[15px] leading-relaxed focus:outline-none focus:border-gold/50"
+          className="w-full bg-transparent border border-surface-light/40 rounded-sm p-4 font-serif text-body leading-relaxed focus:outline-none focus:border-gold/50"
           placeholder="Describe the situation, relationship, or inner movement you want to reflect on."
         />
         <button
           type="submit"
-          className="mt-4 font-mono text-[10px] tracking-[0.3em] uppercase border border-gold/40 px-5 py-2 rounded-sm hover:border-gold hover:text-gold"
+          className="mt-4 font-mono text-label tracking-kicker uppercase border border-gold/40 px-5 py-2 rounded-sm hover:border-gold hover:text-gold"
         >
           Reflect →
         </button>
@@ -190,7 +190,7 @@ export default function MirrorClient() {
         <section className="mb-12">
           <h2 className="font-serif text-xl font-medium mb-2">Three clusters your language touched</h2>
           <HermeneuticCaveat variant="inline" className="mb-6" />
-          <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-secondary/60 mb-4">
+          <p className="font-mono text-label tracking-kicker uppercase text-text-secondary/60 mb-4">
             {totalMatched} archetype{totalMatched === 1 ? "" : "s"} surfaced · grouped by cluster
           </p>
           <ul className="space-y-6">
@@ -208,16 +208,16 @@ export default function MirrorClient() {
                     >
                       {cluster.theme}
                     </Link>
-                    <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/60">
+                    <span className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/60">
                       resonance {score}
                     </span>
                   </div>
                   {ax && (
-                    <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/55 mb-2">
+                    <p className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/55 mb-2">
                       {STAGE_LABELS[ax.stage]} · {AFFECT_LABELS[ax.affect]} · {STANCE_LABELS[ax.stance]}
                     </p>
                   )}
-                  <p className="font-mono text-[10px] text-text-secondary/70 mb-4">
+                  <p className="font-mono text-label text-text-secondary/70 mb-4">
                     matched: <span className="italic">{Array.from(matchedTokens).join(", ")}</span>
                   </p>
                   <ul className="space-y-3">
@@ -230,7 +230,7 @@ export default function MirrorClient() {
                           className="rounded-sm border border-surface-light/30 p-3"
                         >
                           <p
-                            className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                            className="font-mono text-kicker tracking-kicker uppercase"
                             style={{ color: accent }}
                           >
                             {systemName}
@@ -243,7 +243,7 @@ export default function MirrorClient() {
                             {name}
                           </Link>
                           <p className="text-sm text-text-primary/85 mt-1">{entry.note}</p>
-                          <p className="font-mono text-[9px] text-text-secondary/55 mt-2">
+                          <p className="font-mono text-kicker text-text-secondary/55 mt-2">
                             matched: <span className="italic">{matched.join(", ")}</span>
                           </p>
                         </li>
@@ -260,7 +260,7 @@ export default function MirrorClient() {
       {shadow.length > 0 && (
         <section className="mb-12">
           <h2 className="font-serif text-xl font-medium mb-2">What you didn't name</h2>
-          <p className="italic text-text-secondary/80 mb-5 font-serif text-[15px]">
+          <p className="italic text-text-secondary/80 mb-5 font-serif text-body">
             The language above leans toward certain developmental stages, affects, and stances. These
             clusters sit on the axes your description didn't touch — a different angle on the same
             situation might meet them.
@@ -275,12 +275,12 @@ export default function MirrorClient() {
                 >
                   <Link
                     href={`/atlas/cluster/${cluster.id}`}
-                    className="font-serif text-[15px] font-medium hover:underline underline-offset-4 decoration-1 block"
+                    className="font-serif text-body font-medium hover:underline underline-offset-4 decoration-1 block"
                   >
                     {cluster.theme}
                   </Link>
                   {ax && (
-                    <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/55 mt-1">
+                    <p className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/55 mt-1">
                       {STAGE_LABELS[ax.stage]} · {AFFECT_LABELS[ax.affect]} · {STANCE_LABELS[ax.stance]}
                     </p>
                   )}
@@ -299,11 +299,11 @@ export default function MirrorClient() {
           <button
             type="button"
             onClick={reframe}
-            className="font-mono text-[10px] tracking-[0.3em] uppercase border border-surface-light/40 px-4 py-2 rounded-sm hover:border-gold hover:text-gold"
+            className="font-mono text-label tracking-kicker uppercase border border-surface-light/40 px-4 py-2 rounded-sm hover:border-gold hover:text-gold"
           >
             Try another framing →
           </button>
-          <p className="font-serif italic text-[13px] text-text-secondary/60 mt-3 max-w-prose">
+          <p className="font-serif italic text-xs text-text-secondary/60 mt-3 max-w-prose">
             No single description is final. Reframing the same situation usually surfaces different
             vocabulary.
           </p>

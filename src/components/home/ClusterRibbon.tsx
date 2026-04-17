@@ -28,7 +28,7 @@ export default function ClusterRibbon({ focusCluster, focusSystem, onHoverCluste
   return (
     <div className="max-w-6xl mx-auto px-5 sm:px-6 mb-8 md:mb-10">
       <div className="flex items-center gap-3 mb-3">
-        <span className="font-mono text-[9px] tracking-[0.35em] text-gold/80 uppercase">
+        <span className="font-mono text-kicker tracking-kicker text-gold/80 uppercase">
           Shared Currents
         </span>
         <div className="h-px flex-1 bg-gold/15" />
@@ -56,7 +56,7 @@ export default function ClusterRibbon({ focusCluster, focusSystem, onHoverCluste
                   e.stopPropagation();
                   onHoverCluster(isFocus ? null : c.id);
                 }}
-                className="shrink-0 snap-start font-serif text-[15px] italic tracking-tight px-3.5 py-1.5 rounded-full border transition-all duration-300 whitespace-nowrap"
+                className="shrink-0 snap-start font-serif text-body italic tracking-tight px-3.5 py-1.5 rounded-full border transition-all duration-300 whitespace-nowrap"
                 style={{
                   color: isFocus ? "var(--color-gold)" : "var(--color-text-secondary)",
                   opacity: dim ? 0.4 : 1,

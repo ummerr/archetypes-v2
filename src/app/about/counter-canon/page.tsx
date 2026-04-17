@@ -16,7 +16,7 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function CounterCanonPage() {
   return (
-    <article className="max-w-3xl mx-auto px-6 md:px-10 py-20 font-serif text-[17px] leading-[1.7] text-text-secondary/90">
+    <article className="max-w-3xl mx-auto px-6 md:px-10 py-20 font-serif text-body-lg leading-article text-text-secondary/90">
       <SectionHeading kicker="About" as="h1">
         The Counter-Canon
       </SectionHeading>

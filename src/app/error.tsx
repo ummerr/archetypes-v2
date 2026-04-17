@@ -16,10 +16,10 @@ export default function GlobalError({
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
-      <p className="font-mono text-[9px] tracking-[0.4em] text-crimson-light uppercase mb-6">
+      <p className="font-mono text-kicker tracking-display text-crimson-light uppercase mb-6">
         Something fractured
       </p>
-      <h1 className="font-serif text-4xl md:text-6xl font-medium text-text-primary tracking-tight leading-[1.05] mb-6">
+      <h1 className="font-serif text-4xl md:text-6xl font-medium text-text-primary tracking-tight leading-display mb-6">
         An unexpected shadow crossed the field.
       </h1>
       <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-xl font-light mb-10">
@@ -30,13 +30,13 @@ export default function GlobalError({
         <button
           type="button"
           onClick={reset}
-          className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold border border-gold/30 hover:bg-gold/10 px-4 py-2 rounded-sm transition-colors"
+          className="font-mono text-label tracking-kicker uppercase text-gold border border-gold/30 hover:bg-gold/10 px-4 py-2 rounded-sm transition-colors"
         >
           Try again
         </button>
         <Link
           href="/archetypes"
-          className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted hover:text-text-secondary px-4 py-2 transition-colors"
+          className="font-mono text-label tracking-kicker uppercase text-muted hover:text-text-secondary px-4 py-2 transition-colors"
         >
           Return to the index
         </Link>

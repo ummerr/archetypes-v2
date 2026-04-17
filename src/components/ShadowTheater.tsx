@@ -284,7 +284,7 @@ function ShadowCard({
             </svg>
           )}
           <p
-            className="font-mono text-[9px] uppercase tracking-[0.25em] transition-colors duration-500"
+            className="font-mono text-kicker uppercase tracking-kicker transition-colors duration-500"
             style={{
               color: isPossessed
                 ? poleLightColor
@@ -339,7 +339,7 @@ function ShadowCard({
               }}
             >
               <span
-                className="font-mono text-[8px] mt-1 shrink-0 w-4 text-right transition-colors duration-300"
+                className="font-mono text-kicker mt-1 shrink-0 w-4 text-right transition-colors duration-300"
                 style={{ color: `${poleColor}${isPossessed ? (light ? "CC" : "80") : (light ? "80" : "40")}` }}
               >
                 {String(i + 1).padStart(2, "0")}
@@ -391,7 +391,7 @@ export default function ShadowTheater({
               transition={{ duration: 0.45, ease: [0.19, 1, 0.22, 1] }}
             >
               <p
-                className="font-mono text-[7px] tracking-[0.35em] uppercase mb-2.5"
+                className="font-mono text-kicker tracking-kicker uppercase mb-2.5"
                 style={{
                   color:
                     possessed === "active"
@@ -431,7 +431,7 @@ export default function ShadowTheater({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted/50">
+              <p className="font-mono text-kicker tracking-kicker uppercase text-muted/50">
                 Hover a shadow to hear its voice
               </p>
             </motion.div>
@@ -524,7 +524,7 @@ export default function ShadowTheater({
           </span>
           <div>
             <p
-              className="font-mono text-[9px] uppercase tracking-[0.2em] mb-1.5 transition-colors duration-500"
+              className="font-mono text-kicker uppercase tracking-label mb-1.5 transition-colors duration-500"
               style={{
                 color:
                   possessed === "active"

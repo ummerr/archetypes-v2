@@ -16,7 +16,7 @@ export default function HermeneuticCaveat({ variant = "banner", className = "" }
   const text = COPY[variant];
   if (variant === "footnote") {
     return (
-      <p className={`font-mono text-[10px] tracking-[0.2em] uppercase text-muted/70 ${className}`}>
+      <p className={`font-mono text-label tracking-label uppercase text-muted/70 ${className}`}>
         {text}
       </p>
     );
@@ -28,7 +28,7 @@ export default function HermeneuticCaveat({ variant = "banner", className = "" }
   }
   return (
     <aside
-      className={`border-l-2 border-gold/40 pl-4 py-2 font-serif text-[15px] italic text-text-secondary/85 leading-relaxed max-w-2xl ${className}`}
+      className={`border-l-2 border-gold/40 pl-4 py-2 font-serif text-body italic text-text-secondary/85 leading-relaxed max-w-2xl ${className}`}
     >
       {text}
     </aside>

@@ -23,7 +23,7 @@ export default function ExemplarsIndexPage() {
         three systems is a teaching case for resonance; a person who appears in one is a teaching
         case for a tradition's specific lens.
       </p>
-      <p className="font-serif italic text-text-secondary/70 max-w-3xl mb-10 text-[14px]">
+      <p className="font-serif italic text-text-secondary/70 max-w-3xl mb-10 text-body-sm">
         A small seed set ({records.length} figures, canonicalized by hand). The underlying
         exemplars files are larger and per-system; this view surfaces only figures whose name is
         known to the cross-system registry.

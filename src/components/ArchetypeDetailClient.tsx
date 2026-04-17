@@ -35,7 +35,7 @@ const sectionAnim = {
 
 function SectionIndex({ n }: { n: string }) {
   return (
-    <span className="hidden lg:block absolute -left-12 top-1 font-mono text-[8px] tracking-[0.2em] text-muted/20 select-none">
+    <span className="hidden lg:block absolute -left-12 top-1 font-mono text-kicker tracking-label text-muted/20 select-none">
       {n}
     </span>
   );
@@ -78,28 +78,28 @@ export default function ArchetypeDetailClient({
           >
             <Link
               href="/kwml"
-              className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
+              className="font-mono text-kicker tracking-kicker text-muted uppercase hover:text-gold transition-colors"
             >
               KWML
             </Link>
-            <span className="text-muted/40 font-mono text-[10px]">/</span>
+            <span className="text-muted/40 font-mono text-label">/</span>
             <span
-              className="font-mono text-[9px] tracking-[0.25em] uppercase"
+              className="font-mono text-kicker tracking-kicker uppercase"
               style={{ color: light ? color : `${color}CC` }}
             >
               {family.label}
             </span>
-            <span className="text-muted/40 font-mono text-[10px]">/</span>
+            <span className="text-muted/40 font-mono text-label">/</span>
             <span
               aria-current="page"
-              className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase"
+              className="font-mono text-kicker tracking-kicker text-muted uppercase"
             >
               {archetype.maturity === "boy" ? "Boy" : "Man"}
             </span>
-            <span className="text-muted/40 font-mono text-[10px] ml-1">·</span>
+            <span className="text-muted/40 font-mono text-label ml-1">·</span>
             <Link
               href="/kwml/about"
-              className="font-mono text-[9px] tracking-[0.25em] text-muted/80 uppercase hover:text-gold transition-colors"
+              className="font-mono text-kicker tracking-kicker text-muted/80 uppercase hover:text-gold transition-colors"
             >
               About
             </Link>
@@ -115,7 +115,7 @@ export default function ArchetypeDetailClient({
             >
               {/* Mono family label */}
               <p
-                className="font-mono text-[9px] tracking-[0.4em] uppercase mb-4"
+                className="font-mono text-kicker tracking-display uppercase mb-4"
                 style={{ color: light ? color : `${color}B0` }}
               >
                 {family.label} Family &mdash;{" "}
@@ -126,14 +126,14 @@ export default function ArchetypeDetailClient({
 
               {/* Title */}
               <h1
-                className="font-serif text-5xl md:text-7xl font-medium tracking-tight mb-6 leading-[1.05] glow-text-subtle"
+                className="font-serif text-5xl md:text-7xl font-medium tracking-tight mb-6 leading-display glow-text-subtle"
                 style={{ color }}
               >
                 {archetype.name}
               </h1>
 
               {/* Description */}
-              <p className="text-text-secondary text-base md:text-lg leading-[1.7] max-w-xl mb-6">
+              <p className="text-text-secondary text-base md:text-lg leading-article max-w-xl mb-6">
                 {archetype.description}
               </p>
 
@@ -150,7 +150,7 @@ export default function ArchetypeDetailClient({
                     style={{ background: color }}
                   />
                   <span
-                    className="font-mono text-[8px] tracking-[0.15em] uppercase"
+                    className="font-mono text-kicker tracking-label uppercase"
                     style={{ color: light ? color : `${color}CC` }}
                   >
                     {archetype.name} in Fullness
@@ -159,14 +159,14 @@ export default function ArchetypeDetailClient({
                 {/* Active shadow */}
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-crimson" />
-                  <span className="font-mono text-[8px] tracking-[0.15em] text-crimson-light uppercase">
+                  <span className="font-mono text-kicker tracking-label text-crimson-light uppercase">
                     {archetype.activeShadow.name}
                   </span>
                 </div>
                 {/* Passive shadow */}
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-muted/80" />
-                  <span className="font-mono text-[8px] tracking-[0.15em] text-muted uppercase">
+                  <span className="font-mono text-kicker tracking-label text-muted uppercase">
                     {archetype.passiveShadow.name}
                   </span>
                 </div>
@@ -192,12 +192,12 @@ export default function ArchetypeDetailClient({
               {/* Shadow labels on totem */}
               <div className="absolute bottom-3 left-3 flex items-center gap-1">
                 <div className="w-1.5 h-1.5 rounded-full bg-crimson" />
-                <span className="font-mono text-[7px] tracking-wider text-crimson-light/80 uppercase">
+                <span className="font-mono text-kicker tracking-wider text-crimson-light/80 uppercase">
                   {archetype.activeShadow.name}
                 </span>
               </div>
               <div className="absolute bottom-3 right-3 flex items-center gap-1">
-                <span className="font-mono text-[7px] tracking-wider text-muted/80 uppercase">
+                <span className="font-mono text-kicker tracking-wider text-muted/80 uppercase">
                   {archetype.passiveShadow.name}
                 </span>
                 <div className="w-1.5 h-1.5 rounded-full bg-muted/80" />
@@ -221,7 +221,7 @@ export default function ArchetypeDetailClient({
               }}
             >
               <p
-                className="font-mono text-[9px] tracking-[0.25em] uppercase mb-4"
+                className="font-mono text-kicker tracking-kicker uppercase mb-4"
                 style={{ color: light ? color : `${color}CC` }}
               >
                 Fullness
@@ -233,7 +233,7 @@ export default function ArchetypeDetailClient({
                 {archetype.fullness.title}
               </h2>
               <hr className="retro-hr mb-6" />
-              <p className="text-text-secondary text-base leading-[1.8] max-w-3xl">
+              <p className="text-text-secondary text-base leading-article max-w-3xl">
                 {archetype.fullness.description}
               </p>
             </div>
@@ -249,7 +249,7 @@ export default function ArchetypeDetailClient({
               }}
             >
               <p
-                className="font-mono text-[9px] tracking-[0.25em] uppercase mb-4"
+                className="font-mono text-kicker tracking-kicker uppercase mb-4"
                 style={{ color: light ? color : `${color}CC` }}
               >
                 {archetype.maturity === "boy"
@@ -265,7 +265,7 @@ export default function ArchetypeDetailClient({
                   : "The Boy He Carries Within"}
               </h2>
               <hr className="retro-hr mb-6" />
-              <p className="text-text-secondary text-base leading-[1.8] max-w-3xl mb-8">
+              <p className="text-text-secondary text-base leading-article max-w-3xl mb-8">
                 {archetype.maturity === "boy"
                   ? "This boyhood archetype lives as the luminous core within the mature man. Through initiation, the boy\u2019s energy is not destroyed \u2014 it is contained and refined."
                   : "Within the mature man, the boy archetype endures as a living core \u2014 the source of vitality that the man\u2019s structure holds and channels."}
@@ -289,7 +289,7 @@ export default function ArchetypeDetailClient({
             <h2 className="font-serif text-2xl text-text-primary mb-1">
               Characteristics
             </h2>
-            <p className="font-mono text-[9px] tracking-[0.2em] text-muted uppercase mb-6">
+            <p className="font-mono text-kicker tracking-label text-muted uppercase mb-6">
               Defining Qualities
             </p>
             <div className="grid md:grid-cols-2 gap-x-8 gap-y-2">
@@ -308,7 +308,7 @@ export default function ArchetypeDetailClient({
                   }}
                 >
                   <span
-                    className="text-[10px] font-mono mt-0.5 opacity-50"
+                    className="text-label font-mono mt-0.5 opacity-50"
                     style={{ color }}
                   >
                     {String(i + 1).padStart(2, "0")}
@@ -331,7 +331,7 @@ export default function ArchetypeDetailClient({
               }}
             >
               <p
-                className="font-mono text-[9px] tracking-[0.25em] uppercase mb-4"
+                className="font-mono text-kicker tracking-kicker uppercase mb-4"
                 style={{ color: light ? color : `${color}CC` }}
               >
                 Shadow Polarity
@@ -347,7 +347,7 @@ export default function ArchetypeDetailClient({
                 Where the energy goes when the ego can&rsquo;t hold the center
               </p>
               <hr className="retro-hr mb-6" />
-              <p className="text-text-secondary text-base leading-[1.8] max-w-3xl mb-4">
+              <p className="text-text-secondary text-base leading-article max-w-3xl mb-4">
                 Each archetype holds a fullness at the apex and two shadow poles at
                 the base &mdash; one inflated, one deflated. The shadows are not
                 separate pathologies but a <em>single dysfunctional system</em>.
@@ -473,7 +473,7 @@ export default function ArchetypeDetailClient({
           <motion.section className="relative" {...sectionAnim}>
             <div className="relative pt-10">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-surface-light to-transparent" />
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted mb-5">
+              <p className="text-label uppercase tracking-kicker text-muted mb-5">
                 Continue Exploring
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2">
@@ -506,7 +506,7 @@ export default function ArchetypeDetailClient({
                         >
                           {a.name}
                         </p>
-                        <p className="text-[10px] text-muted mt-0.5">
+                        <p className="text-label text-muted mt-0.5">
                           {a.maturity === "boy" ? "Boy" : "Man"}
                         </p>
                       </Link>

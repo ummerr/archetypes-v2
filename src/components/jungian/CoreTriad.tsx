@@ -36,7 +36,7 @@ export default function CoreTriad({
           }}
         >
           <p
-            className="font-mono text-[9px] tracking-[0.3em] uppercase mb-2"
+            className="font-mono text-kicker tracking-kicker uppercase mb-2"
             style={{ color: color + "CC" }}
           >
             {it.label}

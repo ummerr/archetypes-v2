@@ -66,32 +66,32 @@ export default function SixSourceMatrix() {
           >
             <header className="flex items-baseline justify-between mb-3 pb-2 border-b border-gold/20">
               <h3 className="font-serif text-lg font-medium text-text-primary">{s.system}</h3>
-              <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-gold/70">
+              <span className="font-mono text-kicker tracking-kicker uppercase text-gold/70">
                 Mission {s.mission}
               </span>
             </header>
             <dl className="space-y-2">
               <div>
-                <dt className="font-mono text-[8px] tracking-[0.3em] uppercase text-text-secondary/55 mb-0.5">
+                <dt className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/55 mb-0.5">
                   Primary
                 </dt>
-                <dd className="font-serif text-[13px] leading-snug text-text-primary/90">
+                <dd className="font-serif text-xs leading-snug text-text-primary/90">
                   {s.primary}
                 </dd>
               </div>
               <div>
-                <dt className="font-mono text-[8px] tracking-[0.3em] uppercase text-text-secondary/55 mb-0.5">
+                <dt className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/55 mb-0.5">
                   Scholarship
                 </dt>
-                <dd className="font-serif text-[13px] leading-snug text-text-secondary/85">
+                <dd className="font-serif text-xs leading-snug text-text-secondary/85">
                   {s.scholarship}
                 </dd>
               </div>
               <div>
-                <dt className="font-mono text-[8px] tracking-[0.3em] uppercase text-text-secondary/55 mb-0.5">
+                <dt className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/55 mb-0.5">
                   Critique
                 </dt>
-                <dd className="font-serif italic text-[13px] leading-snug text-text-secondary/75">
+                <dd className="font-serif italic text-xs leading-snug text-text-secondary/75">
                   {s.critique}
                 </dd>
               </div>
@@ -99,7 +99,7 @@ export default function SixSourceMatrix() {
           </article>
         ))}
       </div>
-      <figcaption className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/50 mt-3">
+      <figcaption className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/50 mt-3">
         Fig. 2 - Each tradition worked through primary text, academic reception, and cultural critique.
       </figcaption>
     </figure>

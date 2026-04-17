@@ -97,7 +97,7 @@ export default function NavBar() {
       >
         <div className="flex items-center gap-5 min-w-0">
           <Link href="/" className="group flex items-center min-w-0">
-            <span className="font-mono font-bold text-gold glow-text-subtle transition-colors duration-200 group-hover:text-gold-bright whitespace-nowrap text-[10px] tracking-[0.18em] sm:text-sm sm:tracking-[0.25em]">
+            <span className="font-mono font-bold text-gold glow-text-subtle transition-colors duration-200 group-hover:text-gold-bright whitespace-nowrap text-label tracking-label sm:text-sm sm:tracking-kicker">
               MAPS OF THE INNER WORLD
             </span>
           </Link>
@@ -186,7 +186,7 @@ function GroupTrigger({
       type="button"
       onClick={() => setOpen(isOpen ? null : id)}
       aria-expanded={isOpen}
-      className={`font-mono text-[10px] tracking-[0.2em] uppercase transition-colors duration-200 flex items-center gap-1 ${
+      className={`font-mono text-label tracking-label uppercase transition-colors duration-200 flex items-center gap-1 ${
         active || isOpen ? "text-gold" : "text-text-secondary hover:text-gold"
       }`}
     >
@@ -222,11 +222,11 @@ function LinkListPanel({ links, pathname, align }: { links: NavLink[]; pathname:
                   active ? "bg-gold/5" : "hover:bg-gold/5"
                 }`}
               >
-                <div className={`font-mono text-[11px] tracking-[0.15em] uppercase ${active ? "text-gold" : "text-text-secondary"}`}>
+                <div className={`font-mono text-label tracking-label uppercase ${active ? "text-gold" : "text-text-secondary"}`}>
                   {l.label}
                 </div>
                 {l.desc && (
-                  <div className="font-serif italic text-[12px] text-muted mt-0.5">{l.desc}</div>
+                  <div className="font-serif italic text-xs text-muted mt-0.5">{l.desc}</div>
                 )}
               </Link>
             </li>
@@ -248,7 +248,7 @@ function SystemsPanel({ pathname }: { pathname: string }) {
               <div className="flex items-baseline gap-3">
                 <Link
                   href={s.href}
-                  className={`font-mono text-[11px] tracking-[0.15em] uppercase ${active ? "text-gold" : "text-text-secondary hover:text-gold"}`}
+                  className={`font-mono text-label tracking-label uppercase ${active ? "text-gold" : "text-text-secondary hover:text-gold"}`}
                 >
                   {s.name}
                 </Link>
@@ -258,20 +258,20 @@ function SystemsPanel({ pathname }: { pathname: string }) {
                     <Link
                       key={sp.href}
                       href={sp.href}
-                      className="font-mono text-[9px] tracking-[0.15em] uppercase text-muted hover:text-gold"
+                      className="font-mono text-kicker tracking-label uppercase text-muted hover:text-gold"
                     >
                       {sp.label}
                     </Link>
                   ))}
                   <Link
                     href={`${s.href}/about`}
-                    className="font-mono text-[9px] tracking-[0.15em] uppercase text-muted hover:text-gold"
+                    className="font-mono text-kicker tracking-label uppercase text-muted hover:text-gold"
                   >
                     About
                   </Link>
                 </div>
               </div>
-              <div className="font-serif italic text-[12px] text-muted mt-0.5">{s.tagline}</div>
+              <div className="font-serif italic text-xs text-muted mt-0.5">{s.tagline}</div>
             </li>
           );
         })}
@@ -315,15 +315,15 @@ function SimpleSecondaryBar({
 }) {
   return barWrap(
     <>
-      <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-gold whitespace-nowrap">{label}</span>
-      <span className="text-muted/40 font-mono text-[10px]">·</span>
+      <span className="font-mono text-label tracking-kicker uppercase text-gold whitespace-nowrap">{label}</span>
+      <span className="text-muted/40 font-mono text-label">·</span>
       {links.map((l) => {
         const active = pathname === l.href || pathname.startsWith(l.href + "/");
         return (
           <Link
             key={l.href}
             href={l.href}
-            className={`font-mono text-[10px] tracking-[0.2em] uppercase whitespace-nowrap transition-colors duration-200 ${
+            className={`font-mono text-label tracking-label uppercase whitespace-nowrap transition-colors duration-200 ${
               active ? "text-gold" : "text-text-secondary hover:text-gold"
             }`}
           >
@@ -370,19 +370,19 @@ function SystemSecondaryBar({
   return barWrap(
     <>
       <span
-        className="font-mono text-[10px] tracking-[0.25em] uppercase whitespace-nowrap"
+        className="font-mono text-label tracking-kicker uppercase whitespace-nowrap"
         style={{ color: system.accent }}
       >
         {system.name}
       </span>
-      <span className="text-muted/40 font-mono text-[10px]">·</span>
+      <span className="text-muted/40 font-mono text-label">·</span>
       {subs.map((l) => {
         const active = pathname === l.href;
         return (
           <Link
             key={l.href}
             href={l.href}
-            className={`font-mono text-[10px] tracking-[0.2em] uppercase whitespace-nowrap transition-colors duration-200 ${
+            className={`font-mono text-label tracking-label uppercase whitespace-nowrap transition-colors duration-200 ${
               active ? "text-gold" : "text-text-secondary hover:text-gold"
             }`}
           >
@@ -396,7 +396,7 @@ function SystemSecondaryBar({
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
-            className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-secondary hover:text-gold flex items-center gap-1 whitespace-nowrap"
+            className="font-mono text-label tracking-label uppercase text-text-secondary hover:text-gold flex items-center gap-1 whitespace-nowrap"
           >
             Archetypes
             <svg width="8" height="8" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}>
@@ -412,7 +412,7 @@ function SystemSecondaryBar({
                     <li key={a.href}>
                       <Link
                         href={a.href}
-                        className={`block px-4 py-2 font-mono text-[11px] tracking-[0.1em] uppercase transition-colors duration-150 ${
+                        className={`block px-4 py-2 font-mono text-label tracking-label uppercase transition-colors duration-150 ${
                           active ? "text-gold bg-gold/5" : "text-text-secondary hover:text-gold hover:bg-gold/5"
                         }`}
                       >
@@ -504,7 +504,7 @@ function RootSheet({
 
   return (
     <div className="animate-slide-up" style={{ animationDuration: "400ms" }}>
-      <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-gold/80 mb-5">
+      <p className="font-mono text-kicker tracking-display uppercase text-gold/80 mb-5">
         Navigate
       </p>
       <nav className="divide-y divide-gold/10 border-y border-gold/10">
@@ -557,14 +557,14 @@ function SubSheet({
       <button
         type="button"
         onClick={onBack}
-        className="group flex items-center gap-2 mb-5 font-mono text-[9px] tracking-[0.3em] uppercase text-text-secondary hover:text-gold transition-colors"
+        className="group flex items-center gap-2 mb-5 font-mono text-kicker tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
       >
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:-translate-x-0.5">
           <path d="M6 2L3 5l3 3" />
         </svg>
         Back
       </button>
-      <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-gold/80 mb-5">
+      <p className="font-mono text-kicker tracking-display uppercase text-gold/80 mb-5">
         {section === "systems" ? "Six Systems" : section === "atlas" ? "The Atlas" : "About"}
       </p>
       {section === "systems" && (
@@ -600,7 +600,7 @@ function SheetRow({
       className="flex items-center gap-4 py-5 group"
     >
       {leading && (
-        <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted/60 w-6">
+        <span className="font-mono text-kicker tracking-kicker uppercase text-muted/60 w-6">
           {leading}
         </span>
       )}
@@ -640,7 +640,7 @@ function SheetGroupRow({
       className="w-full flex items-center gap-4 py-5 text-left group"
     >
       {leading && (
-        <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted/60 w-6">
+        <span className="font-mono text-kicker tracking-kicker uppercase text-muted/60 w-6">
           {leading}
         </span>
       )}
@@ -652,7 +652,7 @@ function SheetGroupRow({
         >
           {label}
         </span>
-        <span className="block font-serif italic text-[13px] text-muted mt-0.5">
+        <span className="block font-serif italic text-xs text-muted mt-0.5">
           {caption}
         </span>
       </span>
@@ -694,7 +694,7 @@ function SystemsList({ pathname, onNavigate }: { pathname: string; onNavigate: (
                 >
                   {s.name}
                 </span>
-                <span className="block font-serif italic text-[13px] text-muted mt-0.5">
+                <span className="block font-serif italic text-xs text-muted mt-0.5">
                   {s.tagline}
                 </span>
               </span>
@@ -740,7 +740,7 @@ function LinksList({
                   {l.label}
                 </span>
                 {l.desc && (
-                  <span className="block font-serif italic text-[13px] text-muted mt-0.5">
+                  <span className="block font-serif italic text-xs text-muted mt-0.5">
                     {l.desc}
                   </span>
                 )}

@@ -78,12 +78,12 @@ export default function PipelineDiagram() {
           >
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-3">
               <h3
-                className="font-mono text-[10px] tracking-[0.3em] uppercase"
+                className="font-mono text-label tracking-kicker uppercase"
                 style={{ color: p.tint }}
               >
                 {p.label}
               </h3>
-              <p className="font-serif italic text-[13px] text-text-secondary/70">{p.mode}</p>
+              <p className="font-serif italic text-xs text-text-secondary/70">{p.mode}</p>
             </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
               {p.missions.map((m) => (
@@ -92,16 +92,16 @@ export default function PipelineDiagram() {
                   className="flex items-start gap-3 border border-text-secondary/15 rounded-sm p-3 bg-bg/40"
                 >
                   <span
-                    className="font-mono text-[11px] tracking-[0.2em] shrink-0 pt-0.5"
+                    className="font-mono text-label tracking-label shrink-0 pt-0.5"
                     style={{ color: p.tint }}
                   >
                     {m.n}
                   </span>
                   <div className="min-w-0">
-                    <p className="font-serif text-[14px] leading-snug text-text-primary">
+                    <p className="font-serif text-body-sm leading-snug text-text-primary">
                       {m.title}
                     </p>
-                    <p className="font-mono text-[9px] tracking-[0.15em] uppercase text-text-secondary/55 mt-1 truncate">
+                    <p className="font-mono text-kicker tracking-label uppercase text-text-secondary/55 mt-1 truncate">
                       {"\u2192"} {m.output}
                     </p>
                   </div>
@@ -111,7 +111,7 @@ export default function PipelineDiagram() {
           </div>
         ))}
       </div>
-      <figcaption className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-secondary/50 mt-3">
+      <figcaption className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/50 mt-3">
         Fig. 1 - Four phases, eleven missions. All outputs preserved in /research/.
       </figcaption>
     </figure>

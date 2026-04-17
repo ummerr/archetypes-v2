@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Kicker from "./Kicker";
 
 interface Props {
   kicker?: string;
@@ -19,14 +20,15 @@ export default function SectionHeading({
   return (
     <div className={`mb-6 ${className}`}>
       {kicker && (
-        <p
-          className="font-mono text-[10px] tracking-[0.35em] uppercase mb-2"
+        <Kicker
+          size="sm"
+          className="mb-2"
           style={{ color: accentColor ?? "rgb(var(--gold))" }}
         >
           {kicker}
-        </p>
+        </Kicker>
       )}
-      <Tag className="font-serif text-2xl md:text-3xl font-medium leading-tight">{children}</Tag>
+      <Tag className="font-serif text-h2 leading-tight">{children}</Tag>
     </div>
   );
 }

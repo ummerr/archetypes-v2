@@ -218,7 +218,7 @@ export default function MbtiCognitiveCompass() {
               }}
             >
               <p
-                className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                className="font-mono text-kicker tracking-kicker uppercase"
                 style={{ color: main }}
               >
                 {hoveredArchetype.code}
@@ -226,7 +226,7 @@ export default function MbtiCognitiveCompass() {
               <p className="mt-1 font-serif text-sm leading-tight text-text-primary">
                 {hoveredArchetype.nickname}
               </p>
-              <p className="mt-1.5 font-mono text-[10px] tracking-[0.15em] text-text-secondary">
+              <p className="mt-1.5 font-mono text-label tracking-label text-text-secondary">
                 {stack}
               </p>
             </div>

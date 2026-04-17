@@ -55,7 +55,7 @@ export default async function FigureDetailPage({
       <div className="max-w-3xl mx-auto px-6 md:px-10 py-20">
         <Link
           href="/atlas/exemplars"
-          className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted/80 hover:text-gold"
+          className="font-mono text-label tracking-kicker uppercase text-muted/80 hover:text-gold"
         >
           ← Figures
         </Link>
@@ -87,7 +87,7 @@ export default async function FigureDetailPage({
     <div className="max-w-4xl mx-auto px-6 md:px-10 py-20">
       <Link
         href="/atlas/exemplars"
-        className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted/80 hover:text-gold"
+        className="font-mono text-label tracking-kicker uppercase text-muted/80 hover:text-gold"
       >
         ← Figures
       </Link>
@@ -96,17 +96,17 @@ export default async function FigureDetailPage({
           {record.figure.displayName}
         </SectionHeading>
       </div>
-      <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-secondary/60 mb-4">
+      <p className="font-mono text-label tracking-kicker uppercase text-text-secondary/60 mb-4">
         {record.figure.kind} · read by {record.appearances.length} of 6 traditions
       </p>
       {record.figure.editorialNote && (
-        <p className="font-serif italic text-[16px] text-text-secondary/85 max-w-2xl mb-10">
+        <p className="font-serif italic text-base text-text-secondary/85 max-w-2xl mb-10">
           {record.figure.editorialNote}
         </p>
       )}
 
       <section className="mb-12">
-        <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-4">
+        <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-4">
           How each tradition reads the figure
         </p>
         <ul className="space-y-3">
@@ -123,26 +123,26 @@ export default async function FigureDetailPage({
                 <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
                   <div>
                     <p
-                      className="font-mono text-[10px] tracking-[0.3em] uppercase"
+                      className="font-mono text-label tracking-kicker uppercase"
                       style={{ color: accent }}
                     >
                       {systemName}
                     </p>
                     <Link
                       href={archetypeHref(app.system, app.archetypeSlug)}
-                      className="font-serif text-[17px] font-medium hover:underline underline-offset-4 decoration-1"
+                      className="font-serif text-body-lg font-medium hover:underline underline-offset-4 decoration-1"
                       style={{ color: accent }}
                     >
                       {archetypeName}
                     </Link>
                   </div>
                   {app.source && (
-                    <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-text-secondary/55">
+                    <p className="font-mono text-kicker tracking-label uppercase text-text-secondary/55">
                       {app.source}
                     </p>
                   )}
                 </div>
-                <p className="text-[14px] text-text-primary/88 leading-relaxed italic">{app.note}</p>
+                <p className="text-body-sm text-text-primary/88 leading-relaxed italic">{app.note}</p>
               </li>
             );
           })}
@@ -151,10 +151,10 @@ export default async function FigureDetailPage({
 
       {clusters.length > 0 && (
         <section className="mb-10">
-          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-gold/80 mb-4">
+          <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-4">
             Cluster coalescence
           </p>
-          <p className="font-serif italic text-[14px] text-text-secondary/75 mb-5 max-w-prose">
+          <p className="font-serif italic text-body-sm text-text-secondary/75 mb-5 max-w-prose">
             The archetypal tags above resolve into {clusters.length} cluster
             {clusters.length === 1 ? "" : "s"}. Each cluster reads the figure in its own vocabulary;
             where more than one cluster surfaces, the figure itself is holding a structural tension.
@@ -168,9 +168,9 @@ export default async function FigureDetailPage({
                     href={`/atlas/cluster/${c.clusterId}`}
                     className="inline-block rounded-sm border border-gold/30 px-3 py-2 hover:border-gold"
                   >
-                    <span className="font-serif text-[14px] block">{c.clusterTheme}</span>
+                    <span className="font-serif text-body-sm block">{c.clusterTheme}</span>
                     {ax && (
-                      <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-text-secondary/60">
+                      <span className="font-mono text-kicker tracking-label uppercase text-text-secondary/60">
                         {STAGE_LABELS[ax.stage]} · {AFFECT_LABELS[ax.affect]} ·{" "}
                         {STANCE_LABELS[ax.stance]}
                       </span>
@@ -181,7 +181,7 @@ export default async function FigureDetailPage({
             })}
           </ul>
           {holdsTension && (
-            <p className="font-serif italic text-[14px] text-amber-300/85 max-w-prose border-l-2 border-amber-500/40 pl-4">
+            <p className="font-serif italic text-body-sm text-amber-300/85 max-w-prose border-l-2 border-amber-500/40 pl-4">
               {record.figure.displayName} is read across{" "}
               {stances.size > 1 && (
                 <>

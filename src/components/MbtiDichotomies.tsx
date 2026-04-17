@@ -66,12 +66,12 @@ export default function MbtiDichotomies() {
           {/* Header */}
           <div className="flex items-baseline justify-between gap-3 mb-5">
             <span
-              className="font-mono text-[9px] tracking-[0.35em] uppercase"
+              className="font-mono text-kicker tracking-kicker uppercase"
               style={{ color: gold }}
             >
               {axis.kicker}
             </span>
-            <span className="font-mono text-[8px] tracking-[0.2em] text-muted uppercase italic truncate">
+            <span className="font-mono text-kicker tracking-label text-muted uppercase italic truncate">
               {axis.question}
             </span>
           </div>
@@ -80,7 +80,7 @@ export default function MbtiDichotomies() {
           <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
             <PoleSide pole={axis.left} align="left" gold={gold} />
             <span
-              className="font-mono text-[10px] tracking-[0.3em] uppercase"
+              className="font-mono text-label tracking-kicker uppercase"
               style={{ color: gold + (light ? "66" : "55") }}
             >
               vs
@@ -90,10 +90,10 @@ export default function MbtiDichotomies() {
 
           {/* Glosses */}
           <div className="mt-5 grid grid-cols-2 gap-4 md:gap-5 pt-4 border-t" style={{ borderColor: gold + (light ? "20" : "14") }}>
-            <p className="text-xs md:text-[13px] text-text-secondary leading-relaxed font-light">
+            <p className="text-xs md:text-xs text-text-secondary leading-relaxed font-light">
               {axis.left.gloss}
             </p>
-            <p className="text-xs md:text-[13px] text-text-secondary leading-relaxed font-light text-right">
+            <p className="text-xs md:text-xs text-text-secondary leading-relaxed font-light text-right">
               {axis.right.gloss}
             </p>
           </div>
@@ -108,7 +108,7 @@ function PoleSide({ pole, align, gold }: { pole: Pole; align: "left" | "right"; 
   return (
     <div className={`flex items-baseline gap-2 ${isRight ? "justify-end" : "justify-start"}`}>
       {isRight && (
-        <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-text-secondary">
+        <span className="font-mono text-kicker tracking-kicker uppercase text-text-secondary">
           {pole.name}
         </span>
       )}
@@ -119,7 +119,7 @@ function PoleSide({ pole, align, gold }: { pole: Pole; align: "left" | "right"; 
         {pole.letter}
       </span>
       {!isRight && (
-        <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-text-secondary">
+        <span className="font-mono text-kicker tracking-kicker uppercase text-text-secondary">
           {pole.name}
         </span>
       )}

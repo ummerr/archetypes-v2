@@ -49,22 +49,22 @@ export default function JungianDetailClient({
         >
           <Link
             href="/jungian"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted uppercase hover:text-gold transition-colors"
+            className="font-mono text-kicker tracking-kicker text-muted uppercase hover:text-gold transition-colors"
           >
             Jungian
           </Link>
-          <span className="text-muted/40 font-mono text-[10px]">/</span>
+          <span className="text-muted/40 font-mono text-label">/</span>
           <span
             aria-current="page"
-            className="font-mono text-[9px] tracking-[0.25em] uppercase"
+            className="font-mono text-kicker tracking-kicker uppercase"
             style={{ color: cluster.color }}
           >
             {cluster.label}
           </span>
-          <span className="text-muted/40 font-mono text-[10px] ml-1">·</span>
+          <span className="text-muted/40 font-mono text-label ml-1">·</span>
           <Link
             href="/jungian/about"
-            className="font-mono text-[9px] tracking-[0.25em] text-muted/80 uppercase hover:text-gold transition-colors"
+            className="font-mono text-kicker tracking-kicker text-muted/80 uppercase hover:text-gold transition-colors"
           >
             About
           </Link>
@@ -86,13 +86,13 @@ export default function JungianDetailClient({
             </div>
             <div className="flex-1 pt-1">
               <p
-                className="font-mono text-[10px] tracking-[0.35em] uppercase mb-2"
+                className="font-mono text-label tracking-kicker uppercase mb-2"
                 style={{ color: color + "CC" }}
               >
                 {cluster.label} Cluster · {cluster.tagline}
               </p>
               <h1
-                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-[1.05]"
+                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-display"
                 style={{
                   color,
                   textShadow: !light ? `0 0 24px ${color}30` : "none",
@@ -155,7 +155,7 @@ export default function JungianDetailClient({
         {/* Characteristics */}
         <section className="mb-16 animate-slide-up delay-500">
           <div className="flex items-center gap-4 mb-5">
-            <span className="font-mono text-[10px] tracking-[0.4em] text-muted uppercase">
+            <span className="font-mono text-label tracking-display text-muted uppercase">
               Key Characteristics
             </span>
             <div
@@ -213,7 +213,7 @@ export default function JungianDetailClient({
         {/* Cluster siblings - demoted to thin strip */}
         <section className="animate-slide-up delay-500 pt-4">
           <div className="flex items-center gap-4 mb-4">
-            <span className="font-mono text-[9px] tracking-[0.4em] text-muted uppercase">
+            <span className="font-mono text-kicker tracking-display text-muted uppercase">
               Other {cluster.label} Archetypes
             </span>
             <div

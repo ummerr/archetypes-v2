@@ -60,7 +60,7 @@ export default function ClusterGrid({ onHoverCluster }: Props) {
               <div className="min-w-0">
                 <h3 className="font-serif text-base md:text-lg font-medium leading-tight">{theme}</h3>
                 {tagline ? (
-                  <p className="font-serif italic text-[12px] text-text-secondary/70 leading-snug mt-0.5 line-clamp-2">
+                  <p className="font-serif italic text-xs text-text-secondary/70 leading-snug mt-0.5 line-clamp-2">
                     {tagline}
                   </p>
                 ) : null}
@@ -78,7 +78,7 @@ export default function ClusterGrid({ onHoverCluster }: Props) {
               )}
             </div>
 
-            <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[9px] tracking-[0.2em] uppercase text-text-secondary/60">
+            <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-mono text-kicker tracking-label uppercase text-text-secondary/60">
               {axes ? (
                 <>
                   <span>{STAGE_LABELS[axes.stage]}</span>

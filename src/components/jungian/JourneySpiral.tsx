@@ -178,7 +178,7 @@ export default function JourneySpiral({ archetypes, clusters }: Props) {
                 className="inline-block group"
               >
                 <p
-                  className="font-mono text-[9px] tracking-[0.4em] uppercase mb-1"
+                  className="font-mono text-kicker tracking-display uppercase mb-1"
                   style={{ color: c.color }}
                 >
                   {c.label} · Stage {a.stageOrder}
@@ -196,7 +196,7 @@ export default function JourneySpiral({ archetypes, clusters }: Props) {
             );
           })()
         ) : (
-          <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-muted mt-6">
+          <p className="font-mono text-label tracking-display uppercase text-muted mt-6">
             Hover a node · Click to enter
           </p>
         )}

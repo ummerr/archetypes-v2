@@ -20,6 +20,40 @@
   --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Supreme", system-ui, sans-serif;
   --font-mono: "Space Mono", "JetBrains Mono", monospace;
+
+  /* ─── Type scale ────────────────────────────────
+     Semantic size tokens drive nearly all typography.
+     The xs/sm/base/...Tailwind steps remain available
+     for edge cases but should not be the default vocabulary. */
+  --text-kicker: 9px;
+  --text-kicker--line-height: 1.4;
+  --text-label: 10px;
+  --text-label--line-height: 1.4;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.6;
+  --text-body: 15px;
+  --text-body--line-height: 1.6;
+  --text-body-lg: 17px;
+  --text-body-lg--line-height: 1.7;
+  --text-h3: 1.25rem;     /* 20px, card titles */
+  --text-h3--line-height: 1.3;
+  --text-h2: 1.75rem;     /* 28px, section titles */
+  --text-h2--line-height: 1.2;
+  --text-h1: 3rem;        /* 48px, page titles */
+  --text-h1--line-height: 1.08;
+  --text-hero: 4.5rem;    /* 72px, hero display */
+  --text-hero--line-height: 1.05;
+
+  /* ─── Tracking (letter-spacing) ──────────────
+     Three semantic tiers replace the 10 one-offs. */
+  --tracking-label: 0.2em;
+  --tracking-kicker: 0.3em;
+  --tracking-display: 0.4em;
+
+  /* ─── Leading ────────────────────────────────
+     Extend Tailwind's defaults with a display tier. */
+  --leading-display: 1.05;
+  --leading-article: 1.7;
 }
 
 /* ─── Light mode overrides ───────────────────────────
