@@ -21,19 +21,27 @@ async function loadFont(url: string): Promise<ArrayBuffer | null> {
 }
 
 async function loadOgFonts() {
-  const [cormorant500, cormorantItalic] = await Promise.all([
+  const [cormorant500, cormorantItalic, supreme400, supreme500, spaceMono400] = await Promise.all([
     loadFont("https://fonts.gstatic.com/s/cormorantgaramond/v16/co3YmX5slCNuHLi8bLeY9MK7whWMhyjYrEPjuw.ttf"),
     loadFont("https://fonts.gstatic.com/s/cormorantgaramond/v16/co3WmX5slCNuHLi8bLeY9MK7whWMhyjQAFjNgg.ttf"),
+    loadFont("https://cdn.fontshare.com/wf/UDGUA26XVGIV6IQWMQNGGAL7FQZFY227/E6HQU6YVWTGYX3KW3DF66KAAJ224ZDU6/5ZZU4JM62PS7KOJ7BOKLPL3AEO2G76TS.ttf"),
+    loadFont("https://cdn.fontshare.com/wf/OTYYUXNCZZI6EV6RSCAQFTGEGQ7JTD6B/45FLQUBI6DWIP6NYFVBTMKS6YPU3VYPT/GHZ524YD2KXKRX4PZ2S7DE3HKNPE2EKH.ttf"),
+    loadFont("https://fonts.gstatic.com/s/spacemono/v17/i7dPIFZifjKcF5UAWdDRUEY.ttf"),
   ]);
 
-  const fonts: { name: string; data: ArrayBuffer; style?: "normal" | "italic"; weight?: 400 | 500 }[] = [];
+  const fonts: { name: string; data: ArrayBuffer; style?: "normal" | "italic"; weight?: 400 | 500 | 700 }[] = [];
   if (cormorant500) fonts.push({ name: "Cormorant", data: cormorant500, weight: 500, style: "normal" });
   if (cormorantItalic) fonts.push({ name: "Cormorant", data: cormorantItalic, weight: 400, style: "italic" });
+  if (supreme400) fonts.push({ name: "Supreme", data: supreme400, weight: 400, style: "normal" });
+  if (supreme500) fonts.push({ name: "Supreme", data: supreme500, weight: 500, style: "normal" });
+  if (spaceMono400) fonts.push({ name: "SpaceMono", data: spaceMono400, weight: 400, style: "normal" });
 
   const serif = cormorant500 ? "Cormorant, Georgia, serif" : "Georgia, serif";
   const serifItalic = cormorantItalic ? "Cormorant, Georgia, serif" : "Georgia, serif";
+  const sans = supreme400 ? "Supreme, system-ui, sans-serif" : "system-ui, sans-serif";
+  const mono = spaceMono400 ? "SpaceMono, ui-monospace, monospace" : "ui-monospace, monospace";
 
-  return { fonts, serif, serifItalic };
+  return { fonts, serif, serifItalic, sans, mono };
 }
 
 /* ── truncate helper ──────────────────────────────────── */
@@ -55,7 +63,7 @@ export async function renderOgCard(opts: {
 }) {
   const { eyebrow, title, subtitle, motto, accent, totem, format = "wide" } = opts;
   const size = SIZES[format];
-  const { fonts, serif, serifItalic } = await loadOgFonts();
+  const { fonts, serif, serifItalic, sans, mono } = await loadOgFonts();
 
   const italicLine = motto || subtitle;
   const descLine = motto && subtitle ? clip(subtitle, 120) : undefined;
@@ -161,7 +169,7 @@ export async function renderOgCard(opts: {
                   letterSpacing: "0.3em",
                   textTransform: "uppercase",
                   color: `${accent}CC`,
-                  fontFamily: "system-ui, sans-serif",
+                  fontFamily: mono,
                   fontWeight: 400,
                   display: "flex",
                 }}
@@ -213,7 +221,8 @@ export async function renderOgCard(opts: {
                     marginTop: 12,
                     color: "#8A8780",
                     maxWidth: 540,
-                    fontFamily: "system-ui, sans-serif",
+                    fontFamily: sans,
+                    fontWeight: 300,
                     display: "flex",
                   }}
                 >
@@ -232,10 +241,11 @@ export async function renderOgCard(opts: {
             >
               <div
                 style={{
-                  fontSize: 13,
+                  fontSize: 12,
                   letterSpacing: "0.2em",
                   color: "#8A8780",
-                  fontFamily: "system-ui, sans-serif",
+                  fontFamily: mono,
+                  textTransform: "uppercase",
                   display: "flex",
                 }}
               >
@@ -243,10 +253,10 @@ export async function renderOgCard(opts: {
               </div>
               <div
                 style={{
-                  fontSize: 13,
-                  letterSpacing: "0.15em",
+                  fontSize: 12,
+                  letterSpacing: "0.2em",
                   color: "#D4AF3770",
-                  fontFamily: "system-ui, sans-serif",
+                  fontFamily: mono,
                   textTransform: "uppercase",
                   display: "flex",
                 }}
@@ -309,7 +319,7 @@ const SYSTEM_DOTS = [
 export async function renderHomepageOgCard(opts?: { format?: OgFormat }) {
   const format = opts?.format ?? "wide";
   const size = SIZES[format];
-  const { fonts, serif, serifItalic } = await loadOgFonts();
+  const { fonts, serif, sans, mono } = await loadOgFonts();
 
   return new ImageResponse(
     (
@@ -379,11 +389,11 @@ export async function renderHomepageOgCard(opts?: { format?: OgFormat }) {
           {/* Eyebrow */}
           <div
             style={{
-              fontSize: 11,
-              letterSpacing: "0.35em",
+              fontSize: 12,
+              letterSpacing: "0.4em",
               textTransform: "uppercase",
               color: "#D4AF37CC",
-              fontFamily: "system-ui, sans-serif",
+              fontFamily: mono,
               display: "flex",
             }}
           >
@@ -412,13 +422,13 @@ export async function renderHomepageOgCard(opts?: { format?: OgFormat }) {
           <div
             style={{
               fontSize: 22,
-              lineHeight: 1.4,
+              lineHeight: 1.5,
               marginTop: 20,
               color: "#D0CEC8",
               maxWidth: 780,
               textAlign: "center",
-              fontStyle: "italic",
-              fontFamily: serifItalic,
+              fontFamily: sans,
+              fontWeight: 300,
               display: "flex",
             }}
           >
@@ -460,10 +470,11 @@ export async function renderHomepageOgCard(opts?: { format?: OgFormat }) {
         >
           <div
             style={{
-              fontSize: 13,
-              letterSpacing: "0.2em",
+              fontSize: 12,
+              letterSpacing: "0.25em",
+              textTransform: "uppercase",
               color: "#8A8780",
-              fontFamily: "system-ui, sans-serif",
+              fontFamily: mono,
               display: "flex",
             }}
           >
