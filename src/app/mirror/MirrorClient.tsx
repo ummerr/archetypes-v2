@@ -1,314 +1,670 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { CLUSTERS, type ThematicCluster, type ResonanceEntry } from "@/data/resonance";
+import {
+  QUESTIONS,
+  QUESTION_FRAMES,
+  CLUSTER_INTERPRETATIONS,
+  encodeResult,
+  scoreChoices,
+  topClusters,
+  quietClusters,
+  type Choice,
+  type MirrorClusterId,
+} from "@/data/mirror-questions";
+import { CLUSTERS, type ConfidenceTier, type ResonanceEntry, type SystemId } from "@/data/resonance";
 import { archetypeDisplayName, archetypeHref, systemAccent } from "@/lib/resonance";
-import { clusterAxes } from "@/lib/axes";
-import { STAGE_LABELS, AFFECT_LABELS, STANCE_LABELS } from "@/data/atlas-lens-axes";
+import ConfidenceBadge from "@/components/shared/ConfidenceBadge";
 import HermeneuticCaveat from "@/components/shared/HermeneuticCaveat";
 
-const STOPWORDS = new Set([
-  "the", "and", "but", "for", "with", "that", "this", "from", "into", "they",
-  "them", "then", "than", "about", "here", "there", "have", "has", "had",
-  "was", "were", "been", "being", "some", "what", "when", "where", "which",
-  "who", "whom", "your", "yours", "you", "their", "our", "ours", "are",
-  "not", "all", "any", "more", "most", "very", "just", "too", "its",
-]);
+const TIER_WEIGHT: Record<ConfidenceTier, number> = {
+  canonical: 0,
+  strong: 1,
+  moderate: 2,
+  speculative: 3,
+  contested: 4,
+};
 
-function tokenize(text: string): string[] {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z\s-]/g, " ")
-    .split(/\s+/)
-    .map((t) => t.trim())
-    .filter((t) => t.length > 2 && !STOPWORDS.has(t));
+type Phase = "intro" | "sort" | "result";
+
+interface Props {
+  initialChoices: Choice[] | null;
 }
 
-interface CorpusRow {
-  cluster: ThematicCluster;
-  entry: ResonanceEntry;
-  tokens: Set<string>;
+export default function MirrorClient({ initialChoices }: Props) {
+  const [choices, setChoices] = useState<Choice[]>(initialChoices ?? []);
+  const [phase, setPhase] = useState<Phase>(initialChoices ? "result" : "intro");
+  // The viewer arrived at a pre-populated result (shared link) rather than
+  // completing the sort themselves. Use this to offer a path into the flow.
+  const isShared = initialChoices !== null;
+
+  function handleBegin() {
+    setPhase("sort");
+  }
+
+  function handleChoose(choice: Choice) {
+    const next = [...choices, choice];
+    setChoices(next);
+    if (next.length >= QUESTIONS.length) {
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set("r", encodeResult(next));
+        window.history.replaceState({}, "", url.toString());
+      } catch {}
+      setPhase("result");
+    }
+  }
+
+  if (phase === "result" && choices.length === QUESTIONS.length) {
+    return <MirrorResult choices={choices} isShared={isShared} />;
+  }
+
+  if (phase === "sort") {
+    return <MirrorSort onChoose={handleChoose} progress={choices.length} />;
+  }
+
+  return <MirrorIntro onBegin={handleBegin} />;
 }
 
-function buildCorpus(): CorpusRow[] {
-  return CLUSTERS.flatMap((c) =>
-    c.archetypes.map<CorpusRow>((a) => ({
-      cluster: c,
-      entry: a,
-      tokens: new Set([
-        ...tokenize(c.theme),
-        ...tokenize(c.description),
-        ...tokenize(a.note),
-        ...tokenize(a.editorialNote ?? ""),
-      ]),
-    })),
+// ─────────────────────────────────────────────────────────────
+// Phase 0 — Intro
+// ─────────────────────────────────────────────────────────────
+
+function MirrorIntro({ onBegin }: { onBegin: () => void }) {
+  return (
+    <section className="animate-slide-up" style={{ animationDuration: "400ms" }}>
+      <p className="font-mono text-kicker tracking-display uppercase text-gold/80 mb-4">
+        The Mirror
+      </p>
+      <h1 className="font-serif text-h1 leading-display tracking-tight mb-5">
+        A snapshot of what you&rsquo;re navigating
+      </h1>
+      <p className="font-serif text-body-lg text-text-secondary/85 leading-article mb-4 max-w-prose">
+        Twelve forced choices, under ninety seconds. No neutral option, no right
+        answers. At the end: a cross-system read of the archetypal energies
+        you&rsquo;re moving with right now.
+      </p>
+      <HermeneuticCaveat variant="inline" className="mb-10" />
+
+      <button
+        type="button"
+        onClick={onBegin}
+        className="font-mono text-label tracking-kicker uppercase border border-gold px-6 py-3 rounded-sm text-gold hover:bg-gold/10 transition-colors"
+      >
+        Begin →
+      </button>
+
+      <p className="font-serif italic text-xs text-text-secondary/55 mt-6 max-w-prose">
+        Nothing is stored. Nothing is sent. The result lives in the URL —
+        share it or don&rsquo;t.
+      </p>
+    </section>
   );
 }
 
-interface EntryHit {
-  cluster: ThematicCluster;
-  entry: ResonanceEntry;
-  score: number;
-  matched: string[];
-}
+// ─────────────────────────────────────────────────────────────
+// Phase 1 — Sorting
+// ─────────────────────────────────────────────────────────────
 
-interface ClusterHit {
-  cluster: ThematicCluster;
-  score: number;
-  matchedTokens: Set<string>;
-  entries: EntryHit[];
-}
+function MirrorSort({
+  onChoose,
+  progress,
+}: {
+  onChoose: (c: Choice) => void;
+  progress: number;
+}) {
+  const index = Math.min(progress, QUESTIONS.length - 1);
+  const q = QUESTIONS[index];
+  const frame = QUESTION_FRAMES[index];
 
-const REFRAME_PROMPTS = [
-  "Now describe the same situation focused on what you want, not what you fear.",
-  "Now describe the same situation from the point of view of the person you find hardest to understand in it.",
-  "Now describe the same situation using only the body — what tightens, what opens, where you feel the weight.",
-];
-
-export default function MirrorClient() {
-  const corpus = useMemo(buildCorpus, []);
-  const [text, setText] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [reframeIndex, setReframeIndex] = useState(-1);
-
-  const { clusterHits, shadow, totalMatched } = useMemo(() => {
-    if (!submitted) {
-      return { clusterHits: [] as ClusterHit[], shadow: [] as ThematicCluster[], totalMatched: 0 };
-    }
-    const toks = tokenize(text);
-    if (toks.length === 0) {
-      return { clusterHits: [], shadow: [], totalMatched: 0 };
-    }
-
-    const entryHits: EntryHit[] = corpus
-      .map((row) => {
-        const matched: string[] = [];
-        for (const t of toks) if (row.tokens.has(t)) matched.push(t);
-        return { cluster: row.cluster, entry: row.entry, score: matched.length, matched };
-      })
-      .filter((h) => h.score > 0);
-
-    const byCluster = new Map<string, ClusterHit>();
-    for (const hit of entryHits) {
-      const existing = byCluster.get(hit.cluster.id);
-      if (existing) {
-        existing.score += hit.score;
-        for (const t of hit.matched) existing.matchedTokens.add(t);
-        existing.entries.push(hit);
-      } else {
-        byCluster.set(hit.cluster.id, {
-          cluster: hit.cluster,
-          score: hit.score,
-          matchedTokens: new Set(hit.matched),
-          entries: [hit],
-        });
+  // A/1/← choose A, B/2/→ choose B. Ignore when a modifier is held so we
+  // don't swallow ⌘R / ⌘L shortcuts.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const k = e.key.toLowerCase();
+      if (k === "a" || k === "1" || k === "arrowleft") {
+        e.preventDefault();
+        onChoose("A");
+      } else if (k === "b" || k === "2" || k === "arrowright") {
+        e.preventDefault();
+        onChoose("B");
       }
     }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onChoose]);
 
-    const sortedClusters = Array.from(byCluster.values())
-      .map((c) => ({
-        ...c,
-        entries: c.entries.sort((a, b) => b.score - a.score).slice(0, 2),
-      }))
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3);
+  return (
+    <section className="min-h-[75vh] flex flex-col">
+      <ProgressDots current={progress} total={QUESTIONS.length} />
 
-    // Shadow: the axes least represented among the top matches.
-    const presentStages = new Set<string>();
-    const presentAffects = new Set<string>();
-    const presentStances = new Set<string>();
-    for (const c of sortedClusters) {
-      const ax = clusterAxes(c.cluster.id);
-      if (!ax) continue;
-      presentStages.add(ax.stage);
-      presentAffects.add(ax.affect);
-      presentStances.add(ax.stance);
-    }
-    const unmetClusters = CLUSTERS.filter((c) => {
-      if (sortedClusters.some((h) => h.cluster.id === c.id)) return false;
-      const ax = clusterAxes(c.id);
-      if (!ax) return false;
-      const missesStage = !presentStages.has(ax.stage);
-      const missesAffect = !presentAffects.has(ax.affect);
-      const missesStance = !presentStances.has(ax.stance);
-      // Prefer clusters that miss on 2+ axes.
-      return (Number(missesStage) + Number(missesAffect) + Number(missesStance)) >= 2;
-    }).slice(0, 3);
+      <div
+        key={index}
+        className="flex-1 flex flex-col justify-center animate-slide-up"
+        style={{ animationDuration: "260ms" }}
+      >
+        <p className="font-mono text-kicker tracking-kicker uppercase text-muted text-center mb-6">
+          {frame}
+        </p>
 
+        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+          <ChoiceCard label="A" text={q.a.text} onClick={() => onChoose("A")} />
+          <ChoiceCard label="B" text={q.b.text} onClick={() => onChoose("B")} />
+        </div>
+
+        <p className="mt-10 text-center font-serif italic text-xs text-text-secondary/55">
+          Pick the one that&rsquo;s truer right now.
+        </p>
+        <p className="mt-2 text-center font-mono text-kicker tracking-kicker uppercase text-muted/50 hidden sm:block">
+          A or B · ← or →
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function ChoiceCard({
+  label,
+  text,
+  onClick,
+}: {
+  label: string;
+  text: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group relative w-full text-left rounded-sm border border-surface-light/50 px-6 py-7 sm:px-7 sm:py-10 min-h-[120px] transition-all duration-200 hover:border-gold/60 hover:bg-gold/5 focus:outline-none focus:border-gold active:scale-[0.995]"
+    >
+      <span className="font-mono text-kicker tracking-kicker uppercase text-muted/70 group-hover:text-gold/80 transition-colors">
+        {label}
+      </span>
+      <span className="block font-serif text-h3 sm:text-2xl leading-snug mt-2 text-text-primary">
+        {text}
+      </span>
+    </button>
+  );
+}
+
+function ProgressDots({ current, total }: { current: number; total: number }) {
+  return (
+    <div
+      className="flex items-center justify-center gap-1.5 py-2"
+      aria-label={`Question ${Math.min(current + 1, total)} of ${total}`}
+    >
+      {Array.from({ length: total }).map((_, i) => {
+        const done = i < current;
+        const active = i === current;
+        return (
+          <span
+            key={i}
+            aria-hidden
+            className="h-1 rounded-full transition-all duration-300"
+            style={{
+              width: active ? 18 : 6,
+              background:
+                done || active ? "var(--color-gold)" : "var(--color-surface-light)",
+              opacity: done ? 0.6 : 1,
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// Phase 2 — Constellation & interpretation
+// ─────────────────────────────────────────────────────────────
+
+function MirrorResult({
+  choices,
+  isShared,
+}: {
+  choices: Choice[];
+  isShared: boolean;
+}) {
+  const scores = useMemo(() => scoreChoices(choices), [choices]);
+  const dominant = useMemo(() => topClusters(scores, 3), [scores]);
+  const quiet = useMemo(() => quietClusters(scores), [scores]);
+  const shareCode = useMemo(() => encodeResult(choices), [choices]);
+
+  const dominantLabels = dominant.map((id) => CLUSTER_INTERPRETATIONS[id].short);
+  const dominantShort = dominantLabels.join(" · ");
+
+  return (
+    <section className="animate-slide-up" style={{ animationDuration: "400ms" }}>
+      <header className="text-center mb-10">
+        <p className="font-mono text-kicker tracking-kicker uppercase text-muted mb-3">
+          {isShared ? "Their energy right now" : "Your energy right now"}
+        </p>
+        <h1 className="font-serif text-h1 leading-display glow-text-subtle text-gold">
+          {dominantShort || "A quiet field"}
+        </h1>
+      </header>
+
+      <ConstellationChart scores={scores} dominant={dominant} />
+
+      <HermeneuticCaveat variant="inline" className="text-center mt-8 mb-12" />
+
+      <div className="space-y-10">
+        {dominant.map((id, i) => (
+          <ClusterBlock
+            key={id}
+            clusterId={id}
+            score={scores[id]}
+            revealDelay={260 + i * 140}
+          />
+        ))}
+      </div>
+
+      {quiet.length > 0 && <QuietEnergies ids={quiet} />}
+
+      <ExploreFooter
+        shareCode={shareCode}
+        isShared={isShared}
+        dominantLabels={dominantLabels}
+      />
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// Constellation SVG
+// ─────────────────────────────────────────────────────────────
+
+// Fixed angular layout — clusters arranged around the circle by thematic
+// neighborhood so related energies sit near each other.
+const LAYOUT_ORDER: MirrorClusterId[] = [
+  "sovereign",
+  "teacher",
+  "sage-magician",
+  "creator",
+  "lover",
+  "caregiver",
+  "everyman",
+  "innocent",
+  "death-rebirth",
+  "liminal-territory",
+  "jester",
+  "explorer",
+  "rebel",
+  "warrior",
+];
+
+const VIEW_W = 520;
+const VIEW_H = 480;
+const CX = VIEW_W / 2;
+const CY = VIEW_H / 2;
+const INNER_R = 34;
+const OUTER_R = 150;
+const LABEL_R = 188;
+
+function radiusForScore(score: number, maxScore: number): number {
+  if (maxScore <= 0) return INNER_R;
+  return INNER_R + (score / maxScore) * (OUTER_R - INNER_R);
+}
+
+function ConstellationChart({
+  scores,
+  dominant,
+}: {
+  scores: Record<MirrorClusterId, number>;
+  dominant: MirrorClusterId[];
+}) {
+  const dominantSet = new Set<MirrorClusterId>(dominant);
+  const maxScore = Math.max(1, ...Object.values(scores));
+
+  const positions = LAYOUT_ORDER.map((id, i) => {
+    const angle = -Math.PI / 2 + (i / LAYOUT_ORDER.length) * Math.PI * 2;
+    const score = scores[id] ?? 0;
+    const r = radiusForScore(score, maxScore);
     return {
-      clusterHits: sortedClusters,
-      shadow: unmetClusters,
-      totalMatched: entryHits.length,
+      id,
+      angle,
+      score,
+      x: CX + Math.cos(angle) * r,
+      y: CY + Math.sin(angle) * r,
+      labelX: CX + Math.cos(angle) * LABEL_R,
+      labelY: CY + Math.sin(angle) * LABEL_R,
     };
-  }, [submitted, text, corpus]);
+  });
 
-  function run(e: React.FormEvent) {
-    e.preventDefault();
-    setSubmitted(true);
-    setReframeIndex(-1);
-  }
+  const dominantPositions = positions.filter((p) => dominantSet.has(p.id));
+  const dominantPath =
+    dominantPositions.length >= 2
+      ? dominantPositions
+          .map(
+            (p, i) =>
+              `${i === 0 ? "M" : "L"}${p.x.toFixed(1)},${p.y.toFixed(1)}`,
+          )
+          .join(" ") + (dominantPositions.length >= 3 ? " Z" : "")
+      : "";
 
-  function reframe() {
-    setReframeIndex((i) => (i + 1) % REFRAME_PROMPTS.length);
-    setSubmitted(false);
+  return (
+    <div className="mx-auto w-full max-w-[480px]">
+      <svg
+        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        role="img"
+        aria-label="Your archetypal energy constellation"
+        className="w-full h-auto"
+      >
+        {/* Guide rings at 1/3, 2/3, full */}
+        {[0.34, 0.67, 1].map((t, i) => (
+          <circle
+            key={i}
+            cx={CX}
+            cy={CY}
+            r={INNER_R + t * (OUTER_R - INNER_R)}
+            fill="none"
+            stroke="currentColor"
+            strokeOpacity={0.09}
+            strokeWidth={0.5}
+            strokeDasharray="2 4"
+            className="text-muted"
+          />
+        ))}
+
+        {/* Faint spokes */}
+        {positions.map((p) => (
+          <line
+            key={`spoke-${p.id}`}
+            x1={CX}
+            y1={CY}
+            x2={CX + Math.cos(p.angle) * OUTER_R}
+            y2={CY + Math.sin(p.angle) * OUTER_R}
+            stroke="currentColor"
+            strokeOpacity={0.05}
+            strokeWidth={0.5}
+            className="text-muted"
+          />
+        ))}
+
+        {/* Dominant polygon — the "figure" of the constellation */}
+        {dominantPath && (
+          <path
+            d={dominantPath}
+            fill="var(--color-gold)"
+            fillOpacity={0.06}
+            stroke="var(--color-gold)"
+            strokeOpacity={0.5}
+            strokeWidth={1}
+          />
+        )}
+
+        {/* Nodes */}
+        {positions.map((p) => {
+          const isDominant = dominantSet.has(p.id);
+          const nodeR = 3 + p.score * 2.4;
+          const opacity = p.score === 0 ? 0.3 : isDominant ? 1 : 0.72;
+          return (
+            <g key={p.id} opacity={opacity}>
+              {isDominant && (
+                <circle
+                  cx={p.x}
+                  cy={p.y}
+                  r={nodeR + 7}
+                  fill="var(--color-gold)"
+                  fillOpacity={0.18}
+                />
+              )}
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={nodeR}
+                fill={
+                  isDominant
+                    ? "var(--color-gold)"
+                    : "var(--color-text-secondary)"
+                }
+              />
+            </g>
+          );
+        })}
+
+        {/* Labels */}
+        {positions.map((p) => {
+          const isDominant = dominantSet.has(p.id);
+          const cosA = Math.cos(p.angle);
+          const anchor =
+            Math.abs(cosA) < 0.22 ? "middle" : cosA > 0 ? "start" : "end";
+          const short = CLUSTER_INTERPRETATIONS[p.id].short;
+          return (
+            <text
+              key={`label-${p.id}`}
+              x={p.labelX}
+              y={p.labelY}
+              textAnchor={anchor}
+              dominantBaseline="middle"
+              fontFamily="var(--font-mono)"
+              fontSize={9.5}
+              letterSpacing="0.16em"
+              fill={isDominant ? "var(--color-gold)" : "currentColor"}
+              opacity={isDominant ? 1 : p.score === 0 ? 0.4 : 0.7}
+              className="text-text-secondary uppercase"
+            >
+              {short.toUpperCase()}
+            </text>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// Per-cluster interpretation block
+// ─────────────────────────────────────────────────────────────
+
+function ClusterBlock({
+  clusterId,
+  score,
+  revealDelay = 0,
+}: {
+  clusterId: MirrorClusterId;
+  score: number;
+  revealDelay?: number;
+}) {
+  const interp = CLUSTER_INTERPRETATIONS[clusterId];
+  const cluster = CLUSTERS.find((c) => c.id === clusterId);
+
+  const entries: ResonanceEntry[] = useMemo(() => {
+    if (!cluster) return [];
+    const seen = new Set<string>();
+    const sorted = [...cluster.archetypes].sort((a, b) => {
+      if (a.strength !== b.strength) return a.strength === "primary" ? -1 : 1;
+      return TIER_WEIGHT[a.confidence] - TIER_WEIGHT[b.confidence];
+    });
+    const out: ResonanceEntry[] = [];
+    for (const e of sorted) {
+      const key = `${e.system}::${e.slug}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(e);
+      if (out.length >= 5) break;
+    }
+    return out;
+  }, [cluster]);
+
+  return (
+    <article
+      className="rounded-sm border border-gold/25 px-6 py-7 md:px-9 md:py-10 animate-slide-up"
+      style={{ animationDelay: `${revealDelay}ms`, animationFillMode: "both" }}
+    >
+      <div className="flex items-baseline justify-between gap-4 mb-3">
+        <p className="font-mono text-kicker tracking-kicker uppercase text-gold/80">
+          {interp.short}
+        </p>
+        <span className="font-mono text-kicker tracking-kicker uppercase text-muted/70">
+          × {score}
+        </span>
+      </div>
+
+      <h2 className="font-serif text-h2 leading-tight mb-3 text-text-primary">
+        {interp.headline}
+      </h2>
+      <p className="font-serif text-body-lg leading-article text-text-secondary/90 mb-7 max-w-prose">
+        {interp.body}
+      </p>
+
+      {cluster && entries.length > 0 && (
+        <div>
+          <p className="font-mono text-kicker tracking-kicker uppercase text-muted mb-3">
+            Across the traditions
+          </p>
+          <ul className="divide-y divide-surface-light/30 border-y border-surface-light/30">
+            {entries.map((entry) => {
+              const { accent, name: systemName } = systemAccent(entry.system as SystemId);
+              const name =
+                archetypeDisplayName(entry.system as SystemId, entry.slug) ??
+                entry.slug;
+              return (
+                <li key={`${entry.system}::${entry.slug}`}>
+                  <Link
+                    href={archetypeHref(entry.system as SystemId, entry.slug)}
+                    className="group block py-3 transition-colors hover:bg-surface-light/10"
+                  >
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span
+                        className="font-mono text-kicker tracking-kicker uppercase"
+                        style={{ color: accent }}
+                      >
+                        {systemName}
+                      </span>
+                      <span
+                        className="font-serif text-h3 leading-tight group-hover:underline decoration-1 underline-offset-4"
+                        style={{ color: accent }}
+                      >
+                        {name}
+                      </span>
+                      <span className="ml-auto">
+                        <ConfidenceBadge tier={entry.confidence} color={accent} />
+                      </span>
+                    </div>
+                    <p className="font-serif text-body italic text-text-secondary/75 mt-1">
+                      {entry.note}
+                    </p>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="mt-3 text-right">
+            <Link
+              href={`/atlas/cluster/${cluster.id}`}
+              className="font-mono text-kicker tracking-kicker uppercase text-muted hover:text-gold transition-colors"
+            >
+              Read the full cluster →
+            </Link>
+          </div>
+        </div>
+      )}
+    </article>
+  );
+}
+
+function QuietEnergies({ ids }: { ids: MirrorClusterId[] }) {
+  return (
+    <section className="mt-14 pt-10 border-t border-surface-light/30">
+      <p className="font-mono text-kicker tracking-kicker uppercase text-muted mb-3">
+        Quiet energies
+      </p>
+      <p className="font-serif italic text-sm text-text-secondary/70 mb-5 max-w-prose">
+        Not absent — just not leading right now.
+      </p>
+      <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-2">
+        {ids.map((id) => (
+          <li
+            key={id}
+            className="font-serif text-body text-text-secondary/75 leading-snug"
+          >
+            {CLUSTER_INTERPRETATIONS[id].quiet}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// Explore / share footer
+// ─────────────────────────────────────────────────────────────
+
+function ExploreFooter({
+  shareCode,
+  isShared,
+  dominantLabels,
+}: {
+  shareCode: string;
+  isShared: boolean;
+  dominantLabels: string[];
+}) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleShare() {
+    const url = `${window.location.origin}/mirror?r=${shareCode}`;
+    const title = dominantLabels.length
+      ? `My Mirror: ${dominantLabels.join(" · ")}`
+      : "My Mirror";
+    // Native share sheet on mobile where available; fall back to clipboard.
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+      try {
+        await navigator.share({ title, url });
+        return;
+      } catch {
+        // User dismissed or share failed — quietly fall through to clipboard.
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    } catch {
+      // Clipboard unavailable — no-op.
+    }
   }
 
   return (
-    <div>
-      <form onSubmit={run} className="mb-10">
-        <label className="block font-mono text-label tracking-kicker uppercase text-gold/80 mb-3">
-          What are you navigating?
-        </label>
-        {reframeIndex >= 0 && (
-          <p className="font-serif italic text-body-sm text-text-secondary/80 mb-2">
-            {REFRAME_PROMPTS[reframeIndex]}
-          </p>
-        )}
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          rows={5}
-          className="w-full bg-transparent border border-surface-light/40 rounded-sm p-4 font-serif text-body leading-relaxed focus:outline-none focus:border-gold/50"
-          placeholder="Describe the situation, relationship, or inner movement you want to reflect on."
-        />
-        <button
-          type="submit"
-          className="mt-4 font-mono text-label tracking-kicker uppercase border border-gold/40 px-5 py-2 rounded-sm hover:border-gold hover:text-gold"
-        >
-          Reflect →
-        </button>
-      </form>
+    <footer className="mt-14 pt-10 border-t border-surface-light/30">
+      <p className="font-serif italic text-body text-text-secondary/80 leading-article mb-8 max-w-prose">
+        This is a mirror, not a map. Come back tomorrow — the reflection
+        changes as you do.
+      </p>
 
-      {submitted && clusterHits.length === 0 && (
-        <p className="italic text-text-secondary/80">
-          No strong resonances surfaced. Try a longer or more specific description.
-        </p>
-      )}
-
-      {clusterHits.length > 0 && (
-        <section className="mb-12">
-          <h2 className="font-serif text-xl font-medium mb-2">Three clusters your language touched</h2>
-          <HermeneuticCaveat variant="inline" className="mb-6" />
-          <p className="font-mono text-label tracking-kicker uppercase text-text-secondary/60 mb-4">
-            {totalMatched} archetype{totalMatched === 1 ? "" : "s"} surfaced · grouped by cluster
-          </p>
-          <ul className="space-y-6">
-            {clusterHits.map(({ cluster, score, matchedTokens, entries }) => {
-              const ax = clusterAxes(cluster.id);
-              return (
-                <li
-                  key={cluster.id}
-                  className="rounded-sm border border-gold/25 p-5"
-                >
-                  <div className="flex items-baseline justify-between gap-3 mb-1">
-                    <Link
-                      href={`/atlas/cluster/${cluster.id}`}
-                      className="font-serif text-lg font-medium hover:underline underline-offset-4 decoration-1"
-                    >
-                      {cluster.theme}
-                    </Link>
-                    <span className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/60">
-                      resonance {score}
-                    </span>
-                  </div>
-                  {ax && (
-                    <p className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/55 mb-2">
-                      {STAGE_LABELS[ax.stage]} · {AFFECT_LABELS[ax.affect]} · {STANCE_LABELS[ax.stance]}
-                    </p>
-                  )}
-                  <p className="font-mono text-label text-text-secondary/70 mb-4">
-                    matched: <span className="italic">{Array.from(matchedTokens).join(", ")}</span>
-                  </p>
-                  <ul className="space-y-3">
-                    {entries.map(({ entry, matched }) => {
-                      const { accent, name: systemName } = systemAccent(entry.system);
-                      const name = archetypeDisplayName(entry.system, entry.slug) ?? entry.slug;
-                      return (
-                        <li
-                          key={`${entry.system}-${entry.slug}`}
-                          className="rounded-sm border border-surface-light/30 p-3"
-                        >
-                          <p
-                            className="font-mono text-kicker tracking-kicker uppercase"
-                            style={{ color: accent }}
-                          >
-                            {systemName}
-                          </p>
-                          <Link
-                            href={archetypeHref(entry.system, entry.slug)}
-                            className="font-serif text-base font-medium hover:underline underline-offset-4 decoration-1"
-                            style={{ color: accent }}
-                          >
-                            {name}
-                          </Link>
-                          <p className="text-sm text-text-primary/85 mt-1">{entry.note}</p>
-                          <p className="font-mono text-kicker text-text-secondary/55 mt-2">
-                            matched: <span className="italic">{matched.join(", ")}</span>
-                          </p>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      )}
-
-      {shadow.length > 0 && (
-        <section className="mb-12">
-          <h2 className="font-serif text-xl font-medium mb-2">What you didn't name</h2>
-          <p className="italic text-text-secondary/80 mb-5 font-serif text-body">
-            The language above leans toward certain developmental stages, affects, and stances. These
-            clusters sit on the axes your description didn't touch — a different angle on the same
-            situation might meet them.
-          </p>
-          <ul className="grid sm:grid-cols-3 gap-3">
-            {shadow.map((cluster) => {
-              const ax = clusterAxes(cluster.id);
-              return (
-                <li
-                  key={cluster.id}
-                  className="rounded-sm border border-surface-light/30 p-4 opacity-70 hover:opacity-100 transition-opacity"
-                >
-                  <Link
-                    href={`/atlas/cluster/${cluster.id}`}
-                    className="font-serif text-body font-medium hover:underline underline-offset-4 decoration-1 block"
-                  >
-                    {cluster.theme}
-                  </Link>
-                  {ax && (
-                    <p className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/55 mt-1">
-                      {STAGE_LABELS[ax.stage]} · {AFFECT_LABELS[ax.affect]} · {STANCE_LABELS[ax.stance]}
-                    </p>
-                  )}
-                  <p className="text-xs text-text-secondary/75 mt-2 leading-snug">
-                    {cluster.description}
-                  </p>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      )}
-
-      {submitted && clusterHits.length > 0 && (
-        <div className="pt-6 border-t border-surface-light/30">
+      <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+        {isShared ? (
+          <Link
+            href="/mirror"
+            className="font-mono text-label tracking-kicker uppercase border border-gold px-5 py-2.5 rounded-sm text-gold hover:bg-gold/10 transition-colors"
+          >
+            Take your own mirror →
+          </Link>
+        ) : (
           <button
             type="button"
-            onClick={reframe}
-            className="font-mono text-label tracking-kicker uppercase border border-surface-light/40 px-4 py-2 rounded-sm hover:border-gold hover:text-gold"
+            onClick={handleShare}
+            className="font-mono text-label tracking-kicker uppercase border border-gold/40 px-5 py-2.5 rounded-sm text-gold hover:border-gold hover:bg-gold/5 transition-colors"
           >
-            Try another framing →
+            {copied ? "Link copied ✓" : "Share this mirror →"}
           </button>
-          <p className="font-serif italic text-xs text-text-secondary/60 mt-3 max-w-prose">
-            No single description is final. Reframing the same situation usually surfaces different
-            vocabulary.
-          </p>
-        </div>
-      )}
-    </div>
+        )}
+        <Link
+          href="/today"
+          className="font-mono text-label tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
+        >
+          Draw today&rsquo;s card →
+        </Link>
+        <Link
+          href="/atlas"
+          className="font-mono text-label tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
+        >
+          Explore the Atlas →
+        </Link>
+      </div>
+    </footer>
   );
 }
