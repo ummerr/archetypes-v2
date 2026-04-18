@@ -86,7 +86,7 @@ export default function MbtiTemperamentGrid() {
                     />
 
                     <div className="p-5 flex flex-col items-center text-center">
-                      <div className="w-full h-32 -mt-1 mb-2" aria-hidden>
+                      <div className="w-full h-32 -mt-1 mb-2 flex items-center justify-center" aria-hidden>
                         <MbtiTotemCanvas
                           archetype={a}
                           isHovered={isHovered}
