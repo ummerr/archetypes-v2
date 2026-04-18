@@ -75,6 +75,26 @@ const CLUSTER_MAX_OFFERINGS: Record<MirrorClusterId, number> = (() => {
   return counts;
 })();
 
+// Per-cluster thematic hues. Each energy gets its own color so the
+// constellation reads as a field of distinct archetypal tones rather
+// than a single gold glyph. Tuned to sit quietly on the dark canvas.
+const CLUSTER_COLOR: Record<MirrorClusterId, string> = {
+  sovereign: "#E0C065",
+  warrior: "#D6614A",
+  "sage-magician": "#9B87C4",
+  lover: "#E08597",
+  innocent: "#EADBA8",
+  explorer: "#5DB8A0",
+  rebel: "#B64558",
+  creator: "#E89B4F",
+  jester: "#F0C555",
+  caregiver: "#8AB876",
+  everyman: "#C3A07D",
+  "death-rebirth": "#7E5BA0",
+  teacher: "#7FA2CC",
+  "liminal-territory": "#ADA0C6",
+};
+
 type Phase = "intro" | "sort" | "result";
 
 interface Props {
@@ -256,10 +276,13 @@ function MiniConstellation({
 function TickBar({
   filled,
   total,
+  color,
 }: {
   filled: number;
   total: number;
+  color?: string;
 }) {
+  const filledColor = color ?? "var(--color-gold)";
   return (
     <div className="flex items-center gap-[3px]" aria-hidden>
       {Array.from({ length: total }).map((_, i) => (
@@ -267,11 +290,9 @@ function TickBar({
           key={i}
           className="block h-[4px] w-[8px] rounded-[1px]"
           style={{
-            background:
-              i < filled
-                ? "var(--color-gold)"
-                : "var(--color-surface-light)",
-            opacity: i < filled ? 0.85 : 0.55,
+            background: i < filled ? filledColor : "var(--color-surface-light)",
+            opacity: i < filled ? 0.9 : 0.55,
+            boxShadow: i < filled && color ? `0 0 6px ${color}66` : "none",
           }}
         />
       ))}
@@ -667,6 +688,12 @@ function MirrorResult({
   const dominant = useMemo(() => topClusters(scores, 3), [scores]);
   const quiet = useMemo(() => quietClusters(scores), [scores]);
   const shareCode = useMemo(() => encodeResult(choices), [choices]);
+  // Two-layer state: `hovered` is ephemeral (pointer-in), `pinned` is a click.
+  // Display uses hovered first so rolling across nodes feels responsive, but
+  // clicking pins the info card so the "Read more" link is reachable.
+  const [hovered, setHovered] = useState<MirrorClusterId | null>(null);
+  const [pinned, setPinned] = useState<MirrorClusterId | null>(null);
+  const active = hovered ?? pinned;
 
   const dominantLabels = dominant.map((id) => CLUSTER_INTERPRETATIONS[id].short);
 
@@ -676,11 +703,29 @@ function MirrorResult({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      <HeadlineBloom labels={dominantLabels} isShared={isShared} />
+      <HeadlineBloom dominant={dominant} isShared={isShared} />
 
-      <ConstellationChart scores={scores} dominant={dominant} />
+      <ConstellationChart
+        scores={scores}
+        dominant={dominant}
+        activeId={active}
+        onHover={setHovered}
+        onPin={(id) => setPinned((prev) => (prev === id ? null : id))}
+        onClear={() => {
+          setHovered(null);
+          setPinned(null);
+        }}
+      />
+
+      <ConstellationInfo
+        activeId={active}
+        scores={scores}
+        dominant={dominant}
+      />
 
       <HermeneuticCaveat variant="inline" className="text-center mt-8 mb-12" />
+
+      <p className="sr-only">Dominant energies: {dominantLabels.join(", ")}</p>
 
       <div className="space-y-10">
         {dominant.map((id, i) => (
@@ -705,14 +750,20 @@ function MirrorResult({
 }
 
 function HeadlineBloom({
-  labels,
+  dominant,
   isShared,
 }: {
-  labels: string[];
+  dominant: MirrorClusterId[];
   isShared: boolean;
 }) {
   const reduced = useReducedMotion() ?? false;
-  const words = labels.length ? labels : ["A quiet field"];
+  const parts = dominant.length
+    ? dominant.map((id) => ({
+        key: id as string,
+        label: CLUSTER_INTERPRETATIONS[id].short,
+        color: CLUSTER_COLOR[id],
+      }))
+    : [{ key: "quiet", label: "A quiet field", color: "var(--color-gold)" }];
 
   return (
     <header className="text-center mb-10">
@@ -720,13 +771,17 @@ function HeadlineBloom({
         {isShared ? "Their energy right now" : "Your energy right now"}
       </p>
       <h1
-        className="font-serif text-h1 leading-display glow-text-subtle text-gold"
+        className="font-serif text-h1 leading-display"
         aria-live="polite"
       >
-        {words.map((w, i) => (
-          <span key={`${w}-${i}`} className="inline-block">
+        {parts.map((p, i) => (
+          <span key={`${p.key}-${i}`} className="inline-block">
             <motion.span
               className="inline-block"
+              style={{
+                color: p.color,
+                textShadow: `0 0 32px ${p.color}66, 0 0 14px ${p.color}33`,
+              }}
               initial={reduced ? false : { opacity: 0, scale: 0.94, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{
@@ -735,10 +790,10 @@ function HeadlineBloom({
                 ease: [0.19, 1, 0.22, 1],
               }}
             >
-              {w}
+              {p.label}
             </motion.span>
-            {i < words.length - 1 && (
-              <span className="opacity-50 mx-2">·</span>
+            {i < parts.length - 1 && (
+              <span className="opacity-40 mx-2 text-text-secondary">·</span>
             )}
           </span>
         ))}
@@ -767,9 +822,17 @@ function radiusForScore(score: number, maxScore: number): number {
 function ConstellationChart({
   scores,
   dominant,
+  activeId,
+  onHover,
+  onPin,
+  onClear,
 }: {
   scores: Record<MirrorClusterId, number>;
   dominant: MirrorClusterId[];
+  activeId: MirrorClusterId | null;
+  onHover: (id: MirrorClusterId | null) => void;
+  onPin: (id: MirrorClusterId) => void;
+  onClear: () => void;
 }) {
   const reduced = useReducedMotion() ?? false;
   const dominantSet = new Set<MirrorClusterId>(dominant);
@@ -791,6 +854,40 @@ function ConstellationChart({
   });
 
   const dominantPositions = positions.filter((p) => dominantSet.has(p.id));
+
+  // Each edge of the dominant polygon gets its own linearGradient blending
+  // the two endpoint colors, so the connecting lines read as threads between
+  // the distinct archetypal hues rather than a single gold triangle.
+  const dominantEdges: Array<{
+    from: (typeof positions)[number];
+    to: (typeof positions)[number];
+    gradientId: string;
+  }> = [];
+  if (dominantPositions.length >= 2) {
+    for (let i = 0; i < dominantPositions.length; i++) {
+      if (dominantPositions.length < 3 && i === dominantPositions.length - 1) break;
+      const from = dominantPositions[i];
+      const to = dominantPositions[(i + 1) % dominantPositions.length];
+      dominantEdges.push({
+        from,
+        to,
+        gradientId: `mirror-edge-${from.id}-${to.id}`,
+      });
+    }
+  }
+
+  const centroid =
+    dominantPositions.length >= 3
+      ? {
+          x:
+            dominantPositions.reduce((s, p) => s + p.x, 0) /
+            dominantPositions.length,
+          y:
+            dominantPositions.reduce((s, p) => s + p.y, 0) /
+            dominantPositions.length,
+        }
+      : null;
+
   const dominantPath =
     dominantPositions.length >= 2
       ? dominantPositions
@@ -810,16 +907,74 @@ function ConstellationChart({
   const T_POLY = 2.0;
   const d = (t: number) => (reduced ? 0 : t);
 
+  function handleWrapperClick(e: React.MouseEvent<HTMLDivElement>) {
+    if ((e.target as HTMLElement).closest("[data-cluster-node]")) return;
+    onClear();
+  }
+
   return (
-    <div className="mx-auto w-full max-w-[480px]">
+    <div
+      className="relative mx-auto w-full max-w-[520px] select-none"
+      onClick={handleWrapperClick}
+    >
       <svg
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
         role="img"
         aria-label="Your archetypal energy constellation"
-        className="w-full h-auto"
+        className="w-full h-auto overflow-visible"
       >
+        <defs>
+          {dominantEdges.map((edge) => (
+            <linearGradient
+              key={edge.gradientId}
+              id={edge.gradientId}
+              x1={edge.from.x}
+              y1={edge.from.y}
+              x2={edge.to.x}
+              y2={edge.to.y}
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop
+                offset="0%"
+                stopColor={CLUSTER_COLOR[edge.from.id]}
+                stopOpacity={0.85}
+              />
+              <stop
+                offset="100%"
+                stopColor={CLUSTER_COLOR[edge.to.id]}
+                stopOpacity={0.85}
+              />
+            </linearGradient>
+          ))}
+          {centroid && dominantPositions.length >= 3 && (
+            <radialGradient
+              id="mirror-polygon-fill"
+              cx={centroid.x}
+              cy={centroid.y}
+              r={OUTER_R}
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop
+                offset="0%"
+                stopColor={CLUSTER_COLOR[dominantPositions[0].id]}
+                stopOpacity={0.18}
+              />
+              <stop
+                offset="55%"
+                stopColor={CLUSTER_COLOR[dominantPositions[1].id]}
+                stopOpacity={0.10}
+              />
+              <stop
+                offset="100%"
+                stopColor={CLUSTER_COLOR[dominantPositions[2].id]}
+                stopOpacity={0.03}
+              />
+            </radialGradient>
+          )}
+        </defs>
+
         <motion.g layoutId="mirror-constellation-ring">
-          {/* Guide rings at full, 2/3, 1/3 — drawn outer → inner */}
+          {/* Guide rings */}
           {[1, 0.67, 0.34].map((t, i) => (
             <motion.circle
               key={i}
@@ -838,7 +993,7 @@ function ConstellationChart({
             />
           ))}
 
-          {/* Faint spokes — stroke-draw in angular order */}
+          {/* Spokes */}
           {positions.map((p, i) => (
             <motion.line
               key={`spoke-${p.id}`}
@@ -860,137 +1015,341 @@ function ConstellationChart({
             />
           ))}
 
-          {/* Dominant polygon — the "figure" of the constellation */}
-          {dominantPath && (
+          {/* Polygon interior — soft radial blend of dominant hues */}
+          {dominantPath && dominantPositions.length >= 3 && (
             <motion.path
               d={dominantPath}
-              fill="var(--color-gold)"
-              stroke="var(--color-gold)"
-              strokeWidth={1}
-              initial={
-                reduced
-                  ? false
-                  : { pathLength: 0, fillOpacity: 0, strokeOpacity: 0 }
-              }
-              animate={{
-                pathLength: 1,
-                fillOpacity: 0.06,
-                strokeOpacity: 0.5,
-              }}
+              fill="url(#mirror-polygon-fill)"
+              initial={reduced ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{
-                pathLength: {
-                  duration: 0.85,
-                  delay: d(T_POLY),
-                  ease: "easeOut",
-                },
-                fillOpacity: {
-                  duration: 0.45,
-                  delay: d(T_POLY + 0.7),
-                  ease: "easeOut",
-                },
-                strokeOpacity: {
-                  duration: 0.35,
-                  delay: d(T_POLY),
-                  ease: "easeOut",
-                },
+                duration: 0.7,
+                delay: d(T_POLY + 0.5),
+                ease: "easeOut",
               }}
             />
           )}
 
-          {/* Nodes — 3 waves: quiet, mid, dominant */}
+          {/* Polygon edges — each a gradient between its two endpoint hues */}
+          {dominantEdges.map((edge, i) => (
+            <motion.line
+              key={edge.gradientId}
+              x1={edge.from.x}
+              y1={edge.from.y}
+              x2={edge.to.x}
+              y2={edge.to.y}
+              stroke={`url(#${edge.gradientId})`}
+              strokeWidth={1.4}
+              strokeLinecap="round"
+              initial={reduced ? false : { pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.9 }}
+              transition={{
+                pathLength: {
+                  duration: 0.7,
+                  delay: d(T_POLY + i * 0.14),
+                  ease: "easeOut",
+                },
+                opacity: {
+                  duration: 0.4,
+                  delay: d(T_POLY + i * 0.14),
+                  ease: "easeOut",
+                },
+              }}
+            />
+          ))}
+
+          {/* Nodes — each is an interactive tap target colored by cluster */}
           {positions.map((p) => {
             const isDominant = dominantSet.has(p.id);
             const isQuiet = p.score === 0;
+            const isActive = activeId === p.id;
+            const color = CLUSTER_COLOR[p.id];
             const nodeR = 3 + p.score * 2.4;
             const delay = isQuiet
               ? d(T_QUIET)
               : isDominant
                 ? d(T_DOM)
                 : d(T_MID);
-            const opacity = isQuiet ? 0.3 : isDominant ? 1 : 0.72;
+            const baseOpacity = isQuiet ? 0.42 : isDominant ? 1 : 0.78;
 
             return (
               <motion.g
                 key={p.id}
+                data-cluster-node={p.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`${CLUSTER_INTERPRETATIONS[p.id].short} — weight ${p.score} of ${CLUSTER_MAX_OFFERINGS[p.id]}`}
+                aria-pressed={isActive}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onPin(p.id);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onPin(p.id);
+                  }
+                }}
+                onMouseEnter={() => onHover(p.id)}
+                onMouseLeave={() => onHover(null)}
+                onFocus={() => onHover(p.id)}
+                onBlur={() => onHover(null)}
                 initial={reduced ? false : { opacity: 0 }}
-                animate={{ opacity }}
+                animate={{ opacity: baseOpacity }}
                 transition={{ duration: 0.32, delay, ease: "easeOut" }}
+                className="cursor-pointer focus:outline-none"
+                style={{ touchAction: "manipulation" }}
               >
-                {isDominant && (
+                {/* Oversized invisible hit area — ~44px on mobile */}
+                <circle
+                  cx={p.x}
+                  cy={p.y}
+                  r={20}
+                  fill="transparent"
+                />
+                {/* Outer aura — only dominant or active */}
+                {(isDominant || isActive) && (
                   <motion.circle
                     cx={p.x}
                     cy={p.y}
-                    fill="var(--color-gold)"
-                    fillOpacity={0.18}
-                    initial={reduced ? false : { r: 0 }}
-                    animate={{ r: nodeR + 7 }}
-                    transition={{
-                      duration: 0.55,
-                      delay: delay + 0.12,
-                      ease: [0.19, 1.28, 0.22, 1],
+                    fill={color}
+                    initial={reduced ? false : { r: 0, fillOpacity: 0 }}
+                    animate={{
+                      r: nodeR + (isActive ? 13 : 8),
+                      fillOpacity: reduced
+                        ? isActive
+                          ? 0.28
+                          : 0.18
+                        : isActive
+                          ? [0.3, 0.22, 0.3]
+                          : [0.22, 0.14, 0.22],
                     }}
+                    transition={
+                      reduced
+                        ? { duration: 0 }
+                        : {
+                            r: {
+                              duration: 0.55,
+                              delay: isActive ? 0 : delay + 0.12,
+                              ease: [0.19, 1.28, 0.22, 1],
+                            },
+                            fillOpacity: {
+                              duration: 3.6,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            },
+                          }
+                    }
                   />
                 )}
+                {/* Node core */}
                 <motion.circle
                   cx={p.x}
                   cy={p.y}
-                  fill={
-                    isDominant
-                      ? "var(--color-gold)"
-                      : "var(--color-text-secondary)"
-                  }
+                  fill={isQuiet ? "var(--color-text-secondary)" : color}
+                  fillOpacity={isQuiet ? 0.7 : 1}
                   initial={reduced ? false : { r: 0 }}
-                  animate={{ r: nodeR }}
+                  animate={{ r: isActive ? nodeR + 1.8 : nodeR }}
                   transition={{
                     duration: 0.42,
-                    delay,
+                    delay: isActive ? 0 : delay,
                     ease: isDominant
                       ? [0.19, 1.28, 0.22, 1]
                       : "easeOut",
                   }}
+                  style={{
+                    filter:
+                      isDominant || isActive
+                        ? `drop-shadow(0 0 4px ${color})`
+                        : undefined,
+                  }}
+                />
+                {/* Focus / active ring */}
+                <circle
+                  cx={p.x}
+                  cy={p.y}
+                  r={nodeR + 4.5}
+                  fill="none"
+                  stroke={color}
+                  strokeOpacity={isActive ? 0.7 : 0}
+                  strokeWidth={0.9}
+                  style={{ transition: "stroke-opacity 220ms ease" }}
                 />
               </motion.g>
             );
           })}
-
-          {/* Labels — fade in with each node wave */}
-          {positions.map((p) => {
-            const isDominant = dominantSet.has(p.id);
-            const cosA = Math.cos(p.angle);
-            const anchor =
-              Math.abs(cosA) < 0.22 ? "middle" : cosA > 0 ? "start" : "end";
-            const short = CLUSTER_INTERPRETATIONS[p.id].short;
-            const isQuiet = p.score === 0;
-            const delay = isQuiet
-              ? d(T_QUIET + 0.15)
-              : isDominant
-                ? d(T_DOM + 0.15)
-                : d(T_MID + 0.15);
-            const finalOpacity = isDominant ? 1 : isQuiet ? 0.4 : 0.7;
-
-            return (
-              <motion.text
-                key={`label-${p.id}`}
-                x={p.labelX}
-                y={p.labelY}
-                textAnchor={anchor}
-                dominantBaseline="middle"
-                fontFamily="var(--font-mono)"
-                fontSize={9.5}
-                letterSpacing="0.16em"
-                fill={isDominant ? "var(--color-gold)" : "currentColor"}
-                className="text-text-secondary uppercase"
-                initial={reduced ? false : { opacity: 0 }}
-                animate={{ opacity: finalOpacity }}
-                transition={{ duration: 0.32, delay }}
-              >
-                {short.toUpperCase()}
-              </motion.text>
-            );
-          })}
         </motion.g>
       </svg>
+
+      {/* HTML label overlay — keeps text at real pixel sizes on mobile */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden>
+        {positions.map((p) => {
+          const isDominant = dominantSet.has(p.id);
+          const isQuiet = p.score === 0;
+          const isActive = activeId === p.id;
+          const color = CLUSTER_COLOR[p.id];
+          const short = CLUSTER_INTERPRETATIONS[p.id].short;
+          const leftPct = (p.labelX / VIEW_W) * 100;
+          const topPct = (p.labelY / VIEW_H) * 100;
+          const cosA = Math.cos(p.angle);
+          const anchor =
+            Math.abs(cosA) < 0.22
+              ? "translate(-50%, -50%)"
+              : cosA > 0
+                ? "translate(0%, -50%)"
+                : "translate(-100%, -50%)";
+          const delay = isQuiet
+            ? d(T_QUIET + 0.15)
+            : isDominant
+              ? d(T_DOM + 0.15)
+              : d(T_MID + 0.15);
+          const finalOpacity = isActive
+            ? 1
+            : isDominant
+              ? 0.95
+              : isQuiet
+                ? 0.45
+                : 0.72;
+          const useColor = isDominant || isActive;
+
+          return (
+            <motion.span
+              key={`label-${p.id}`}
+              className="absolute font-mono text-[9px] sm:text-[10px] tracking-[0.18em] uppercase whitespace-nowrap"
+              style={{
+                left: `${leftPct}%`,
+                top: `${topPct}%`,
+                transform: anchor,
+                color: useColor ? color : "var(--color-text-secondary)",
+                textShadow: useColor ? `0 0 10px ${color}66` : "none",
+              }}
+              initial={reduced ? false : { opacity: 0 }}
+              animate={{ opacity: finalOpacity }}
+              transition={{ duration: 0.32, delay }}
+            >
+              {short}
+            </motion.span>
+          );
+        })}
+      </div>
     </div>
+  );
+}
+
+// Info card shown below the constellation. Pops in when the viewer
+// hovers / taps / focuses a node — gives a one-line read of that
+// energy plus a link into the full block for dominant clusters.
+function ConstellationInfo({
+  activeId,
+  scores,
+  dominant,
+}: {
+  activeId: MirrorClusterId | null;
+  scores: Record<MirrorClusterId, number>;
+  dominant: MirrorClusterId[];
+}) {
+  const reduced = useReducedMotion() ?? false;
+
+  return (
+    <div className="mt-5 min-h-[108px] sm:min-h-[96px]">
+      <AnimatePresence mode="wait">
+        {activeId ? (
+          <ActiveClusterCard
+            key={activeId}
+            id={activeId}
+            score={scores[activeId] ?? 0}
+            isDominant={dominant.includes(activeId)}
+            reduced={reduced}
+          />
+        ) : (
+          <motion.p
+            key="hint"
+            initial={reduced ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.28 }}
+            className="text-center font-serif italic text-sm text-text-secondary/55"
+          >
+            Tap or hover a star to read what it&rsquo;s saying.
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function ActiveClusterCard({
+  id,
+  score,
+  isDominant,
+  reduced,
+}: {
+  id: MirrorClusterId;
+  score: number;
+  isDominant: boolean;
+  reduced: boolean;
+}) {
+  const interp = CLUSTER_INTERPRETATIONS[id];
+  const color = CLUSTER_COLOR[id];
+  const maxOfferings = CLUSTER_MAX_OFFERINGS[id] ?? 1;
+  const isQuiet = score === 0;
+  const firstSentence = interp.body.split(/(?<=\.)\s+/)[0] ?? interp.body;
+
+  function handleJump(e: React.MouseEvent<HTMLAnchorElement>) {
+    const el = document.getElementById(`cluster-${id}`);
+    if (el) {
+      e.preventDefault();
+      el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+    }
+  }
+
+  return (
+    <motion.div
+      initial={reduced ? false : { opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -4 }}
+      transition={{ duration: 0.26, ease: "easeOut" }}
+      className="mx-auto max-w-xl rounded-sm border px-5 py-4"
+      style={{
+        borderColor: `${color}55`,
+        background: `linear-gradient(180deg, ${color}12, transparent 70%)`,
+      }}
+    >
+      <div className="flex items-center justify-between gap-4 mb-2">
+        <span className="flex items-center gap-2.5">
+          <span
+            aria-hidden
+            className="h-2 w-2 rounded-full"
+            style={{ background: color, boxShadow: `0 0 10px ${color}99` }}
+          />
+          <span
+            className="font-mono text-kicker tracking-kicker uppercase"
+            style={{ color }}
+          >
+            {interp.short}
+          </span>
+        </span>
+        <span className="flex items-center gap-2 shrink-0">
+          <span className="font-mono text-kicker tracking-kicker uppercase text-muted/60">
+            weight
+          </span>
+          <TickBar filled={score} total={maxOfferings} color={color} />
+        </span>
+      </div>
+      <p className="font-serif text-sm sm:text-body leading-snug text-text-secondary/90">
+        {isQuiet ? interp.quiet : firstSentence}
+      </p>
+      {isDominant && (
+        <a
+          href={`#cluster-${id}`}
+          onClick={handleJump}
+          className="mt-3 inline-block font-mono text-kicker tracking-kicker uppercase transition-opacity hover:opacity-80"
+          style={{ color }}
+        >
+          Read more &darr;
+        </a>
+      )}
+    </motion.div>
   );
 }
 
@@ -1030,9 +1389,16 @@ function ClusterBlock({
     return out;
   }, [cluster]);
 
+  const color = CLUSTER_COLOR[clusterId];
+
   return (
     <motion.article
-      className="rounded-sm border border-gold/25 px-6 py-7 md:px-9 md:py-10 transition-colors duration-500 hover:border-gold/45"
+      id={`cluster-${clusterId}`}
+      className="scroll-mt-24 rounded-sm border px-6 py-7 md:px-9 md:py-10 transition-colors duration-500"
+      style={{
+        borderColor: `${color}40`,
+        background: `linear-gradient(180deg, ${color}08, transparent 40%)`,
+      }}
       initial={reduced ? false : { opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -1042,14 +1408,22 @@ function ClusterBlock({
       }}
     >
       <div className="flex items-center justify-between gap-4 mb-4">
-        <p className="font-mono text-kicker tracking-kicker uppercase text-gold/85">
+        <p
+          className="font-mono text-kicker tracking-kicker uppercase flex items-center gap-2"
+          style={{ color }}
+        >
+          <span
+            aria-hidden
+            className="h-1.5 w-1.5 rounded-full"
+            style={{ background: color, boxShadow: `0 0 8px ${color}99` }}
+          />
           {interp.short}
         </p>
         <div className="flex items-center gap-2">
           <span className="font-mono text-kicker tracking-kicker uppercase text-muted/60">
             Weight
           </span>
-          <TickBar filled={score} total={maxOfferings} />
+          <TickBar filled={score} total={maxOfferings} color={color} />
         </div>
       </div>
 
