@@ -61,6 +61,7 @@ export const INDEX_LINK: NavLink = {
 };
 
 export const ATLAS_LINKS: NavLink[] = [
+  { label: "Today", href: "/today", desc: "A daily archetype for the collective" },
   { label: "The Atlas", href: "/atlas", desc: "Cross-system constellation" },
   { label: "Debates", href: "/atlas/debates", desc: "Contested mappings" },
   { label: "Figures", href: "/atlas/exemplars", desc: "The figures each tradition reads" },
