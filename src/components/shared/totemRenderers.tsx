@@ -15,10 +15,13 @@ import MbtiGlyph from "@/components/MbtiGlyph";
 import ArchetypeSymbol from "@/components/ArchetypeSymbol";
 import ArcanaGlyph from "@/components/tarot/ArcanaGlyph";
 import { HeroJourneyArchetypeIcon } from "@/components/HeroJourneyArchetypeIcon";
+import JungianSilhouette from "@/components/JungianSilhouette";
+import EnneagramSilhouette from "@/components/EnneagramSilhouette";
+import type { JungianArchetype } from "@/types/jungian";
+import type { EnneagramArchetype } from "@/types/enneagram";
 import { registerTotem } from "@/data/totem-registry";
 import { useTheme } from "@/components/ThemeProvider";
 import {
-  emissiveTextShadow,
   emissiveBoxShadow,
   emissiveHaloGradient,
   emissiveBorder,
@@ -68,43 +71,54 @@ function HeroJourneyRenderer({ entry, hovered }: { entry: IndexEntry; hovered: b
   );
 }
 
-function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean }) {
+/**
+ * Shared motif shell — two counter-rotating rings, breathing halo, orbiting
+ * mote, and a centered motif. Used by Tarot, Jungian, and Enneagram to give
+ * every bespoke per-archetype silhouette the same ceremonial framing so
+ * three systems read as one vocabulary.
+ */
+function MotifShell({
+  label,
+  color,
+  hovered,
+  children,
+}: {
+  label: string;
+  color: string;
+  hovered: boolean;
+  children: React.ReactNode;
+}) {
   const prefersReducedMotion = useReducedMotion();
   const { theme } = useTheme();
   const light = theme === "light";
   const motionOn = !prefersReducedMotion;
-  const color = entry.accentColor;
   return (
     <div
       className="relative flex items-center justify-center"
       style={{ width: CELL, height: CELL }}
-      aria-label={`${entry.name} — ${entry.systemName}`}
+      aria-label={label}
       role="img"
     >
-      {/* breathing radial halo */}
       <motion.span
         className="absolute inset-[-4px] rounded-full"
-        style={{
-          background: emissiveHaloGradient(color, { light, hovered }),
-        }}
+        style={{ background: emissiveHaloGradient(color, { light, hovered }) }}
         animate={motionOn ? { scale: [1, 1.08, 1], opacity: [0.75, 1, 0.75] } : undefined}
         transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
       />
-      {/* slow-rotating solid ring */}
       <motion.span
         className="absolute inset-0 rounded-full"
         style={{ border: emissiveBorder(color, { light, hovered }) }}
         animate={motionOn ? { rotate: 360 } : undefined}
         transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
       />
-      {/* counter-rotating dashed ring */}
       <motion.span
         className="absolute inset-[5px] rounded-full"
-        style={{ border: `1px dashed ${color}${light ? (hovered ? "35" : "18") : (hovered ? "55" : "28")}` }}
+        style={{
+          border: `1px dashed ${color}${light ? (hovered ? "35" : "18") : (hovered ? "55" : "28")}`,
+        }}
         animate={motionOn ? { rotate: -360 } : undefined}
         transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
       />
-      {/* orbiting phase mote */}
       <motion.span
         className="absolute top-1/2 left-1/2"
         style={{ width: 0, height: 0 }}
@@ -124,7 +138,6 @@ function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean
           }}
         />
       </motion.span>
-      {/* bespoke arcana composition */}
       <motion.div
         className="relative"
         style={{
@@ -135,52 +148,55 @@ function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean
         animate={{ scale: hovered ? 1.08 : 1 }}
         transition={{ scale: { duration: 0.5, ease: "easeOut" } }}
       >
-        <ArcanaGlyph slug={entry.slug} color={color} size={34} light={light} />
+        {children}
       </motion.div>
     </div>
   );
 }
 
-function GlyphRingRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean }) {
+function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean }) {
   const { theme } = useTheme();
   const light = theme === "light";
-  const color = entry.accentColor;
-  const char = entry.symbol ?? "◯";
   return (
-    <div
-      className="relative flex items-center justify-center"
-      style={{ width: CELL, height: CELL }}
-      aria-label={`${entry.name} — ${entry.systemName}`}
-      role="img"
+    <MotifShell
+      label={`${entry.name} — ${entry.systemName}`}
+      color={entry.accentColor}
+      hovered={hovered}
     >
-      <span
-        className="absolute inset-0 rounded-full transition-all duration-700 ease-out"
-        style={{
-          border: emissiveBorder(color, { light, hovered }),
-          background: emissiveHaloGradient(color, { light, hovered }),
-          transform: hovered ? "scale(1.08)" : "scale(1)",
-        }}
+      <ArcanaGlyph slug={entry.slug} color={entry.accentColor} size={34} light={light} />
+    </MotifShell>
+  );
+}
+
+function JungianRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean }) {
+  return (
+    <MotifShell
+      label={`${entry.name} — ${entry.systemName}`}
+      color={entry.accentColor}
+      hovered={hovered}
+    >
+      <JungianSilhouette
+        slug={entry.slug as JungianArchetype["slug"]}
+        color={entry.accentColor}
+        size={34}
       />
-      <span
-        className="absolute inset-[6px] rounded-full transition-opacity duration-1000"
-        style={{
-          border: `1px dashed ${color}${light ? (hovered ? "30" : "14") : (hovered ? "40" : "18")}`,
-          opacity: hovered ? 1 : 0.55,
-          animation: hovered ? "slow-spin 14s linear infinite" : "none",
-        }}
+    </MotifShell>
+  );
+}
+
+function EnneagramRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean }) {
+  return (
+    <MotifShell
+      label={`${entry.name} — ${entry.systemName}`}
+      color={entry.accentColor}
+      hovered={hovered}
+    >
+      <EnneagramSilhouette
+        slug={entry.slug as EnneagramArchetype["slug"]}
+        color={entry.accentColor}
+        size={34}
       />
-      <span
-        className="relative font-serif leading-none transition-all duration-500"
-        style={{
-          color,
-          fontSize: 26,
-          textShadow: emissiveTextShadow(color, { light, hovered }),
-          transform: hovered ? "scale(1.08)" : "scale(1)",
-        }}
-      >
-        {char}
-      </span>
-    </div>
+    </MotifShell>
   );
 }
 
@@ -190,7 +206,9 @@ registerTotem("heros-journey", (entry, hovered) => (
   <HeroJourneyRenderer entry={entry} hovered={hovered} />
 ));
 registerTotem("tarot", (entry, hovered) => <TarotRenderer entry={entry} hovered={hovered} />);
-registerTotem("jungian", (entry, hovered) => <GlyphRingRenderer entry={entry} hovered={hovered} />);
+registerTotem("jungian", (entry, hovered) => (
+  <JungianRenderer entry={entry} hovered={hovered} />
+));
 registerTotem("enneagram", (entry, hovered) => (
-  <GlyphRingRenderer entry={entry} hovered={hovered} />
+  <EnneagramRenderer entry={entry} hovered={hovered} />
 ));
