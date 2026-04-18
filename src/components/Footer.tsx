@@ -29,7 +29,7 @@ export default function Footer() {
           <LinkList links={ATLAS_LINKS} />
         </Column>
         <Column title="Practice">
-          <LinkList links={PRACTICE_LINKS} comingSoon />
+          <LinkList links={PRACTICE_LINKS} />
         </Column>
         <Column title="About">
           <LinkList links={ABOUT_LINKS} />
@@ -60,12 +60,12 @@ function Column({ title, children }: { title: string; children: React.ReactNode 
   );
 }
 
-function LinkList({ links, comingSoon }: { links: NavLink[]; comingSoon?: boolean }) {
+function LinkList({ links }: { links: NavLink[] }) {
   return (
     <ul className="space-y-1.5">
       {links.map((l) => (
         <li key={l.href}>
-          {comingSoon ? (
+          {l.soon ? (
             <span className="font-mono text-label tracking-label uppercase text-muted/60 cursor-default">
               {l.label}
               <span className="ml-2 text-kicker tracking-kicker text-gold/40">— soon</span>
@@ -79,7 +79,7 @@ function LinkList({ links, comingSoon }: { links: NavLink[]; comingSoon?: boolea
             </Link>
           )}
           {l.desc && (
-            <div className={`font-serif italic text-xs ${comingSoon ? "text-muted/50" : "text-muted"}`}>{l.desc}</div>
+            <div className={`font-serif italic text-xs ${l.soon ? "text-muted/50" : "text-muted"}`}>{l.desc}</div>
           )}
         </li>
       ))}

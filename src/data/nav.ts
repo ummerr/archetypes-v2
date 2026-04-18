@@ -10,6 +10,7 @@ export type NavLink = {
   label: string;
   href: string;
   desc?: string;
+  soon?: boolean;
 };
 
 export type NavSystem = {
@@ -61,8 +62,6 @@ export const INDEX_LINK: NavLink = {
 };
 
 export const ATLAS_LINKS: NavLink[] = [
-  { label: "Today", href: "/today", desc: "A daily archetype for the collective" },
-  { label: "The Mirror", href: "/mirror", desc: "A cross-system snapshot in twelve choices" },
   { label: "The Atlas", href: "/atlas", desc: "Cross-system constellation" },
   { label: "Debates", href: "/atlas/debates", desc: "Contested mappings" },
   { label: "Figures", href: "/atlas/exemplars", desc: "The figures each tradition reads" },
@@ -72,7 +71,9 @@ export const ATLAS_LINKS: NavLink[] = [
 export const SHOW_PRACTICE = false;
 
 export const PRACTICE_LINKS: NavLink[] = [
-  { label: "Profile", href: "/profile", desc: "Build a cross-system reflection" },
+  { label: "Today", href: "/today", desc: "A daily archetype for the collective" },
+  { label: "The Mirror", href: "/mirror", desc: "A cross-system snapshot in twelve choices" },
+  { label: "Profile", href: "/profile", desc: "Build a cross-system reflection", soon: true },
 ];
 
 export const ABOUT_LINKS: NavLink[] = [
