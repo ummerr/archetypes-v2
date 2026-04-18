@@ -51,7 +51,12 @@ There are exactly five scales, defined in `src/lib/totem-sizes.ts`. Each carries
 
 **Note on MBTI sizing.** `MbtiGlyph` is internally calibrated at denser pixel values (sm=72, md=128, lg=200) because its cognitive-geometry primitives need the space to read. Treat `MbtiGlyph size="sm"` as occupying the visual weight of an `md` in the canonical scale.
 
-**Note on MBTI dimensionality.** The 2D `MbtiGlyph` is the sole form at sm/md/lg. A 3D counterpart, `MbtiTotemCanvas`, appears **only at the detail-page hero** — and it is a literal z-extrusion of the 2D vocabulary (NodeBurst → sphere+spikes, SquareStack → cube, GridCross → lattice, CircleRings → tori). Same primitives, now dimensional. This honors the "one glyph at every scale" principle at ambient scale while letting the hero earn its ceremonial depth.
+**Note on MBTI dimensionality.** MBTI has **one vocabulary** (NodeBurst / SquareStack / GridCross / CircleRings) rendered in two dimensionalities:
+
+- **2D `MbtiGlyph`** — used at `sm` ambient scale (sibling cards, resonance mentions, OG/share cards, anywhere Satori must render the glyph).
+- **3D `MbtiTotemCanvas`** — used at `md`+ surfaces where WebGL is available: temperament grid cards (index page) *and* the detail-page hero. Matches the Jungian / Enneagram pattern where the 3D totem is the primary per-archetype icon across index and hero.
+
+The 3D primitives are a literal z-extrusion of the 2D primitives — NodeBurst → sphere+spikes, SquareStack → cube + rails/inner-cube, GridCross → lattice, CircleRings → tori. Same vocabulary, same dom/aux hierarchy, same breath rhythm. This is **not a 2D-ambient / 3D-ceremonial split**: it is one form expressed at two dimensionalities, with 2D reserved for surfaces where Three.js is unavailable or cost-prohibitive.
 
 ---
 
@@ -74,14 +79,14 @@ Every card composes three layers:
 ## 5. Totem map — unique but consistent
 
 ```
-                 ambient (sm/md)        ceremonial (lg/hero)
-KWML          →  ArchetypeSymbol        TotemCanvas (3D platonic)
-Jungian       →  glyph + ring           JungianTotemCanvas (3D organic)
-Enneagram     →  numeral + ring         EnneagramTotemCanvas (3D instrument)
-MBTI          →  MbtiGlyph 2D           MbtiTotemCanvas (3D extrusion of same primitives)
-Tarot         →  halo + ArcanaGlyph     TarotCard (flip + foil, layered ArcanaGlyph with parallax)
-Hero's Journey → HeroJourneyIcon        [gap — see §8]
-Atlas cluster →  ClusterTotem           ClusterTotem hero
+                 ambient (sm)           grid (md)                       ceremonial (lg/hero)
+KWML          →  ArchetypeSymbol        ArchetypeSymbol                 TotemCanvas (3D platonic)
+Jungian       →  glyph + ring           JungianTotemCanvas              JungianTotemCanvas
+Enneagram     →  numeral + ring         EnneagramTotemCanvas            EnneagramTotemCanvas
+MBTI          →  MbtiGlyph 2D           MbtiTotemCanvas (3D, 128px)     MbtiTotemCanvas (3D, 208px)
+Tarot         →  halo + ArcanaGlyph     ArcanaGlyph inside TarotCard    TarotCard (flip + foil + parallax)
+Hero's Journey → HeroJourneyIcon        HeroJourneyIcon                 [gap — see §8]
+Atlas cluster →  ClusterTotem           ClusterTotem                    ClusterTotem hero
 ```
 
 Each cell is unique in what it *draws*; consistent in what it *obeys* (grammar, scale budget, card anatomy). Routing lives in `src/data/totem-registry.ts` — one entry per system.
@@ -144,3 +149,47 @@ src/components/shared/ArchetypeCardVisual.tsx — dispatcher, reads the registry
 ```
 
 If you are adding a seventh system, start at the registry and the scale table. Do not write an eighth `if (systemId === …)` branch.
+
+---
+
+## 9. Propagation sweep — the iconography parity rule
+
+**When an archetype icon changes, it changes everywhere the archetype appears.** An unswept surface breaks recognition: a reader clicks a card and lands on an unrelated-looking form. This is the single most common iconography regression on this site.
+
+Before shipping any change to a per-archetype icon (2D glyph, 3D totem, card face, motif primitive), walk the full journey and confirm every surface renders the same vocabulary:
+
+### 9a. Per-archetype icon surfaces — audit list
+
+For the system you changed, verify each of these (skip rows that don't apply):
+
+| Surface | Primary location |
+|---|---|
+| **Index page grid card** | `src/app/<system>/page.tsx` or `<System>TemperamentGrid.tsx` / cluster/triad grid |
+| **Index ambient / wayfinding** | `src/components/shared/totemRenderers.tsx` (fed by `totem-registry.ts`) |
+| **Detail page hero** | `src/components/<System>DetailClient.tsx` |
+| **Sibling / related cards** | bottom of `<System>DetailClient.tsx` |
+| **Cross-system resonance** | `src/components/resonance/CrossSystemResonance*.tsx` |
+| **All-archetypes index** | `src/app/archetypes/page.tsx` (uses `totem-registry`) |
+| **Modal view** | `src/app/<system>/@modal/…` (usually reuses `<System>DetailClient`) |
+| **OG / share card** | `src/app/api/card/<system>/[slug]/route.ts` and `src/lib/og-totems.tsx` (Satori — no filters/animation) |
+| **Atlas / cluster surfaces** | `src/components/atlas/…` |
+
+### 9b. Ambient vs ceremonial is a dimensionality choice, not a visual split
+
+If a system has a 2D glyph and a 3D totem, they **must be the same vocabulary** — the 3D is a z-extrusion of the 2D primitives, not an unrelated ceremonial form. The 2D is reserved for surfaces where WebGL is unavailable or cost-prohibitive (Satori OG, sm scale). Everywhere else, prefer the 3D.
+
+If the two forms drift — different primitives, different silhouette — collapse them back to one vocabulary before shipping. Iconography parity is non-negotiable.
+
+### 9c. Shared primitive libraries are the propagation unit
+
+When multiple archetypes in a system share a motif (Tarot: pillars, crowns, wreaths, chalices), those primitives live in **one** file (`src/components/tarot/arcanaMotifs.tsx`), and every composition dispatches from it. A change to the primitive propagates to all 22 arcana automatically. Don't inline a motif into a single card — you will end up editing it in 6 places.
+
+Same logic for MBTI: the N / S / T / F primitives live in `MbtiGlyph.tsx` (2D) and `MbtiTotemCanvas.tsx` (3D). The two files are locked vocabularies — a change to one requires the matching change in the other.
+
+### 9d. Before committing an iconography change
+
+- [ ] Ran every surface in §9a that applies to the system you touched.
+- [ ] If the system has 2D + 3D forms: confirmed they still share primitives.
+- [ ] If the system has a shared motif library: change lives in the library, not in consumers.
+- [ ] OG / Satori path tested (`simple={true}` or Satori-safe paths — no `<filter>`, no animation, prefer `<path>` with cubic beziers).
+- [ ] `prefers-reduced-motion` still kills animation on every surface.

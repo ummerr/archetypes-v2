@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ALL_TAROT, TAROT_PHASES } from "@/data/tarot/archetypes";
 import type { TarotArchetype } from "@/types/tarot";
 import { useTheme } from "@/components/ThemeProvider";
+import ArcanaGlyph from "@/components/tarot/ArcanaGlyph";
 
 const GRAIN_SVG =
   "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
@@ -161,16 +162,22 @@ export default function TarotDeckArc({
                     >
                       {card.numeral}
                     </span>
-                    <span
-                      className="font-serif text-2xl leading-none"
+                    <div
                       style={{
-                        color,
-                        textShadow: !light && isHovered ? `0 0 10px ${color}` : "none",
+                        filter: !light
+                          ? `drop-shadow(0 0 ${isHovered ? 6 : 3}px ${color}${isHovered ? "AA" : "70"})`
+                          : `drop-shadow(0 1px 1px ${color}55)`,
+                        transition: "filter 300ms ease",
                       }}
                       aria-hidden
                     >
-                      {card.symbol}
-                    </span>
+                      <ArcanaGlyph
+                        slug={card.slug}
+                        color={color}
+                        size={Math.round(cardH * 0.4)}
+                        light={light}
+                      />
+                    </div>
                     <span
                       className="font-serif text-kicker tracking-tight leading-tight text-center px-0.5"
                       style={{ color: light ? "var(--color-text-primary)" : color }}
