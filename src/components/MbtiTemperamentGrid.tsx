@@ -2,18 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import {
   TEMPERAMENT_GROUPS,
   MBTI_BY_TEMPERAMENT,
 } from "@/data/mbti/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
-import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
-
-const MbtiTotemCanvas = dynamic(
-  () => import("@/components/MbtiTotemCanvas"),
-  { ssr: false, loading: () => <CanvasSkeleton /> },
-);
+import MbtiGlyph from "@/components/MbtiGlyph";
 
 export default function MbtiTemperamentGrid() {
   const { theme } = useTheme();
@@ -87,11 +81,7 @@ export default function MbtiTemperamentGrid() {
 
                     <div className="p-5 flex flex-col items-center text-center">
                       <div className="w-full h-32 -mt-1 mb-2 flex items-center justify-center" aria-hidden>
-                        <MbtiTotemCanvas
-                          archetype={a}
-                          isHovered={isHovered}
-                          size={128}
-                        />
+                        <MbtiGlyph archetype={a} size="md" interactive />
                       </div>
 
                       <p
