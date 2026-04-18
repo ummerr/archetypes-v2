@@ -164,6 +164,170 @@ export const FIGURES: FigureEntry[] = [
     kind: "cultural",
     aliases: ["Katniss Everdeen"],
   },
+
+  // ── Tier A — confirmed in 3+ traditions ────────────────────────────────
+  {
+    slug: "samwise-gamgee",
+    displayName: "Samwise Gamgee",
+    kind: "cultural",
+    aliases: ["Samwise Gamgee", "Samwise on the mountain"],
+  },
+  {
+    slug: "carl-jung",
+    displayName: "Carl Jung",
+    kind: "historical",
+    aliases: [
+      "Carl Jung",
+      "Carl Jung (mature)",
+      "Carl Jung (Red Book period)",
+      "Carl Jung (late life)",
+    ],
+  },
+  {
+    slug: "frida-kahlo",
+    displayName: "Frida Kahlo",
+    kind: "cultural",
+    aliases: ["Frida Kahlo", "Frida Kahlo & Diego Rivera"],
+  },
+  {
+    slug: "yoda",
+    displayName: "Yoda",
+    kind: "cultural",
+    aliases: ["Yoda", "Yoda (in exile)"],
+  },
+  {
+    slug: "prospero",
+    displayName: "Prospero",
+    kind: "cultural",
+    aliases: ["Prospero", "Prospero breaking the staff"],
+  },
+  {
+    slug: "socrates",
+    displayName: "Socrates",
+    kind: "historical",
+    aliases: ["Socrates"],
+  },
+  {
+    slug: "george-washington",
+    displayName: "George Washington",
+    kind: "historical",
+    aliases: ["George Washington"],
+  },
+  {
+    slug: "mary-poppins",
+    displayName: "Mary Poppins",
+    kind: "cultural",
+    aliases: ["Mary Poppins"],
+  },
+  {
+    slug: "willy-wonka",
+    displayName: "Willy Wonka",
+    kind: "cultural",
+    aliases: ["Willy Wonka"],
+  },
+  {
+    slug: "jay-gatsby",
+    displayName: "Jay Gatsby",
+    kind: "cultural",
+    aliases: ["Jay Gatsby"],
+  },
+  {
+    slug: "dumbledore",
+    displayName: "Albus Dumbledore",
+    kind: "cultural",
+    aliases: [
+      "Dumbledore",
+      "Albus Dumbledore",
+      "Professor Dumbledore",
+      "Dumbledore's Pensieve",
+    ],
+  },
+
+  // ── Tier B — confirmed in 2 traditions ─────────────────────────────────
+  {
+    slug: "merlin",
+    displayName: "Merlin",
+    kind: "cultural",
+    aliases: ["Merlin"],
+  },
+  {
+    slug: "gollum",
+    displayName: "Gollum",
+    kind: "cultural",
+    aliases: ["Gollum", "Sméagol", "Smeagol"],
+  },
+  {
+    slug: "obi-wan",
+    displayName: "Obi-Wan Kenobi",
+    kind: "cultural",
+    aliases: ["Obi-Wan Kenobi", "Obi-Wan"],
+  },
+  {
+    slug: "sherlock-holmes",
+    displayName: "Sherlock Holmes",
+    kind: "cultural",
+    aliases: ["Sherlock Holmes"],
+  },
+  {
+    slug: "vincent-van-gogh",
+    displayName: "Vincent van Gogh",
+    kind: "historical",
+    aliases: ["Vincent van Gogh"],
+  },
+  {
+    slug: "emily-dickinson",
+    displayName: "Emily Dickinson",
+    kind: "historical",
+    aliases: ["Emily Dickinson"],
+  },
+  {
+    slug: "pablo-neruda",
+    displayName: "Pablo Neruda",
+    kind: "historical",
+    aliases: ["Pablo Neruda"],
+  },
+  {
+    slug: "rumi",
+    displayName: "Rumi",
+    kind: "historical",
+    aliases: ["Rumi", "Rumi's speaker"],
+  },
+  {
+    slug: "joseph-campbell",
+    displayName: "Joseph Campbell",
+    kind: "historical",
+    aliases: ["Joseph Campbell", "Joseph Campbell himself (Sarah Lawrence years)"],
+  },
+  {
+    slug: "confucius",
+    displayName: "Confucius",
+    kind: "historical",
+    aliases: ["Confucius"],
+  },
+  {
+    slug: "anne-frank",
+    displayName: "Anne Frank",
+    kind: "historical",
+    aliases: ["Anne Frank", "Anne Frank's diary"],
+  },
+  {
+    slug: "t-challa",
+    displayName: "T'Challa",
+    kind: "cultural",
+    aliases: ["T'Challa", "Black Panther"],
+  },
+  {
+    slug: "harriet-tubman",
+    displayName: "Harriet Tubman",
+    kind: "historical",
+    aliases: ["Harriet Tubman"],
+  },
+  {
+    slug: "walt-whitman",
+    displayName: "Walt Whitman",
+    kind: "historical",
+    aliases: ["Walt Whitman"],
+  },
 ];
 
 export function getFigureBySlug(slug: string): FigureEntry | undefined {

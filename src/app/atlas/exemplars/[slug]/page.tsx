@@ -2,22 +2,32 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FIGURES } from "@/data/exemplars/figures";
-import { getFigureIndex, getFigureRecord, resolveFigureClusters } from "@/lib/exemplars";
+import {
+  getFigureIndex,
+  getFigureRecord,
+  resolveFigureClusters,
+  type FigureClusterResolution,
+  type FigureRecord,
+} from "@/lib/exemplars";
 import { archetypeDisplayName, archetypeHref, systemAccent } from "@/lib/resonance";
 import { buildPageMetadata } from "@/lib/site";
 import SectionHeading from "@/components/shared/SectionHeading";
+import ClusterTotem from "@/components/viz/ClusterTotem";
 import {
   CLUSTER_AXES,
+  STAGES,
+  AFFECTS,
+  STANCES,
   STAGE_LABELS,
   AFFECT_LABELS,
+  AFFECT_ACCENT,
   STANCE_LABELS,
-  type Stance,
+  type Stage,
   type Affect,
+  type Stance,
 } from "@/data/atlas-lens-axes";
 
 export function generateStaticParams() {
-  // Only static-gen pages for figures that actually resolve to at least one
-  // appearance — empty figures would 404.
   return getFigureIndex().map((r) => ({ slug: r.figure.slug }));
 }
 
@@ -48,7 +58,6 @@ export default async function FigureDetailPage({
   const { slug } = await params;
   const record = getFigureRecord(slug);
   if (!record) {
-    // If the slug is in FIGURES but has no appearances, still show a soft page.
     const bare = FIGURES.find((f) => f.slug === slug);
     if (!bare) notFound();
     return (
@@ -71,17 +80,12 @@ export default async function FigureDetailPage({
   }
 
   const clusters = resolveFigureClusters(record);
-  const stances = new Set<Stance>(
-    clusters
-      .map((c) => CLUSTER_AXES[c.clusterId]?.stance)
-      .filter((s): s is Stance => Boolean(s)),
-  );
-  const affects = new Set<Affect>(
-    clusters
-      .map((c) => CLUSTER_AXES[c.clusterId]?.affect)
-      .filter((a): a is Affect => Boolean(a)),
-  );
-  const holdsTension = stances.size > 1 || affects.size > 1;
+  const dominantCluster = pickDominantCluster(clusters);
+  const stages = collectAxis(clusters, "stage");
+  const affects = collectAxis(clusters, "affect");
+  const stancesSet = collectAxis(clusters, "stance");
+  const holdsTension = stancesSet.size > 1 || affects.size > 1;
+  const neighbors = computeNeighbors(record, clusters);
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-10 py-20">
@@ -91,21 +95,34 @@ export default async function FigureDetailPage({
       >
         ← Figures
       </Link>
-      <div className="mt-4 flex items-baseline gap-3 flex-wrap">
-        <SectionHeading kicker="Figure" as="h1">
-          {record.figure.displayName}
-        </SectionHeading>
+
+      <div className="mt-4 flex items-start gap-5 flex-wrap">
+        {dominantCluster && (
+          <div
+            className="shrink-0 mt-1"
+            aria-hidden
+            style={{ width: 72, height: 72 }}
+          >
+            <ClusterTotem id={dominantCluster.clusterId} size="md" />
+          </div>
+        )}
+        <div className="flex-1 min-w-0">
+          <SectionHeading kicker="Figure" as="h1">
+            {record.figure.displayName}
+          </SectionHeading>
+          <p className="font-mono text-label tracking-kicker uppercase text-text-secondary/60 mt-2">
+            {record.figure.kind} · read by {record.appearances.length} of 6 traditions
+          </p>
+        </div>
       </div>
-      <p className="font-mono text-label tracking-kicker uppercase text-text-secondary/60 mb-4">
-        {record.figure.kind} · read by {record.appearances.length} of 6 traditions
-      </p>
+
       {record.figure.editorialNote && (
-        <p className="font-serif italic text-base text-text-secondary/85 max-w-2xl mb-10">
+        <p className="font-serif italic text-base text-text-secondary/85 max-w-2xl mt-6 mb-10">
           {record.figure.editorialNote}
         </p>
       )}
 
-      <section className="mb-12">
+      <section className="mt-10 mb-12">
         <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-4">
           How each tradition reads the figure
         </p>
@@ -150,7 +167,36 @@ export default async function FigureDetailPage({
       </section>
 
       {clusters.length > 0 && (
-        <section className="mb-10">
+        <section className="mb-12">
+          <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-4">
+            Where the figure sits on the lenses
+          </p>
+          <div className="rounded-sm border border-surface-light/40 p-5 space-y-4">
+            <AxisRow
+              label="Stage"
+              values={STAGES}
+              active={stages}
+              labels={STAGE_LABELS}
+            />
+            <AxisRow
+              label="Affect"
+              values={AFFECTS}
+              active={affects}
+              labels={AFFECT_LABELS}
+              colorOf={(v) => AFFECT_ACCENT[v as Affect]}
+            />
+            <AxisRow
+              label="Stance"
+              values={STANCES}
+              active={stancesSet}
+              labels={STANCE_LABELS}
+            />
+          </div>
+        </section>
+      )}
+
+      {clusters.length > 0 && (
+        <section className="mb-12">
           <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-4">
             Cluster coalescence
           </p>
@@ -183,15 +229,15 @@ export default async function FigureDetailPage({
           {holdsTension && (
             <p className="font-serif italic text-body-sm text-amber-300/85 max-w-prose border-l-2 border-amber-500/40 pl-4">
               {record.figure.displayName} is read across{" "}
-              {stances.size > 1 && (
+              {stancesSet.size > 1 && (
                 <>
-                  divergent stances ({Array.from(stances).map((s) => STANCE_LABELS[s]).join(" vs. ")})
+                  divergent stances ({Array.from(stancesSet).map((s) => STANCE_LABELS[s as Stance]).join(" vs. ")})
                 </>
               )}
-              {stances.size > 1 && affects.size > 1 && " and "}
+              {stancesSet.size > 1 && affects.size > 1 && " and "}
               {affects.size > 1 && (
                 <>
-                  divergent affect centers ({Array.from(affects).map((a) => AFFECT_LABELS[a]).join(" vs. ")})
+                  divergent affect centers ({Array.from(affects).map((a) => AFFECT_LABELS[a as Affect]).join(" vs. ")})
                 </>
               )}
               . The figure holds a tension their readers cannot — which is often why they endure.
@@ -199,6 +245,143 @@ export default async function FigureDetailPage({
           )}
         </section>
       )}
+
+      {neighbors.length > 0 && (
+        <section className="mb-10">
+          <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-4">
+            Also read in this register
+          </p>
+          <ul className="space-y-4">
+            {neighbors.map((n) => (
+              <li key={n.clusterId}>
+                <p className="font-serif text-body-sm italic text-text-secondary/75 mb-2">
+                  {n.clusterTheme}
+                </p>
+                <ul className="flex flex-wrap gap-2">
+                  {n.figures.map((f) => (
+                    <li key={f.slug}>
+                      <Link
+                        href={`/atlas/exemplars/${f.slug}`}
+                        className="inline-block rounded-sm border border-surface-light/40 px-3 py-1.5 font-serif text-body-sm hover:border-gold/60 hover:text-gold transition-colors"
+                      >
+                        {f.displayName}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+  );
+}
+
+// ── helpers ────────────────────────────────────────────────────────────────
+
+function pickDominantCluster(
+  clusters: FigureClusterResolution[],
+): FigureClusterResolution | undefined {
+  if (clusters.length === 0) return undefined;
+  return clusters
+    .slice()
+    .sort((a, b) => b.appearances.length - a.appearances.length)[0];
+}
+
+function collectAxis<K extends "stage" | "affect" | "stance">(
+  clusters: FigureClusterResolution[],
+  key: K,
+): Set<string> {
+  const set = new Set<string>();
+  for (const c of clusters) {
+    const ax = CLUSTER_AXES[c.clusterId];
+    if (ax) set.add(ax[key]);
+  }
+  return set;
+}
+
+interface NeighborGroup {
+  clusterId: string;
+  clusterTheme: string;
+  figures: Array<{ slug: string; displayName: string }>;
+}
+
+function computeNeighbors(
+  record: FigureRecord,
+  clusters: FigureClusterResolution[],
+): NeighborGroup[] {
+  const all = getFigureIndex();
+  return clusters
+    .map<NeighborGroup>((c) => {
+      const others = all.filter((other) => {
+        if (other.figure.slug === record.figure.slug) return false;
+        return resolveFigureClusters(other).some((rc) => rc.clusterId === c.clusterId);
+      });
+      others.sort(
+        (a, b) =>
+          b.appearances.length - a.appearances.length ||
+          a.figure.displayName.localeCompare(b.figure.displayName),
+      );
+      return {
+        clusterId: c.clusterId,
+        clusterTheme: c.clusterTheme,
+        figures: others.slice(0, 5).map((o) => ({
+          slug: o.figure.slug,
+          displayName: o.figure.displayName,
+        })),
+      };
+    })
+    .filter((g) => g.figures.length > 0);
+}
+
+interface AxisRowProps<T extends string> {
+  label: string;
+  values: readonly T[];
+  active: Set<string>;
+  labels: Record<T, string>;
+  colorOf?: (v: T) => string;
+}
+
+function AxisRow<T extends string>({
+  label,
+  values,
+  active,
+  labels,
+  colorOf,
+}: AxisRowProps<T>) {
+  return (
+    <div className="flex items-baseline gap-4 flex-wrap">
+      <p className="font-mono text-kicker tracking-kicker uppercase text-text-secondary/60 w-16 shrink-0">
+        {label}
+      </p>
+      <ul className="flex flex-wrap gap-1.5">
+        {values.map((v) => {
+          const on = active.has(v);
+          const color = colorOf?.(v);
+          return (
+            <li key={v}>
+              <span
+                className={`inline-block rounded-sm border px-2.5 py-1 font-mono text-kicker tracking-label uppercase transition-colors ${
+                  on
+                    ? "text-text-primary"
+                    : "text-text-secondary/45 border-surface-light/30"
+                }`}
+                style={
+                  on
+                    ? {
+                        borderColor: color ? `${color}99` : "rgba(201,184,132,0.7)",
+                        background: color ? `${color}1f` : "rgba(201,184,132,0.08)",
+                      }
+                    : undefined
+                }
+              >
+                {labels[v]}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

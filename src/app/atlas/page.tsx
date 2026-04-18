@@ -15,6 +15,8 @@ import { buildPageMetadata } from "@/lib/site";
 import HermeneuticCaveat from "@/components/shared/HermeneuticCaveat";
 import SectionHeading from "@/components/shared/SectionHeading";
 import ConfidenceBadge from "@/components/shared/ConfidenceBadge";
+import Link from "next/link";
+import { getFigureIndex } from "@/lib/exemplars";
 import type {
   ConstellationLayout,
   ConstellationNodeMeta,
@@ -88,6 +90,7 @@ export default function AtlasPage() {
     theme: c.theme,
     shortTheme: c.theme.split("—")[0].trim().split(" - ")[0].trim(),
   }));
+  const figureCount = getFigureIndex().length;
 
   return (
     <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-10 py-12 md:py-20">
@@ -213,6 +216,25 @@ export default function AtlasPage() {
               so a shape you learn here stays consistent wherever that cluster shows up.
             </p>
           </div>
+
+          <Link
+            href="/atlas/exemplars"
+            className="rounded-sm border border-gold/40 p-5 hover:border-gold/80 transition-colors group md:col-span-2"
+          >
+            <div className="flex items-baseline justify-between gap-2 mb-3">
+              <p className="font-mono text-label tracking-kicker uppercase text-gold/90 group-hover:text-gold">
+                The Figures →
+              </p>
+              <p className="font-mono text-kicker tracking-label uppercase text-text-secondary/60">
+                {figureCount} canonicalized
+              </p>
+            </div>
+            <p className="font-serif text-body-sm italic text-text-secondary/80 leading-relaxed">
+              The figures the six traditions read. A cross-system view of who gets tagged where —
+              and what surviving translation looks like in practice. Sorted by the number of
+              traditions that claim them, with the canon's most-read figures kept on top.
+            </p>
+          </Link>
         </div>
       </section>
 

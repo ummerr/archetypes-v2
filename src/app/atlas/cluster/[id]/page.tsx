@@ -21,6 +21,7 @@ import ClusterVignettes from "@/components/atlas/ClusterVignettes";
 import ClusterExemplarGrid from "@/components/atlas/ClusterExemplarGrid";
 import ClusterDevelopmentalArc from "@/components/atlas/ClusterDevelopmentalArc";
 import ClusterShadowFaces from "@/components/atlas/ClusterShadowFaces";
+import { getFigureIndex, resolveFigureClusters } from "@/lib/exemplars";
 
 export function generateStaticParams() {
   return CLUSTERS.map((c) => ({ id: c.id }));
@@ -101,12 +102,41 @@ export default async function ClusterPage({
       {(() => {
         const ped = CLUSTER_PEDAGOGY[cluster.id];
         const motif = CLUSTER_AXES[cluster.id]?.motifColor ?? "#d4af37";
+        const registeredFigures = getFigureIndex().filter((r) =>
+          resolveFigureClusters(r).some((c) => c.clusterId === cluster.id),
+        );
         return (
           <div className="mt-10">
             {ped?.vignettes && (
               <ClusterVignettes vignettes={ped.vignettes} color={motif} />
             )}
             <ClusterExemplarGrid clusterId={cluster.id} />
+            {registeredFigures.length > 0 && (
+              <section className="mb-12">
+                <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-3">
+                  Registered figures in this cluster
+                </p>
+                <p className="font-serif italic text-body-sm text-text-secondary/70 mb-4 max-w-prose">
+                  Cross-system figures whose archetypal tags resolve here. Each links to a page
+                  showing how every tradition reads them.
+                </p>
+                <ul className="flex flex-wrap gap-2">
+                  {registeredFigures.map((r) => (
+                    <li key={r.figure.slug}>
+                      <Link
+                        href={`/atlas/exemplars/${r.figure.slug}`}
+                        className="inline-block rounded-sm border border-surface-light/40 px-3 py-1.5 font-serif text-body-sm hover:border-gold/60 hover:text-gold transition-colors"
+                      >
+                        {r.figure.displayName}
+                        <span className="ml-2 font-mono text-kicker tracking-label uppercase text-text-secondary/55">
+                          {r.appearances.length}×
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
             {ped?.developmentalArc && (
               <ClusterDevelopmentalArc arc={ped.developmentalArc} color={motif} />
             )}
