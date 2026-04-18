@@ -72,8 +72,6 @@ export const ATLAS_LINKS: NavLink[] = [
 export const SHOW_PRACTICE = false;
 
 export const PRACTICE_LINKS: NavLink[] = [
-  { label: "Today", href: "/today", desc: "A daily archetype for the collective" },
-  { label: "The Mirror", href: "/mirror", desc: "Describe what you're navigating" },
   { label: "Profile", href: "/profile", desc: "Build a cross-system reflection" },
 ];
 
