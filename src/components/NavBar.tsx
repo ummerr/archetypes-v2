@@ -286,7 +286,7 @@ function SecondaryBar({ pathname }: { pathname: string }) {
   const inAbout = pathname.startsWith("/about");
 
   if (system) return <SystemSecondaryBar system={system} pathname={pathname} />;
-  if (inAtlas) return <SimpleSecondaryBar label="Atlas" links={ATLAS_LINKS} pathname={pathname} />;
+  if (inAtlas) return <SimpleSecondaryBar label="Atlas" labelHref="/atlas" links={ATLAS_LINKS} pathname={pathname} />;
   if (inAbout) return <SimpleSecondaryBar label="About" links={ABOUT_LINKS} pathname={pathname} />;
   return null;
 }
@@ -306,16 +306,26 @@ function barWrap(children: React.ReactNode) {
 
 function SimpleSecondaryBar({
   label,
+  labelHref,
   links,
   pathname,
 }: {
   label: string;
+  labelHref?: string;
   links: NavLink[];
   pathname: string;
 }) {
+  const labelClass =
+    "font-mono text-label tracking-kicker uppercase text-gold whitespace-nowrap";
   return barWrap(
     <>
-      <span className="font-mono text-label tracking-kicker uppercase text-gold whitespace-nowrap">{label}</span>
+      {labelHref ? (
+        <Link href={labelHref} className={`${labelClass} transition-colors duration-200 hover:text-gold-bright`}>
+          {label}
+        </Link>
+      ) : (
+        <span className={labelClass}>{label}</span>
+      )}
       <span className="text-muted/40 font-mono text-label">·</span>
       {links.map((l) => {
         const active = pathname === l.href || pathname.startsWith(l.href + "/");
@@ -369,12 +379,13 @@ function SystemSecondaryBar({
 
   return barWrap(
     <>
-      <span
-        className="font-mono text-label tracking-kicker uppercase whitespace-nowrap"
+      <Link
+        href={system.href}
+        className="font-mono text-label tracking-kicker uppercase whitespace-nowrap transition-opacity duration-200 hover:opacity-80"
         style={{ color: system.accent }}
       >
         {system.name}
-      </span>
+      </Link>
       <span className="text-muted/40 font-mono text-label">·</span>
       {subs.map((l) => {
         const active = pathname === l.href;

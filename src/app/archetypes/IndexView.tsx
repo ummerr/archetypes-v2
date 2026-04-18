@@ -296,7 +296,7 @@ export default function IndexView() {
       </div>
 
       {/* Toolbar */}
-      <div className="sticky top-14 z-30 px-6 py-3 backdrop-blur-xl bg-bg/80 border-b border-gold/10 transition-colors duration-300">
+      <div className="sticky top-24 z-30 px-6 py-3 backdrop-blur-xl bg-bg/80 border-b border-gold/10 transition-colors duration-300">
         <div className="max-w-6xl mx-auto flex flex-col gap-2">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="font-mono text-kicker tracking-kicker uppercase text-muted/70 shrink-0 w-16">
