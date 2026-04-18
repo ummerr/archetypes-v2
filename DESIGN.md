@@ -15,8 +15,8 @@ Each system's totem language is grounded in what the system is actually *for*. D
 | **KWML** | 3D platonic solids with bloom | Moore/Gillette's developmental masculine — maturity as geometric integrity. Crown, blade, nested solids, torus knot. |
 | **Jungian** | 3D organic / biological forms | Pearson-Marr — transformation, growth, nature. Seeds, petals, rings of twelve. |
 | **Enneagram** | 3D physical instruments | Somatic typology; gut-wisdom as calibration. Plumb line, cupped heart, scales. |
-| **MBTI** | Animated cognitive geometry (N/S/T/F glyph layers) | Functions as circuitry. Dominant layer heavy, auxiliary half-speed behind it. |
-| **Tarot** | Unicode glyph inside breathing halo; flip to shadow | The card *is* the totem. Alchemical arcana, foil, ceremony. |
+| **MBTI** | Animated cognitive geometry (N/S/T/F glyph layers); 3D extrusion at hero | Functions as circuitry. 2D glyph at ambient scale, same vocabulary re-extruded in z at ceremonial hero. |
+| **Tarot** | Bespoke 2.5D arcana compositions (layered motifs); card flip to shadow | The card *is* the totem. Each major arcana drawn from a shared motif vocabulary (pillar, chalice, crown, wreath…), z-layered for depth. |
 | **Hero's Journey** | Mythic line drawing (silhouette) | Narrative archetypes sketched as myth. Currently static; see §8 Future Work. |
 | **Atlas cluster** | Distilled 2D motif (`ClusterTotem`) | Essences extracted from the systems. Reduced glyphic form — the lowest-common-denominator sign. |
 
@@ -51,6 +51,8 @@ There are exactly five scales, defined in `src/lib/totem-sizes.ts`. Each carries
 
 **Note on MBTI sizing.** `MbtiGlyph` is internally calibrated at denser pixel values (sm=72, md=128, lg=200) because its cognitive-geometry primitives need the space to read. Treat `MbtiGlyph size="sm"` as occupying the visual weight of an `md` in the canonical scale.
 
+**Note on MBTI dimensionality.** The 2D `MbtiGlyph` is the sole form at sm/md/lg. A 3D counterpart, `MbtiTotemCanvas`, appears **only at the detail-page hero** — and it is a literal z-extrusion of the 2D vocabulary (NodeBurst → sphere+spikes, SquareStack → cube, GridCross → lattice, CircleRings → tori). Same primitives, now dimensional. This honors the "one glyph at every scale" principle at ambient scale while letting the hero earn its ceremonial depth.
+
 ---
 
 ## 4. Card anatomy — *frame → field → token*
@@ -72,17 +74,28 @@ Every card composes three layers:
 ## 5. Totem map — unique but consistent
 
 ```
-                 ambient (sm/md)    ceremonial (lg/hero)
-KWML          →  ArchetypeSymbol    TotemCanvas (3D platonic)
-Jungian       →  glyph + ring       JungianTotemCanvas (3D organic)
-Enneagram     →  numeral + ring     EnneagramTotemCanvas (3D instrument)
-MBTI          →  MbtiGlyph sm       MbtiGlyph lg (same glyph, scaled up)
-Tarot         →  halo + glyph       TarotCard (flip + foil)
-Hero's Journey → HeroJourneyIcon    [gap — see §8]
-Atlas cluster →  ClusterTotem       ClusterTotem hero
+                 ambient (sm/md)        ceremonial (lg/hero)
+KWML          →  ArchetypeSymbol        TotemCanvas (3D platonic)
+Jungian       →  glyph + ring           JungianTotemCanvas (3D organic)
+Enneagram     →  numeral + ring         EnneagramTotemCanvas (3D instrument)
+MBTI          →  MbtiGlyph 2D           MbtiTotemCanvas (3D extrusion of same primitives)
+Tarot         →  halo + ArcanaGlyph     TarotCard (flip + foil, layered ArcanaGlyph with parallax)
+Hero's Journey → HeroJourneyIcon        [gap — see §8]
+Atlas cluster →  ClusterTotem           ClusterTotem hero
 ```
 
 Each cell is unique in what it *draws*; consistent in what it *obeys* (grammar, scale budget, card anatomy). Routing lives in `src/data/totem-registry.ts` — one entry per system.
+
+### 5a. The Tarot motif vocabulary
+
+Tarot's dialect is a shared library of ~25 stroke-based motif primitives in `src/components/tarot/arcanaMotifs.tsx` — **pillar, crown, wreath, chalice, sword, scales, crescent, pentagram, star-8, infinity, wheel, wand, throne-cube, horizon, lightning, figure, tower, ladder, scythe, trumpet, angel-arc, ripples, chains, pouring-arc, mote**. Each major arcana is a composition of 2–4 primitives dispatched in `ArcanaGlyph.tsx`, layered back-to-front with per-layer `z` (0 → 1) that drives:
+
+- **Parallax drift** at ceremonial scale. `TarotCard`'s cursor-tracked tilt is piped into the glyph; each layer translates proportional to its `z` so the composition reads as 2.5D depth.
+- **Shadow stacking** — a subtle `feGaussianBlur` + offset filter applied to the whole group gives the layered motifs a carved quality.
+
+Compositional rules: layer the backdrop (horizon, wreath, star-field) at low `z`; central figures / solids mid; active fore elements (motes, glints, small stars) high. No more than 4 layers per card — more becomes noise.
+
+**OG compatibility.** Satori / resvg do not support SVG `<filter>` or animation. The glyph accepts `simple` which strips filters for OG rendering while keeping the same path geometry. A small number of motif shapes were sensitive to Satori's renderer (e.g. arc commands with asymmetric `rx/ry`, or certain `<g>` wrappers); the guiding rule is: **prefer `<path>` with cubic beziers over `<line>`/`<rect>`/`<ellipse>` arcs** when building new motifs, and test the OG path before shipping.
 
 ---
 

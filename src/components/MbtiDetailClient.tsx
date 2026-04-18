@@ -5,6 +5,7 @@ import { MbtiArchetype, TemperamentGroup } from "@/types/mbti";
 import { getFunction } from "@/data/mbti/functions";
 import { useTheme } from "@/components/ThemeProvider";
 import MbtiGlyph from "@/components/MbtiGlyph";
+import MbtiTotemCanvas from "@/components/MbtiTotemCanvas";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
 import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
@@ -85,7 +86,7 @@ export default function MbtiDetailClient({
         <div className="mb-14 animate-slide-up delay-100">
           <div className="flex flex-col md:flex-row gap-8 md:gap-10 items-start">
             <div className="flex-shrink-0 mx-auto md:mx-0" aria-hidden>
-              <MbtiGlyph archetype={archetype} size="lg" />
+              <MbtiTotemCanvas archetype={archetype} size={208} />
             </div>
 
             <div className="flex-1 min-w-0 pt-1">

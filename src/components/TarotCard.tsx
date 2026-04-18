@@ -12,16 +12,17 @@ import {
 import { TarotArchetype } from "@/types/tarot";
 import { TAROT_PHASES } from "@/data/tarot/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
+import ArcanaGlyph from "@/components/tarot/ArcanaGlyph";
 
 type Size = "sm" | "md" | "lg";
 
 const DIMS: Record<
   Size,
-  { w: number; h: number; numCls: string; nameCls: string; glyphCls: string }
+  { w: number; h: number; numCls: string; nameCls: string; glyphPx: number }
 > = {
-  sm: { w: 200, h: 320, numCls: "text-3xl", nameCls: "text-base", glyphCls: "text-5xl" },
-  md: { w: 260, h: 400, numCls: "text-4xl", nameCls: "text-xl", glyphCls: "text-7xl" },
-  lg: { w: 320, h: 500, numCls: "text-5xl", nameCls: "text-2xl", glyphCls: "text-8xl" },
+  sm: { w: 200, h: 320, numCls: "text-3xl", nameCls: "text-base", glyphPx: 76 },
+  md: { w: 260, h: 400, numCls: "text-4xl", nameCls: "text-xl", glyphPx: 108 },
+  lg: { w: 320, h: 500, numCls: "text-5xl", nameCls: "text-2xl", glyphPx: 144 },
 };
 
 const GRAIN_SVG =
@@ -78,6 +79,10 @@ export default function TarotCard({
   const glowX = useTransform(mx, (v) => `${v * 100}%`);
   const glowY = useTransform(my, (v) => `${v * 100}%`);
   const foilBg = useMotionTemplate`radial-gradient(circle at ${glowX} ${glowY}, ${color}66 0%, ${color}22 25%, transparent 60%)`;
+
+  // Glyph parallax — drift against card tilt, amplifying the 2.5D read.
+  const glyphX = useTransform(mx, [0, 1], [5, -5]);
+  const glyphY = useTransform(my, [0, 1], [4, -4]);
 
   function onMove(e: React.MouseEvent) {
     const r = ref.current?.getBoundingClientRect();
@@ -159,16 +164,18 @@ export default function TarotCard({
               />
             </div>
 
-            <div
-              className={`${dim.glyphCls} font-serif leading-none`}
+            <motion.div
               style={{
-                color,
-                textShadow: !light ? `0 0 32px ${color}70, 0 0 8px ${color}50` : "none",
+                x: glyphX,
+                y: glyphY,
+                filter: !light
+                  ? `drop-shadow(0 0 12px ${color}80) drop-shadow(0 0 3px ${color}60)`
+                  : `drop-shadow(0 1px 2px ${color}55)`,
               }}
               aria-hidden
             >
-              {archetype.symbol}
-            </div>
+              <ArcanaGlyph slug={archetype.slug} color={color} size={dim.glyphPx} light={light} />
+            </motion.div>
 
             <div className="flex flex-col items-center gap-2 text-center w-full">
               <div

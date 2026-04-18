@@ -13,6 +13,7 @@ import { getMbtiBySlug } from "@/data/mbti/archetypes";
 import { getArchetypeBySlug as getKwmlBySlug } from "@/data/kwml/archetypes";
 import MbtiGlyph from "@/components/MbtiGlyph";
 import ArchetypeSymbol from "@/components/ArchetypeSymbol";
+import ArcanaGlyph from "@/components/tarot/ArcanaGlyph";
 import { HeroJourneyArchetypeIcon } from "@/components/HeroJourneyArchetypeIcon";
 import { registerTotem } from "@/data/totem-registry";
 import { useTheme } from "@/components/ThemeProvider";
@@ -73,7 +74,6 @@ function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean
   const light = theme === "light";
   const motionOn = !prefersReducedMotion;
   const color = entry.accentColor;
-  const char = entry.symbol ?? "✶";
   return (
     <div
       className="relative flex items-center justify-center"
@@ -124,29 +124,19 @@ function TarotRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean
           }}
         />
       </motion.span>
-      {/* glyph with subtle shimmer */}
-      <motion.span
-        className="relative font-serif leading-none"
-        style={{ color, fontSize: 26 }}
-        animate={
-          motionOn && !light
-            ? {
-                textShadow: [
-                  `0 0 6px ${color}40`,
-                  `0 0 14px ${color}90`,
-                  `0 0 6px ${color}40`,
-                ],
-                scale: hovered ? 1.08 : 1,
-              }
-            : { scale: hovered ? 1.08 : 1 }
-        }
-        transition={{
-          textShadow: { duration: 4.5, repeat: Infinity, ease: "easeInOut" },
-          scale: { duration: 0.5, ease: "easeOut" },
+      {/* bespoke arcana composition */}
+      <motion.div
+        className="relative"
+        style={{
+          filter: !light
+            ? `drop-shadow(0 0 6px ${color}80) drop-shadow(0 0 1.5px ${color}60)`
+            : `drop-shadow(0 1px 1px ${color}55)`,
         }}
+        animate={{ scale: hovered ? 1.08 : 1 }}
+        transition={{ scale: { duration: 0.5, ease: "easeOut" } }}
       >
-        {char}
-      </motion.span>
+        <ArcanaGlyph slug={entry.slug} color={color} size={34} light={light} />
+      </motion.div>
     </div>
   );
 }

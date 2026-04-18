@@ -1,4 +1,5 @@
 import type { SystemId } from "@/data/resonance";
+import ArcanaGlyph from "@/components/tarot/ArcanaGlyph";
 
 const S = 200;
 const HJ_S = 200;
@@ -205,8 +206,21 @@ export function ogTotem(
       return opts?.kwmlFamily ? (kwmlIcons[opts.kwmlFamily]?.(accent) ?? null) : null;
     case "jungian":
     case "enneagram":
-    case "tarot":
       return opts?.symbol ? glyphRing(opts.symbol, accent) : null;
+    case "tarot":
+      return (
+        <div
+          style={{
+            width: S,
+            height: S,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ArcanaGlyph slug={slug} color={accent} size={S} simple />
+        </div>
+      );
     case "mbti":
       return opts?.mbtiCode ? mbtiCode(opts.mbtiCode, accent) : null;
     default:
