@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 import {
   CLUSTER_INTERPRETATIONS,
   decodeResult,
+  readingName,
   scoreChoices,
   topClusters,
   type MirrorClusterId,
@@ -128,6 +129,7 @@ export async function GET(req: NextRequest) {
     .filter((p): p is (typeof positions)[number] => Boolean(p));
 
   const dominantLabels = dominant.map((id) => CLUSTER_INTERPRETATIONS[id].short);
+  const name = readingName(dominant);
   const primaryColor =
     dominant.length > 0 ? CLUSTER_COLOR[dominant[0]] : "#D4AF37";
 
@@ -213,50 +215,118 @@ export async function GET(req: NextRequest) {
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
+                  alignItems: "baseline",
+                  flexWrap: "wrap",
                   marginTop: 18,
                   maxWidth: 640,
                 }}
               >
-                {dominantLabels.length > 0 ? (
-                  dominantLabels.map((label, i) => (
-                    <div
-                      key={label}
-                      style={{
-                        fontSize: 68,
-                        fontWeight: 500,
-                        lineHeight: 1.02,
-                        letterSpacing: -1,
-                        color: CLUSTER_COLOR[dominant[i]],
-                        fontFamily: serif,
-                        display: "flex",
-                      }}
-                    >
-                      {label}
-                    </div>
-                  ))
+                {name.parts.length > 0 ? (
+                  name.parts.flatMap((p, i) => {
+                    const color = CLUSTER_COLOR[p.clusterId];
+                    const word = (
+                      <div
+                        key={`${p.clusterId}-${i}`}
+                        style={{
+                          fontSize: 108,
+                          fontWeight: 500,
+                          lineHeight: 1.0,
+                          letterSpacing: -2,
+                          color,
+                          fontFamily: serif,
+                          display: "flex",
+                        }}
+                      >
+                        {p.word}
+                      </div>
+                    );
+                    if (i === 0 && name.parts.length > 1) {
+                      return [
+                        word,
+                        <div
+                          key="amp"
+                          style={{
+                            fontSize: 92,
+                            lineHeight: 1.0,
+                            color: "#8A878099",
+                            fontStyle: "italic",
+                            fontFamily: serifItalic,
+                            margin: "0 18px",
+                            display: "flex",
+                          }}
+                        >
+                          &amp;
+                        </div>,
+                      ];
+                    }
+                    return [word];
+                  })
                 ) : (
                   <div
                     style={{
-                      fontSize: 68,
+                      fontSize: 108,
                       fontWeight: 500,
-                      lineHeight: 1.02,
-                      letterSpacing: -1,
+                      lineHeight: 1.0,
+                      letterSpacing: -2,
                       color: "#EDEDEC",
                       fontFamily: serif,
                       display: "flex",
                     }}
                   >
-                    A quiet field
+                    {name.display}
                   </div>
                 )}
               </div>
+
+              {dominantLabels.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    marginTop: 22,
+                    fontSize: 18,
+                    letterSpacing: "0.22em",
+                    textTransform: "uppercase",
+                    fontFamily: mono,
+                  }}
+                >
+                  {dominantLabels.flatMap((label, i) => {
+                    const color = CLUSTER_COLOR[dominant[i]];
+                    const segment = (
+                      <div
+                        key={`label-${dominant[i]}`}
+                        style={{ color, opacity: 0.85, display: "flex" }}
+                      >
+                        {label}
+                      </div>
+                    );
+                    if (i < dominantLabels.length - 1) {
+                      return [
+                        segment,
+                        <div
+                          key={`sep-${i}`}
+                          style={{
+                            color: "#8A878066",
+                            margin: "0 10px",
+                            display: "flex",
+                          }}
+                        >
+                          ·
+                        </div>,
+                      ];
+                    }
+                    return [segment];
+                  })}
+                </div>
+              )}
 
               <div
                 style={{
                   fontSize: 22,
                   lineHeight: 1.4,
-                  marginTop: 24,
+                  marginTop: 28,
                   color: "#D0CEC8",
                   maxWidth: 540,
                   fontStyle: "italic",

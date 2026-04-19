@@ -404,3 +404,49 @@ export function quietClusters(
   }
   return Array.from(offered).filter((id) => scores[id] === 0);
 }
+
+// ── Reading name ───────────────────────────────────────────────────────
+//
+// Each cluster maps to a single evocative noun — a place, a tool, an
+// element. Pairing the top two produces a poetic handle for the reading
+// ("Crown & Blade", "Hearth & Forge") that people can screenshot and talk
+// about. Nouns over adjectives so they compose cleanly regardless of
+// ordering or pairing.
+export const CLUSTER_NAME_WORD: Record<MirrorClusterId, string> = {
+  sovereign: "Crown",
+  warrior: "Blade",
+  "sage-magician": "Glyph",
+  lover: "Hearth",
+  innocent: "Dawn",
+  explorer: "Compass",
+  rebel: "Storm",
+  creator: "Forge",
+  jester: "Bell",
+  caregiver: "Cradle",
+  everyman: "Commons",
+  "death-rebirth": "Chrysalis",
+  teacher: "Beacon",
+  "liminal-territory": "Veil",
+};
+
+export interface ReadingName {
+  // Ready-to-render string ("Crown & Blade", "Crown", "A Quiet Field").
+  display: string;
+  // Per-cluster parts so UIs can color each word with its cluster hue.
+  // Empty when the reading is a quiet field.
+  parts: Array<{ word: string; clusterId: MirrorClusterId }>;
+}
+
+// Compose a name from the top one or two dominant clusters. `dominant` is
+// expected pre-sorted by score (as returned by topClusters); only the
+// first two are used so the handle stays a poetic pair rather than a list.
+export function readingName(dominant: MirrorClusterId[]): ReadingName {
+  if (dominant.length === 0) {
+    return { display: "A Quiet Field", parts: [] };
+  }
+  const parts = dominant.slice(0, 2).map((id) => ({
+    word: CLUSTER_NAME_WORD[id],
+    clusterId: id,
+  }));
+  return { display: parts.map((p) => p.word).join(" & "), parts };
+}

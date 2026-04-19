@@ -11,6 +11,7 @@ import {
 import {
   CLUSTER_INTERPRETATIONS,
   encodeResult,
+  readingName,
   scoreChoices,
   topClusters,
   quietClusters,
@@ -824,13 +825,26 @@ function HeadlineBloom({
   isShared: boolean;
 }) {
   const reduced = useReducedMotion() ?? false;
-  const parts = dominant.length
-    ? dominant.map((id) => ({
-        key: id as string,
-        label: CLUSTER_INTERPRETATIONS[id].short,
-        color: CLUSTER_COLOR[id],
+  const name = readingName(dominant);
+
+  // Name words — the h1. Each word gets its cluster hue and glow. The quiet
+  // fallback renders the whole display string as a single gold token.
+  const nameWords = name.parts.length
+    ? name.parts.map((p, i) => ({
+        key: `${p.clusterId}-${i}`,
+        word: p.word,
+        color: CLUSTER_COLOR[p.clusterId],
       }))
-    : [{ key: "quiet", label: "A quiet field", color: "var(--color-gold)" }];
+    : [{ key: "quiet", word: name.display, color: "var(--color-gold)" }];
+
+  // Subtitle — the cluster labels underneath, dot-separated, so the name
+  // doesn't read as cryptic. Takes the full top three (not just the two in
+  // the name) so the diagnostic matches the constellation below.
+  const subtitle = dominant.map((id) => ({
+    key: id as string,
+    label: CLUSTER_INTERPRETATIONS[id].short,
+    color: CLUSTER_COLOR[id],
+  }));
 
   return (
     <header className="text-center mb-10">
@@ -841,8 +855,8 @@ function HeadlineBloom({
         className="font-serif text-h1 leading-display"
         aria-live="polite"
       >
-        {parts.map((p, i) => (
-          <span key={`${p.key}-${i}`} className="inline-block">
+        {nameWords.map((p, i) => (
+          <span key={p.key} className="inline-block">
             <motion.span
               className="inline-block"
               style={{
@@ -853,18 +867,51 @@ function HeadlineBloom({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{
                 duration: 0.65,
-                delay: reduced ? 0 : 0.2 + i * 0.2,
+                delay: reduced ? 0 : 0.2 + i * 0.25,
                 ease: [0.19, 1, 0.22, 1],
               }}
             >
-              {p.label}
+              {p.word}
             </motion.span>
-            {i < parts.length - 1 && (
-              <span className="opacity-40 mx-2 text-text-secondary">·</span>
+            {i < nameWords.length - 1 && (
+              <motion.span
+                className="inline-block italic mx-2 text-text-secondary/50"
+                initial={reduced ? false : { opacity: 0 }}
+                animate={{ opacity: 0.5 }}
+                transition={{
+                  duration: 0.5,
+                  delay: reduced ? 0 : 0.2 + i * 0.25 + 0.15,
+                }}
+              >
+                &amp;
+              </motion.span>
             )}
           </span>
         ))}
       </h1>
+      {subtitle.length > 0 && (
+        <motion.p
+          className="font-mono text-kicker tracking-kicker uppercase mt-4"
+          initial={reduced ? false : { opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.55,
+            delay: reduced ? 0 : 0.2 + nameWords.length * 0.25 + 0.2,
+            ease: [0.19, 1, 0.22, 1],
+          }}
+        >
+          {subtitle.map((p, i) => (
+            <span key={`${p.key}-sub`} className="inline-block">
+              <span style={{ color: p.color }} className="opacity-80">
+                {p.label}
+              </span>
+              {i < subtitle.length - 1 && (
+                <span className="opacity-30 mx-2 text-text-secondary">·</span>
+              )}
+            </span>
+          ))}
+        </motion.p>
+      )}
     </header>
   );
 }
@@ -1641,11 +1688,11 @@ function ExploreFooter({
         changes as you do.
       </p>
 
-      <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-4 sm:gap-x-8">
         {isShared ? (
           <Link
             href="/mirror"
-            className="relative font-mono text-label tracking-kicker uppercase border border-gold px-5 py-2.5 rounded-sm text-gold transition-all duration-300 hover:bg-gold/10 shadow-[0_0_20px_rgba(212,175,55,0.16)] hover:shadow-[0_0_32px_rgba(212,175,55,0.36)]"
+            className="relative font-serif italic text-body-lg text-gold border border-gold/60 px-6 py-2.5 rounded-sm transition-all duration-300 hover:bg-gold/10 hover:border-gold shadow-[0_0_20px_rgba(212,175,55,0.16)] hover:shadow-[0_0_32px_rgba(212,175,55,0.36)]"
           >
             Take your own mirror →
           </Link>
@@ -1659,7 +1706,7 @@ function ExploreFooter({
                 : "0 0 0 rgba(212,175,55,0)",
             }}
             transition={{ duration: 0.9, ease: "easeOut" }}
-            className="relative font-mono text-label tracking-kicker uppercase border px-5 py-2.5 rounded-sm text-gold transition-colors duration-300 border-gold/40 hover:border-gold hover:bg-gold/5"
+            className="relative font-serif italic text-body-lg text-gold border px-6 py-2.5 rounded-sm transition-colors duration-300 border-gold/40 hover:border-gold hover:bg-gold/5"
             aria-live="polite"
           >
             <span className="inline-flex items-center gap-2">
@@ -1695,20 +1742,20 @@ function ExploreFooter({
           <Link
             href="/mirror"
             prefetch={false}
-            className="font-mono text-label tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
+            className="font-serif italic text-body text-text-secondary hover:text-gold transition-colors"
           >
             Take it again →
           </Link>
         )}
         <Link
           href="/today"
-          className="font-mono text-label tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
+          className="font-serif italic text-body text-text-secondary hover:text-gold transition-colors"
         >
           Draw today&rsquo;s card →
         </Link>
         <Link
           href="/atlas"
-          className="font-mono text-label tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
+          className="font-serif italic text-body text-text-secondary hover:text-gold transition-colors"
         >
           Explore the Atlas →
         </Link>

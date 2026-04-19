@@ -4,6 +4,7 @@ import MirrorClient from "./MirrorClient";
 import {
   CLUSTER_INTERPRETATIONS,
   decodeResult,
+  readingName,
   scoreChoices,
   topClusters,
 } from "@/data/mirror-questions";
@@ -58,10 +59,14 @@ export async function generateMetadata(
   }
 
   const scores = scoreChoices(choices, session.questions, session.flips);
-  const top = topClusters(scores, 3).map((id) => CLUSTER_INTERPRETATIONS[id].short);
-  const title = top.length ? `My Mirror: ${top.join(" · ")}` : "The Mirror";
+  const dominant = topClusters(scores, 3);
+  const top = dominant.map((id) => CLUSTER_INTERPRETATIONS[id].short);
+  const name = readingName(dominant);
+  const title = name.parts.length
+    ? `${name.display} · The Mirror`
+    : "The Mirror";
   const description = top.length
-    ? `A cross-system snapshot: ${top.join(", ")}. Take the mirror yourself — twelve choices, ninety seconds.`
+    ? `${name.display} — a cross-system snapshot: ${top.join(", ")}. Take the mirror yourself — twelve choices, ninety seconds.`
     : "A cross-system snapshot of archetypal energy.";
 
   // Point link-preview consumers (iMessage / Slack / Twitter / etc.) at the
