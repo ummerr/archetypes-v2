@@ -373,9 +373,11 @@ function Primitive(props: PrimitiveProps) {
 export default function MbtiTotemCanvas({
   archetype,
   isHovered = false,
+  size,
 }: {
   archetype: MbtiArchetype;
   isHovered?: boolean;
+  size?: number;
 }) {
   const { theme } = useTheme();
   const light = theme === "light";
@@ -386,8 +388,13 @@ export default function MbtiTotemCanvas({
   const aux = getFunction(archetype.stack[1].code);
   const intensity = isHovered ? 1.35 : 1.0;
 
+  const sizeStyle = size ? { width: size, height: size } : undefined;
+
   return (
-    <div className="no-contrast-boost w-full h-full">
+    <div
+      className={size ? "no-contrast-boost" : "no-contrast-boost w-full h-full"}
+      style={sizeStyle}
+    >
       <Canvas
         camera={{ position: [0, 0, 2.8], fov: 40 }}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
