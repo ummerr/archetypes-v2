@@ -88,10 +88,10 @@ export default function HeroJourneyWheel() {
   const hairline = light ? "#00000014" : "#FFFFFF14";
 
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full -mx-6 sm:mx-0 overflow-x-auto sm:overflow-x-visible">
       <svg
         viewBox={`0 0 ${W} ${H}`}
-        className="w-full max-w-[1200px] h-auto"
+        className="mx-auto h-auto w-[860px] sm:w-full max-w-[1200px]"
         role="img"
         aria-label="Hero's Journey - twelve-stage timeline with archetype swim lanes"
         onClick={clearSelection}
