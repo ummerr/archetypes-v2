@@ -11,7 +11,7 @@ import { ALL_MBTI } from "@/data/mbti/archetypes";
 import { systemAccent } from "@/lib/resonance";
 import type { SystemId } from "@/data/resonance";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 type Card = {
   eyebrow: string;
