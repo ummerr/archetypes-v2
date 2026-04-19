@@ -279,7 +279,7 @@ export default function IndexView() {
       <div className="px-6 pt-24 pb-8 md:pt-32 md:pb-10">
         <div className="max-w-6xl mx-auto animate-slide-up">
           <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4">
-            The Index
+            Index
           </p>
           <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-medium text-text-primary tracking-tight leading-display mb-5">
             All{" "}

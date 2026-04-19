@@ -251,7 +251,7 @@ export default function Home() {
               <div className="grid md:grid-cols-[1.3fr_1fr] gap-6 md:gap-12 p-6 sm:p-8 md:p-12 items-center">
                 <div>
                   <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-3 md:mb-4">
-                    The Atlas · Resonance Map
+                    Atlas · Resonance Map
                   </p>
                   <h2 className="font-serif text-h2 sm:text-3xl md:text-5xl leading-display font-medium text-text-primary tracking-tight mb-4 md:mb-5">
                     See where the systems{" "}

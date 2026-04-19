@@ -25,7 +25,7 @@ import AtlasInteractive from "@/components/viz/AtlasInteractive";
 import constellationLayout from "@/data/constellation-layout.json";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "The Atlas — Cross-System Resonance Map",
+  title: "Atlas — Cross-System Resonance Map",
   description:
     "A hermeneutic atlas of six archetypal traditions. Where authors connect them we cite the source; where we infer we say so; where practitioners disagree we show both sides.",
   path: "/atlas",

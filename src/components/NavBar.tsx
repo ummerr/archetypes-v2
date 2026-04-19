@@ -8,13 +8,18 @@ import {
   ABOUT_LINKS,
   ATLAS_LINKS,
   NAV_SYSTEMS,
+  PRACTICE_LINKS,
   archetypesForSystem,
   systemFromPath,
   systemSubLinks,
   type NavLink,
 } from "@/data/nav";
 
-type GroupId = "systems" | "atlas" | "about";
+type GroupId = "systems" | "atlas" | "practice" | "about";
+
+const PRACTICE_PATHS = ["/today", "/mirror", "/profile"];
+const inPracticePath = (p: string) =>
+  PRACTICE_PATHS.some((base) => p === base || p.startsWith(base + "/"));
 
 export default function NavBar() {
   const { theme, toggle } = useTheme();
@@ -576,7 +581,7 @@ function SubSheet({
         Back
       </button>
       <p className="font-mono text-kicker tracking-display uppercase text-gold/80 mb-5">
-        {section === "systems" ? "Six Systems" : section === "atlas" ? "The Atlas" : "About"}
+        {section === "systems" ? "Six Systems" : section === "atlas" ? "Atlas" : "About"}
       </p>
       {section === "systems" && (
         <SystemsList pathname={pathname} onNavigate={onNavigate} />

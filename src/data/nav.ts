@@ -56,19 +56,17 @@ export function archetypesForSystem(systemId: string): NavLink[] {
 }
 
 export const INDEX_LINK: NavLink = {
-  label: "The Index",
+  label: "Index",
   href: "/archetypes",
   desc: "All archetypes across every system",
 };
 
 export const ATLAS_LINKS: NavLink[] = [
-  { label: "The Atlas", href: "/atlas", desc: "Cross-system constellation" },
+  { label: "Atlas", href: "/atlas", desc: "Cross-system constellation" },
   { label: "Debates", href: "/atlas/debates", desc: "Contested mappings" },
   { label: "Figures", href: "/atlas/exemplars", desc: "The figures each tradition reads" },
   INDEX_LINK,
 ];
-
-export const SHOW_PRACTICE = false;
 
 export const PRACTICE_LINKS: NavLink[] = [
   { label: "Today", href: "/today", desc: "A daily archetype for the collective" },
