@@ -20,7 +20,7 @@ async function loadFont(url: string): Promise<ArrayBuffer | null> {
   }
 }
 
-async function loadOgFonts() {
+export async function loadOgFonts() {
   const [cormorant500, cormorantItalic, supreme400, supreme500, spaceMono400] = await Promise.all([
     loadFont("https://fonts.gstatic.com/s/cormorantgaramond/v16/co3YmX5slCNuHLi8bLeY9MK7whWMhyjYrEPjuw.ttf"),
     loadFont("https://fonts.gstatic.com/s/cormorantgaramond/v16/co3WmX5slCNuHLi8bLeY9MK7whWMhyjQAFjNgg.ttf"),

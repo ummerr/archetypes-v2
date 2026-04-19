@@ -1,9 +1,14 @@
-// The Mirror — a 12-question forced-choice sorter.
+// The Mirror — a forced-choice sorter.
 //
 // Each pair offers two present-tense energy states. The user picks one; the
 // chosen cluster scores +1. Cluster IDs must match grounded-resonance-map.json.
 // This is a reflective instrument, not a psychometric one — question
 // calibration is editorial, not empirical.
+//
+// Positions 0–11 are the original 12 questions preserved in place so legacy
+// `?r=AABBAB…` URLs keep decoding to the same reading. New sessions draw a
+// stratified 12 from the full pool; selection + A/B flip are derived from a
+// URL-encoded seed.
 
 export type MirrorClusterId =
   | "sovereign"
@@ -27,76 +32,175 @@ export interface MirrorOption {
 }
 
 export interface MirrorQuestion {
+  // Context sentence shown above the choice pair. Must read naturally when
+  // concatenated with either option text.
+  frame: string;
   a: MirrorOption;
   b: MirrorOption;
 }
 
-export const QUESTIONS: MirrorQuestion[] = [
+// Full pool. First 12 items are the original questions in original order —
+// do not reorder them, or legacy share URLs will decode differently.
+export const QUESTION_POOL: MirrorQuestion[] = [
+  // ── Original 12 (legacy-compat range) ──────────────────────────────
   {
+    frame: "Right now I'm more pulled toward",
     a: { text: "holding the center for others", cluster: "sovereign" },
     b: { text: "cutting through to what needs doing", cluster: "warrior" },
   },
   {
+    frame: "Under pressure I tend to",
     a: { text: "withdraw into analysis", cluster: "sage-magician" },
     b: { text: "reach for whoever's nearest", cluster: "lover" },
   },
   {
+    frame: "What I most need is",
     a: { text: "freedom to explore", cluster: "explorer" },
     b: { text: "a structure I can trust", cluster: "sovereign" },
   },
   {
+    frame: "I'm more drawn to",
     a: { text: "breaking what's not working", cluster: "rebel" },
     b: { text: "building something that endures", cluster: "creator" },
   },
   {
+    frame: "When things get hard, I",
     a: { text: "make it lighter with humor", cluster: "jester" },
     b: { text: "go quiet and sit with it", cluster: "liminal-territory" },
   },
   {
+    frame: "I feel most alive when",
     a: { text: "deeply connected to someone", cluster: "lover" },
     b: { text: "fully absorbed in making something", cluster: "creator" },
   },
   {
+    frame: "My instinct is to",
     a: { text: "protect and care for others", cluster: "caregiver" },
     b: { text: "challenge them to grow", cluster: "warrior" },
   },
   {
+    frame: "I'd rather",
     a: { text: "understand why things work", cluster: "sage-magician" },
     b: { text: "feel what things mean", cluster: "lover" },
   },
   {
+    frame: "Right now I need",
     a: { text: "belonging and solidarity", cluster: "everyman" },
     b: { text: "solitude and self-discovery", cluster: "explorer" },
   },
   {
+    frame: "I'm navigating",
     a: { text: "an ending that needs to happen", cluster: "death-rebirth" },
     b: { text: "a beginning I'm not ready for", cluster: "innocent" },
   },
   {
+    frame: "My energy is going toward",
     a: { text: "teaching what I know", cluster: "teacher" },
     b: { text: "learning what I don't", cluster: "explorer" },
   },
   {
+    frame: "I feel most like myself when",
     a: { text: "disrupting the pattern", cluster: "rebel" },
     b: { text: "holding the space", cluster: "sovereign" },
   },
+
+  // ── Extended pool ──────────────────────────────────────────────────
+  {
+    frame: "I'm most drawn to",
+    a: { text: "starting fresh as a beginner", cluster: "innocent" },
+    b: { text: "passing on what I've learned", cluster: "teacher" },
+  },
+  {
+    frame: "I make a room easier by",
+    a: { text: "tending to what everyone needs", cluster: "caregiver" },
+    b: { text: "breaking the tension with a joke", cluster: "jester" },
+  },
+  {
+    frame: "I trust",
+    a: { text: "what ordinary people figure out together", cluster: "everyman" },
+    b: { text: "what careful thought arrives at alone", cluster: "sage-magician" },
+  },
+  {
+    frame: "The real work right now is",
+    a: { text: "letting an old self die", cluster: "death-rebirth" },
+    b: { text: "bringing a new thing into being", cluster: "creator" },
+  },
+  {
+    frame: "I can tell I'm ready when",
+    a: { text: "the old ground stops holding", cluster: "liminal-territory" },
+    b: { text: "I can steady the ground for others", cluster: "sovereign" },
+  },
+  {
+    frame: "What cuts through is",
+    a: { text: "laughter that refuses the pretense", cluster: "jester" },
+    b: { text: "force that refuses the delay", cluster: "warrior" },
+  },
+  {
+    frame: "The inheritance I carry is",
+    a: { text: "something I want to pass forward", cluster: "teacher" },
+    b: { text: "something I want to break open", cluster: "rebel" },
+  },
+  {
+    frame: "I protect my clarity by",
+    a: { text: "staying open to not-knowing", cluster: "innocent" },
+    b: { text: "refusing easy explanations", cluster: "sage-magician" },
+  },
+  {
+    frame: "Love right now looks like",
+    a: { text: "staying close to what needs me", cluster: "caregiver" },
+    b: { text: "trusting them to their own road", cluster: "explorer" },
+  },
+  {
+    frame: "What the moment wants is",
+    a: { text: "patience with the unformed", cluster: "liminal-territory" },
+    b: { text: "commitment to the next form", cluster: "creator" },
+  },
+  {
+    frame: "I belong",
+    a: { text: "with the people doing ordinary good", cluster: "everyman" },
+    b: { text: "with the ones refusing the quiet lie", cluster: "rebel" },
+  },
+  {
+    frame: "The hardest tenderness is",
+    a: { text: "letting someone finish becoming someone else", cluster: "death-rebirth" },
+    b: { text: "continuing to feed what still looks fragile", cluster: "caregiver" },
+  },
+  {
+    frame: "I'm more useful as",
+    a: { text: "a voice that names the pattern", cluster: "teacher" },
+    b: { text: "a body that does the ordinary work", cluster: "everyman" },
+  },
+  {
+    frame: "I let others in through",
+    a: { text: "what I'm willing to feel", cluster: "lover" },
+    b: { text: "what I'm willing to laugh at", cluster: "jester" },
+  },
 ];
 
-// Context sentence shown above each choice pair. Each frame must read
-// naturally when concatenated with either of its option texts.
-export const QUESTION_FRAMES: string[] = [
-  "Right now I'm more pulled toward",
-  "Under pressure I tend to",
-  "What I most need is",
-  "I'm more drawn to",
-  "When things get hard, I",
-  "I feel most alive when",
-  "My instinct is to",
-  "I'd rather",
-  "Right now I need",
-  "I'm navigating",
-  "My energy is going toward",
-  "I feel most like myself when",
+// Back-compat alias for any callers that import `QUESTIONS`. The live code
+// paths now read from `QUESTION_POOL` via a session.
+export const QUESTIONS = QUESTION_POOL;
+
+// First 12 questions — the legacy fixed set. Preserved verbatim so
+// `?r=AABBAB…` URLs created before the pool expansion still decode to the
+// same reading.
+export const LEGACY_QUESTIONS: MirrorQuestion[] = QUESTION_POOL.slice(0, 12);
+
+export const ALL_CLUSTERS: MirrorClusterId[] = [
+  "sovereign",
+  "warrior",
+  "sage-magician",
+  "lover",
+  "innocent",
+  "explorer",
+  "rebel",
+  "creator",
+  "jester",
+  "caregiver",
+  "everyman",
+  "death-rebirth",
+  "teacher",
+  "liminal-territory",
 ];
 
 export interface ClusterInterpretation {
@@ -195,36 +299,83 @@ export const CLUSTER_INTERPRETATIONS: Record<MirrorClusterId, ClusterInterpretat
   },
 };
 
-export const CLUSTERS_IN_USE: MirrorClusterId[] = Array.from(
-  new Set(QUESTIONS.flatMap((q) => [q.a.cluster, q.b.cluster])),
-) as MirrorClusterId[];
-
 export type Choice = "A" | "B";
 
-export function encodeResult(choices: Choice[]): string {
-  return choices.join("");
+// ── URL encoding (v1 legacy + v2 seeded) ───────────────────────────────
+
+export interface DecodedResult {
+  version: "v1" | "v2";
+  seed: string | null; // null for v1
+  choices: Choice[];
 }
 
-// Accepts `AABB...` (12 chars of A/B). Returns null for anything malformed so
-// a bad URL falls back to the empty sorter.
-export function decodeResult(raw: string | null | undefined): Choice[] | null {
+// Emit v2 when a seed is provided; otherwise fall through to the raw
+// legacy form. Callers that hold a session should always pass the seed.
+export function encodeResult(choices: Choice[], seed?: string | null): string {
+  const body = choices.join("");
+  if (seed) return `v2.${seed}.${body}`;
+  return body;
+}
+
+// Accepts either `AABB…` (legacy 12-char) or `v2.{seed}.{choices}`.
+// Returns null for anything malformed so a bad URL falls back to the empty
+// sorter.
+export function decodeResult(raw: string | null | undefined): DecodedResult | null {
   if (!raw) return null;
+
+  if (raw.startsWith("v2.")) {
+    const parts = raw.split(".");
+    if (parts.length !== 3) return null;
+    const seed = parts[1];
+    const body = parts[2];
+    if (!seed || !/^[a-z0-9]{1,12}$/i.test(seed)) return null;
+    const choices = parseChoices(body);
+    if (!choices || choices.length < 1 || choices.length > QUESTION_POOL.length) {
+      return null;
+    }
+    return { version: "v2", seed, choices };
+  }
+
+  // Legacy path: exactly 12 A/B chars.
   const s = raw.toUpperCase();
-  if (s.length !== QUESTIONS.length) return null;
+  if (s.length !== LEGACY_QUESTIONS.length) return null;
+  const choices = parseChoices(s);
+  if (!choices) return null;
+  return { version: "v1", seed: null, choices };
+}
+
+function parseChoices(s: string | undefined | null): Choice[] | null {
+  if (!s) return null;
   const out: Choice[] = [];
-  for (const ch of s) {
+  for (const ch of s.toUpperCase()) {
     if (ch !== "A" && ch !== "B") return null;
     out.push(ch);
   }
   return out;
 }
 
-export function scoreChoices(choices: Choice[]): Record<MirrorClusterId, number> {
+// ── Scoring ────────────────────────────────────────────────────────────
+
+// Score against the questions the user actually saw. `flips[i]` true means
+// the visual A/B was swapped at presentation time — the user's "A" clicks
+// question.b and vice versa.
+export function scoreChoices(
+  choices: Choice[],
+  questions: MirrorQuestion[],
+  flips?: boolean[],
+): Record<MirrorClusterId, number> {
   const scores = Object.fromEntries(
-    CLUSTERS_IN_USE.map((id) => [id, 0]),
+    ALL_CLUSTERS.map((id) => [id, 0]),
   ) as Record<MirrorClusterId, number>;
-  for (let i = 0; i < choices.length && i < QUESTIONS.length; i++) {
-    const pick = choices[i] === "A" ? QUESTIONS[i].a : QUESTIONS[i].b;
+  const n = Math.min(choices.length, questions.length);
+  for (let i = 0; i < n; i++) {
+    const flipped = flips?.[i] ?? false;
+    const resolved: Choice = flipped
+      ? choices[i] === "A"
+        ? "B"
+        : "A"
+      : choices[i];
+    const pick = resolved === "A" ? questions[i].a : questions[i].b;
     scores[pick.cluster] += 1;
   }
   return scores;
@@ -241,8 +392,15 @@ export function topClusters(
     .map(([id]) => id);
 }
 
+// Clusters that were offered in this session but scored 0.
 export function quietClusters(
   scores: Record<MirrorClusterId, number>,
+  questions: MirrorQuestion[],
 ): MirrorClusterId[] {
-  return CLUSTERS_IN_USE.filter((id) => scores[id] === 0);
+  const offered = new Set<MirrorClusterId>();
+  for (const q of questions) {
+    offered.add(q.a.cluster);
+    offered.add(q.b.cluster);
+  }
+  return Array.from(offered).filter((id) => scores[id] === 0);
 }

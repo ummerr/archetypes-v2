@@ -9,8 +9,6 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import {
-  QUESTIONS,
-  QUESTION_FRAMES,
   CLUSTER_INTERPRETATIONS,
   encodeResult,
   scoreChoices,
@@ -18,7 +16,12 @@ import {
   quietClusters,
   type Choice,
   type MirrorClusterId,
+  type MirrorQuestion,
 } from "@/data/mirror-questions";
+import {
+  createSession,
+  type MirrorSession,
+} from "@/lib/mirror-session";
 import {
   CLUSTERS,
   type ConfidenceTier,
@@ -62,18 +65,21 @@ const LAYOUT_ORDER: MirrorClusterId[] = [
   "warrior",
 ];
 
-// How many times each cluster can be picked across the 12 questions.
-// Used to size the per-cluster weight tick bar honestly.
-const CLUSTER_MAX_OFFERINGS: Record<MirrorClusterId, number> = (() => {
+// How many times each cluster can be picked across the questions in a
+// given session. Sizes the per-cluster weight tick bar honestly for any
+// stratified sample from the pool, not just the original fixed 12.
+function computeMaxOfferings(
+  questions: MirrorQuestion[],
+): Record<MirrorClusterId, number> {
   const counts = Object.fromEntries(
     LAYOUT_ORDER.map((id) => [id, 0]),
   ) as Record<MirrorClusterId, number>;
-  for (const q of QUESTIONS) {
+  for (const q of questions) {
     counts[q.a.cluster] += 1;
     counts[q.b.cluster] += 1;
   }
   return counts;
-})();
+}
 
 // Per-cluster thematic hues. Each energy gets its own color so the
 // constellation reads as a field of distinct archetypal tones rather
@@ -98,27 +104,36 @@ const CLUSTER_COLOR: Record<MirrorClusterId, string> = {
 type Phase = "intro" | "sort" | "result";
 
 interface Props {
+  initialSession: MirrorSession | null;
   initialChoices: Choice[] | null;
 }
 
-export default function MirrorClient({ initialChoices }: Props) {
+export default function MirrorClient({ initialSession, initialChoices }: Props) {
+  const [session, setSession] = useState<MirrorSession | null>(initialSession);
   const [choices, setChoices] = useState<Choice[]>(initialChoices ?? []);
-  const [phase, setPhase] = useState<Phase>(initialChoices ? "result" : "intro");
+  const [phase, setPhase] = useState<Phase>(
+    initialSession && initialChoices ? "result" : "intro",
+  );
   // The viewer arrived at a pre-populated result (shared link) rather than
   // completing the sort themselves. Use this to offer a path into the flow.
-  const isShared = initialChoices !== null;
+  const isShared = initialSession !== null && initialChoices !== null;
 
   function handleBegin() {
+    // Defer seed generation to this moment so every Begin click starts a
+    // fresh reading, and so SSR never ships a random seed in the HTML.
+    const active = session ?? createSession();
+    if (!session) setSession(active);
     setPhase("sort");
   }
 
   function handleChoose(choice: Choice) {
+    if (!session) return;
     const next = [...choices, choice];
     setChoices(next);
-    if (next.length >= QUESTIONS.length) {
+    if (next.length >= session.questions.length) {
       try {
         const url = new URL(window.location.href);
-        url.searchParams.set("r", encodeResult(next));
+        url.searchParams.set("r", encodeResult(next, session.seed));
         window.history.replaceState({}, "", url.toString());
       } catch {}
       setPhase("result");
@@ -128,11 +143,19 @@ export default function MirrorClient({ initialChoices }: Props) {
   return (
     <LayoutGroup>
       {phase === "intro" && <MirrorIntro onBegin={handleBegin} />}
-      {phase === "sort" && (
-        <MirrorSort onChoose={handleChoose} choices={choices} />
+      {phase === "sort" && session && (
+        <MirrorSort
+          onChoose={handleChoose}
+          choices={choices}
+          session={session}
+        />
       )}
-      {phase === "result" && choices.length === QUESTIONS.length && (
-        <MirrorResult choices={choices} isShared={isShared} />
+      {phase === "result" && session && choices.length === session.questions.length && (
+        <MirrorResult
+          choices={choices}
+          session={session}
+          isShared={isShared}
+        />
       )}
     </LayoutGroup>
   );
@@ -403,33 +426,57 @@ function MirrorIntro({ onBegin }: { onBegin: () => void }) {
 function MirrorSort({
   onChoose,
   choices,
+  session,
 }: {
   onChoose: (c: Choice) => void;
   choices: Choice[];
+  session: MirrorSession;
 }) {
   const [pressed, setPressed] = useState<Choice | null>(null);
+  const questions = session.questions;
+  const flips = session.flips;
+  const total = questions.length;
   const progress = choices.length;
-  const index = Math.min(progress, QUESTIONS.length - 1);
-  const q = QUESTIONS[index];
-  const frame = QUESTION_FRAMES[index];
+  const index = Math.min(progress, total - 1);
+  const rawQ = questions[index];
+  const flipped = flips[index];
+  // Flip A/B at the render layer so the visual "A" always maps to the
+  // left card. Scoring reconstructs the original orientation via `flips`.
+  const q: MirrorQuestion = flipped
+    ? { frame: rawQ.frame, a: rawQ.b, b: rawQ.a }
+    : rawQ;
+  const frame = q.frame;
 
-  // Running cluster scores for the mini-constellation.
+  // Running cluster scores for the mini-constellation. Honours the
+  // per-question flip so the mini chart lights up the real cluster.
   const runningScores = useMemo(() => {
     const s = Object.fromEntries(
       LAYOUT_ORDER.map((id) => [id, 0]),
     ) as Record<MirrorClusterId, number>;
     for (let i = 0; i < choices.length; i++) {
-      const pick = choices[i] === "A" ? QUESTIONS[i].a : QUESTIONS[i].b;
+      const raw = questions[i];
+      const resolved: Choice = flips[i]
+        ? choices[i] === "A"
+          ? "B"
+          : "A"
+        : choices[i];
+      const pick = resolved === "A" ? raw.a : raw.b;
       s[pick.cluster] += 1;
     }
     return s;
-  }, [choices]);
+  }, [choices, questions, flips]);
 
   const lastCluster = useMemo<MirrorClusterId | null>(() => {
     if (choices.length === 0) return null;
     const i = choices.length - 1;
-    return choices[i] === "A" ? QUESTIONS[i].a.cluster : QUESTIONS[i].b.cluster;
-  }, [choices]);
+    const raw = questions[i];
+    const resolved: Choice = flips[i]
+      ? choices[i] === "A"
+        ? "B"
+        : "A"
+      : choices[i];
+    return resolved === "A" ? raw.a.cluster : raw.b.cluster;
+  }, [choices, questions, flips]);
 
   // Clear the "pressed" flash when the next question arrives.
   useEffect(() => {
@@ -472,7 +519,7 @@ function MirrorSort({
       className="min-h-[75vh] flex flex-col"
     >
       <div className="flex items-end justify-between gap-6 mb-6">
-        <ProgressRail current={progress} total={QUESTIONS.length} />
+        <ProgressRail current={progress} total={total} />
         <MiniConstellation scores={runningScores} highlight={lastCluster} />
       </div>
 
@@ -679,15 +726,30 @@ function ProgressRail({
 
 function MirrorResult({
   choices,
+  session,
   isShared,
 }: {
   choices: Choice[];
+  session: MirrorSession;
   isShared: boolean;
 }) {
-  const scores = useMemo(() => scoreChoices(choices), [choices]);
+  const scores = useMemo(
+    () => scoreChoices(choices, session.questions, session.flips),
+    [choices, session],
+  );
   const dominant = useMemo(() => topClusters(scores, 3), [scores]);
-  const quiet = useMemo(() => quietClusters(scores), [scores]);
-  const shareCode = useMemo(() => encodeResult(choices), [choices]);
+  const quiet = useMemo(
+    () => quietClusters(scores, session.questions),
+    [scores, session],
+  );
+  const shareCode = useMemo(
+    () => encodeResult(choices, session.seed),
+    [choices, session],
+  );
+  const maxOfferings = useMemo(
+    () => computeMaxOfferings(session.questions),
+    [session],
+  );
   // Two-layer state: `hovered` is ephemeral (pointer-in), `pinned` is a click.
   // Display uses hovered first so rolling across nodes feels responsive, but
   // clicking pins the info card so the "Read more" link is reachable.
@@ -709,6 +771,7 @@ function MirrorResult({
         scores={scores}
         dominant={dominant}
         activeId={active}
+        maxOfferings={maxOfferings}
         onHover={setHovered}
         onPin={(id) => setPinned((prev) => (prev === id ? null : id))}
         onClear={() => {
@@ -721,6 +784,7 @@ function MirrorResult({
         activeId={active}
         scores={scores}
         dominant={dominant}
+        maxOfferings={maxOfferings}
       />
 
       <HermeneuticCaveat variant="inline" className="text-center mt-8 mb-12" />
@@ -733,6 +797,7 @@ function MirrorResult({
             key={id}
             clusterId={id}
             score={scores[id]}
+            maxOfferings={maxOfferings[id] ?? 1}
             revealDelay={500 + i * 140}
           />
         ))}
@@ -823,6 +888,7 @@ function ConstellationChart({
   scores,
   dominant,
   activeId,
+  maxOfferings,
   onHover,
   onPin,
   onClear,
@@ -830,6 +896,7 @@ function ConstellationChart({
   scores: Record<MirrorClusterId, number>;
   dominant: MirrorClusterId[];
   activeId: MirrorClusterId | null;
+  maxOfferings: Record<MirrorClusterId, number>;
   onHover: (id: MirrorClusterId | null) => void;
   onPin: (id: MirrorClusterId) => void;
   onClear: () => void;
@@ -1078,7 +1145,7 @@ function ConstellationChart({
                 data-cluster-node={p.id}
                 role="button"
                 tabIndex={0}
-                aria-label={`${CLUSTER_INTERPRETATIONS[p.id].short} — weight ${p.score} of ${CLUSTER_MAX_OFFERINGS[p.id]}`}
+                aria-label={`${CLUSTER_INTERPRETATIONS[p.id].short} — weight ${p.score} of ${maxOfferings[p.id] ?? 0}`}
                 aria-pressed={isActive}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -1243,10 +1310,12 @@ function ConstellationInfo({
   activeId,
   scores,
   dominant,
+  maxOfferings,
 }: {
   activeId: MirrorClusterId | null;
   scores: Record<MirrorClusterId, number>;
   dominant: MirrorClusterId[];
+  maxOfferings: Record<MirrorClusterId, number>;
 }) {
   const reduced = useReducedMotion() ?? false;
 
@@ -1258,6 +1327,7 @@ function ConstellationInfo({
             key={activeId}
             id={activeId}
             score={scores[activeId] ?? 0}
+            maxOfferings={maxOfferings[activeId] ?? 1}
             isDominant={dominant.includes(activeId)}
             reduced={reduced}
           />
@@ -1281,17 +1351,18 @@ function ConstellationInfo({
 function ActiveClusterCard({
   id,
   score,
+  maxOfferings,
   isDominant,
   reduced,
 }: {
   id: MirrorClusterId;
   score: number;
+  maxOfferings: number;
   isDominant: boolean;
   reduced: boolean;
 }) {
   const interp = CLUSTER_INTERPRETATIONS[id];
   const color = CLUSTER_COLOR[id];
-  const maxOfferings = CLUSTER_MAX_OFFERINGS[id] ?? 1;
   const isQuiet = score === 0;
   const firstSentence = interp.body.split(/(?<=\.)\s+/)[0] ?? interp.body;
 
@@ -1360,16 +1431,17 @@ function ActiveClusterCard({
 function ClusterBlock({
   clusterId,
   score,
+  maxOfferings,
   revealDelay = 0,
 }: {
   clusterId: MirrorClusterId;
   score: number;
+  maxOfferings: number;
   revealDelay?: number;
 }) {
   const reduced = useReducedMotion() ?? false;
   const interp = CLUSTER_INTERPRETATIONS[clusterId];
   const cluster = CLUSTERS.find((c) => c.id === clusterId);
-  const maxOfferings = CLUSTER_MAX_OFFERINGS[clusterId] ?? 1;
 
   const entries: ResonanceEntry[] = useMemo(() => {
     if (!cluster) return [];
@@ -1616,6 +1688,15 @@ function ExploreFooter({
               )}
             </span>
           </motion.button>
+        )}
+        {!isShared && (
+          <Link
+            href="/mirror"
+            prefetch={false}
+            className="font-mono text-label tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
+          >
+            Take it again →
+          </Link>
         )}
         <Link
           href="/today"
