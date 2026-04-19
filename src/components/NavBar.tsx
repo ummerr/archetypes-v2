@@ -66,6 +66,7 @@ export default function NavBar() {
 
   const activeSystem = systemFromPath(pathname);
   const inAtlas = pathname.startsWith("/atlas") || pathname.startsWith("/archetypes");
+  const inPractice = inPracticePath(pathname);
   const inAbout = pathname.startsWith("/about");
 
   const groupActive = (g: GroupId) =>
@@ -73,13 +74,15 @@ export default function NavBar() {
       ? activeSystem !== null
       : g === "atlas"
         ? inAtlas
-        : inAbout;
+        : g === "practice"
+          ? inPractice
+          : inAbout;
 
   const hasSecondary =
-    systemFromPath(pathname) !== null ||
-    pathname.startsWith("/atlas") ||
-    pathname.startsWith("/archetypes") ||
-    pathname.startsWith("/about");
+    activeSystem !== null ||
+    inAtlas ||
+    inPractice ||
+    inAbout;
 
   return (
     <>
@@ -114,6 +117,10 @@ export default function NavBar() {
             <div className="relative">
               <GroupTrigger id="atlas" label="Atlas" open={open} setOpen={setOpen} active={groupActive("atlas")} />
               {open === "atlas" && <LinkListPanel links={ATLAS_LINKS} pathname={pathname} />}
+            </div>
+            <div className="relative">
+              <GroupTrigger id="practice" label="Practice" open={open} setOpen={setOpen} active={groupActive("practice")} />
+              {open === "practice" && <LinkListPanel links={PRACTICE_LINKS} pathname={pathname} />}
             </div>
           </div>
         </div>
@@ -219,6 +226,21 @@ function LinkListPanel({ links, pathname, align }: { links: NavLink[]; pathname:
       <ul className="py-2">
         {links.map((l) => {
           const active = pathname === l.href;
+          if (l.soon) {
+            return (
+              <li key={l.href}>
+                <div className="block px-4 py-2.5 cursor-default">
+                  <div className="font-mono text-label tracking-label uppercase text-muted/60">
+                    {l.label}
+                    <span className="ml-2 text-kicker tracking-kicker text-gold/40">— soon</span>
+                  </div>
+                  {l.desc && (
+                    <div className="font-serif italic text-xs text-muted/50 mt-0.5">{l.desc}</div>
+                  )}
+                </div>
+              </li>
+            );
+          }
           return (
             <li key={l.href}>
               <Link
@@ -288,10 +310,12 @@ function SystemsPanel({ pathname }: { pathname: string }) {
 function SecondaryBar({ pathname }: { pathname: string }) {
   const system = systemFromPath(pathname);
   const inAtlas = pathname.startsWith("/atlas") || pathname.startsWith("/archetypes");
+  const inPractice = inPracticePath(pathname);
   const inAbout = pathname.startsWith("/about");
 
   if (system) return <SystemSecondaryBar system={system} pathname={pathname} />;
   if (inAtlas) return <SimpleSecondaryBar label="Atlas" labelHref="/atlas" links={ATLAS_LINKS} pathname={pathname} />;
+  if (inPractice) return <SimpleSecondaryBar label="Practice" links={PRACTICE_LINKS} pathname={pathname} />;
   if (inAbout) return <SimpleSecondaryBar label="About" links={ABOUT_LINKS} pathname={pathname} />;
   return null;
 }
@@ -334,6 +358,17 @@ function SimpleSecondaryBar({
       <span className="text-muted/40 font-mono text-label">·</span>
       {links.map((l) => {
         const active = pathname === l.href || pathname.startsWith(l.href + "/");
+        if (l.soon) {
+          return (
+            <span
+              key={l.href}
+              className="font-mono text-label tracking-label uppercase whitespace-nowrap text-muted/50 cursor-default"
+            >
+              {l.label}
+              <span className="ml-1.5 text-kicker tracking-kicker text-gold/40">— soon</span>
+            </span>
+          );
+        }
         return (
           <Link
             key={l.href}
@@ -459,7 +494,7 @@ function MobileSheet({
   pathname: string;
   onClose: () => void;
 }) {
-  const [section, setSection] = useState<"root" | "systems" | "atlas" | "about">("root");
+  const [section, setSection] = useState<"root" | "systems" | "atlas" | "practice" | "about">("root");
 
   useEffect(() => {
     if (!open) setSection("root");
@@ -511,11 +546,12 @@ function RootSheet({
   onNavigate,
 }: {
   pathname: string;
-  onSelect: (s: "systems" | "atlas" | "about") => void;
+  onSelect: (s: "systems" | "atlas" | "practice" | "about") => void;
   onNavigate: () => void;
 }) {
   const inSystems = systemFromPath(pathname) !== null;
   const inAtlas = pathname.startsWith("/atlas") || pathname.startsWith("/archetypes");
+  const inPractice = inPracticePath(pathname);
   const inAbout = pathname.startsWith("/about");
 
   return (
@@ -546,11 +582,18 @@ function RootSheet({
           leading="03"
         />
         <SheetGroupRow
+          label="Practice"
+          caption="Daily & reflection"
+          active={inPractice}
+          onClick={() => onSelect("practice")}
+          leading="04"
+        />
+        <SheetGroupRow
           label="About"
           caption="Method & sources"
           active={inAbout}
           onClick={() => onSelect("about")}
-          leading="04"
+          leading="05"
         />
       </nav>
     </div>
@@ -563,11 +606,19 @@ function SubSheet({
   onBack,
   onNavigate,
 }: {
-  section: "systems" | "atlas" | "about";
+  section: "systems" | "atlas" | "practice" | "about";
   pathname: string;
   onBack: () => void;
   onNavigate: () => void;
 }) {
+  const heading =
+    section === "systems"
+      ? "Six Systems"
+      : section === "atlas"
+        ? "Atlas"
+        : section === "practice"
+          ? "Practice"
+          : "About";
   return (
     <div className="animate-slide-up" style={{ animationDuration: "350ms" }}>
       <button
@@ -581,13 +632,16 @@ function SubSheet({
         Back
       </button>
       <p className="font-mono text-kicker tracking-display uppercase text-gold/80 mb-5">
-        {section === "systems" ? "Six Systems" : section === "atlas" ? "Atlas" : "About"}
+        {heading}
       </p>
       {section === "systems" && (
         <SystemsList pathname={pathname} onNavigate={onNavigate} />
       )}
       {section === "atlas" && (
         <LinksList links={ATLAS_LINKS} pathname={pathname} onNavigate={onNavigate} />
+      )}
+      {section === "practice" && (
+        <LinksList links={PRACTICE_LINKS} pathname={pathname} onNavigate={onNavigate} />
       )}
       {section === "about" && (
         <LinksList links={ABOUT_LINKS} pathname={pathname} onNavigate={onNavigate} />
@@ -740,6 +794,25 @@ function LinksList({
     <ul className="divide-y divide-gold/10 border-y border-gold/10">
       {links.map((l) => {
         const active = pathname === l.href || pathname.startsWith(l.href + "/");
+        if (l.soon) {
+          return (
+            <li key={l.href}>
+              <div className="flex items-start gap-4 py-5 cursor-default">
+                <span className="flex-1 min-w-0">
+                  <span className="block font-serif text-2xl tracking-tight text-muted/60">
+                    {l.label}
+                    <span className="ml-2 font-mono text-kicker tracking-kicker text-gold/40">— soon</span>
+                  </span>
+                  {l.desc && (
+                    <span className="block font-serif italic text-xs text-muted/50 mt-0.5">
+                      {l.desc}
+                    </span>
+                  )}
+                </span>
+              </div>
+            </li>
+          );
+        }
         return (
           <li key={l.href}>
             <Link
