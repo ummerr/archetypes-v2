@@ -392,7 +392,7 @@ function MirrorIntro({ onBegin }: { onBegin: () => void }) {
 
       <div className="relative">
         <p className="font-mono text-kicker tracking-display uppercase text-gold/80 mb-4">
-          The Mirror
+          Mirror
         </p>
         <h1 className="font-serif text-h1 leading-display tracking-tight mb-4">
           A snapshot of what you&rsquo;re navigating

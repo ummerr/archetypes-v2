@@ -94,7 +94,7 @@ function fallbackImage() {
           fontSize: 48,
         }}
       >
-        The Mirror
+        Mirror
       </div>
     ),
     { width: 1200, height: 630 },

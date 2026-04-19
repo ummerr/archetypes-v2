@@ -53,7 +53,7 @@ export async function generateMetadata(
 
   if (!session || !choices || !dotCode) {
     return buildPageMetadata({
-      title: "The Mirror",
+      title: "Mirror",
       description:
         "Eleven forced choices. One cross-system snapshot of what you're navigating right now. No sign-in, nothing stored — a mirror to try on.",
       path: "/mirror",
@@ -65,8 +65,8 @@ export async function generateMetadata(
   const top = dominant.map((id) => CLUSTER_INTERPRETATIONS[id].short);
   const name = readingName(dominant);
   const title = name.parts.length
-    ? `${name.display} · The Mirror`
-    : "The Mirror";
+    ? `${name.display} · Mirror`
+    : "Mirror";
   const description = top.length
     ? `${name.display} — a cross-system snapshot: ${top.join(", ")}. Take the mirror yourself — eleven choices, a minute or two.`
     : "A cross-system snapshot of archetypal energy.";

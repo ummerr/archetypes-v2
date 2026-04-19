@@ -15,7 +15,7 @@ function readR(raw: string | string[] | undefined): string | null {
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
-    title: "The Mirror",
+    title: "Mirror",
     description:
       "Eleven forced choices. One cross-system snapshot of what you're navigating right now. No sign-in, nothing stored — a mirror to try on.",
     path: "/mirror",
