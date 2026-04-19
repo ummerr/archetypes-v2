@@ -22,7 +22,6 @@ import type {
   ConstellationNodeMeta,
 } from "@/components/viz/ResonanceConstellation";
 import AtlasInteractive from "@/components/viz/AtlasInteractive";
-import TwoByTwo from "@/components/viz/TwoByTwo";
 import constellationLayout from "@/data/constellation-layout.json";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -237,16 +236,6 @@ export default function AtlasPage() {
             </p>
           </Link>
         </div>
-      </section>
-
-      <section className="mb-16">
-        <SectionHeading kicker="Structural Compass">Two axes, every archetype</SectionHeading>
-        <TwoByTwo />
-        <p className="mt-4 font-serif text-sm italic text-text-secondary/70 max-w-2xl">
-          Two of Mission 8&apos;s numeric feature dimensions - the belonging / independence axis
-          and the stability / risk axis - plotted for every archetype in the atlas. Clusters in the
-          same quadrant tend to share a posture toward world and risk.
-        </p>
       </section>
 
       <section className="mb-16">
