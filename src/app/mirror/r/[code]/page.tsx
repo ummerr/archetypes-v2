@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { buildPageMetadata } from "@/lib/site";
+import { absoluteUrl, buildPageMetadata } from "@/lib/site";
 import MirrorClient from "../../MirrorClient";
 import {
   CLUSTER_INTERPRETATIONS,
@@ -73,7 +73,7 @@ export async function generateMetadata(
 
   // OG handler reads `?r=` as its input; keep the dotted form there since
   // it's a query param, not a path segment.
-  const ogImage = `/api/og/mirror?r=${encodeURIComponent(dotCode)}`;
+  const ogImage = absoluteUrl(`/api/og/mirror?r=${encodeURIComponent(dotCode)}`);
 
   return {
     ...buildPageMetadata({
