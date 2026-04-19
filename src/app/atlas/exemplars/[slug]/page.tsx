@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FIGURES } from "@/data/exemplars/figures";
+import { CANONICAL_EXEMPLARS } from "@/data/exemplars/canonical";
 import {
-  getFigureIndex,
-  getFigureRecord,
-  resolveFigureClusters,
-  type FigureClusterResolution,
-  type FigureRecord,
+  getExemplarIndex,
+  getExemplarRecord,
+  resolveExemplarClusters,
+  type ExemplarClusterResolution,
+  type ExemplarRecord,
 } from "@/lib/exemplars";
 import { archetypeDisplayName, archetypeHref, systemAccent } from "@/lib/resonance";
 import { buildPageMetadata } from "@/lib/site";
@@ -22,13 +22,12 @@ import {
   AFFECT_LABELS,
   AFFECT_ACCENT,
   STANCE_LABELS,
-  type Stage,
   type Affect,
   type Stance,
 } from "@/data/atlas-lens-axes";
 
 export function generateStaticParams() {
-  return getFigureIndex().map((r) => ({ slug: r.figure.slug }));
+  return getExemplarIndex().map((r) => ({ slug: r.exemplar.slug }));
 }
 
 export async function generateMetadata({
@@ -37,28 +36,29 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const record = getFigureRecord(slug);
+  const record = getExemplarRecord(slug);
   if (!record) return {};
+  const uniqueSystems = new Set(record.appearances.map((a) => a.system));
   return buildPageMetadata({
-    title: record.figure.displayName,
+    title: record.exemplar.displayName,
     description:
-      record.figure.editorialNote ??
-      `How ${record.appearances.length} tradition${
-        record.appearances.length === 1 ? "" : "s"
-      } read ${record.figure.displayName}.`,
-    path: `/atlas/exemplars/${record.figure.slug}`,
+      record.exemplar.editorialNote ??
+      `How ${uniqueSystems.size} tradition${
+        uniqueSystems.size === 1 ? "" : "s"
+      } read ${record.exemplar.displayName}.`,
+    path: `/atlas/exemplars/${record.exemplar.slug}`,
   });
 }
 
-export default async function FigureDetailPage({
+export default async function ExemplarDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const record = getFigureRecord(slug);
+  const record = getExemplarRecord(slug);
   if (!record) {
-    const bare = FIGURES.find((f) => f.slug === slug);
+    const bare = CANONICAL_EXEMPLARS.find((e) => e.slug === slug);
     if (!bare) notFound();
     return (
       <div className="max-w-3xl mx-auto px-6 md:px-10 py-20">
@@ -66,26 +66,27 @@ export default async function FigureDetailPage({
           href="/atlas/exemplars"
           className="font-mono text-label tracking-kicker uppercase text-muted/80 hover:text-gold"
         >
-          ← Figures
+          ← Exemplars
         </Link>
-        <SectionHeading kicker="Figure" as="h1">
+        <SectionHeading kicker="Exemplar" as="h1">
           {bare.displayName}
         </SectionHeading>
         <p className="italic text-text-secondary/80 mt-4">
-          No tradition in this atlas currently reads this figure. The registry keeps the slot open
-          for future canonicalization.
+          No tradition in this atlas currently reads this exemplar. The registry keeps the slot
+          open for future canonicalization.
         </p>
       </div>
     );
   }
 
-  const clusters = resolveFigureClusters(record);
+  const clusters = resolveExemplarClusters(record);
   const dominantCluster = pickDominantCluster(clusters);
   const stages = collectAxis(clusters, "stage");
   const affects = collectAxis(clusters, "affect");
   const stancesSet = collectAxis(clusters, "stance");
   const holdsTension = stancesSet.size > 1 || affects.size > 1;
   const neighbors = computeNeighbors(record, clusters);
+  const uniqueSystems = new Set(record.appearances.map((a) => a.system));
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-10 py-20">
@@ -93,7 +94,7 @@ export default async function FigureDetailPage({
         href="/atlas/exemplars"
         className="font-mono text-label tracking-kicker uppercase text-muted/80 hover:text-gold"
       >
-        ← Figures
+        ← Exemplars
       </Link>
 
       <div className="mt-4 flex items-start gap-5 flex-wrap">
@@ -107,24 +108,24 @@ export default async function FigureDetailPage({
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <SectionHeading kicker="Figure" as="h1">
-            {record.figure.displayName}
+          <SectionHeading kicker="Exemplar" as="h1">
+            {record.exemplar.displayName}
           </SectionHeading>
           <p className="font-mono text-label tracking-kicker uppercase text-text-secondary/60 mt-2">
-            {record.figure.kind} · read by {record.appearances.length} of 6 traditions
+            {record.exemplar.kind} · read by {uniqueSystems.size} of 6 traditions
           </p>
         </div>
       </div>
 
-      {record.figure.editorialNote && (
+      {record.exemplar.editorialNote && (
         <p className="font-serif italic text-base text-text-secondary/85 max-w-2xl mt-6 mb-10">
-          {record.figure.editorialNote}
+          {record.exemplar.editorialNote}
         </p>
       )}
 
       <section className="mt-10 mb-12">
         <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-4">
-          How each tradition reads the figure
+          How each tradition reads them
         </p>
         <ul className="space-y-3">
           {record.appearances.map((app) => {
@@ -169,7 +170,7 @@ export default async function FigureDetailPage({
       {clusters.length > 0 && (
         <section className="mb-12">
           <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mb-4">
-            Where the figure sits on the lenses
+            Where they sit on the lenses
           </p>
           <div className="rounded-sm border border-surface-light/40 p-5 space-y-4">
             <AxisRow
@@ -202,8 +203,9 @@ export default async function FigureDetailPage({
           </p>
           <p className="font-serif italic text-body-sm text-text-secondary/75 mb-5 max-w-prose">
             The archetypal tags above resolve into {clusters.length} cluster
-            {clusters.length === 1 ? "" : "s"}. Each cluster reads the figure in its own vocabulary;
-            where more than one cluster surfaces, the figure itself is holding a structural tension.
+            {clusters.length === 1 ? "" : "s"}. Each cluster reads the exemplar in its own
+            vocabulary; where more than one cluster surfaces, the exemplar themself is holding a
+            structural tension.
           </p>
           <ul className="flex flex-wrap gap-2 mb-6">
             {clusters.map((c) => {
@@ -228,7 +230,7 @@ export default async function FigureDetailPage({
           </ul>
           {holdsTension && (
             <p className="font-serif italic text-body-sm text-amber-300/85 max-w-prose border-l-2 border-amber-500/40 pl-4">
-              {record.figure.displayName} is read across{" "}
+              {record.exemplar.displayName} is read across{" "}
               {stancesSet.size > 1 && (
                 <>
                   divergent stances ({Array.from(stancesSet).map((s) => STANCE_LABELS[s as Stance]).join(" vs. ")})
@@ -240,7 +242,7 @@ export default async function FigureDetailPage({
                   divergent affect centers ({Array.from(affects).map((a) => AFFECT_LABELS[a as Affect]).join(" vs. ")})
                 </>
               )}
-              . The figure holds a tension their readers cannot — which is often why they endure.
+              . The exemplar holds a tension their readers cannot — which is often why they endure.
             </p>
           )}
         </section>
@@ -258,7 +260,7 @@ export default async function FigureDetailPage({
                   {n.clusterTheme}
                 </p>
                 <ul className="flex flex-wrap gap-2">
-                  {n.figures.map((f) => (
+                  {n.exemplars.map((f) => (
                     <li key={f.slug}>
                       <Link
                         href={`/atlas/exemplars/${f.slug}`}
@@ -281,8 +283,8 @@ export default async function FigureDetailPage({
 // ── helpers ────────────────────────────────────────────────────────────────
 
 function pickDominantCluster(
-  clusters: FigureClusterResolution[],
-): FigureClusterResolution | undefined {
+  clusters: ExemplarClusterResolution[],
+): ExemplarClusterResolution | undefined {
   if (clusters.length === 0) return undefined;
   return clusters
     .slice()
@@ -290,7 +292,7 @@ function pickDominantCluster(
 }
 
 function collectAxis<K extends "stage" | "affect" | "stance">(
-  clusters: FigureClusterResolution[],
+  clusters: ExemplarClusterResolution[],
   key: K,
 ): Set<string> {
   const set = new Set<string>();
@@ -304,35 +306,35 @@ function collectAxis<K extends "stage" | "affect" | "stance">(
 interface NeighborGroup {
   clusterId: string;
   clusterTheme: string;
-  figures: Array<{ slug: string; displayName: string }>;
+  exemplars: Array<{ slug: string; displayName: string }>;
 }
 
 function computeNeighbors(
-  record: FigureRecord,
-  clusters: FigureClusterResolution[],
+  record: ExemplarRecord,
+  clusters: ExemplarClusterResolution[],
 ): NeighborGroup[] {
-  const all = getFigureIndex();
+  const all = getExemplarIndex();
   return clusters
     .map<NeighborGroup>((c) => {
       const others = all.filter((other) => {
-        if (other.figure.slug === record.figure.slug) return false;
-        return resolveFigureClusters(other).some((rc) => rc.clusterId === c.clusterId);
+        if (other.exemplar.slug === record.exemplar.slug) return false;
+        return resolveExemplarClusters(other).some((rc) => rc.clusterId === c.clusterId);
       });
       others.sort(
         (a, b) =>
           b.appearances.length - a.appearances.length ||
-          a.figure.displayName.localeCompare(b.figure.displayName),
+          a.exemplar.displayName.localeCompare(b.exemplar.displayName),
       );
       return {
         clusterId: c.clusterId,
         clusterTheme: c.clusterTheme,
-        figures: others.slice(0, 5).map((o) => ({
-          slug: o.figure.slug,
-          displayName: o.figure.displayName,
+        exemplars: others.slice(0, 5).map((o) => ({
+          slug: o.exemplar.slug,
+          displayName: o.exemplar.displayName,
         })),
       };
     })
-    .filter((g) => g.figures.length > 0);
+    .filter((g) => g.exemplars.length > 0);
 }
 
 interface AxisRowProps<T extends string> {

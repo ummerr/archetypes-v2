@@ -78,7 +78,7 @@ export default function ExemplarIndexClient({ records }: { records: Card[] }) {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search figures…"
+          placeholder="Search exemplars…"
           className="flex-1 min-w-[200px] bg-transparent border border-surface-light/40 rounded-sm px-3 py-2 font-serif text-body focus:outline-none focus:border-gold/50"
         />
         <div className="flex gap-1 font-mono text-label tracking-kicker uppercase">
@@ -114,7 +114,7 @@ export default function ExemplarIndexClient({ records }: { records: Card[] }) {
       </div>
 
       {filtered.length === 0 && (
-        <p className="italic text-text-secondary/70">No figures match.</p>
+        <p className="italic text-text-secondary/70">No exemplars match.</p>
       )}
 
       {heroes.length > 0 && (
@@ -124,7 +124,7 @@ export default function ExemplarIndexClient({ records }: { records: Card[] }) {
               Most read · {HERO_THRESHOLD}+ traditions
             </p>
             <p className="font-serif italic text-xs text-text-secondary/65">
-              Figures the canon keeps returning to. The teaching cases.
+              Exemplars the canon keeps returning to. The teaching cases.
             </p>
           </div>
           <ul className="grid sm:grid-cols-2 gap-4">
@@ -148,7 +148,7 @@ export default function ExemplarIndexClient({ records }: { records: Card[] }) {
             </div>
             <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {t.rows.map((r) => (
-                <FigureCard key={r.slug} card={r} />
+                <ExemplarCard key={r.slug} card={r} />
               ))}
             </ul>
           </section>
@@ -204,7 +204,7 @@ function HeroCard({ card }: { card: Card }) {
   );
 }
 
-function FigureCard({ card }: { card: Card }) {
+function ExemplarCard({ card }: { card: Card }) {
   return (
     <li>
       <Link

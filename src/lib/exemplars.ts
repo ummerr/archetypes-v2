@@ -1,21 +1,25 @@
-import { FIGURES, type FigureEntry } from "@/data/exemplars/figures";
+import {
+  CANONICAL_EXEMPLARS,
+  type ExemplarEntry,
+  type ExemplarKind,
+} from "@/data/exemplars/canonical";
 import type { SystemId } from "@/data/resonance";
 import { allExemplarsForSystem, type AnyExemplar } from "@/lib/cluster-exemplars";
 import { clustersForArchetype } from "@/lib/axes";
 
-export interface FigureAppearance {
+export interface ExemplarAppearance {
   system: SystemId;
   archetypeSlug: string;
   name: string;
   note: string;
   source?: string;
   medium?: string;
-  kind: "cultural" | "historical";
+  kind: ExemplarKind;
 }
 
-export interface FigureRecord {
-  figure: FigureEntry;
-  appearances: FigureAppearance[];
+export interface ExemplarRecord {
+  exemplar: ExemplarEntry;
+  appearances: ExemplarAppearance[];
 }
 
 const SYSTEMS: SystemId[] = [
@@ -27,7 +31,7 @@ const SYSTEMS: SystemId[] = [
   "tarot",
 ];
 
-let cache: FigureRecord[] | undefined;
+let cache: ExemplarRecord[] | undefined;
 
 function normalizeName(name: string): string {
   return name
@@ -38,60 +42,127 @@ function normalizeName(name: string): string {
     .trim();
 }
 
-function buildIndex(): FigureRecord[] {
-  // Flatten all exemplars across all systems once.
+function stripParentheticals(name: string): string {
+  return name.replace(/\s*\([^)]*\)\s*/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function slugify(name: string): string {
+  return name
+    .normalize("NFKD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+interface Resolution {
+  slug: string;
+  displayName: string;
+  canonical?: ExemplarEntry;
+}
+
+function buildResolver() {
+  const bySlug = new Map<string, ExemplarEntry>();
+  const aliases: Array<{ entry: ExemplarEntry; norm: string }> = [];
+  for (const entry of CANONICAL_EXEMPLARS) {
+    bySlug.set(entry.slug, entry);
+    for (const alias of entry.aliases) {
+      aliases.push({ entry, norm: normalizeName(alias) });
+    }
+  }
+
+  return function resolve(rawName: string): Resolution {
+    const norm = normalizeName(rawName);
+    for (const { entry, norm: aliasNorm } of aliases) {
+      if (
+        aliasNorm === norm ||
+        norm.startsWith(aliasNorm) ||
+        aliasNorm.startsWith(norm)
+      ) {
+        return { slug: entry.slug, displayName: entry.displayName, canonical: entry };
+      }
+    }
+    const cleaned = stripParentheticals(rawName);
+    const slug = slugify(cleaned);
+    const collide = bySlug.get(slug);
+    if (collide) {
+      return { slug: collide.slug, displayName: collide.displayName, canonical: collide };
+    }
+    return { slug, displayName: cleaned };
+  };
+}
+
+function buildIndex(): ExemplarRecord[] {
   const flat: Array<AnyExemplar & { archetypeSlug: string; system: SystemId }> = [];
   for (const s of SYSTEMS) {
     flat.push(...allExemplarsForSystem(s));
   }
 
-  const records: FigureRecord[] = [];
-  for (const figure of FIGURES) {
-    const aliasKeys = figure.aliases.map(normalizeName);
-    const appearances: FigureAppearance[] = [];
-    const seen = new Set<string>();
-    for (const entry of flat) {
-      const key = normalizeName(entry.name);
-      if (!aliasKeys.some((a) => a === key || key.startsWith(a) || a.startsWith(key))) continue;
-      const dedupeKey = `${entry.system}-${entry.archetypeSlug}`;
-      if (seen.has(dedupeKey)) continue;
-      seen.add(dedupeKey);
-      appearances.push({
-        system: entry.system,
-        archetypeSlug: entry.archetypeSlug,
-        name: entry.name,
-        note: entry.note,
-        source: entry.source,
-        medium: entry.kind === "cultural" ? entry.medium : undefined,
-        kind: entry.kind,
-      });
-    }
-    if (appearances.length > 0) {
-      records.push({ figure, appearances });
-    }
+  const resolve = buildResolver();
+
+  interface Bucket {
+    entry: ExemplarEntry;
+    appearances: ExemplarAppearance[];
+    seen: Set<string>;
   }
-  return records;
+  const buckets = new Map<string, Bucket>();
+
+  for (const raw of flat) {
+    const { slug, displayName, canonical } = resolve(raw.name);
+
+    let bucket = buckets.get(slug);
+    if (!bucket) {
+      const entry: ExemplarEntry = canonical ?? {
+        slug,
+        displayName,
+        kind: raw.kind,
+        aliases: [displayName],
+      };
+      bucket = { entry, appearances: [], seen: new Set() };
+      buckets.set(slug, bucket);
+    }
+
+    const dedupe = `${raw.system}::${raw.archetypeSlug}`;
+    if (bucket.seen.has(dedupe)) continue;
+    bucket.seen.add(dedupe);
+    bucket.appearances.push({
+      system: raw.system,
+      archetypeSlug: raw.archetypeSlug,
+      name: raw.name,
+      note: raw.note,
+      source: raw.source,
+      medium: raw.kind === "cultural" ? raw.medium : undefined,
+      kind: raw.kind,
+    });
+  }
+
+  return Array.from(buckets.values()).map((b) => ({
+    exemplar: b.entry,
+    appearances: b.appearances,
+  }));
 }
 
-export function getFigureIndex(): FigureRecord[] {
+export function getExemplarIndex(): ExemplarRecord[] {
   if (!cache) cache = buildIndex();
   return cache;
 }
 
-export function getFigureRecord(slug: string): FigureRecord | undefined {
-  return getFigureIndex().find((r) => r.figure.slug === slug);
+export function getExemplarRecord(slug: string): ExemplarRecord | undefined {
+  return getExemplarIndex().find((r) => r.exemplar.slug === slug);
 }
 
-export interface FigureClusterResolution {
+export interface ExemplarClusterResolution {
   clusterId: string;
   clusterTheme: string;
-  appearances: FigureAppearance[];
+  appearances: ExemplarAppearance[];
 }
 
-/** Cluster-coalesce a figure's appearances. A cluster surfaces if at least one
- *  of the figure's archetype-tags maps to it. */
-export function resolveFigureClusters(record: FigureRecord): FigureClusterResolution[] {
-  const byCluster = new Map<string, FigureClusterResolution>();
+/** Cluster-coalesce an exemplar's appearances. A cluster surfaces if at least
+ *  one of the exemplar's archetype-tags maps to it. */
+export function resolveExemplarClusters(
+  record: ExemplarRecord,
+): ExemplarClusterResolution[] {
+  const byCluster = new Map<string, ExemplarClusterResolution>();
   for (const app of record.appearances) {
     const clusters = clustersForArchetype(app.system, app.archetypeSlug);
     for (const c of clusters) {

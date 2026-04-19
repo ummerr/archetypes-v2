@@ -16,12 +16,13 @@ import HermeneuticCaveat from "@/components/shared/HermeneuticCaveat";
 import SectionHeading from "@/components/shared/SectionHeading";
 import ConfidenceBadge from "@/components/shared/ConfidenceBadge";
 import Link from "next/link";
-import { getFigureIndex } from "@/lib/exemplars";
+import { getExemplarIndex } from "@/lib/exemplars";
 import type {
   ConstellationLayout,
   ConstellationNodeMeta,
 } from "@/components/viz/ResonanceConstellation";
 import AtlasInteractive from "@/components/viz/AtlasInteractive";
+import TwoByTwo from "@/components/viz/TwoByTwo";
 import constellationLayout from "@/data/constellation-layout.json";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -90,7 +91,7 @@ export default function AtlasPage() {
     theme: c.theme,
     shortTheme: c.theme.split("—")[0].trim().split(" - ")[0].trim(),
   }));
-  const figureCount = getFigureIndex().length;
+  const exemplarCount = getExemplarIndex().length;
 
   return (
     <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-10 py-12 md:py-20">
@@ -223,19 +224,29 @@ export default function AtlasPage() {
           >
             <div className="flex items-baseline justify-between gap-2 mb-3">
               <p className="font-mono text-label tracking-kicker uppercase text-gold/90 group-hover:text-gold">
-                The Figures →
+                The Exemplars →
               </p>
               <p className="font-mono text-kicker tracking-label uppercase text-text-secondary/60">
-                {figureCount} canonicalized
+                {exemplarCount} across six traditions
               </p>
             </div>
             <p className="font-serif text-body-sm italic text-text-secondary/80 leading-relaxed">
-              The figures the six traditions read. A cross-system view of who gets tagged where —
-              and what surviving translation looks like in practice. Sorted by the number of
-              traditions that claim them, with the canon's most-read figures kept on top.
+              The exemplars the six traditions read. A cross-system view of who gets tagged where
+              — and what surviving translation looks like in practice. Sorted by the number of
+              traditions that claim them, with the most-read exemplars kept on top.
             </p>
           </Link>
         </div>
+      </section>
+
+      <section className="mb-16">
+        <SectionHeading kicker="Structural Compass">Two axes, every archetype</SectionHeading>
+        <TwoByTwo />
+        <p className="mt-4 font-serif text-sm italic text-text-secondary/70 max-w-2xl">
+          Two of Mission 8&apos;s numeric feature dimensions - the belonging / independence axis
+          and the stability / risk axis - plotted for every archetype in the atlas. Clusters in the
+          same quadrant tend to share a posture toward world and risk.
+        </p>
       </section>
 
       <section className="mb-16">

@@ -1,26 +1,27 @@
-// Canonicalized figures — the cross-system registry.
+// Canonicalized exemplars — the cross-system registry.
 //
-// Each figure lists the names under which it might appear in any of the six
-// per-system exemplars files. The `aliases` array lets the resolver match a
-// figure to its raw entry even when the exemplar file uses a different spelling
-// (e.g., "Parzival" vs "Percival", "King Arthur (Malory / White)" vs
-// "King Arthur").
+// Each entry lists the names under which an exemplar might appear in any of
+// the six per-system exemplars files. The resolver (lib/exemplars.ts) uses
+// `aliases` to collapse spelling variants so a single card on
+// /atlas/exemplars collects every reading (e.g. "Parzival" vs "Percival",
+// "King Arthur (Malory / White)" vs "King Arthur").
 //
-// Adding a figure is non-breaking: it only creates a new cross-reference. A
-// figure surfaces on /atlas/exemplars only if the resolver finds at least one
-// raw entry matching its aliases.
+// An entry here is an override, not a gate: every name that appears in a
+// per-system exemplars file surfaces on /atlas/exemplars. Adding an entry
+// here only merges variants and attaches an editorial note; it never filters
+// anything out.
 
-export type FigureKind = "cultural" | "historical";
+export type ExemplarKind = "cultural" | "historical";
 
-export interface FigureEntry {
+export interface ExemplarEntry {
   slug: string;
   displayName: string;
-  kind: FigureKind;
+  kind: ExemplarKind;
   aliases: string[];
   editorialNote?: string;
 }
 
-export const FIGURES: FigureEntry[] = [
+export const CANONICAL_EXEMPLARS: ExemplarEntry[] = [
   {
     slug: "odysseus",
     displayName: "Odysseus",
@@ -330,6 +331,6 @@ export const FIGURES: FigureEntry[] = [
   },
 ];
 
-export function getFigureBySlug(slug: string): FigureEntry | undefined {
-  return FIGURES.find((f) => f.slug === slug);
+export function getCanonicalExemplarBySlug(slug: string): ExemplarEntry | undefined {
+  return CANONICAL_EXEMPLARS.find((e) => e.slug === slug);
 }
