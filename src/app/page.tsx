@@ -107,56 +107,82 @@ export default function Home() {
           }
         />
 
-        {/* Stance */}
-        <div className="px-5 sm:px-6 py-14 md:py-24 border-t border-b border-surface-light/20">
+        {/* Mirror CTA */}
+        <div className="px-5 sm:px-6 py-14 md:py-20 border-t border-b border-surface-light/20">
           <div className="max-w-6xl mx-auto">
-            <div className="max-w-2xl mb-10 md:mb-14">
-              <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4">
-                Why this one
-              </p>
-              <p className="font-serif text-2xl md:text-3xl leading-display text-text-primary font-medium tracking-tight">
-                Most archetype sites pick a tradition and sell certainty.{" "}
-                <span className={light ? "italic" : "text-gold italic glow-text-subtle"}>
-                  This one holds six in the same room
-                </span>{" "}
-                and keeps the receipts.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-10 md:gap-x-16 md:gap-y-14">
-              <div className="animate-slide-up">
-                <p className="font-serif text-xl md:text-2xl text-text-primary font-medium mb-3 leading-snug">
-                  Six traditions, cross-read
-                </p>
-                <p className="text-text-secondary text-body leading-relaxed font-light">
-                  Jung, Enneagram, KWML, tarot, Human Design, MBTI — held side by side, so you can see where they rhyme, where they diverge, and where the overlap is too loose to claim.
-                </p>
+            <Link
+              href="/mirror"
+              className="group block relative overflow-hidden rounded-sm transition-all duration-500"
+              style={{
+                background: `linear-gradient(145deg, ${light ? "#8A6A200A" : "#D4AF3708"} 0%, var(--color-bg) 55%, var(--color-bg) 100%)`,
+                border: `1px solid ${light ? "#8A6A2028" : "#D4AF3720"}`,
+              }}
+            >
+              <div
+                className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${light ? "#8A6A2060" : "#D4AF3760"}, transparent)`,
+                }}
+              />
+              <div className="grid md:grid-cols-[1fr_1.1fr] gap-8 md:gap-14 p-6 sm:p-8 md:p-12 items-center">
+                <div>
+                  <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-3 md:mb-4">
+                    Mirror · 11 choices · ~1 min
+                  </p>
+                  <h2 className="font-serif text-h2 sm:text-3xl md:text-5xl leading-display font-medium text-text-primary tracking-tight mb-4 md:mb-5">
+                    This or that.{" "}
+                    <span className={light ? "text-text-primary italic" : "text-gold glow-text-subtle italic"}>
+                      Eleven times.
+                    </span>
+                  </h2>
+                  <p className="text-text-secondary text-body md:text-lg leading-relaxed font-light mb-5 md:mb-6 max-w-xl">
+                    A forced-choice sorter that draws a cross-system snapshot of
+                    what you&rsquo;re navigating right now. No sign-in, nothing
+                    stored — a mirror to try on, not a verdict to carry.
+                  </p>
+                  <span className="inline-flex items-center gap-2 font-mono text-label tracking-kicker uppercase text-gold group-hover:translate-x-0.5 transition-transform">
+                    Step into the Mirror
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                      <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </div>
+                <div>
+                  <p className="font-serif italic text-text-secondary text-body md:text-lg mb-4 md:mb-5">
+                    Right now I&rsquo;m more pulled toward&hellip;
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 md:gap-4">
+                    <div
+                      className="relative rounded-sm p-4 md:p-5 transition-all duration-300 group-hover:-rotate-1 group-hover:-translate-y-0.5"
+                      style={{
+                        background: light ? "#8A6A200A" : "#D4AF3708",
+                        border: `1px solid ${light ? "#8A6A2030" : "#D4AF3722"}`,
+                      }}
+                    >
+                      <span className="font-mono text-kicker tracking-kicker uppercase text-gold/70">A</span>
+                      <p className="font-serif text-base md:text-lg text-text-primary mt-2 leading-snug">
+                        holding the center for others
+                      </p>
+                    </div>
+                    <div
+                      className="relative rounded-sm p-4 md:p-5 transition-all duration-300 group-hover:rotate-1 group-hover:-translate-y-0.5"
+                      style={{
+                        background: light ? "#8A6A200A" : "#D4AF3708",
+                        border: `1px solid ${light ? "#8A6A2030" : "#D4AF3722"}`,
+                      }}
+                    >
+                      <span className="font-mono text-kicker tracking-kicker uppercase text-gold/70">B</span>
+                      <p className="font-serif text-base md:text-lg text-text-primary mt-2 leading-snug">
+                        cutting through to what needs doing
+                      </p>
+                    </div>
+                  </div>
+                  <p className="font-mono text-label tracking-label uppercase text-muted mt-3 md:mt-4 text-center">
+                    one of eleven
+                  </p>
+                </div>
               </div>
-              <div className="animate-slide-up delay-100">
-                <p className="font-serif text-xl md:text-2xl text-text-primary font-medium mb-3 leading-snug">
-                  Every tie sourced or flagged
-                </p>
-                <p className="text-text-secondary text-body leading-relaxed font-light">
-                  147 mappings across 20 clusters — each cited to its author, or named explicitly as inference, with a confidence tier you can weigh.
-                </p>
-              </div>
-              <div className="animate-slide-up delay-200">
-                <p className="font-serif text-xl md:text-2xl text-text-primary font-medium mb-3 leading-snug">
-                  Dissent kept in view
-                </p>
-                <p className="text-text-secondary text-body leading-relaxed font-light">
-                  Where practitioners genuinely disagree, both readings stay on the page — no silent consensus, no invented synthesis.
-                </p>
-              </div>
-              <div className="animate-slide-up delay-300">
-                <p className="font-serif text-xl md:text-2xl text-text-primary font-medium mb-3 leading-snug">
-                  A map, not a verdict
-                </p>
-                <p className="text-text-secondary text-body leading-relaxed font-light">
-                  Descriptive, not prescriptive. These patterns are how people have noticed themselves for centuries — a mirror to think with, not a label to wear.
-                </p>
-              </div>
-            </div>
+            </Link>
           </div>
         </div>
 

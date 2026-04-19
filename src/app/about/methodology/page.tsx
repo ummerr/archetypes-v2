@@ -30,6 +30,59 @@ export default function MethodologyPage() {
 
       <HermeneuticCaveat variant="banner" className="mb-10" />
 
+      <section className="mb-12 not-prose">
+        <p className="font-mono text-kicker tracking-display text-gold/80 uppercase mb-4">
+          Why this one
+        </p>
+        <p className="font-serif text-2xl md:text-3xl leading-display text-text-primary font-medium tracking-tight mb-10">
+          Most archetype sites pick a tradition and sell certainty.{" "}
+          <span className="text-gold italic">This one holds six in the same room</span>{" "}
+          and keeps the receipts.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-8 md:gap-x-12 md:gap-y-10">
+          <div>
+            <p className="font-serif text-xl md:text-2xl text-text-primary font-medium mb-3 leading-snug">
+              Six traditions, cross-read
+            </p>
+            <p className="text-text-secondary text-body leading-relaxed font-light">
+              Jung, Enneagram, KWML, tarot, Hero&apos;s Journey, MBTI — held
+              side by side, so you can see where they rhyme, where they
+              diverge, and where the overlap is too loose to claim.
+            </p>
+          </div>
+          <div>
+            <p className="font-serif text-xl md:text-2xl text-text-primary font-medium mb-3 leading-snug">
+              Every tie sourced or flagged
+            </p>
+            <p className="text-text-secondary text-body leading-relaxed font-light">
+              147 mappings across 20 clusters — each cited to its author, or
+              named explicitly as inference, with a confidence tier you can
+              weigh.
+            </p>
+          </div>
+          <div>
+            <p className="font-serif text-xl md:text-2xl text-text-primary font-medium mb-3 leading-snug">
+              Dissent kept in view
+            </p>
+            <p className="text-text-secondary text-body leading-relaxed font-light">
+              Where practitioners genuinely disagree, both readings stay on the
+              page — no silent consensus, no invented synthesis.
+            </p>
+          </div>
+          <div>
+            <p className="font-serif text-xl md:text-2xl text-text-primary font-medium mb-3 leading-snug">
+              A map, not a verdict
+            </p>
+            <p className="text-text-secondary text-body leading-relaxed font-light">
+              Descriptive, not prescriptive. These patterns are how people have
+              noticed themselves for centuries — a mirror to think with, not a
+              label to wear.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <p className="font-serif italic text-body-lg text-text-secondary/85 mb-8">
         This page is the long-form account of how the resonance map was built - the pipeline
         that produced it, the anatomy of a single mapping, the counter-canon that corrects it,
@@ -220,6 +273,62 @@ export default function MethodologyPage() {
         the <em>Antagonists</em> cluster for figures whose primary narrative function is
         opposition, and reserves shadow-as-typology for the five-part reading above.
       </p>
+
+      <h2 className="font-serif text-2xl font-medium mt-16 mb-3">Per-system critical profiles</h2>
+      <p>
+        Each of the six traditions has its own page summarising its lineage, what it actually maps,
+        its empirical status, and the blind spot it carries into this atlas.
+      </p>
+      <ul className="mt-4 grid gap-y-2 gap-x-6 sm:grid-cols-2">
+        <li>
+          <Link
+            href="/about/jungian"
+            className="underline decoration-gold/60 underline-offset-4 hover:text-gold"
+          >
+            Jungian (Pearson-Marr)
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/about/enneagram"
+            className="underline decoration-gold/60 underline-offset-4 hover:text-gold"
+          >
+            Enneagram
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/about/kwml"
+            className="underline decoration-gold/60 underline-offset-4 hover:text-gold"
+          >
+            KWML
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/about/mbti"
+            className="underline decoration-gold/60 underline-offset-4 hover:text-gold"
+          >
+            Myers-Briggs
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/about/heros-journey"
+            className="underline decoration-gold/60 underline-offset-4 hover:text-gold"
+          >
+            Hero&apos;s Journey
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/about/tarot"
+            className="underline decoration-gold/60 underline-offset-4 hover:text-gold"
+          >
+            Tarot
+          </Link>
+        </li>
+      </ul>
 
       <h2 className="font-serif text-2xl font-medium mt-16 mb-3">What&apos;s in the repo</h2>
       <p>
