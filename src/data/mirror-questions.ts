@@ -311,20 +311,39 @@ export interface DecodedResult {
 
 // Emit v2 when a seed is provided; otherwise fall through to the raw
 // legacy form. Callers that hold a session should always pass the seed.
+// The dotted form is used inside `?r=` query params (OG image handler,
+// legacy share links). For path-segment URLs use `encodeResultPath`.
 export function encodeResult(choices: Choice[], seed?: string | null): string {
   const body = choices.join("");
   if (seed) return `v2.${seed}.${body}`;
   return body;
 }
 
-// Accepts either `AABB…` (legacy 12-char) or `v2.{seed}.{choices}`.
-// Returns null for anything malformed so a bad URL falls back to the empty
+// Path-segment form. Uses `-` instead of `.` so the code is safe to drop
+// into a URL path without percent-encoding or conflicting with extension
+// parsers. Legacy v1 bodies (raw A/B) contain no delimiters and survive
+// this encoding unchanged.
+export function encodeResultPath(choices: Choice[], seed?: string | null): string {
+  const body = choices.join("");
+  if (seed) return `v2-${seed}-${body}`;
+  return body;
+}
+
+// Accepts any of: `AABB…` (legacy 12-char), `v2.{seed}.{choices}`
+// (dotted query form), or `v2-{seed}-{choices}` (path form). Returns
+// null for anything malformed so a bad URL falls back to the empty
 // sorter.
 export function decodeResult(raw: string | null | undefined): DecodedResult | null {
   if (!raw) return null;
 
-  if (raw.startsWith("v2.")) {
-    const parts = raw.split(".");
+  // Normalize path-form to dotted so the rest of the parser only has to
+  // handle one v2 shape. Only the first two `-` separate v2/seed/body —
+  // the body is pure A/B so it never contains `-`.
+  const normalized =
+    raw.startsWith("v2-") ? raw.replace(/^v2-([^-]+)-/, "v2.$1.") : raw;
+
+  if (normalized.startsWith("v2.")) {
+    const parts = normalized.split(".");
     if (parts.length !== 3) return null;
     const seed = parts[1];
     const body = parts[2];
@@ -337,7 +356,7 @@ export function decodeResult(raw: string | null | undefined): DecodedResult | nu
   }
 
   // Legacy path: exactly 12 A/B chars.
-  const s = raw.toUpperCase();
+  const s = normalized.toUpperCase();
   if (s.length !== LEGACY_QUESTIONS.length) return null;
   const choices = parseChoices(s);
   if (!choices) return null;

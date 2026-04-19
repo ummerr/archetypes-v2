@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import {
   CLUSTER_INTERPRETATIONS,
-  encodeResult,
+  encodeResultPath,
   readingName,
   scoreChoices,
   topClusters,
@@ -133,9 +133,11 @@ export default function MirrorClient({ initialSession, initialChoices }: Props) 
     setChoices(next);
     if (next.length >= session.questions.length) {
       try {
-        const url = new URL(window.location.href);
-        url.searchParams.set("r", encodeResult(next, session.seed));
-        window.history.replaceState({}, "", url.toString());
+        // Swap the URL in place to the canonical path-based reading. No
+        // server round-trip — the result is already rendered client-side,
+        // but reload / bookmark / copy-url now all yield the stable URL.
+        const path = `/mirror/r/${encodeResultPath(next, session.seed)}`;
+        window.history.replaceState({}, "", path);
       } catch {}
       setPhase("result");
     }
@@ -174,47 +176,74 @@ function Kbd({ children }: { children: ReactNode }) {
   );
 }
 
-// The seed ring lives behind the intro heading — a faint preview of the
-// eventual result constellation. Breathes very slowly.
+// The seed ring lives behind the intro heading — a ghost of the eventual
+// result constellation. Full scaffold (3 guide rings, 14 spokes, 14 nodes
+// at their real angular positions) with each node carrying its cluster
+// hue at low opacity. Teases structure and palette without spoiling the
+// reading. Shares `layoutId` with the result chart so the same object
+// carries through the whole flow.
 function SeedRing({ reduced }: { reduced: boolean }) {
-  const size = 260;
-  const cx = size / 2;
-  const cy = size / 2;
-  const r = 96;
+  const w = 520;
+  const h = 480;
+  const cx = w / 2;
+  const cy = h / 2;
+  const innerR = 34;
+  const outerR = 150;
   return (
     <motion.svg
-      viewBox={`0 0 ${size} ${size}`}
-      width={size}
-      height={size}
+      viewBox={`0 0 ${w} ${h}`}
       aria-hidden
-      className="text-muted"
-      animate={reduced ? undefined : breath(10)}
+      className="text-muted w-full max-w-[480px] h-auto overflow-visible"
+      animate={reduced ? undefined : breath(12)}
     >
-      <circle
-        cx={cx}
-        cy={cy}
-        r={r}
-        fill="none"
-        stroke="currentColor"
-        strokeOpacity={0.12}
-        strokeWidth={0.5}
-        strokeDasharray="2 4"
-      />
-      {LAYOUT_ORDER.map((id, i) => {
-        const a = -Math.PI / 2 + (i / LAYOUT_ORDER.length) * Math.PI * 2;
-        const x = cx + Math.cos(a) * r;
-        const y = cy + Math.sin(a) * r;
-        return (
+      <motion.g layoutId="mirror-constellation-ring">
+        {[1, 0.67, 0.34].map((t, i) => (
           <circle
-            key={id}
-            cx={x}
-            cy={y}
-            r={1.6}
-            fill="currentColor"
-            opacity={0.35}
+            key={i}
+            cx={cx}
+            cy={cy}
+            r={innerR + t * (outerR - innerR)}
+            fill="none"
+            stroke="currentColor"
+            strokeOpacity={0.08}
+            strokeWidth={0.5}
+            strokeDasharray="2 4"
           />
-        );
-      })}
+        ))}
+        {LAYOUT_ORDER.map((id, i) => {
+          const angle = -Math.PI / 2 + (i / LAYOUT_ORDER.length) * Math.PI * 2;
+          const x = cx + Math.cos(angle) * outerR;
+          const y = cy + Math.sin(angle) * outerR;
+          const color = CLUSTER_COLOR[id];
+          return (
+            <g key={id}>
+              <line
+                x1={cx}
+                y1={cy}
+                x2={x}
+                y2={y}
+                stroke="currentColor"
+                strokeOpacity={0.04}
+                strokeWidth={0.5}
+              />
+              <motion.circle
+                cx={x}
+                cy={y}
+                r={2.6}
+                fill={color}
+                initial={reduced ? false : { opacity: 0 }}
+                animate={{ opacity: 0.38 }}
+                transition={{
+                  duration: 0.85,
+                  delay: reduced ? 0 : 0.2 + i * 0.045,
+                  ease: "easeOut",
+                }}
+                style={{ filter: `drop-shadow(0 0 3px ${color}55)` }}
+              />
+            </g>
+          );
+        })}
+      </motion.g>
     </motion.svg>
   );
 }
@@ -355,7 +384,7 @@ function MirrorIntro({ onBegin }: { onBegin: () => void }) {
     >
       {/* Ambient seed constellation behind the heading */}
       <div
-        className="pointer-events-none absolute inset-x-0 -top-6 flex justify-center opacity-60"
+        className="pointer-events-none absolute inset-x-0 -top-16 sm:-top-24 flex justify-center"
         aria-hidden
       >
         <SeedRing reduced={reduced} />
@@ -392,7 +421,7 @@ function MirrorIntro({ onBegin }: { onBegin: () => void }) {
         </svg>
 
         <p className="font-serif text-body-lg text-text-secondary/85 leading-article mb-4 max-w-prose">
-          Twelve forced choices, under ninety seconds. No neutral option, no
+          Eleven forced choices, under a minute or two. No neutral option, no
           right answers. At the end: a cross-system read of the archetypal
           energies you&rsquo;re moving with right now.
         </p>
@@ -745,8 +774,8 @@ function MirrorResult({
     () => quietClusters(scores, session.questions),
     [scores, session],
   );
-  const shareCode = useMemo(
-    () => encodeResult(choices, session.seed),
+  const sharePath = useMemo(
+    () => `/mirror/r/${encodeResultPath(choices, session.seed)}`,
     [choices, session],
   );
   const maxOfferings = useMemo(
@@ -809,7 +838,7 @@ function MirrorResult({
       {quiet.length > 0 && <QuietEnergies ids={quiet} />}
 
       <ExploreFooter
-        shareCode={shareCode}
+        sharePath={sharePath}
         isShared={isShared}
         dominantLabels={dominantLabels}
       />
@@ -1648,18 +1677,18 @@ function QuietEnergies({ ids }: { ids: MirrorClusterId[] }) {
 // ─────────────────────────────────────────────────────────────
 
 function ExploreFooter({
-  shareCode,
+  sharePath,
   isShared,
   dominantLabels,
 }: {
-  shareCode: string;
+  sharePath: string;
   isShared: boolean;
   dominantLabels: string[];
 }) {
   const [copied, setCopied] = useState(false);
 
   async function handleShare() {
-    const url = `${window.location.origin}/mirror?r=${shareCode}`;
+    const url = `${window.location.origin}${sharePath}`;
     const title = dominantLabels.length
       ? `My Mirror: ${dominantLabels.join(" · ")}`
       : "My Mirror";

@@ -18,8 +18,10 @@ export interface MirrorSession {
 }
 
 // Default length of a presented quiz. The URL encoder tolerates other
-// lengths — only the pool size is a hard ceiling.
-export const DEFAULT_SESSION_LENGTH = 12;
+// lengths — only the pool size is a hard ceiling. Legacy v2 share links
+// created at length 12 keep working because the decoder passes the
+// observed choice-string length into `sessionFromSeed`.
+export const DEFAULT_SESSION_LENGTH = 11;
 
 // Alphabet for generated seeds. No 0/O/1/I/l so a human reading a shared
 // link aloud can't confuse similar glyphs. 30 chars → 4-char seeds give
