@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 
 export type OgFormat = "wide" | "square";
 
@@ -10,11 +12,13 @@ const SIZES: Record<OgFormat, { width: number; height: number }> = {
 export const ogContentType = "image/png";
 export const ogSize = SIZES.wide;
 
-async function loadFont(url: string): Promise<ArrayBuffer | null> {
+// Fonts are bundled under src/lib/fonts/ so they can't be broken by a
+// Google Fonts URL rotation. Read at runtime from the deployed file path.
+async function loadFont(relPath: string): Promise<ArrayBuffer | null> {
   try {
-    const res = await fetch(url);
-    if (!res.ok) return null;
-    return await res.arrayBuffer();
+    const abs = fileURLToPath(new URL(`./fonts/${relPath}`, import.meta.url));
+    const buf = await readFile(abs);
+    return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
   } catch {
     return null;
   }
@@ -22,11 +26,11 @@ async function loadFont(url: string): Promise<ArrayBuffer | null> {
 
 export async function loadOgFonts() {
   const [cormorant500, cormorantItalic, supreme400, supreme500, spaceMono400] = await Promise.all([
-    loadFont("https://fonts.gstatic.com/s/cormorantgaramond/v16/co3YmX5slCNuHLi8bLeY9MK7whWMhyjYrEPjuw.ttf"),
-    loadFont("https://fonts.gstatic.com/s/cormorantgaramond/v16/co3WmX5slCNuHLi8bLeY9MK7whWMhyjQAFjNgg.ttf"),
-    loadFont("https://cdn.fontshare.com/wf/UDGUA26XVGIV6IQWMQNGGAL7FQZFY227/E6HQU6YVWTGYX3KW3DF66KAAJ224ZDU6/5ZZU4JM62PS7KOJ7BOKLPL3AEO2G76TS.ttf"),
-    loadFont("https://cdn.fontshare.com/wf/OTYYUXNCZZI6EV6RSCAQFTGEGQ7JTD6B/45FLQUBI6DWIP6NYFVBTMKS6YPU3VYPT/GHZ524YD2KXKRX4PZ2S7DE3HKNPE2EKH.ttf"),
-    loadFont("https://fonts.gstatic.com/s/spacemono/v17/i7dPIFZifjKcF5UAWdDRUEY.ttf"),
+    loadFont("cormorant-500.ttf"),
+    loadFont("cormorant-italic-400.ttf"),
+    loadFont("supreme-400.ttf"),
+    loadFont("supreme-500.ttf"),
+    loadFont("space-mono-400.ttf"),
   ]);
 
   const fonts: { name: string; data: ArrayBuffer; style?: "normal" | "italic"; weight?: 400 | 500 | 700 }[] = [];

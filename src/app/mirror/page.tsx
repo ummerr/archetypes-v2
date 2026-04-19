@@ -19,6 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Eleven forced choices. One cross-system snapshot of what you're navigating right now. No sign-in, nothing stored — a mirror to try on.",
     path: "/mirror",
+    ogImage: "/api/og/mirror",
   });
 }
 

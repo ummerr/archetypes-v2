@@ -78,7 +78,20 @@ function sessionForR(r: string | null): MirrorSession | null {
   return session;
 }
 
-function fallbackImage() {
+async function intakeImage() {
+  const { fonts, serif, serifItalic, sans, mono } = await loadOgFonts();
+  const accent = "#D4AF37";
+
+  const positions = LAYOUT_ORDER.map((id, i) => {
+    const angle = -Math.PI / 2 + (i / LAYOUT_ORDER.length) * Math.PI * 2;
+    const r = INNER_R + (OUTER_R - INNER_R) * 0.62;
+    return {
+      id,
+      x: CX + Math.cos(angle) * r,
+      y: CY + Math.sin(angle) * r,
+    };
+  });
+
   return new ImageResponse(
     (
       <div
@@ -88,16 +101,245 @@ function fallbackImage() {
           height: "100%",
           background: "#06060A",
           color: "#EDEDEC",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: "Georgia, serif",
-          fontSize: 48,
+          position: "relative",
+          fontFamily: serif,
         }}
       >
-        Mirror
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `linear-gradient(145deg, ${accent}10 0%, #06060A 40%, #0E0E1480 100%)`,
+            display: "flex",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 3,
+            background: `linear-gradient(90deg, ${accent}, ${accent}40)`,
+            display: "flex",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: 56,
+            left: 80,
+            right: 80,
+            height: 1,
+            background: `linear-gradient(90deg, ${accent}22, transparent 80%)`,
+            display: "flex",
+          }}
+        />
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            height: "100%",
+            padding: "72px 80px 40px 80px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              flex: 1,
+              justifyContent: "space-between",
+              minWidth: 0,
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                style={{
+                  fontSize: 12,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  color: `${accent}CC`,
+                  fontFamily: mono,
+                  display: "flex",
+                }}
+              >
+                The Mirror · 11 Choices · ~1 Min
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginTop: 22,
+                  maxWidth: 640,
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 104,
+                    fontWeight: 500,
+                    lineHeight: 1.0,
+                    letterSpacing: -2,
+                    color: "#EDEDEC",
+                    fontFamily: serif,
+                    display: "flex",
+                  }}
+                >
+                  This or that.
+                </div>
+                <div
+                  style={{
+                    fontSize: 104,
+                    fontWeight: 500,
+                    lineHeight: 1.0,
+                    letterSpacing: -2,
+                    color: accent,
+                    fontStyle: "italic",
+                    fontFamily: serifItalic,
+                    marginTop: 8,
+                    display: "flex",
+                  }}
+                >
+                  Eleven times.
+                </div>
+              </div>
+
+              <div
+                style={{
+                  fontSize: 22,
+                  lineHeight: 1.45,
+                  marginTop: 30,
+                  color: "#D0CEC8",
+                  maxWidth: 540,
+                  fontStyle: "italic",
+                  fontFamily: serifItalic,
+                  display: "flex",
+                }}
+              >
+                A cross-system snapshot of what you&rsquo;re navigating right now.
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 12,
+                  letterSpacing: "0.2em",
+                  color: "#8A8780",
+                  fontFamily: mono,
+                  textTransform: "uppercase",
+                  display: "flex",
+                }}
+              >
+                archetypes.ummerr.com/mirror
+              </div>
+              <div
+                style={{
+                  fontSize: 12,
+                  letterSpacing: "0.2em",
+                  color: `${accent}70`,
+                  fontFamily: mono,
+                  textTransform: "uppercase",
+                  display: "flex",
+                }}
+              >
+                Maps of the Inner World
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 460,
+              flexShrink: 0,
+              position: "relative",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                width: 460,
+                height: 460,
+                borderRadius: "50%",
+                background: `radial-gradient(circle, ${accent}14, transparent 60%)`,
+                display: "flex",
+              }}
+            />
+            <svg
+              width={VIEW}
+              height={VIEW}
+              viewBox={`0 0 ${VIEW} ${VIEW}`}
+              style={{ display: "block" }}
+            >
+              {[0.5, 0.78, 1].map((t, i) => (
+                <circle
+                  key={i}
+                  cx={CX}
+                  cy={CY}
+                  r={INNER_R + (OUTER_R - INNER_R) * t}
+                  fill="none"
+                  stroke="#8A878040"
+                  strokeWidth={0.8}
+                  strokeDasharray="2 5"
+                />
+              ))}
+              {LAYOUT_ORDER.map((id, i) => {
+                const angle =
+                  -Math.PI / 2 + (i / LAYOUT_ORDER.length) * Math.PI * 2;
+                const x2 = CX + Math.cos(angle) * OUTER_R;
+                const y2 = CY + Math.sin(angle) * OUTER_R;
+                return (
+                  <line
+                    key={id}
+                    x1={CX}
+                    y1={CY}
+                    x2={x2}
+                    y2={y2}
+                    stroke="#4A4742"
+                    strokeOpacity={0.3}
+                    strokeWidth={0.5}
+                  />
+                );
+              })}
+              {/* Center gold pulse — "potential" */}
+              <circle cx={CX} cy={CY} r={INNER_R * 0.9} fill={`${accent}12`} />
+              <circle cx={CX} cy={CY} r={INNER_R * 0.45} fill={`${accent}28`} />
+              <circle cx={CX} cy={CY} r={5} fill={accent} opacity={0.9} />
+              {/* Empty constellation — dim uniform dots, an invitation */}
+              {positions.map((p) => (
+                <circle
+                  key={p.id}
+                  cx={p.x}
+                  cy={p.y}
+                  r={3}
+                  fill="#8A8780"
+                  opacity={0.45}
+                />
+              ))}
+            </svg>
+          </div>
+        </div>
+
+        {/* Keep sans binding referenced for future use */}
+        <div style={{ display: "none", fontFamily: sans }} />
       </div>
     ),
-    { width: 1200, height: 630 },
+    {
+      width: 1200,
+      height: 630,
+      fonts: fonts.length ? fonts : undefined,
+    },
   );
 }
 
@@ -106,7 +348,7 @@ export async function GET(req: NextRequest) {
   const r = searchParams.get("r");
   const session = sessionForR(r);
   const decoded = decodeResult(r);
-  if (!session || !decoded) return fallbackImage();
+  if (!session || !decoded) return intakeImage();
 
   const scores = scoreChoices(decoded.choices, session.questions, session.flips);
   const dominant = topClusters(scores, 3);
