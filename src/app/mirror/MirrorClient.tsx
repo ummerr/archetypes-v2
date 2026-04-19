@@ -533,7 +533,7 @@ function MirrorSort({
             transition={{ duration: 0.28, ease: [0.19, 1, 0.22, 1] }}
           >
             <motion.p
-              className="font-mono text-kicker tracking-kicker uppercase text-muted text-center mb-7"
+              className="font-mono text-[13px] sm:text-kicker tracking-[0.14em] sm:tracking-kicker uppercase text-text-primary text-center mb-5 sm:mb-7"
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.22 }}
@@ -612,7 +612,7 @@ function ChoiceCard({
         scale: pressed ? 0.985 : 1,
       }}
       transition={{ duration: 0.26, ease: "easeOut" }}
-      className="group relative overflow-hidden w-full text-left rounded-sm border border-surface-light/50 px-6 py-7 sm:px-7 sm:py-10 min-h-[128px] transition-all duration-500 hover:border-gold/55 hover:bg-gold/[0.04] focus:outline-none focus-visible:border-gold shadow-[0_0_0_rgba(212,175,55,0)] hover:shadow-[0_0_32px_rgba(212,175,55,0.18)] disabled:cursor-default"
+      className="group relative overflow-hidden w-full text-left rounded-sm border border-surface-light/50 px-5 py-5 sm:px-7 sm:py-10 min-h-[88px] sm:min-h-[128px] transition-all duration-500 hover:border-gold/55 hover:bg-gold/[0.04] focus:outline-none focus-visible:border-gold shadow-[0_0_0_rgba(212,175,55,0)] hover:shadow-[0_0_32px_rgba(212,175,55,0.18)] disabled:cursor-default"
     >
       {/* Breathing halo on the inner border — only visible on hover/focus */}
       <span
@@ -637,11 +637,13 @@ function ChoiceCard({
         }}
       />
 
-      <span className="relative z-10 inline-flex items-center gap-2 mb-3">
-        <Kbd>{label}</Kbd>
-      </span>
-      <span className="relative z-10 block font-serif text-h3 sm:text-2xl leading-snug text-text-primary group-hover:text-text-primary">
-        {text}
+      <span className="relative z-10 flex flex-row sm:flex-col items-center sm:items-start gap-3 sm:gap-0">
+        <span className="inline-flex items-center shrink-0 sm:mb-3">
+          <Kbd>{label}</Kbd>
+        </span>
+        <span className="block font-serif text-h3 sm:text-2xl leading-snug text-text-primary group-hover:text-text-primary">
+          {text}
+        </span>
       </span>
     </motion.button>
   );
