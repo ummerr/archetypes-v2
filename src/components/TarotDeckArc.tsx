@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ALL_TAROT, TAROT_PHASES } from "@/data/tarot/archetypes";
 import type { TarotArchetype } from "@/types/tarot";
 import { useTheme } from "@/components/ThemeProvider";
@@ -50,8 +50,51 @@ export default function TarotDeckArc({
   const phaseColor = (id: number) =>
     TAROT_PHASES.find((p) => p.ids.includes(id))?.color ?? "#D4AF37";
 
-  // arc path sized to current viewBox
-  const vbW = 980;
+  // Geometric design width — the horizontal span the fanned cards naturally need.
+  // Scale the whole arc down if the container is narrower than that.
+  const halfAngleRad = ((fanDeg / 2) * Math.PI) / 180;
+  const designW = Math.max(
+    maxWidth,
+    Math.ceil(2 * (arcRadius * Math.sin(halfAngleRad) + cardW / 2) + 24),
+  );
+
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  // Floor the scale so cards never shrink below legibility; if the container
+  // is narrower than that, we let the arc overflow and become pan-scrollable.
+  const MIN_SCALE = 0.42;
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const update = () => {
+      const w = el.clientWidth;
+      if (!w) return;
+      setScale(Math.max(MIN_SCALE, Math.min(1, w / designW)));
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [designW]);
+
+  const scaledHeight = height * scale;
+  const scaledDesignW = designW * scale;
+
+  // When the arc overflows horizontally, center the active card in view so
+  // the user doesn't have to scroll to find where they are in the journey.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || !activeSlug) return;
+    const visible = el.clientWidth;
+    if (visible >= scaledDesignW) return;
+    el.scrollLeft = Math.max(0, (scaledDesignW - visible) / 2);
+  }, [activeSlug, scaledDesignW]);
+
+  // arc path sized to the design width so it aligns with card baselines
+  const vbW = designW;
   const vbH = height;
   const baselineY = vbH - 30;
   const peakY = vbH * 0.44;
@@ -60,146 +103,169 @@ export default function TarotDeckArc({
   return (
     <div className="w-full">
       <div
+        ref={wrapRef}
         className="relative mx-auto"
-        style={{ width: "100%", maxWidth, height, perspective: "1400px" }}
+        style={{ width: "100%", maxWidth }}
       >
-        {/* ground arc */}
-        <svg
-          className="absolute inset-x-0 bottom-0 pointer-events-none"
-          width="100%"
-          height={height}
-          viewBox={`0 0 ${vbW} ${vbH}`}
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="arcStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-              {strokeColor ? (
-                <>
-                  <stop offset="0%" stopColor={strokeColor} stopOpacity="0" />
-                  <stop offset="50%" stopColor={strokeColor} stopOpacity={light ? 0.5 : 0.4} />
-                  <stop offset="100%" stopColor={strokeColor} stopOpacity="0" />
-                </>
-              ) : (
-                <>
-                  <stop offset="0%" stopColor={TAROT_PHASES[0].color} stopOpacity="0" />
-                  <stop offset="15%" stopColor={TAROT_PHASES[0].color} stopOpacity={light ? 0.55 : 0.4} />
-                  <stop offset="38%" stopColor={TAROT_PHASES[0].color} stopOpacity={light ? 0.55 : 0.4} />
-                  <stop offset="50%" stopColor={TAROT_PHASES[1].color} stopOpacity={light ? 0.55 : 0.4} />
-                  <stop offset="68%" stopColor={TAROT_PHASES[1].color} stopOpacity={light ? 0.55 : 0.4} />
-                  <stop offset="80%" stopColor={TAROT_PHASES[2].color} stopOpacity={light ? 0.55 : 0.4} />
-                  <stop offset="100%" stopColor={TAROT_PHASES[2].color} stopOpacity="0" />
-                </>
-              )}
-            </linearGradient>
-          </defs>
-          <path d={arcPath} fill="none" stroke="url(#arcStroke)" strokeWidth="1" />
-        </svg>
-
         <div
-          className="absolute"
-          style={{
-            left: "50%",
-            bottom: 40,
-            width: 0,
-            height: 0,
-            transformStyle: "preserve-3d",
-          }}
+          ref={scrollRef}
+          className="relative mx-auto overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          style={{ height: scaledHeight, width: "100%", WebkitOverflowScrolling: "touch" }}
         >
-          {cards.map((card, i) => {
-            const angle = start + step * i;
-            const isActive = activeSlug === card.slug;
-            const isHovered = hovered === card.slug || isActive;
-            const color = phaseColor(card.id);
-            const lift = isHovered ? liftY : 0;
+          <div
+            className="relative mx-auto"
+            style={{ width: Math.max(scaledDesignW, 1), height: scaledHeight }}
+          >
+          <div
+            className="absolute left-1/2 top-0"
+            style={{
+              width: designW,
+              height,
+              transform: `translateX(-50%) scale(${scale})`,
+              transformOrigin: "top center",
+              perspective: "1400px",
+            }}
+          >
+            {/* ground arc — same coord space as cards */}
+            <svg
+              className="absolute inset-x-0 bottom-0 pointer-events-none"
+              width={designW}
+              height={height}
+              viewBox={`0 0 ${designW} ${vbH}`}
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <defs>
+                <linearGradient id="arcStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+                  {strokeColor ? (
+                    <>
+                      <stop offset="0%" stopColor={strokeColor} stopOpacity="0" />
+                      <stop offset="50%" stopColor={strokeColor} stopOpacity={light ? 0.5 : 0.4} />
+                      <stop offset="100%" stopColor={strokeColor} stopOpacity="0" />
+                    </>
+                  ) : (
+                    <>
+                      <stop offset="0%" stopColor={TAROT_PHASES[0].color} stopOpacity="0" />
+                      <stop offset="15%" stopColor={TAROT_PHASES[0].color} stopOpacity={light ? 0.55 : 0.4} />
+                      <stop offset="38%" stopColor={TAROT_PHASES[0].color} stopOpacity={light ? 0.55 : 0.4} />
+                      <stop offset="50%" stopColor={TAROT_PHASES[1].color} stopOpacity={light ? 0.55 : 0.4} />
+                      <stop offset="68%" stopColor={TAROT_PHASES[1].color} stopOpacity={light ? 0.55 : 0.4} />
+                      <stop offset="80%" stopColor={TAROT_PHASES[2].color} stopOpacity={light ? 0.55 : 0.4} />
+                      <stop offset="100%" stopColor={TAROT_PHASES[2].color} stopOpacity="0" />
+                    </>
+                  )}
+                </linearGradient>
+              </defs>
+              <path d={arcPath} fill="none" stroke="url(#arcStroke)" strokeWidth="1" />
+            </svg>
 
-            return (
-              <Link
-                key={card.slug}
-                href={`/tarot/archetype/${card.slug}`}
-                onMouseEnter={() => setHovered(card.slug)}
-                onMouseLeave={() => setHovered(null)}
-                aria-label={`${card.numeral} - ${card.name}`}
-                className="group absolute block"
-                style={{
-                  width: cardW,
-                  height: cardH,
-                  left: -cardW / 2,
-                  bottom: 0,
-                  transformOrigin: `center ${arcRadius}px`,
-                  transform: `rotate(${angle}deg) translateY(${lift}px)`,
-                  transition:
-                    "transform 420ms cubic-bezier(0.22, 1, 0.36, 1), z-index 0ms",
-                  zIndex: isActive ? 60 : isHovered ? 50 : i,
-                  willChange: "transform",
-                }}
-              >
-                <div
-                  className="relative w-full h-full rounded-[3px] overflow-hidden"
-                  style={{
-                    background: light
-                      ? `linear-gradient(165deg, #F8F5EE 0%, ${color}18 50%, #EAE7E0 100%)`
-                      : `linear-gradient(165deg, #15151C 0%, ${color}22 50%, #08080C 100%)`,
-                    border: `1px solid ${color}${light ? (isHovered ? "AA" : "55") : isHovered ? "90" : "40"}`,
-                    boxShadow: isHovered
-                      ? light
-                        ? `0 14px 28px -10px ${color}90, 0 0 0 1px ${color}60`
-                        : `0 14px 32px -8px #000, 0 0 24px ${color}70`
-                      : light
-                        ? `0 4px 10px -6px rgba(0,0,0,0.18)`
-                        : `0 4px 10px -4px #000, 0 0 8px ${color}20`,
-                    transition: "box-shadow 300ms ease, border-color 300ms ease",
-                  }}
-                >
-                  <div
-                    className="absolute inset-[3px] rounded-[2px] pointer-events-none"
-                    style={{ border: `1px solid ${color}${light ? "55" : "30"}` }}
-                  />
+            <div
+              className="absolute"
+              style={{
+                left: "50%",
+                bottom: 40,
+                width: 0,
+                height: 0,
+                transformStyle: "preserve-3d",
+              }}
+            >
+              {cards.map((card, i) => {
+                const angle = start + step * i;
+                const isActive = activeSlug === card.slug;
+                const isHovered = hovered === card.slug || isActive;
+                const color = phaseColor(card.id);
+                const lift = isHovered ? liftY : 0;
 
-                  <div className="absolute inset-0 flex flex-col items-center justify-between px-1 py-2">
-                    <span
-                      className="font-mono text-kicker tracking-kicker uppercase"
-                      style={{ color: color + (light ? "DD" : "CC") }}
-                    >
-                      {card.numeral}
-                    </span>
+                return (
+                  <Link
+                    key={card.slug}
+                    href={`/tarot/archetype/${card.slug}`}
+                    onMouseEnter={() => setHovered(card.slug)}
+                    onMouseLeave={() => setHovered(null)}
+                    aria-label={`${card.numeral} - ${card.name}`}
+                    className="group absolute block"
+                    style={{
+                      width: cardW,
+                      height: cardH,
+                      left: -cardW / 2,
+                      bottom: 0,
+                      transformOrigin: `center ${arcRadius}px`,
+                      transform: `rotate(${angle}deg) translateY(${lift}px)`,
+                      transition:
+                        "transform 420ms cubic-bezier(0.22, 1, 0.36, 1), z-index 0ms",
+                      zIndex: isActive ? 60 : isHovered ? 50 : i,
+                      willChange: "transform",
+                    }}
+                  >
                     <div
+                      className="relative w-full h-full rounded-[3px] overflow-hidden"
                       style={{
-                        filter: !light
-                          ? `drop-shadow(0 0 ${isHovered ? 6 : 3}px ${color}${isHovered ? "AA" : "70"})`
-                          : `drop-shadow(0 1px 1px ${color}55)`,
-                        transition: "filter 300ms ease",
+                        background: light
+                          ? `linear-gradient(165deg, #F8F5EE 0%, ${color}18 50%, #EAE7E0 100%)`
+                          : `linear-gradient(165deg, #15151C 0%, ${color}22 50%, #08080C 100%)`,
+                        border: `1px solid ${color}${light ? (isHovered ? "AA" : "55") : isHovered ? "90" : "40"}`,
+                        boxShadow: isHovered
+                          ? light
+                            ? `0 14px 28px -10px ${color}90, 0 0 0 1px ${color}60`
+                            : `0 14px 32px -8px #000, 0 0 24px ${color}70`
+                          : light
+                            ? `0 4px 10px -6px rgba(0,0,0,0.18)`
+                            : `0 4px 10px -4px #000, 0 0 8px ${color}20`,
+                        transition: "box-shadow 300ms ease, border-color 300ms ease",
                       }}
-                      aria-hidden
                     >
-                      <ArcanaGlyph
-                        slug={card.slug}
-                        color={color}
-                        size={Math.round(cardH * 0.4)}
-                        light={light}
+                      <div
+                        className="absolute inset-[3px] rounded-[2px] pointer-events-none"
+                        style={{ border: `1px solid ${color}${light ? "55" : "30"}` }}
+                      />
+
+                      <div className="absolute inset-0 flex flex-col items-center justify-between px-1 py-2">
+                        <span
+                          className="font-mono text-kicker tracking-kicker uppercase"
+                          style={{ color: color + (light ? "DD" : "CC") }}
+                        >
+                          {card.numeral}
+                        </span>
+                        <div
+                          style={{
+                            filter: !light
+                              ? `drop-shadow(0 0 ${isHovered ? 6 : 3}px ${color}${isHovered ? "AA" : "70"})`
+                              : `drop-shadow(0 1px 1px ${color}55)`,
+                            transition: "filter 300ms ease",
+                          }}
+                          aria-hidden
+                        >
+                          <ArcanaGlyph
+                            slug={card.slug}
+                            color={color}
+                            size={Math.round(cardH * 0.4)}
+                            light={light}
+                          />
+                        </div>
+                        <span
+                          className="font-serif text-kicker tracking-tight leading-tight text-center px-0.5"
+                          style={{ color: light ? "var(--color-text-primary)" : color }}
+                        >
+                          {card.name.replace(/^The /, "")}
+                        </span>
+                      </div>
+
+                      <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                          backgroundImage: GRAIN_SVG,
+                          backgroundRepeat: "repeat",
+                          backgroundSize: "256px 256px",
+                          mixBlendMode: "overlay",
+                          opacity: light ? 0.1 : 0.18,
+                        }}
                       />
                     </div>
-                    <span
-                      className="font-serif text-kicker tracking-tight leading-tight text-center px-0.5"
-                      style={{ color: light ? "var(--color-text-primary)" : color }}
-                    >
-                      {card.name.replace(/^The /, "")}
-                    </span>
-                  </div>
-
-                  <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      backgroundImage: GRAIN_SVG,
-                      backgroundRepeat: "repeat",
-                      backgroundSize: "256px 256px",
-                      mixBlendMode: "overlay",
-                      opacity: light ? 0.1 : 0.18,
-                    }}
-                  />
-                </div>
-              </Link>
-            );
-          })}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+          </div>
         </div>
 
         {showHoverLabel && (

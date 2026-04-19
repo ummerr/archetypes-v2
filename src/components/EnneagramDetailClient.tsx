@@ -97,9 +97,9 @@ export default function EnneagramDetailClient({
 
         {/* Hero */}
         <div className="mb-10 animate-slide-up delay-100">
-          <div className="flex items-start gap-5 mb-4">
+          <div className="flex items-start gap-4 sm:gap-5 mb-4">
             <div
-              className="w-40 h-40 md:w-56 md:h-56 flex-shrink-0 -mt-4"
+              className="w-28 h-28 sm:w-40 sm:h-40 md:w-56 md:h-56 flex-shrink-0 -mt-2 sm:-mt-4"
               aria-hidden
             >
               <EnneagramTotemCanvas
@@ -108,7 +108,7 @@ export default function EnneagramDetailClient({
                 isHovered
               />
             </div>
-            <div className="flex-1 pt-1">
+            <div className="flex-1 min-w-0 pt-1">
               <p
                 className="font-mono text-label tracking-kicker uppercase mb-2"
                 style={{ color: color + "CC" }}
@@ -116,7 +116,7 @@ export default function EnneagramDetailClient({
                 {triad.label} Triad · {triad.dominantEmotion}
               </p>
               <h1
-                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-display"
+                className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-display"
                 style={{
                   color,
                   textShadow: !light ? `0 0 24px ${color}30` : "none",
@@ -140,19 +140,6 @@ export default function EnneagramDetailClient({
           <p className="text-text-secondary text-base md:text-lg leading-relaxed font-light max-w-2xl">
             {archetype.description}
           </p>
-
-          {archetype.jungianSlug && (
-            <div className="mt-5">
-              <Link
-                href={`/jungian/archetype/${archetype.jungianSlug}`}
-                className="inline-flex items-center gap-2 font-mono text-kicker tracking-kicker uppercase text-muted hover:text-gold transition-colors"
-              >
-                <span className="w-4 h-px bg-current" />
-                Jungian correlation: {archetype.jungianCorrelation}
-                <span>→</span>
-              </Link>
-            </div>
-          )}
 
           <CrossSystemResonanceInline system="enneagram" slug={archetype.slug} />
         </div>
