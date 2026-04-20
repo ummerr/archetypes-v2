@@ -15,6 +15,8 @@ import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
 import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import CounterCanonLinks from "@/components/resonance/CounterCanonLinks";
+import ArchetypeRadar from "@/components/viz/ArchetypeRadar";
+import ResonanceNetwork from "@/components/viz/ResonanceNetwork";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getKwmlExemplars } from "@/data/kwml/exemplars";
 
@@ -451,6 +453,13 @@ export default function ArchetypeDetailClient({
               </motion.section>
             );
           })()}
+
+          <motion.section {...sectionAnim}>
+            <div className="grid md:grid-cols-2 gap-8 mb-12">
+              <ArchetypeRadar system="kwml" slug={archetype.slug} />
+              <ResonanceNetwork system="kwml" slug={archetype.slug} />
+            </div>
+          </motion.section>
 
           <motion.section {...sectionAnim}>
             <CrossSystemResonance
