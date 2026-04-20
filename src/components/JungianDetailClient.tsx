@@ -15,6 +15,8 @@ import { getJungianExemplars } from "@/data/jungian/exemplars";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
 import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
+import ArchetypeRadar from "@/components/viz/ArchetypeRadar";
+import ResonanceNetwork from "@/components/viz/ResonanceNetwork";
 import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
 const JungianTotemCanvas = dynamic(
@@ -194,6 +196,11 @@ export default function JungianDetailClient({
         {/* Opposite */}
         <div className="animate-slide-up delay-500">
           <OppositeCard opposite={opposite} fromColor={color} />
+        </div>
+
+        <div className="animate-slide-up delay-500 grid md:grid-cols-2 gap-8 mt-12 mb-12">
+          <ArchetypeRadar system="jungian" slug={archetype.slug} />
+          <ResonanceNetwork system="jungian" slug={archetype.slug} />
         </div>
 
         <CrossSystemResonance
