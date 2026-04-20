@@ -4,7 +4,7 @@
 // (src/data/feature-vectors.json). Mirrors build-constellation-layout.mjs so
 // Vercel can build without access to research/.
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
@@ -14,6 +14,21 @@ const SRC_PATH = resolve(ROOT, "research/08-structural-similarity.json");
 const OUT_PATH = resolve(ROOT, "src/data/feature-vectors.json");
 
 function main() {
+  // research/* is gitignored, so on Vercel the source JSON is absent.
+  // The checked-in src/data/feature-vectors.json is the source of truth there;
+  // this script only re-generates it locally when the research file is present.
+  if (!existsSync(SRC_PATH)) {
+    if (existsSync(OUT_PATH)) {
+      console.log(
+        `[feature-vectors] source missing (${SRC_PATH}); using checked-in ${OUT_PATH}`,
+      );
+      return;
+    }
+    throw new Error(
+      `[feature-vectors] neither source (${SRC_PATH}) nor checked-in artifact (${OUT_PATH}) found`,
+    );
+  }
+
   const raw = JSON.parse(readFileSync(SRC_PATH, "utf8"));
   if (!raw.feature_vectors) {
     throw new Error(
