@@ -1,0 +1,691 @@
+{
+  "feature_vectors": {
+    "kwml": {
+      "the-king": {
+        "stability_risk": 0.9,
+        "belonging_independence": 0.6,
+        "developmental_stage": "integrated",
+        "shadow_structure": "bipolar",
+        "affect_center": "anger",
+        "narrative_position": "return",
+        "relational_stance": "toward"
+      },
+      "the-warrior": {
+        "stability_risk": -0.2,
+        "belonging_independence": 0.3,
+        "developmental_stage": "integrated",
+        "shadow_structure": "bipolar",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "the-magician": {
+        "stability_risk": 0.1,
+        "belonging_independence": -0.3,
+        "developmental_stage": "integrated",
+        "shadow_structure": "bipolar",
+        "affect_center": "fear",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "the-lover": {
+        "stability_risk": -0.4,
+        "belonging_independence": 0.5,
+        "developmental_stage": "integrated",
+        "shadow_structure": "bipolar",
+        "affect_center": "desire",
+        "narrative_position": "initiation",
+        "relational_stance": "toward"
+      },
+      "the-divine-child": {
+        "stability_risk": 0,
+        "belonging_independence": 0.3,
+        "developmental_stage": "pre-initiation",
+        "shadow_structure": "bipolar",
+        "affect_center": "desire",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "the-hero": {
+        "stability_risk": -0.5,
+        "belonging_independence": -0.2,
+        "developmental_stage": "striving",
+        "shadow_structure": "bipolar",
+        "affect_center": "anger",
+        "narrative_position": "departure",
+        "relational_stance": "against"
+      },
+      "the-precocious-child": {
+        "stability_risk": -0.1,
+        "belonging_independence": -0.4,
+        "developmental_stage": "striving",
+        "shadow_structure": "bipolar",
+        "affect_center": "fear",
+        "narrative_position": "departure",
+        "relational_stance": "away"
+      },
+      "the-oedipal-child": {
+        "stability_risk": -0.2,
+        "belonging_independence": 0.4,
+        "developmental_stage": "striving",
+        "shadow_structure": "bipolar",
+        "affect_center": "desire",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      }
+    },
+    "jungian": {
+      "innocent": {
+        "stability_risk": 0.6,
+        "belonging_independence": 0.6,
+        "developmental_stage": "pre-initiation",
+        "shadow_structure": "unipolar",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "everyman": {
+        "stability_risk": 0.7,
+        "belonging_independence": 0.8,
+        "developmental_stage": "pre-initiation",
+        "shadow_structure": "unipolar",
+        "affect_center": "fear",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "hero": {
+        "stability_risk": -0.4,
+        "belonging_independence": -0.1,
+        "developmental_stage": "striving",
+        "shadow_structure": "unipolar",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "against"
+      },
+      "caregiver": {
+        "stability_risk": 0.7,
+        "belonging_independence": 0.9,
+        "developmental_stage": "pre-initiation",
+        "shadow_structure": "unipolar",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "explorer": {
+        "stability_risk": -0.6,
+        "belonging_independence": -0.8,
+        "developmental_stage": "striving",
+        "shadow_structure": "unipolar",
+        "affect_center": "fear",
+        "narrative_position": "departure",
+        "relational_stance": "away"
+      },
+      "rebel": {
+        "stability_risk": -0.9,
+        "belonging_independence": -0.5,
+        "developmental_stage": "striving",
+        "shadow_structure": "unipolar",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "lover": {
+        "stability_risk": -0.3,
+        "belonging_independence": 0.7,
+        "developmental_stage": "striving",
+        "shadow_structure": "unipolar",
+        "affect_center": "desire",
+        "narrative_position": "initiation",
+        "relational_stance": "toward"
+      },
+      "creator": {
+        "stability_risk": -0.2,
+        "belonging_independence": -0.4,
+        "developmental_stage": "striving",
+        "shadow_structure": "unipolar",
+        "affect_center": "shame",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "jester": {
+        "stability_risk": -0.5,
+        "belonging_independence": 0.1,
+        "developmental_stage": "integrating",
+        "shadow_structure": "unipolar",
+        "affect_center": "fear",
+        "narrative_position": "return",
+        "relational_stance": "balanced"
+      },
+      "sage": {
+        "stability_risk": 0.3,
+        "belonging_independence": -0.3,
+        "developmental_stage": "integrating",
+        "shadow_structure": "unipolar",
+        "affect_center": "fear",
+        "narrative_position": "return",
+        "relational_stance": "away"
+      },
+      "magician": {
+        "stability_risk": 0,
+        "belonging_independence": -0.2,
+        "developmental_stage": "integrated",
+        "shadow_structure": "unipolar",
+        "affect_center": "fear",
+        "narrative_position": "return",
+        "relational_stance": "away"
+      },
+      "ruler": {
+        "stability_risk": 0.9,
+        "belonging_independence": 0.5,
+        "developmental_stage": "integrated",
+        "shadow_structure": "unipolar",
+        "affect_center": "anger",
+        "narrative_position": "return",
+        "relational_stance": "toward"
+      }
+    },
+    "enneagram": {
+      "reformer": {
+        "stability_risk": 0.7,
+        "belonging_independence": 0.2,
+        "developmental_stage": "striving",
+        "shadow_structure": "passion-virtue",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "helper": {
+        "stability_risk": 0.3,
+        "belonging_independence": 0.9,
+        "developmental_stage": "striving",
+        "shadow_structure": "passion-virtue",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "achiever": {
+        "stability_risk": -0.1,
+        "belonging_independence": 0.1,
+        "developmental_stage": "striving",
+        "shadow_structure": "passion-virtue",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "against"
+      },
+      "individualist": {
+        "stability_risk": -0.4,
+        "belonging_independence": -0.3,
+        "developmental_stage": "striving",
+        "shadow_structure": "passion-virtue",
+        "affect_center": "shame",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "investigator": {
+        "stability_risk": 0.2,
+        "belonging_independence": -0.7,
+        "developmental_stage": "striving",
+        "shadow_structure": "passion-virtue",
+        "affect_center": "fear",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "loyalist": {
+        "stability_risk": 0.5,
+        "belonging_independence": 0.7,
+        "developmental_stage": "striving",
+        "shadow_structure": "passion-virtue",
+        "affect_center": "fear",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "enthusiast": {
+        "stability_risk": -0.7,
+        "belonging_independence": -0.3,
+        "developmental_stage": "striving",
+        "shadow_structure": "passion-virtue",
+        "affect_center": "fear",
+        "narrative_position": "departure",
+        "relational_stance": "away"
+      },
+      "challenger": {
+        "stability_risk": -0.5,
+        "belonging_independence": -0.2,
+        "developmental_stage": "striving",
+        "shadow_structure": "passion-virtue",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "peacemaker": {
+        "stability_risk": 0.6,
+        "belonging_independence": 0.7,
+        "developmental_stage": "striving",
+        "shadow_structure": "passion-virtue",
+        "affect_center": "anger",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      }
+    },
+    "mbti": {
+      "intj": {
+        "stability_risk": 0.1,
+        "belonging_independence": -0.7,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "fear",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "intp": {
+        "stability_risk": -0.1,
+        "belonging_independence": -0.7,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "fear",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "entj": {
+        "stability_risk": 0.3,
+        "belonging_independence": -0.1,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "entp": {
+        "stability_risk": -0.6,
+        "belonging_independence": -0.4,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "fear",
+        "narrative_position": "departure",
+        "relational_stance": "against"
+      },
+      "infj": {
+        "stability_risk": 0.2,
+        "belonging_independence": 0.2,
+        "developmental_stage": "integrating",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "shame",
+        "narrative_position": "return",
+        "relational_stance": "toward"
+      },
+      "infp": {
+        "stability_risk": 0,
+        "belonging_independence": -0.2,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "shame",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "enfj": {
+        "stability_risk": 0.3,
+        "belonging_independence": 0.8,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "shame",
+        "narrative_position": "return",
+        "relational_stance": "toward"
+      },
+      "enfp": {
+        "stability_risk": -0.5,
+        "belonging_independence": 0.2,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "istj": {
+        "stability_risk": 0.9,
+        "belonging_independence": 0.6,
+        "developmental_stage": "pre-initiation",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "fear",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "isfj": {
+        "stability_risk": 0.8,
+        "belonging_independence": 0.8,
+        "developmental_stage": "pre-initiation",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "estj": {
+        "stability_risk": 0.8,
+        "belonging_independence": 0.5,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "esfj": {
+        "stability_risk": 0.6,
+        "belonging_independence": 0.9,
+        "developmental_stage": "pre-initiation",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "istp": {
+        "stability_risk": -0.3,
+        "belonging_independence": -0.5,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "fear",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "isfp": {
+        "stability_risk": -0.1,
+        "belonging_independence": -0.1,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "shame",
+        "narrative_position": "liminal",
+        "relational_stance": "away"
+      },
+      "estp": {
+        "stability_risk": -0.7,
+        "belonging_independence": -0.1,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "anger",
+        "narrative_position": "departure",
+        "relational_stance": "against"
+      },
+      "esfp": {
+        "stability_risk": -0.5,
+        "belonging_independence": 0.4,
+        "developmental_stage": "striving",
+        "shadow_structure": "stack-inversion",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      }
+    },
+    "heros-journey": {
+      "hero": {
+        "stability_risk": -0.4,
+        "belonging_independence": -0.1,
+        "developmental_stage": "striving",
+        "shadow_structure": "mirror",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "against"
+      },
+      "mentor": {
+        "stability_risk": 0.4,
+        "belonging_independence": 0.1,
+        "developmental_stage": "integrated",
+        "shadow_structure": "mirror",
+        "affect_center": "fear",
+        "narrative_position": "return",
+        "relational_stance": "away"
+      },
+      "herald": {
+        "stability_risk": -0.6,
+        "belonging_independence": -0.2,
+        "developmental_stage": "pre-initiation",
+        "shadow_structure": "mirror",
+        "affect_center": "fear",
+        "narrative_position": "departure",
+        "relational_stance": "against"
+      },
+      "threshold-guardian": {
+        "stability_risk": 0.6,
+        "belonging_independence": 0,
+        "developmental_stage": "striving",
+        "shadow_structure": "mirror",
+        "affect_center": "anger",
+        "narrative_position": "liminal",
+        "relational_stance": "against"
+      },
+      "shapeshifter": {
+        "stability_risk": -0.5,
+        "belonging_independence": -0.2,
+        "developmental_stage": "liminal",
+        "shadow_structure": "mirror",
+        "affect_center": "desire",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "shadow": {
+        "stability_risk": -0.3,
+        "belonging_independence": -0.5,
+        "developmental_stage": "liminal",
+        "shadow_structure": "mirror",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "trickster": {
+        "stability_risk": -0.7,
+        "belonging_independence": -0.2,
+        "developmental_stage": "liminal",
+        "shadow_structure": "mirror",
+        "affect_center": "fear",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "ally": {
+        "stability_risk": 0.4,
+        "belonging_independence": 0.8,
+        "developmental_stage": "striving",
+        "shadow_structure": "mirror",
+        "affect_center": "shame",
+        "narrative_position": "initiation",
+        "relational_stance": "toward"
+      }
+    },
+    "tarot": {
+      "the-fool": {
+        "stability_risk": -0.8,
+        "belonging_independence": -0.4,
+        "developmental_stage": "pre-initiation",
+        "shadow_structure": "reversal",
+        "affect_center": "desire",
+        "narrative_position": "departure",
+        "relational_stance": "balanced"
+      },
+      "the-magician": {
+        "stability_risk": -0.1,
+        "belonging_independence": -0.3,
+        "developmental_stage": "striving",
+        "shadow_structure": "reversal",
+        "affect_center": "fear",
+        "narrative_position": "departure",
+        "relational_stance": "away"
+      },
+      "the-high-priestess": {
+        "stability_risk": 0.3,
+        "belonging_independence": -0.4,
+        "developmental_stage": "striving",
+        "shadow_structure": "reversal",
+        "affect_center": "fear",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "the-empress": {
+        "stability_risk": 0.2,
+        "belonging_independence": 0.7,
+        "developmental_stage": "striving",
+        "shadow_structure": "reversal",
+        "affect_center": "desire",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "the-emperor": {
+        "stability_risk": 0.9,
+        "belonging_independence": 0.4,
+        "developmental_stage": "integrated",
+        "shadow_structure": "reversal",
+        "affect_center": "anger",
+        "narrative_position": "return",
+        "relational_stance": "toward"
+      },
+      "the-hierophant": {
+        "stability_risk": 0.8,
+        "belonging_independence": 0.6,
+        "developmental_stage": "integrating",
+        "shadow_structure": "reversal",
+        "affect_center": "fear",
+        "narrative_position": "return",
+        "relational_stance": "toward"
+      },
+      "the-lovers": {
+        "stability_risk": -0.2,
+        "belonging_independence": 0.6,
+        "developmental_stage": "striving",
+        "shadow_structure": "reversal",
+        "affect_center": "desire",
+        "narrative_position": "initiation",
+        "relational_stance": "toward"
+      },
+      "the-chariot": {
+        "stability_risk": -0.3,
+        "belonging_independence": -0.1,
+        "developmental_stage": "striving",
+        "shadow_structure": "reversal",
+        "affect_center": "anger",
+        "narrative_position": "departure",
+        "relational_stance": "against"
+      },
+      "strength": {
+        "stability_risk": 0.4,
+        "belonging_independence": 0.1,
+        "developmental_stage": "integrating",
+        "shadow_structure": "reversal",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "balanced"
+      },
+      "the-hermit": {
+        "stability_risk": 0.2,
+        "belonging_independence": -0.8,
+        "developmental_stage": "integrating",
+        "shadow_structure": "reversal",
+        "affect_center": "fear",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "wheel-of-fortune": {
+        "stability_risk": -0.1,
+        "belonging_independence": 0,
+        "developmental_stage": "liminal",
+        "shadow_structure": "reversal",
+        "affect_center": "mixed",
+        "narrative_position": "initiation",
+        "relational_stance": "balanced"
+      },
+      "justice": {
+        "stability_risk": 0.7,
+        "belonging_independence": 0.2,
+        "developmental_stage": "integrating",
+        "shadow_structure": "reversal",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "balanced"
+      },
+      "the-hanged-man": {
+        "stability_risk": -0.2,
+        "belonging_independence": -0.3,
+        "developmental_stage": "liminal",
+        "shadow_structure": "reversal",
+        "affect_center": "shame",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "death": {
+        "stability_risk": -0.6,
+        "belonging_independence": -0.1,
+        "developmental_stage": "liminal",
+        "shadow_structure": "reversal",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "balanced"
+      },
+      "temperance": {
+        "stability_risk": 0.5,
+        "belonging_independence": 0.3,
+        "developmental_stage": "integrating",
+        "shadow_structure": "reversal",
+        "affect_center": "mixed",
+        "narrative_position": "return",
+        "relational_stance": "balanced"
+      },
+      "the-devil": {
+        "stability_risk": -0.5,
+        "belonging_independence": -0.1,
+        "developmental_stage": "liminal",
+        "shadow_structure": "reversal",
+        "affect_center": "desire",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "the-tower": {
+        "stability_risk": -0.9,
+        "belonging_independence": -0.2,
+        "developmental_stage": "liminal",
+        "shadow_structure": "reversal",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "the-star": {
+        "stability_risk": 0.1,
+        "belonging_independence": 0.1,
+        "developmental_stage": "integrating",
+        "shadow_structure": "reversal",
+        "affect_center": "desire",
+        "narrative_position": "return",
+        "relational_stance": "balanced"
+      },
+      "the-moon": {
+        "stability_risk": -0.4,
+        "belonging_independence": -0.3,
+        "developmental_stage": "liminal",
+        "shadow_structure": "reversal",
+        "affect_center": "fear",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "the-sun": {
+        "stability_risk": 0.4,
+        "belonging_independence": 0.5,
+        "developmental_stage": "integrated",
+        "shadow_structure": "reversal",
+        "affect_center": "desire",
+        "narrative_position": "return",
+        "relational_stance": "toward"
+      },
+      "judgement": {
+        "stability_risk": 0,
+        "belonging_independence": 0.2,
+        "developmental_stage": "integrating",
+        "shadow_structure": "reversal",
+        "affect_center": "shame",
+        "narrative_position": "return",
+        "relational_stance": "balanced"
+      },
+      "the-world": {
+        "stability_risk": 0.7,
+        "belonging_independence": 0.3,
+        "developmental_stage": "integrated",
+        "shadow_structure": "reversal",
+        "affect_center": "mixed",
+        "narrative_position": "return",
+        "relational_stance": "balanced"
+      }
+    }
+  }
+}
