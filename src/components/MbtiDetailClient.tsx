@@ -86,9 +86,12 @@ export default function MbtiDetailClient({
 
         {/* Hero */}
         <div className="mb-14 animate-slide-up delay-100">
-          <div className="flex flex-col md:flex-row gap-8 md:gap-10 items-start">
-            <div className="flex-shrink-0 mx-auto md:mx-0" aria-hidden>
-              <MbtiTotemCanvas archetype={archetype} size={208} />
+          <div className="flex items-start gap-4 sm:gap-6 md:gap-10">
+            <div
+              className="w-28 h-28 sm:w-40 sm:h-40 md:w-52 md:h-52 flex-shrink-0 -mt-2 sm:-mt-4"
+              aria-hidden
+            >
+              <MbtiTotemCanvas archetype={archetype} />
             </div>
 
             <div className="flex-1 min-w-0 pt-1">
@@ -99,7 +102,7 @@ export default function MbtiDetailClient({
                 {temperament.label} · {temperament.letters}
               </p>
               <h1
-                className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-display"
+                className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-display"
                 style={{
                   color: light ? "var(--color-text-primary)" : color,
                   textShadow: !light ? `0 0 24px ${color}40` : "none",
@@ -378,7 +381,7 @@ export default function MbtiDetailClient({
                 }}
               />
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid sm:grid-cols-3 gap-3">
               {siblings.map((s) => (
                 <Link
                   key={s.slug}
