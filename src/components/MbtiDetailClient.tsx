@@ -9,6 +9,8 @@ import MbtiTotemCanvas from "@/components/MbtiTotemCanvas";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
 import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
+import ArchetypeRadar from "@/components/viz/ArchetypeRadar";
+import ResonanceNetwork from "@/components/viz/ResonanceNetwork";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getMbtiExemplars } from "@/data/mbti/exemplars";
 
@@ -273,6 +275,11 @@ export default function MbtiDetailClient({
             </div>
           );
         })()}
+
+        <div className="animate-slide-up delay-400 grid md:grid-cols-2 gap-8 mt-12 mb-12">
+          <ArchetypeRadar system="mbti" slug={archetype.slug} />
+          <ResonanceNetwork system="mbti" slug={archetype.slug} />
+        </div>
 
         <CrossSystemResonance
           system="mbti"
