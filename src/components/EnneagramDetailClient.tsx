@@ -9,6 +9,8 @@ import EnneagramWings from "@/components/EnneagramWings";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
 import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
+import ArchetypeRadar from "@/components/viz/ArchetypeRadar";
+import ResonanceNetwork from "@/components/viz/ResonanceNetwork";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getEnneagramExemplars } from "@/data/enneagram/exemplars";
 import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
@@ -335,6 +337,11 @@ export default function EnneagramDetailClient({
             </div>
           );
         })()}
+
+        <div className="animate-slide-up delay-500 grid md:grid-cols-2 gap-8 mt-12 mb-12">
+          <ArchetypeRadar system="enneagram" slug={archetype.slug} />
+          <ResonanceNetwork system="enneagram" slug={archetype.slug} />
+        </div>
 
         <CrossSystemResonance
           system="enneagram"
