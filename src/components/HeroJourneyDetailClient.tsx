@@ -8,6 +8,8 @@ import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
 import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
 import CounterCanonLinks from "@/components/resonance/CounterCanonLinks";
+import ArchetypeRadar from "@/components/viz/ArchetypeRadar";
+import ResonanceNetwork from "@/components/viz/ResonanceNetwork";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getHerosJourneyExemplars } from "@/data/herosjourney/exemplars";
 import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
@@ -244,6 +246,11 @@ export default function HeroJourneyDetailClient({
             </div>
           );
         })()}
+
+        <div className="grid md:grid-cols-2 gap-8 mt-12 mb-12">
+          <ArchetypeRadar system="heros-journey" slug={archetype.slug} />
+          <ResonanceNetwork system="heros-journey" slug={archetype.slug} />
+        </div>
 
         <CrossSystemResonance system="heros-journey" slug={archetype.slug} accentColor={color} />
         <CounterCanonLinks parent="heros-journey" />
