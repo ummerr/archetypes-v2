@@ -9,6 +9,8 @@ import TarotDeckArc from "@/components/TarotDeckArc";
 import CrossSystemResonance from "@/components/resonance/CrossSystemResonance";
 import ArchetypeShareCard from "@/components/viz/ArchetypeShareCard";
 import CrossSystemResonanceInline from "@/components/resonance/CrossSystemResonanceInline";
+import ArchetypeRadar from "@/components/viz/ArchetypeRadar";
+import ResonanceNetwork from "@/components/viz/ResonanceNetwork";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getTarotExemplars } from "@/data/tarot/exemplars";
 
@@ -242,6 +244,11 @@ export default function TarotDetailClient({
             </div>
           );
         })()}
+
+        <div className="animate-slide-up delay-300 grid md:grid-cols-2 gap-8 mt-12 mb-12">
+          <ArchetypeRadar system="tarot" slug={archetype.slug} />
+          <ResonanceNetwork system="tarot" slug={archetype.slug} />
+        </div>
 
         <CrossSystemResonance
           system="tarot"
