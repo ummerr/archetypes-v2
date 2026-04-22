@@ -73,82 +73,108 @@ export default function QuestionLikert({ item, onCommit }: Props) {
       </motion.h2>
 
       <motion.div
-        className="flex items-center justify-center gap-3 sm:gap-5 mb-4"
+        className="relative mx-auto w-fit mb-4"
         initial={reduced ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.45, delay: 0.12 }}
         role="radiogroup"
         aria-label={item.prompt}
       >
-        {VALUES.map((v) => {
-          const isPressed = pressed === v;
-          const isHover = hovered === v;
-          const dimOther = pressed !== null && pressed !== v;
-          // Intensity scales dim → bright left-to-right. 1 = faintest, 7 = brightest.
-          const base = 0.18 + ((v - 1) / 6) * 0.55;
-          const size = 14 + v * 2; // 16..28px
-          return (
-            <button
-              key={v}
-              type="button"
-              role="radio"
-              aria-checked={isPressed}
-              aria-label={`${v} of 7`}
-              onClick={() => commit(v)}
-              onMouseEnter={() => setHovered(v)}
-              onMouseLeave={() => setHovered(null)}
-              onFocus={() => setHovered(v)}
-              onBlur={() => setHovered(null)}
-              disabled={pressed !== null}
-              className="group relative rounded-full transition-all duration-500 focus:outline-none disabled:cursor-default"
-              style={{
-                width: 44,
-                height: 44,
-                padding: 0,
-              }}
-            >
-              <motion.span
-                aria-hidden
-                className="block rounded-full"
-                animate={{
-                  opacity: dimOther
-                    ? 0.12
-                    : isPressed
-                      ? 1
-                      : isHover
-                        ? Math.min(1, base + 0.18)
-                        : base,
-                  scale: isPressed ? 1.18 : isHover ? 1.1 : 1,
-                }}
-                transition={{ duration: 0.28, ease: "easeOut" }}
+        {/* Hairline spine running from dot-1 center to dot-7 center. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 flex items-center"
+          style={{ left: 22, right: 22 }}
+        >
+          <div
+            className="w-full h-px transition-opacity duration-500"
+            style={{
+              background: "var(--color-gold)",
+              opacity: pressed !== null ? 0.08 : 0.22,
+            }}
+          />
+        </div>
+        {/* Mid-tick anchor at position 4 — the "neither" of a Likert. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 left-1/2 -translate-x-1/2 flex items-center"
+        >
+          <div
+            className="h-[7px] w-px transition-opacity duration-500"
+            style={{
+              background: "var(--color-gold)",
+              opacity: pressed !== null ? 0.18 : 0.35,
+            }}
+          />
+        </div>
+
+        <div className="relative flex items-center gap-3 sm:gap-5">
+          {VALUES.map((v) => {
+            const isPressed = pressed === v;
+            const isHover = hovered === v;
+            const dimOther = pressed !== null && pressed !== v;
+            // Rest-state tint warms left→right: cool muted on the low end,
+            // full gold on the high end. Hover/press lifts any dot to gold.
+            const goldPct = Math.round(((v - 1) / 6) * 100);
+            const restBg = `color-mix(in oklch, var(--color-muted) ${100 - goldPct}%, var(--color-gold) ${goldPct}%)`;
+            // Gentle opacity ramp: the color is doing most of the magnitude
+            // work, so opacity only whispers.
+            const base = 0.55 + ((v - 1) / 6) * 0.3;
+            // Dampened size ramp. The spine already says "this is a scale",
+            // so size doesn't need to shout.
+            const size = 17 + v * 1.2;
+            return (
+              <button
+                key={v}
+                type="button"
+                role="radio"
+                aria-checked={isPressed}
+                aria-label={`${v} of 7`}
+                onClick={() => commit(v)}
+                onMouseEnter={() => setHovered(v)}
+                onMouseLeave={() => setHovered(null)}
+                onFocus={() => setHovered(v)}
+                onBlur={() => setHovered(null)}
+                disabled={pressed !== null}
+                className="group relative rounded-full transition-all duration-500 focus:outline-none disabled:cursor-default"
                 style={{
-                  width: size,
-                  height: size,
-                  margin: "auto",
-                  marginTop: (44 - size) / 2,
-                  background: isPressed || isHover
-                    ? "var(--color-gold)"
-                    : "var(--color-text-secondary)",
-                  boxShadow:
-                    isPressed
-                      ? "0 0 18px rgba(212,175,55,0.55), 0 0 36px rgba(212,175,55,0.32)"
+                  width: 44,
+                  height: 44,
+                  padding: 0,
+                }}
+              >
+                <motion.span
+                  aria-hidden
+                  className="block rounded-full"
+                  animate={{
+                    opacity: dimOther
+                      ? 0.1
+                      : isPressed
+                        ? 1
+                        : isHover
+                          ? Math.min(1, base + 0.2)
+                          : base,
+                    scale: isPressed ? 1.18 : isHover ? 1.1 : 1,
+                  }}
+                  transition={{ duration: 0.28, ease: "easeOut" }}
+                  style={{
+                    width: size,
+                    height: size,
+                    margin: "auto",
+                    marginTop: (44 - size) / 2,
+                    background:
+                      isPressed || isHover ? "var(--color-gold)" : restBg,
+                    boxShadow: isPressed
+                      ? "0 0 0 1px rgba(212,175,55,0.85), 0 0 18px rgba(212,175,55,0.55), 0 0 36px rgba(212,175,55,0.32)"
                       : isHover
-                        ? "0 0 10px rgba(212,175,55,0.28)"
-                        : "none",
-                }}
-              />
-              {/* Active / hover ring */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 rounded-full"
-                style={{
-                  border: isHover && !isPressed ? "1px solid rgba(212,175,55,0.5)" : "1px solid transparent",
-                  transition: "border-color 220ms ease",
-                }}
-              />
-            </button>
-          );
-        })}
+                        ? "0 0 0 1px rgba(212,175,55,0.5), 0 0 10px rgba(212,175,55,0.28)"
+                        : "0 0 0 1px rgba(212,175,55,0.14)",
+                  }}
+                />
+              </button>
+            );
+          })}
+        </div>
       </motion.div>
 
       <motion.div
