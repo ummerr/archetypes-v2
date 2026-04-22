@@ -1776,6 +1776,23 @@ function ExploreFooter({
             Take it again →
           </Link>
         )}
+      </div>
+
+      <div className="mt-12 pt-8 border-t border-surface-light/20">
+        <p className="font-serif italic text-body text-text-secondary/75 leading-article mb-5 max-w-prose">
+          Different tools, different weather — the longer reading probes axes
+          the mirror doesn&rsquo;t, and starts fresh rather than picking up
+          where this one left off.
+        </p>
+        <Link
+          href="/quiz"
+          className="inline-block font-serif italic text-body-lg text-gold border border-gold/50 px-6 py-2.5 rounded-sm transition-all duration-300 hover:bg-gold/10 hover:border-gold hover:shadow-[0_0_24px_rgba(212,175,55,0.22)]"
+        >
+          Cast the longer reading →
+        </Link>
+      </div>
+
+      <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
         <Link
           href="/today"
           className="font-serif italic text-body text-text-secondary hover:text-gold transition-colors"
