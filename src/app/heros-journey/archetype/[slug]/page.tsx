@@ -31,6 +31,7 @@ export async function generateMetadata({
     title: `${archetype.name} - Hero's Journey Archetype`,
     description: truncate(archetype.description),
     path: `/heros-journey/archetype/${archetype.slug}`,
+    ogImage: absoluteUrl(`/api/card/heros-journey/${archetype.slug}`),
     type: "article",
   });
 }

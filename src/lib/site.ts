@@ -15,10 +15,6 @@ export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path === "/" ? "" : path}`;
 }
 
-export function systemOgImage(systemId: string): string {
-  return `/og/${systemId}.png`;
-}
-
 export function buildPageMetadata(opts: {
   title: string;
   description: string;

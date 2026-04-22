@@ -32,6 +32,7 @@ export async function generateMetadata({
     title: `${archetype.code} - ${archetype.nickname}`,
     description: truncate(archetype.tagline),
     path: `/mbti/archetype/${archetype.slug}`,
+    ogImage: absoluteUrl(`/api/card/mbti/${archetype.slug}`),
     type: "article",
   });
 }

@@ -31,6 +31,7 @@ export async function generateMetadata({
     title: `${archetype.name} - Jungian Archetype`,
     description: truncate(archetype.description),
     path: `/jungian/archetype/${archetype.slug}`,
+    ogImage: absoluteUrl(`/api/card/jungian/${archetype.slug}`),
     type: "article",
   });
 }

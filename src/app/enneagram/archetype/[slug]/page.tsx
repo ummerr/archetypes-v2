@@ -32,6 +32,7 @@ export async function generateMetadata({
     title: `${archetype.name} - Enneagram Type ${archetype.number}`,
     description: truncate(archetype.description),
     path: `/enneagram/archetype/${archetype.slug}`,
+    ogImage: absoluteUrl(`/api/card/enneagram/${archetype.slug}`),
     type: "article",
   });
 }

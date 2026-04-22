@@ -3,7 +3,7 @@ import {
   JUNGIAN_CLUSTERS,
   getJungianByCluster,
 } from "@/data/jungian/archetypes";
-import { buildPageMetadata, systemOgImage } from "@/lib/site";
+import { buildPageMetadata } from "@/lib/site";
 import BlindSpotsSection from "@/components/shared/BlindSpotsSection";
 
 export const metadata = buildPageMetadata({
@@ -11,7 +11,6 @@ export const metadata = buildPageMetadata({
   description:
     "The Pearson-Marr twelve - the framework behind modern brand identity, and the living vocabulary of Jung's collective unconscious. Ego, Soul, and Self.",
   path: "/jungian/about",
-  ogImage: systemOgImage("jungian"),
 });
 
 const BRAND_TEASERS: { brand: string; archetype: string; slug: string; note: string }[] = [

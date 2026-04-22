@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ENNEAGRAM_TRIADS } from "@/data/enneagram/archetypes";
-import { buildPageMetadata, systemOgImage } from "@/lib/site";
+import { buildPageMetadata } from "@/lib/site";
 import BlindSpotsSection from "@/components/shared/BlindSpotsSection";
 
 export const metadata = buildPageMetadata({
@@ -8,7 +8,6 @@ export const metadata = buildPageMetadata({
   description:
     "The Enneagram: nine motivational types organized into three centers of intelligence, with dynamic paths of integration and disintegration.",
   path: "/enneagram/about",
-  ogImage: systemOgImage("enneagram"),
 });
 
 export default function EnneagramAbout() {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { JOURNEY_ACTS } from "@/data/herosjourney/stages";
-import { buildPageMetadata, systemOgImage } from "@/lib/site";
+import { buildPageMetadata } from "@/lib/site";
 import BlindSpotsSection from "@/components/shared/BlindSpotsSection";
 
 export const metadata = buildPageMetadata({
@@ -8,7 +8,6 @@ export const metadata = buildPageMetadata({
   description:
     "Campbell's monomyth, Vogler's twelve-stage adaptation, and honest notes on what the framework illuminates and what it leaves out.",
   path: "/heros-journey/about",
-  ogImage: systemOgImage("heros-journey"),
 });
 
 export default function HerosJourneyAbout() {

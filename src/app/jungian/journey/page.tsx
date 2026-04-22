@@ -6,7 +6,6 @@ import JourneySpiral from "@/components/jungian/JourneySpiral";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   buildPageMetadata,
-  systemOgImage,
   absoluteUrl,
   SITE_NAME,
   SITE_AUTHOR,
@@ -19,7 +18,6 @@ export const metadata: Metadata = buildPageMetadata({
   description:
     "The Pearson-Marr journey, visualized: twelve archetypes arranged across three rings - Ego, Soul, and Self - tracing the stages of psychological development.",
   path: "/jungian/journey",
-  ogImage: systemOgImage("jungian"),
   type: "article",
 });
 

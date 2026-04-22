@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
+import { SYSTEMS } from "@/data/systems";
 
 export type OgFormat = "wide" | "square";
 
@@ -307,6 +308,20 @@ export async function renderOgCard(opts: {
       fonts: fonts.length ? fonts : undefined,
     },
   );
+}
+
+/* ── Per-System Card ───────────────────────────────────── */
+
+export async function renderSystemOgCard(systemId: string) {
+  const system = SYSTEMS.find((s) => s.id === systemId);
+  if (!system) return renderHomepageOgCard();
+  return renderOgCard({
+    eyebrow: system.framework,
+    title: system.name,
+    subtitle: system.description,
+    motto: system.subtitle,
+    accent: system.accent,
+  });
 }
 
 /* ── Homepage Card ─────────────────────────────────────── */

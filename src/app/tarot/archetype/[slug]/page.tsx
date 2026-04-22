@@ -32,6 +32,7 @@ export async function generateMetadata({
     title: `${archetype.name} - Major Arcanum ${archetype.numeral}`,
     description: truncate(archetype.description),
     path: `/tarot/archetype/${archetype.slug}`,
+    ogImage: absoluteUrl(`/api/card/tarot/${archetype.slug}`),
     type: "article",
   });
 }

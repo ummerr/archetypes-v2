@@ -35,6 +35,7 @@ export async function generateMetadata({
     title: `${archetype.name} - KWML Archetype`,
     description: truncate(`${archetype.description}${shadows}`),
     path: `/kwml/archetype/${archetype.slug}`,
+    ogImage: absoluteUrl(`/api/card/kwml/${archetype.slug}`),
     type: "article",
   });
 }
