@@ -6,6 +6,7 @@ import type { ClassificationResult } from "@/lib/quiz-types";
 import HermeneuticCaveat from "@/components/shared/HermeneuticCaveat";
 import ReadingOpening from "./ReadingOpening";
 import SignatureRadar from "./SignatureRadar";
+import ReadingConstellation from "./ReadingConstellation";
 import AxisSummary from "./AxisSummary";
 import SystemSpread from "./SystemSpread";
 import ClusterResonance from "./ClusterResonance";
@@ -44,6 +45,18 @@ export default function QuizReadingClient({ classification, readingNo }: Props) 
         transition={{ duration: 1.0, delay: 1.4, ease: [0.19, 1, 0.22, 1] }}
       >
         <SignatureRadar classification={classification} />
+      </motion.div>
+
+      <motion.div
+        className="mb-20"
+        initial={reduced ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.0, delay: 1.6, ease: [0.19, 1, 0.22, 1] }}
+      >
+        <ReadingConstellation
+          clusters={classification.clusters}
+          primaryClusterId={classification.clusters[0]?.cluster.id}
+        />
       </motion.div>
 
       <AxisSummary summary={classification.axisSummary} />
