@@ -17,7 +17,7 @@ import {
 
 type GroupId = "systems" | "atlas" | "practice" | "about";
 
-const PRACTICE_PATHS = ["/today", "/mirror", "/profile"];
+const PRACTICE_PATHS = ["/today", "/mirror", "/quiz", "/profile"];
 const inPracticePath = (p: string) =>
   PRACTICE_PATHS.some((base) => p === base || p.startsWith(base + "/"));
 
