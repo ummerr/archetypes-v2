@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import QuestionLikert from "@/components/quiz/QuestionLikert";
 import QuestionForcedChoice from "@/components/quiz/QuestionForcedChoice";
@@ -11,10 +11,67 @@ import {
   createSession,
   encodeResultPath,
   sectionProgress,
+  sessionFromSeed,
   SECTION_ORDER,
   type QuizSession,
 } from "@/lib/quiz-session";
 import type { QuizResponse, QuizSection } from "@/lib/quiz-types";
+
+// Autosave lives in sessionStorage — tab-scoped, so it survives refresh and
+// accidental nav but still evaporates when the tab closes. That keeps the
+// "nothing is stored" ethos honest: the ceremony is preserved *for this sitting*
+// and nothing more. Bumping STORAGE_VERSION invalidates stale saves.
+const STORAGE_KEY = "archetypes:quiz:v1";
+const STORAGE_VERSION = "q1";
+// Older than this → treat as abandoned. A single sitting, not a week-old ghost.
+const STORAGE_MAX_AGE_MS = 6 * 60 * 60 * 1000;
+
+interface SavedState {
+  version: string;
+  seed: string;
+  stepIdx: number;
+  responses: Record<string, QuizResponse>;
+  savedAt: number;
+}
+
+function readSaved(): SavedState | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as SavedState;
+    if (parsed.version !== STORAGE_VERSION) return null;
+    if (!parsed.seed || typeof parsed.stepIdx !== "number") return null;
+    if (Date.now() - parsed.savedAt > STORAGE_MAX_AGE_MS) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeSaved(state: Omit<SavedState, "savedAt" | "version">): void {
+  if (typeof window === "undefined") return;
+  try {
+    const payload: SavedState = {
+      ...state,
+      version: STORAGE_VERSION,
+      savedAt: Date.now(),
+    };
+    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  } catch {
+    // Storage full / disabled — silently no-op. Losing autosave is fine;
+    // losing the ceremony because of a quota error would not be.
+  }
+}
+
+function clearSaved(): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.sessionStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // ignore
+  }
+}
 
 // Between-section threshold aphorisms. Each sits before the *next* section
 // named in the key — so SECTION_APHORISMS["relational-affect"] shows after
@@ -93,6 +150,11 @@ function toRoman(n: number): string {
 
 type Phase = "running" | "complete";
 
+// How long the undo chip lingers after a commit. Long enough to catch the
+// mis-tap ("wait, I meant 5 not 3"), short enough that it doesn't tempt a
+// second-guess of a considered answer.
+const UNDO_WINDOW_MS = 2200;
+
 export default function QuizTakeClient() {
   // Session creation is deferred to client mount so SSR never ships a random
   // seed in the HTML and re-mounting doesn't reuse a stale session.
@@ -100,18 +162,135 @@ export default function QuizTakeClient() {
   const [stepIdx, setStepIdx] = useState(0);
   const [responses, setResponses] = useState<Record<string, QuizResponse>>({});
   const [phase, setPhase] = useState<Phase>("running");
+  // If a valid save exists, we defer session creation and show a resume
+  // prompt instead — the user chooses Continue or Begin anew. Null means no
+  // pending prompt (either never had one, or the user has resolved it).
+  const [pendingResume, setPendingResume] = useState<SavedState | null>(null);
+  // One-step undo window. Armed after each question commit, auto-clears
+  // after UNDO_WINDOW_MS. Reverting drops the response for itemId and
+  // rewinds the step to prevStepIdx.
+  const [undoable, setUndoable] = useState<{
+    itemId: string;
+    prevStepIdx: number;
+  } | null>(null);
+  const undoTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // Session creation calls crypto.getRandomValues — defer to mount so SSR
-    // doesn't ship a random seed (which would mismatch on hydration).
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSession(createSession());
+    // On mount: check for a saved session from this tab. If present, show
+    // the resume prompt; otherwise cast a fresh session. Both paths defer
+    // crypto-using code until after hydration.
+    const saved = readSaved();
+    // Mount-time initialization: readSaved / createSession both read from
+    // environment APIs that can't be invoked during render, so setting
+    // state here is load-bearing, not cascading.
+    if (saved) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPendingResume(saved);
+    } else {
+      setSession(createSession());
+    }
+  }, []);
+
+  // Autosave on every meaningful state change. Skipped while the resume
+  // prompt is open (we haven't committed to a session yet) and after
+  // completion (the slug IS the artefact — no need to keep a draft).
+  useEffect(() => {
+    if (!session || pendingResume || phase === "complete") return;
+    writeSaved({ seed: session.seed, stepIdx, responses });
+  }, [session, stepIdx, responses, phase, pendingResume]);
+
+  // On completion, drop the tab-local draft — the share slug is the
+  // canonical artefact from here on, and a future visit to /quiz/take
+  // should start fresh rather than offering to resume a finished reading.
+  useEffect(() => {
+    if (phase === "complete") clearSaved();
+  }, [phase]);
+
+  // Clean up the undo timer if the component tears down.
+  useEffect(() => {
+    return () => {
+      if (undoTimerRef.current !== null) {
+        window.clearTimeout(undoTimerRef.current);
+      }
+    };
   }, []);
 
   const steps = useMemo(
     () => (session ? buildSteps(session) : []),
     [session],
   );
+
+  const clearUndo = useCallback(() => {
+    if (undoTimerRef.current !== null) {
+      window.clearTimeout(undoTimerRef.current);
+      undoTimerRef.current = null;
+    }
+    setUndoable(null);
+  }, []);
+
+  const performUndo = useCallback(() => {
+    setUndoable((current) => {
+      if (!current) return null;
+      setResponses((prev) => {
+        const next = { ...prev };
+        delete next[current.itemId];
+        return next;
+      });
+      setStepIdx(current.prevStepIdx);
+      if (undoTimerRef.current !== null) {
+        window.clearTimeout(undoTimerRef.current);
+        undoTimerRef.current = null;
+      }
+      return null;
+    });
+  }, []);
+
+  // Keyboard shortcut for undo — only active while the window is open so
+  // we don't shadow any 'u' option labels in forced-choice (none currently,
+  // but cheap guard).
+  useEffect(() => {
+    if (!undoable) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const target = e.target as HTMLElement | null;
+      if (target && ["INPUT", "TEXTAREA"].includes(target.tagName)) return;
+      if (e.key.toLowerCase() === "u") {
+        e.preventDefault();
+        performUndo();
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [undoable, performUndo]);
+
+  // Resume-prompt branch: render before any session-dependent UI so the
+  // user's saved answers are never briefly overwritten on the wire.
+  if (pendingResume && !session) {
+    return (
+      <ResumePrompt
+        saved={pendingResume}
+        onContinue={() => {
+          const restored = sessionFromSeed(pendingResume.seed);
+          const builtSteps = buildSteps(restored);
+          const clampedStep = Math.max(
+            0,
+            Math.min(pendingResume.stepIdx, builtSteps.length - 1),
+          );
+          setSession(restored);
+          setStepIdx(clampedStep);
+          setResponses(pendingResume.responses ?? {});
+          setPendingResume(null);
+        }}
+        onRestart={() => {
+          clearSaved();
+          setSession(createSession());
+          setStepIdx(0);
+          setResponses({});
+          setPendingResume(null);
+        }}
+      />
+    );
+  }
 
   if (!session) return <SessionLoading />;
 
@@ -131,6 +310,7 @@ export default function QuizTakeClient() {
     // (or to step 0 if there is none earlier) and drop responses for any
     // items we rewind past.
     if (!session) return;
+    clearUndo();
     for (let i = stepIdx - 1; i >= 0; i--) {
       if (steps[i].kind === "threshold") {
         setStepIdx(i);
@@ -153,11 +333,22 @@ export default function QuizTakeClient() {
   function handleCommit(value: QuizResponse["value"]) {
     if (!session || step?.kind !== "question") return;
     const item = session.items[step.itemIndex];
+    const prevStepIdx = stepIdx;
     setResponses((prev) => ({
       ...prev,
       [item.id]: { itemId: item.id, value },
     }));
     advance();
+    // Arm the undo chip AFTER advance. It names the item the user just
+    // committed to and the step they were on when they did.
+    if (undoTimerRef.current !== null) {
+      window.clearTimeout(undoTimerRef.current);
+    }
+    setUndoable({ itemId: item.id, prevStepIdx });
+    undoTimerRef.current = window.setTimeout(() => {
+      setUndoable(null);
+      undoTimerRef.current = null;
+    }, UNDO_WINDOW_MS);
   }
 
   if (phase === "complete") {
@@ -181,6 +372,11 @@ export default function QuizTakeClient() {
         answered={answered}
       />
 
+      <UndoChip
+        visible={!!undoable}
+        onUndo={performUndo}
+      />
+
       <div className="flex-1 flex items-center">
         <AnimatePresence mode="wait">
           {step.kind === "threshold" ? (
@@ -195,7 +391,12 @@ export default function QuizTakeClient() {
               <ThresholdPage
                 aphorism={SECTION_APHORISMS[step.section]}
                 sectionLabel={SECTION_LABELS[step.section]}
-                onContinue={advance}
+                onContinue={() => {
+                  // Crossing a threshold commits the prior section — undo
+                  // the last in-section answer should not survive the rite.
+                  clearUndo();
+                  advance();
+                }}
                 onBack={stepIdx > 0 ? stepBackToLastThreshold : undefined}
               />
             </motion.div>
@@ -388,6 +589,138 @@ function Header({
         })}
       </div>
     </header>
+  );
+}
+
+// A quiet, low-layout-impact chip offering one-step undo after each commit.
+// AnimatePresence handles the fade; the outer row reserves a fixed minimum
+// height so arming/clearing the chip doesn't shift the question beneath.
+function UndoChip({
+  visible,
+  onUndo,
+}: {
+  visible: boolean;
+  onUndo: () => void;
+}) {
+  return (
+    <div className="min-h-[1.5rem] mb-2 flex items-center justify-center">
+      <AnimatePresence>
+        {visible && (
+          <motion.button
+            key="undo-chip"
+            type="button"
+            onClick={onUndo}
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+            className="group inline-flex items-center gap-2 font-mono text-kicker tracking-kicker uppercase text-muted/70 hover:text-gold focus:outline-none focus-visible:text-gold transition-colors"
+            aria-label="Undo last answer"
+          >
+            <span aria-hidden className="text-gold/70 group-hover:text-gold">
+              &#x21ba;
+            </span>
+            <span>Undo last</span>
+            <span className="hidden sm:inline-flex items-center justify-center font-mono text-[10px] tracking-normal uppercase min-w-[22px] h-[22px] px-1.5 rounded-sm border border-gold/35 text-gold/90 bg-gold/[0.04]">
+              U
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// The resume prompt is the only interruption to the ceremony we allow.
+// It's shown once on mount when a valid tab-local save exists; choosing
+// either option commits and the prompt never returns in the same session.
+function ResumePrompt({
+  saved,
+  onContinue,
+  onRestart,
+}: {
+  saved: SavedState;
+  onContinue: () => void;
+  onRestart: () => void;
+}) {
+  const reduced = useReducedMotion() ?? false;
+  const answered = Object.keys(saved.responses ?? {}).length;
+  // Capture "now" once at mount — re-reading Date.now() during render would
+  // be impure, and the exact minute count doesn't need to tick while the
+  // user hovers over the prompt.
+  const [nowAtMount] = useState(() => Date.now());
+  const minutesAgo = Math.max(
+    1,
+    Math.round((nowAtMount - saved.savedAt) / 60000),
+  );
+  const agoLabel =
+    minutesAgo < 60
+      ? `${minutesAgo} minute${minutesAgo === 1 ? "" : "s"} ago`
+      : `${Math.round(minutesAgo / 60)} hour${Math.round(minutesAgo / 60) === 1 ? "" : "s"} ago`;
+
+  return (
+    <motion.section
+      className="max-w-2xl mx-auto px-6 md:px-10 py-24 md:py-28 text-center"
+      initial={reduced ? false : { opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
+    >
+      <p className="font-mono text-kicker tracking-display uppercase text-gold/80 mb-6">
+        A reading in progress
+      </p>
+      <h1 className="font-serif text-h2 md:text-h1 leading-display mb-5">
+        You were in the middle of something.
+      </h1>
+
+      <svg
+        viewBox="0 0 160 2"
+        width="160"
+        height="2"
+        className="mx-auto my-6 text-gold block"
+        aria-hidden
+      >
+        <motion.line
+          x1="0"
+          y1="1"
+          x2="160"
+          y2="1"
+          stroke="currentColor"
+          strokeWidth={1}
+          strokeOpacity={0.6}
+          initial={reduced ? false : { pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.0, delay: 0.2, ease: "easeOut" }}
+        />
+      </svg>
+
+      <p className="font-serif italic text-body-lg text-text-secondary/85 leading-article max-w-prose mx-auto mb-10">
+        {answered} answer{answered === 1 ? "" : "s"} waiting, saved {agoLabel}.
+        Nothing has left this tab. You can pick up where you left off, or set
+        it aside and begin a new reading.
+      </p>
+
+      <div className="flex flex-wrap items-center justify-center gap-5">
+        <button
+          type="button"
+          onClick={onContinue}
+          className="group relative overflow-hidden font-mono text-label tracking-kicker uppercase border border-gold px-7 py-4 rounded-sm text-gold transition-all duration-500 hover:bg-gold/10 shadow-[0_0_22px_rgba(212,175,55,0.18)] hover:shadow-[0_0_36px_rgba(212,175,55,0.38)] focus-visible:shadow-[0_0_36px_rgba(212,175,55,0.45)]"
+        >
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-breathe-subtle"
+            style={{ boxShadow: "inset 0 0 20px rgba(212,175,55,0.14)" }}
+          />
+          <span className="relative z-10">Continue the reading &rarr;</span>
+        </button>
+        <button
+          type="button"
+          onClick={onRestart}
+          className="font-serif italic text-body text-text-secondary/75 hover:text-gold transition-colors"
+        >
+          Begin anew
+        </button>
+      </div>
+    </motion.section>
   );
 }
 

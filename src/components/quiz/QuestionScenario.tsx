@@ -29,7 +29,7 @@ export default function QuestionScenario({ item, onCommit }: Props) {
     setPressed(optionId);
     // Slightly slower than forced-choice — scenarios invite reflection, and
     // the gold sweep wants room to land before advancing.
-    window.setTimeout(() => onCommit(optionId), 280);
+    window.setTimeout(() => onCommit(optionId), 160);
   }
 
   useEffect(() => {

@@ -28,7 +28,7 @@ export default function QuestionForcedChoice({ item, onCommit }: Props) {
   function commit(optionId: string) {
     if (pressed !== null) return;
     setPressed(optionId);
-    window.setTimeout(() => onCommit(optionId), 220);
+    window.setTimeout(() => onCommit(optionId), 110);
   }
 
   useEffect(() => {

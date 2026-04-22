@@ -28,7 +28,9 @@ export default function QuestionLikert({ item, onCommit }: Props) {
   function commit(v: number) {
     if (pressed !== null) return;
     setPressed(v);
-    window.setTimeout(() => onCommit(v), 220);
+    // Short enough to feel snappy across 50 questions; long enough for the
+    // scale flourish to read as a response rather than a cut.
+    window.setTimeout(() => onCommit(v), 110);
   }
 
   useEffect(() => {
