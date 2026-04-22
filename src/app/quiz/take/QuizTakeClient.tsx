@@ -29,11 +29,18 @@ const SECTION_APHORISMS: Record<QuizSection, string> = {
     "The last turn is down. Answer only what you can answer honestly.",
 };
 
+const SECTION_NAMES: Record<QuizSection, string> = {
+  calibration: "Ground",
+  "relational-affect": "Weather",
+  narrative: "Story",
+  shadow: "Shadow",
+};
+
 const SECTION_LABELS: Record<QuizSection, string> = {
-  calibration: "I · Ground",
-  "relational-affect": "II · Weather",
-  narrative: "III · Story",
-  shadow: "IV · Shadow",
+  calibration: `I · ${SECTION_NAMES.calibration}`,
+  "relational-affect": `II · ${SECTION_NAMES["relational-affect"]}`,
+  narrative: `III · ${SECTION_NAMES.narrative}`,
+  shadow: `IV · ${SECTION_NAMES.shadow}`,
 };
 
 // Build the ordered step list once per session. Each item is its own step;
@@ -239,7 +246,9 @@ function QuestionRenderer({
 }
 
 // Header: the kicker row that tells a reader where they are in the ceremony.
-// Roman numerals on each side; section name in small caps mono.
+// Left kicker is functional (arabic "Ground · 3 of 22"); right is ambient
+// (roman overall). The rail beneath is segmented proportional to section
+// length, so its fill is an honest map of the ceremony's pacing.
 function Header({
   session,
   step,
@@ -253,61 +262,128 @@ function Header({
   const total = session.items.length;
   const currentItemIdx =
     step.kind === "question" ? step.itemIndex : answered;
-  const progress = sectionProgress(session.items, Math.min(currentItemIdx, total - 1));
-  const counter = `${toRoman(answered + (step.kind === "question" ? 1 : 0))} · ${toRoman(total)}`;
-  const sectionOrderIdx = SECTION_ORDER.indexOf(progress.section) + 1;
+  const progress = sectionProgress(
+    session.items,
+    Math.min(currentItemIdx, total - 1),
+  );
+  const sectionOrderIdx = SECTION_ORDER.indexOf(progress.section);
+
+  // Per-section totals so each rail segment's flex-basis is proportional to
+  // how long that section actually runs. Keeps the rail an honest map.
+  const sectionTotals = useMemo(() => {
+    const counts: Record<QuizSection, number> = {
+      calibration: 0,
+      "relational-affect": 0,
+      narrative: 0,
+      shadow: 0,
+    };
+    for (const it of session.items) counts[it.section]++;
+    return counts;
+  }, [session.items]);
+
+  // Overall position counted ceremoniously: on a question, include it
+  // (1-based); on a threshold, show the count of answered questions (the
+  // threshold itself isn't a numbered step).
+  const overallPos =
+    step.kind === "question" ? step.itemIndex + 1 : answered;
 
   return (
     <header className="mb-10 md:mb-14">
-      <div className="flex items-center justify-between gap-4 mb-3">
-        <motion.p
-          className="font-mono text-kicker tracking-display uppercase text-gold/80"
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          aria-label={`Question ${answered + 1} of ${total}`}
+      <div className="flex items-baseline justify-between gap-4 mb-3 min-h-[1.1rem]">
+        {step.kind === "question" ? (
+          <motion.p
+            className="font-mono text-kicker tracking-display uppercase text-gold/85"
+            initial={reduced ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            aria-label={`${SECTION_NAMES[progress.section]} section, question ${progress.indexInSection + 1} of ${progress.sectionTotal}. ${overallPos} of ${total} overall.`}
+          >
+            <span>{SECTION_NAMES[progress.section]}</span>
+            <span className="mx-2 text-muted/40">·</span>
+            <span>{progress.indexInSection + 1}</span>
+            <span className="mx-1 text-muted/55 normal-case tracking-normal">
+              of
+            </span>
+            <span>{progress.sectionTotal}</span>
+          </motion.p>
+        ) : (
+          <span aria-hidden />
+        )}
+        <p
+          className="font-mono text-kicker tracking-kicker uppercase text-muted/55 ml-auto"
+          aria-hidden={step.kind === "question"}
         >
-          {counter}
-        </motion.p>
-        <p className="font-mono text-kicker tracking-kicker uppercase text-muted/70">
-          <span className="text-gold/70">{toRoman(sectionOrderIdx)}</span>
-          <span className="mx-1.5 text-muted/40">of</span>
-          <span>{toRoman(SECTION_ORDER.length)}</span>
+          <span>{toRoman(overallPos)}</span>
+          <span className="mx-1.5 text-muted/40 normal-case tracking-normal">
+            of
+          </span>
+          <span>{toRoman(total)}</span>
         </p>
       </div>
 
-      {/* Breath-dot rail. A single gold dot that breathes to mark "in this section";
-          dim dots on either side for the sections already walked / still ahead. */}
-      <div className="flex items-center gap-3">
+      {/* Segmented rail. One segment per section, width proportional to that
+          section's question count. Past segments are solid dim-gold; the
+          current segment fills left-to-right as answers accumulate, with a
+          slow breath on its base to mark "you are here". */}
+      <div
+        className="flex items-center gap-[3px] h-1"
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={total}
+        aria-valuenow={answered}
+        aria-label={`${answered} of ${total} questions answered`}
+      >
         {SECTION_ORDER.map((s, i) => {
-          const done = i < sectionOrderIdx - 1;
-          const active = i === sectionOrderIdx - 1;
+          const segTotal = sectionTotals[s] || 1;
+          const done = i < sectionOrderIdx;
+          const active = i === sectionOrderIdx;
+          const fill = done
+            ? 1
+            : active
+              ? progress.indexInSection / segTotal
+              : 0;
           return (
-            <motion.span
+            <div
               key={s}
+              className="relative h-full overflow-hidden rounded-full"
+              style={{ flexGrow: segTotal, flexBasis: 0 }}
               aria-hidden
-              className="block h-1 rounded-full"
-              initial={false}
-              animate={{
-                width: active ? 28 : done ? 18 : 12,
-                backgroundColor: done || active
-                  ? "var(--color-gold)"
-                  : "var(--color-surface-light)",
-                opacity: active ? [0.55, 1, 0.55] : done ? 0.55 : 0.65,
-              }}
-              transition={{
-                width: { duration: 0.32, ease: "easeOut" },
-                backgroundColor: { duration: 0.32 },
-                opacity: active
-                  ? { duration: 4.8, repeat: Infinity, ease: "easeInOut" }
-                  : { duration: 0.32 },
-              }}
-              style={{
-                boxShadow: active
-                  ? "0 0 10px rgba(212,175,55,0.45)"
-                  : "none",
-              }}
-            />
+            >
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                initial={false}
+                animate={{
+                  backgroundColor: active
+                    ? "rgba(212,175,55,0.14)"
+                    : "var(--color-surface-light)",
+                  opacity: active ? [0.7, 1, 0.7] : 1,
+                }}
+                transition={{
+                  backgroundColor: { duration: 0.32 },
+                  opacity: active
+                    ? { duration: 5.5, repeat: Infinity, ease: "easeInOut" }
+                    : { duration: 0.32 },
+                }}
+              />
+              <motion.div
+                className="absolute inset-y-0 left-0 bg-gold rounded-full"
+                initial={false}
+                animate={{
+                  width: `${fill * 100}%`,
+                  opacity: fill > 0 ? (done ? 0.6 : 0.9) : 0,
+                }}
+                transition={{
+                  width: { duration: 0.55, ease: [0.19, 1, 0.22, 1] },
+                  opacity: { duration: 0.32 },
+                }}
+                style={{
+                  boxShadow:
+                    active && fill > 0
+                      ? "0 0 10px rgba(212,175,55,0.42)"
+                      : "none",
+                }}
+              />
+            </div>
           );
         })}
       </div>
