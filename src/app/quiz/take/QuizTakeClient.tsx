@@ -10,12 +10,21 @@ import ThresholdPage from "@/components/quiz/ThresholdPage";
 import {
   createSession,
   encodeResultPath,
+  readingNumberFor,
   sectionProgress,
   sessionFromSeed,
   SECTION_ORDER,
   type QuizSession,
 } from "@/lib/quiz-session";
-import type { QuizResponse, QuizSection } from "@/lib/quiz-types";
+import { responsesToVector } from "@/lib/quiz-scoring";
+import { classifyVector } from "@/lib/quiz-classifier";
+import { systemAccent } from "@/lib/resonance";
+import { composeOpening } from "@/components/quiz/ReadingOpening";
+import type {
+  ClassificationResult,
+  QuizResponse,
+  QuizSection,
+} from "@/lib/quiz-types";
 
 // Autosave lives in sessionStorage — tab-scoped, so it survives refresh and
 // accidental nav but still evaporates when the tab closes. That keeps the
@@ -356,7 +365,16 @@ export default function QuizTakeClient() {
       .map((item) => responses[item.id])
       .filter((r): r is QuizResponse => !!r);
     const code = encodeResultPath(session, responseList);
-    return <QuizComplete code={code} />;
+    const vector = responsesToVector(responseList, session.items);
+    const classification = classifyVector(vector);
+    const readingNo = readingNumberFor(code);
+    return (
+      <QuizComplete
+        code={code}
+        classification={classification}
+        readingNo={readingNo}
+      />
+    );
   }
 
   if (!step) return <SessionLoading />;
@@ -738,20 +756,32 @@ function SessionLoading() {
   );
 }
 
-// Phase 4 ("The Reading") will replace this with a full editorial spread at
-// /quiz/r/[code]. For now, confirm completion, surface the share slug so the
-// URL encoder can be verified end-to-end, and offer a path back to start.
-function QuizComplete({ code }: { code: string }) {
+// Threshold between take and reading: names the cast in cast-specific language
+// (the composed opening), then hands the reader a ceremonial gold button into
+// the full spread at /quiz/r/[code]. The opening text here matches the one the
+// Reading itself opens with — this page is the vestibule, not a placeholder.
+function QuizComplete({
+  code,
+  classification,
+  readingNo,
+}: {
+  code: string;
+  classification: ClassificationResult;
+  readingNo: string;
+}) {
   const reduced = useReducedMotion() ?? false;
+  const { line, tail } = composeOpening(classification);
+  const systemName = systemAccent(classification.primarySystem).name;
+
   return (
     <motion.section
-      className="max-w-2xl mx-auto px-6 md:px-10 py-24 md:py-32 text-center"
+      className="max-w-3xl mx-auto px-6 md:px-10 py-20 md:py-28 text-center"
       initial={reduced ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.1 }}
     >
       <p className="font-mono text-kicker tracking-display uppercase text-gold/80 mb-6">
-        The Reading is complete
+        The Reading is complete &middot; N&ordm; {readingNo}
       </p>
       <motion.h1
         className="font-serif text-h1 leading-display mb-6"
@@ -783,11 +813,46 @@ function QuizComplete({ code }: { code: string }) {
         />
       </svg>
 
-      <p className="font-serif italic text-body-lg text-text-secondary/85 leading-article max-w-prose mx-auto mb-10">
-        The spread itself &mdash; six systems, the constellation, the shadow
-        reading, the developmental edge &mdash; is still being drawn. Your
-        answers are encoded here; the reading will arrive with its own evening.
-      </p>
+      <motion.p
+        className="font-serif italic text-body-lg md:text-[1.375rem] leading-article text-text-primary max-w-prose mx-auto mb-5"
+        initial={reduced ? false : { opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.0, delay: 0.9, ease: [0.19, 1, 0.22, 1] }}
+      >
+        {line}
+      </motion.p>
+
+      <motion.p
+        className="font-serif text-body-lg text-text-secondary/85 leading-article max-w-prose mx-auto mb-12"
+        initial={reduced ? false : { opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.0, delay: 1.1, ease: [0.19, 1, 0.22, 1] }}
+      >
+        {tail}
+      </motion.p>
+
+      <motion.div
+        className="flex flex-col items-center gap-4 mb-14"
+        initial={reduced ? false : { opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.0, delay: 1.35, ease: [0.19, 1, 0.22, 1] }}
+      >
+        <Link
+          href={`/quiz/r/${code}`}
+          className="group relative overflow-hidden font-mono text-label md:text-kicker tracking-kicker uppercase border border-gold px-10 py-5 md:px-14 md:py-6 rounded-sm text-gold transition-all duration-500 hover:bg-gold/10 shadow-[0_0_28px_rgba(212,175,55,0.22)] hover:shadow-[0_0_48px_rgba(212,175,55,0.45)] focus-visible:shadow-[0_0_48px_rgba(212,175,55,0.5)]"
+        >
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-breathe-subtle"
+            style={{ boxShadow: "inset 0 0 24px rgba(212,175,55,0.18)" }}
+          />
+          <span className="relative z-10">Open the Full Reading &rarr;</span>
+        </Link>
+        <p className="font-serif italic text-body-sm text-muted/75 max-w-sm">
+          The constellation, the system spread, the shadow, and the developmental
+          edge &mdash; through {systemName} and five other lenses.
+        </p>
+      </motion.div>
 
       <p className="font-mono text-kicker tracking-kicker uppercase text-muted/65 mb-2">
         Your Reading URL

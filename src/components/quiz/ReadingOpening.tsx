@@ -12,7 +12,7 @@ interface Props {
 // Composed opening line, 2–3 sentences, specific-to-cast. Names the primary
 // system without diagnosing. Second-person, aphoristic. The stance audit
 // lives here: no "you are", no "underlying", no certainty language.
-function composeOpening(
+export function composeOpening(
   classification: ClassificationResult,
 ): { line: string; tail: string } {
   const { axisSummary, primarySystem } = classification;
