@@ -307,6 +307,19 @@ export function decodeResultPath(
   return { session, responses };
 }
 
+// Stable 4-digit "No" derived from the slug. fnv-1a 32-bit clipped to
+// 4 digits and zero-padded — the artefact feel wants a signed number,
+// not a perfect hash. Shared so the Reading page and the OG card show
+// the same number for the same slug.
+export function readingNumberFor(slug: string): string {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < slug.length; i++) {
+    h ^= slug.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return String(h % 10000).padStart(4, "0");
+}
+
 // ─────────────────────────────────────────────────────────────────────────
 // Section helpers (used by the ceremony flow)
 // ─────────────────────────────────────────────────────────────────────────
