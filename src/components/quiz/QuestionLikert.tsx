@@ -83,33 +83,35 @@ export default function QuestionLikert({ item, onCommit }: Props) {
         role="radiogroup"
         aria-label={item.prompt}
       >
-        {/* Pinned at top: 22 (not flex-centered) so the 1px line lands on a
-            whole pixel row instead of subpixel-rendering blurred at 21.5. */}
+        {/* Spine is 2px tall at top=21, centering on whole pixel y=22 —
+            the exact y at which every dot's geometric center also sits
+            (buttons are 44 and the dot uses marginTop (44-size)/2).
+            Opacity halved vs. the old 1px line so visual weight matches. */}
         <div
           aria-hidden
           className="pointer-events-none absolute transition-opacity duration-500"
           style={{
             left: 22,
             right: 22,
-            top: 22,
-            height: 1,
+            top: 21,
+            height: 2,
             background: "var(--color-gold)",
-            opacity: pressed !== null ? 0.08 : 0.22,
+            opacity: pressed !== null ? 0.05 : 0.13,
           }}
         />
-        {/* Mid-tick anchor at position 4 — the "neither" of a Likert.
-            Explicit top=19 h=7 → centered on y=22.5 to match the spine. */}
+        {/* Mid-tick anchor at position 4 — the "neither" of a Likert. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute left-1/2 -translate-x-1/2 transition-opacity duration-500"
-          style={{
-            top: 19,
-            height: 7,
-            width: 1,
-            background: "var(--color-gold)",
-            opacity: pressed !== null ? 0.18 : 0.35,
-          }}
-        />
+          className="pointer-events-none absolute inset-y-0 left-1/2 -translate-x-1/2 flex items-center"
+        >
+          <div
+            className="h-[7px] w-px transition-opacity duration-500"
+            style={{
+              background: "var(--color-gold)",
+              opacity: pressed !== null ? 0.18 : 0.35,
+            }}
+          />
+        </div>
 
         <div className="relative flex items-center gap-3 sm:gap-5">
           {VALUES.map((v) => {
@@ -164,10 +166,7 @@ export default function QuestionLikert({ item, onCommit }: Props) {
                     width: size,
                     height: size,
                     margin: "auto",
-                    // +0.5 so the dot's equator sits at y=22.5, matching the
-                    // 1px spine's visual center (top=22 → midpoint 22.5).
-                    // Subpixel offset is invisible on an anti-aliased circle.
-                    marginTop: (44 - size) / 2 + 0.5,
+                    marginTop: (44 - size) / 2,
                     background:
                       isPressed || isHover ? "var(--color-gold)" : restBg,
                     boxShadow: isPressed
