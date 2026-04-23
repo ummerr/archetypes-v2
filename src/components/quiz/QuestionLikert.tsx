@@ -74,28 +74,29 @@ export default function QuestionLikert({ item, onCommit }: Props) {
         {item.prompt}
       </motion.h2>
 
+      <div className="mx-auto w-fit mb-10">
       <motion.div
-        className="relative mx-auto w-fit mb-4"
+        className="relative"
         initial={reduced ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.45, delay: 0.12 }}
         role="radiogroup"
         aria-label={item.prompt}
       >
-        {/* Hairline spine running from dot-1 center to dot-7 center. */}
+        {/* Pinned at top: 22 (not flex-centered) so the 1px line lands on a
+            whole pixel row instead of subpixel-rendering blurred at 21.5. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 flex items-center"
-          style={{ left: 22, right: 22 }}
-        >
-          <div
-            className="w-full h-px transition-opacity duration-500"
-            style={{
-              background: "var(--color-gold)",
-              opacity: pressed !== null ? 0.08 : 0.22,
-            }}
-          />
-        </div>
+          className="pointer-events-none absolute transition-opacity duration-500"
+          style={{
+            left: 22,
+            right: 22,
+            top: 22,
+            height: 1,
+            background: "var(--color-gold)",
+            opacity: pressed !== null ? 0.08 : 0.22,
+          }}
+        />
         {/* Mid-tick anchor at position 4 — the "neither" of a Likert. */}
         <div
           aria-hidden
@@ -180,18 +181,25 @@ export default function QuestionLikert({ item, onCommit }: Props) {
       </motion.div>
 
       <motion.div
-        className="flex justify-between items-start gap-6 max-w-lg mx-auto px-2 mb-10"
+        className="relative mt-4 h-5"
         initial={reduced ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.45, delay: 0.2 }}
       >
-        <span className="font-serif italic text-sm text-text-secondary/60">
+        <span
+          className="absolute top-0 whitespace-nowrap font-serif italic text-sm text-text-secondary/60"
+          style={{ left: 22, transform: "translateX(-50%)" }}
+        >
           {anchors.low}
         </span>
-        <span className="font-serif italic text-sm text-text-secondary/60 text-right">
+        <span
+          className="absolute top-0 whitespace-nowrap font-serif italic text-sm text-text-secondary/60"
+          style={{ right: 22, transform: "translateX(50%)" }}
+        >
           {anchors.high}
         </span>
       </motion.div>
+      </div>
 
       <motion.div
         className="hidden sm:flex items-center justify-center gap-2 font-mono text-kicker tracking-kicker uppercase text-muted/55"
