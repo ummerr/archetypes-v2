@@ -53,7 +53,10 @@ export default function ArchetypeRadar({ system, slug, className = "", size = 36
     },
   ];
 
-  const W = size;
+  // Horizontal padding inside the viewBox so the long left-side label
+  // ("NARRATIVE") isn't clipped when text-anchor pushes it past the chart edge.
+  const LABEL_PAD = 48;
+  const W = size + LABEL_PAD * 2;
   const H = size;
   const cx = W / 2;
   const cy = H / 2;
@@ -101,7 +104,7 @@ export default function ArchetypeRadar({ system, slug, className = "", size = 36
       <div className="w-full overflow-x-auto">
         <svg
           viewBox={`0 0 ${W} ${H}`}
-          className="w-full h-auto max-w-[360px] mx-auto"
+          className="w-full h-auto max-w-[456px] mx-auto"
           role="img"
           aria-label="Archetype signature radar"
         >
