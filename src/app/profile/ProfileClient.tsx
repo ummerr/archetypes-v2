@@ -33,7 +33,7 @@ const OPTIONS: Record<SystemId, { slug: string; label: string }[]> = {
   tarot: ALL_TAROT.map((a) => ({ slug: a.slug, label: a.name })),
   "heros-journey": ALL_HEROSJOURNEY.map((a) => ({ slug: a.slug, label: a.name })),
   mbti: ALL_MBTI.map((a) => ({ slug: a.slug, label: `${a.code} — ${a.nickname}` })),
-  astrology: ALL_ASTROLOGY.map((a) => ({ slug: a.slug, label: `${a.glyph} ${a.name}` })),
+  astrology: ALL_ASTROLOGY.map((a) => ({ slug: a.slug, label: a.name })),
 };
 
 interface PickAxes {

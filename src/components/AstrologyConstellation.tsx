@@ -15,8 +15,6 @@ interface Props {
   slug: string;
   color: string;
   size?: number;
-  /** faint sign glyph behind the figure */
-  glyph?: string;
 }
 
 const V = 32;
@@ -26,7 +24,7 @@ function project(n: number): number {
   return PAD + n * (V - 2 * PAD);
 }
 
-export default function AstrologyConstellation({ slug, color, size = 32, glyph }: Props) {
+export default function AstrologyConstellation({ slug, color, size = 32 }: Props) {
   const asterism = asterismFor(slug);
   if (!asterism) return null;
 
@@ -41,19 +39,6 @@ export default function AstrologyConstellation({ slug, color, size = 32, glyph }
       role="img"
       aria-label={`${slug} constellation`}
     >
-      {glyph && (
-        <text
-          x={V / 2}
-          y={V / 2 + 0.5}
-          textAnchor="middle"
-          dominantBaseline="central"
-          fontSize={18}
-          fill={color}
-          opacity={0.07}
-        >
-          {glyph}
-        </text>
-      )}
       {asterism.edges.map(([a, b], i) => (
         <line
           key={i}

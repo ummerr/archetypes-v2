@@ -11,6 +11,7 @@ import Link from "next/link";
 import { ALL_ASTROLOGY } from "@/data/astrology/archetypes";
 import { dailyReadingFor, formatDailyDate, type DailyReading } from "@/lib/astrology-daily";
 import { useTheme } from "@/components/ThemeProvider";
+import ZodiacGlyph from "@/components/ZodiacGlyph";
 
 const signs = [...ALL_ASTROLOGY].sort((a, b) => a.order - b.order);
 
@@ -53,10 +54,8 @@ export default function AstrologyTodayGrid() {
                 minHeight: 168,
               }}
             >
-              <div className="flex items-baseline gap-2 mb-3">
-                <span className="font-serif text-2xl" style={{ color: c }} aria-hidden>
-                  {s.glyph}
-                </span>
+              <div className="flex items-center gap-2 mb-3">
+                <ZodiacGlyph slug={s.slug} color={c} size={22} strokeWidth={1.5} className="shrink-0" />
                 <span
                   className="font-serif text-lg font-medium group-hover:underline decoration-1 underline-offset-4"
                   style={{ color: light ? "var(--color-text-primary)" : c }}

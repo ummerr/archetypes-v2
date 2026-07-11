@@ -14,6 +14,7 @@ import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getAstrologyExemplars } from "@/data/astrology/exemplars";
 import AstrologyDailyCard from "@/components/AstrologyDailyCard";
 import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
+import ZodiacGlyph from "@/components/ZodiacGlyph";
 
 const AstrologyTotemCanvas = dynamic(
   () => import("@/components/AstrologyTotemCanvas"),
@@ -115,7 +116,7 @@ export default function AstrologyDetailClient({
                   textShadow: !light ? `0 0 24px ${color}30` : "none",
                 }}
               >
-                <span aria-hidden className="opacity-80">{archetype.glyph}</span>
+                <ZodiacGlyph slug={archetype.slug} color={color} size={44} strokeWidth={1.4} className="opacity-80 shrink-0" />
                 {archetype.name}
               </h1>
               <p
@@ -140,7 +141,7 @@ export default function AstrologyDetailClient({
 
         {/* Daily reading */}
         <div className="mb-16 animate-slide-up delay-150">
-          <AstrologyDailyCard slug={archetype.slug} color={color} glyph={archetype.glyph} />
+          <AstrologyDailyCard slug={archetype.slug} color={color} />
         </div>
 
         {/* Fields grid */}
@@ -282,14 +283,18 @@ export default function AstrologyDetailClient({
                     This sign
                   </span>
                   <span className="font-serif text-2xl font-medium flex items-center gap-2" style={{ color }}>
-                    <span aria-hidden>{archetype.glyph}</span> {archetype.name}
+                    <ZodiacGlyph slug={archetype.slug} color={color} size={24} strokeWidth={1.5} className="shrink-0" /> {archetype.name}
                   </span>
                 </div>
                 <div className="flex flex-col items-center flex-1 min-w-[120px]">
                   <span className="font-mono text-kicker tracking-kicker uppercase mb-1" style={{ color: stressColor }}>
                     Shadow across the wheel
                   </span>
-                  <span className="font-mono text-base" style={{ color: stressColor }}>⟷</span>
+                  <svg width="34" height="12" viewBox="0 0 34 12" fill="none" stroke={stressColor} strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M5 6 H29" />
+                    <path d="M5 6 L9 2.5 M5 6 L9 9.5" />
+                    <path d="M29 6 L25 2.5 M29 6 L25 9.5" />
+                  </svg>
                 </div>
                 <Link
                   href={`/astrology/archetype/${oppositeArchetype.slug}`}
@@ -302,7 +307,7 @@ export default function AstrologyDetailClient({
                     className="font-serif text-2xl font-medium group-hover:underline decoration-1 underline-offset-4 flex items-center gap-2"
                     style={{ color: oppositeArchetype.accentColor }}
                   >
-                    <span aria-hidden>{oppositeArchetype.glyph}</span> {oppositeArchetype.name}
+                    <ZodiacGlyph slug={oppositeArchetype.slug} color={oppositeArchetype.accentColor} size={24} strokeWidth={1.5} className="shrink-0" /> {oppositeArchetype.name}
                   </span>
                 </Link>
               </div>
@@ -388,13 +393,13 @@ export default function AstrologyDetailClient({
                 }}
               >
                 <div className="flex items-center gap-3">
-                  <span
-                    className="font-serif text-2xl opacity-70 group-hover:opacity-100 transition-opacity"
-                    style={{ color: s.accentColor }}
-                    aria-hidden
-                  >
-                    {s.glyph}
-                  </span>
+                  <ZodiacGlyph
+                    slug={s.slug}
+                    color={s.accentColor}
+                    size={26}
+                    strokeWidth={1.5}
+                    className="opacity-70 group-hover:opacity-100 transition-opacity shrink-0"
+                  />
                   <div>
                     <p className="font-serif text-base font-medium" style={{ color: s.accentColor }}>
                       {s.name}

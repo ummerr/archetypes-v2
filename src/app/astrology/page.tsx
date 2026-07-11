@@ -8,6 +8,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import { ZodiacArchetype } from "@/types/astrology";
 import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 import ZodiacWheel from "@/components/ZodiacWheel";
+import ZodiacGlyph from "@/components/ZodiacGlyph";
 
 const AstrologyTotemCanvas = dynamic(
   () => import("@/components/AstrologyTotemCanvas"),
@@ -59,7 +60,7 @@ export default function AstrologyHome() {
             href="/astrology/today"
             className="inline-flex items-center gap-2 font-mono text-label tracking-kicker uppercase text-gold hover:opacity-80 transition-opacity"
           >
-            ☾ Today&apos;s reading for every sign →
+            Today&apos;s reading for every sign →
           </Link>
         </div>
       </div>
@@ -161,7 +162,7 @@ export default function AstrologyHome() {
                                 isHovered && !light ? `0 0 16px ${a.accentColor}50` : "none",
                             }}
                           >
-                            <span aria-hidden className="opacity-75">{a.glyph}</span>
+                            <ZodiacGlyph slug={a.slug} color={light ? "var(--color-text-primary)" : a.accentColor} size={20} strokeWidth={1.5} className="opacity-75 shrink-0" />
                             {a.name}
                           </h3>
 

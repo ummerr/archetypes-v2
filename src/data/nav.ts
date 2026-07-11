@@ -53,7 +53,7 @@ export function archetypesForSystem(systemId: string): NavLink[] {
     case "mbti":
       return ALL_MBTI.map((a) => ({ label: `${a.code} · ${a.nickname}`, href: `/mbti/archetype/${a.slug}` }));
     case "astrology":
-      return ALL_ASTROLOGY.map((a) => ({ label: `${a.glyph} ${a.name}`, href: `/astrology/archetype/${a.slug}` }));
+      return ALL_ASTROLOGY.map((a) => ({ label: a.name, href: `/astrology/archetype/${a.slug}` }));
     default:
       return [];
   }

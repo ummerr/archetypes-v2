@@ -3,7 +3,7 @@ import { HeroJourneyArchetypeIcon } from "@/components/HeroJourneyArchetypeIcon"
 import { getEnneagramBySlug } from "@/data/enneagram/archetypes";
 import { getMbtiBySlug } from "@/data/mbti/archetypes";
 import { getTarotBySlug } from "@/data/tarot/archetypes";
-import { getAstrologyBySlug } from "@/data/astrology/archetypes";
+import ZodiacGlyph from "@/components/ZodiacGlyph";
 import type { SystemId } from "@/data/resonance";
 
 // Map per-archetype slugs to the motif ids exposed by ClusterTotem.
@@ -77,10 +77,8 @@ export default function ArchetypeMark({ system, slug, color, size = 22, title }:
       const numeral = getTarotBySlug(slug)?.numeral ?? "";
       return <NumeralFrame label={numeral} color={color} size={size} title={title} />;
     }
-    case "astrology": {
-      const glyph = getAstrologyBySlug(slug)?.glyph ?? "";
-      return <GlyphInCircle label={glyph} color={color} size={size} title={title} />;
-    }
+    case "astrology":
+      return <GlyphInCircle slug={slug} color={color} size={size} title={title} />;
     default:
       return null;
   }
@@ -106,20 +104,13 @@ function NumberInCircle({ label, color, size, title }: { label: string; color: s
   );
 }
 
-function GlyphInCircle({ label, color, size, title }: { label: string; color: string; size: number; title?: string }) {
+function GlyphInCircle({ slug, color, size, title }: { slug: string; color: string; size: number; title?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" role={title ? "img" : "presentation"} aria-label={title}>
-      <circle cx={12} cy={12} r={10} fill="none" stroke={color} strokeWidth={1.2} opacity={0.85} />
-      <text
-        x={12}
-        y={12.5}
-        textAnchor="middle"
-        dominantBaseline="central"
-        fontSize={12}
-        fill={color}
-      >
-        {label}
-      </text>
+      <circle cx={12} cy={12} r={11} fill="none" stroke={color} strokeWidth={1.2} opacity={0.85} />
+      <g transform="translate(4.2 4.2) scale(0.65)">
+        <ZodiacGlyph slug={slug} color={color} size={24} strokeWidth={2.1} />
+      </g>
     </svg>
   );
 }

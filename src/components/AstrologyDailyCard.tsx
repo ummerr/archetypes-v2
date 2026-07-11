@@ -10,14 +10,14 @@
 import { useEffect, useState } from "react";
 import { dailyReadingFor, formatDailyDate, type DailyReading } from "@/lib/astrology-daily";
 import { useTheme } from "@/components/ThemeProvider";
+import ZodiacGlyph from "@/components/ZodiacGlyph";
 
 interface Props {
   slug: string;
   color: string;
-  glyph: string;
 }
 
-export default function AstrologyDailyCard({ slug, color, glyph }: Props) {
+export default function AstrologyDailyCard({ slug, color }: Props) {
   const { theme } = useTheme();
   const light = theme === "light";
   const [reading, setReading] = useState<DailyReading | null>(null);
@@ -40,8 +40,8 @@ export default function AstrologyDailyCard({ slug, color, glyph }: Props) {
         style={{ background: `linear-gradient(90deg, transparent, ${color}55, transparent)` }}
       />
       <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
-        <span className="font-mono text-kicker tracking-kicker uppercase" style={{ color: color + "CC" }}>
-          <span aria-hidden className="mr-1.5">{glyph}</span> Today&apos;s reading
+        <span className="font-mono text-kicker tracking-kicker uppercase inline-flex items-center gap-1.5" style={{ color: color + "CC" }}>
+          <ZodiacGlyph slug={slug} color={color} size={15} strokeWidth={1.5} /> Today&apos;s reading
         </span>
         <span className="font-mono text-kicker tracking-kicker text-muted uppercase">
           {reading ? formatDailyDate(reading.dateLabel) : " "}

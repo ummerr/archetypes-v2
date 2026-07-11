@@ -5,6 +5,7 @@ import {
 } from "@/data/astrology/archetypes";
 import { buildPageMetadata } from "@/lib/site";
 import BlindSpotsSection from "@/components/shared/BlindSpotsSection";
+import ZodiacGlyph from "@/components/ZodiacGlyph";
 
 export const metadata = buildPageMetadata({
   title: "About - Astrology",
@@ -98,12 +99,10 @@ export default function AstrologyAbout() {
                       {signs.map((s) => (
                         <span
                           key={s.slug}
-                          className="font-serif text-sm"
+                          className="font-serif text-sm inline-flex items-center gap-1.5"
                           style={{ color: el.color }}
                         >
-                          <span aria-hidden className="mr-1 opacity-80">
-                            {s.glyph}
-                          </span>
+                          <ZodiacGlyph slug={s.slug} color={el.color} size={16} strokeWidth={1.5} className="opacity-80 shrink-0" />
                           {s.name}
                         </span>
                       ))}

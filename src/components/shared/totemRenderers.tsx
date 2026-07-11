@@ -212,7 +212,6 @@ function AstrologyRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boo
         slug={entry.slug}
         color={entry.accentColor}
         size={36}
-        glyph={entry.symbol}
       />
     </MotifShell>
   );

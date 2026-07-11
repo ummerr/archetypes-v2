@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { ALL_ASTROLOGY, ZODIAC_ELEMENTS } from "@/data/astrology/archetypes";
 import { useTheme } from "@/components/ThemeProvider";
+import ZodiacGlyph from "@/components/ZodiacGlyph";
 
 const CX = 200;
 const CY = 200;
@@ -134,20 +135,20 @@ export default function ZodiacWheel({ size = 400 }: { size?: number }) {
                 strokeWidth={isHover ? 1.4 : 0.9}
                 style={{ transition: "fill 250ms, stroke 250ms" }}
               />
-              <text
-                x={gx}
-                y={gy}
-                textAnchor="middle"
-                dominantBaseline="central"
-                fontSize={isHover ? 22 : 19}
-                fill={isHover ? c : light ? "#3A3A3A" : "#C8C8D0"}
+              <g
+                transform={`translate(${gx - 11} ${gy - 11})`}
                 style={{
-                  transition: "font-size 200ms, fill 250ms",
+                  transition: "opacity 250ms",
                   filter: isHover && !light ? `drop-shadow(0 0 6px ${c}90)` : "none",
                 }}
               >
-                {sign.glyph}
-              </text>
+                <ZodiacGlyph
+                  slug={sign.slug}
+                  color={isHover ? c : light ? "#3A3A3A" : "#C8C8D0"}
+                  size={22}
+                  strokeWidth={isHover ? 1.7 : 1.4}
+                />
+              </g>
             </g>
           );
         })}
@@ -156,9 +157,9 @@ export default function ZodiacWheel({ size = 400 }: { size?: number }) {
         <circle cx={CX} cy={CY} r={R_INNER - 14} fill={light ? "#00000006" : "#FFFFFF04"} stroke={`${active?.accentColor ?? "#7C8CB0"}${light ? "22" : "18"}`} strokeWidth={1} />
         {active ? (
           <>
-            <text x={CX} y={CY - 30} textAnchor="middle" fontSize={40} fill={active.accentColor} style={{ filter: light ? "none" : `drop-shadow(0 0 10px ${active.accentColor}80)` }}>
-              {active.glyph}
-            </text>
+            <g transform={`translate(${CX - 21} ${CY - 51})`} style={{ filter: light ? "none" : `drop-shadow(0 0 10px ${active.accentColor}80)` }}>
+              <ZodiacGlyph slug={active.slug} color={active.accentColor} size={42} strokeWidth={1.5} />
+            </g>
             <text x={CX} y={CY + 8} textAnchor="middle" className="font-serif" fontSize={22} fill={light ? "#1a1a1a" : "#EDEDEC"}>
               {active.name}
             </text>
