@@ -73,12 +73,14 @@ export default function QuizLanding() {
       <div className="space-y-5 max-w-prose mb-8">
         <p className="font-serif text-body-lg text-text-secondary/90 leading-article">
           Seven traditions on one page, cast for you. The Mirror was a glimpse;
-          this takes about half an hour and goes several rooms deeper &mdash;
-          five axes, six vocabularies, a confidence tier for every mapping.
+          this goes several rooms deeper &mdash; five axes, six vocabularies, a
+          confidence tier for every mapping &mdash; in about six minutes,
+          sixteen questions across four short chambers.
         </p>
         <p className="font-serif italic text-body-lg text-text-secondary/80 leading-article">
-          It is best done in a single sitting. You will be asked about
-          stability, belonging, the weather you carry, the room you stand in.
+          You won&apos;t wait until the end to see it. After each chamber the
+          reading appears &mdash; your axis signature drawing itself, the sky of
+          rooms lighting one by one &mdash; until the last answer names it.
           Answer the way you would answer a friend.
         </p>
       </div>
@@ -106,13 +108,13 @@ export default function QuizLanding() {
 
       <div className="space-y-2 border-t border-surface-light/35 pt-6 max-w-prose">
         <p className="font-mono text-kicker tracking-kicker uppercase text-muted/70">
-          What you are committing to
+          What you are stepping into
         </p>
         <ul className="space-y-1.5 font-serif italic text-body text-text-secondary/75 leading-snug">
-          <li>&mdash; about thirty minutes, undivided.</li>
-          <li>&mdash; roughly fifty questions in four sections.</li>
+          <li>&mdash; about six minutes, undivided.</li>
+          <li>&mdash; sixteen questions in four short chambers.</li>
+          <li>&mdash; the reading forms as you go &mdash; you watch it appear.</li>
           <li>&mdash; the first answer, not the considered one.</li>
-          <li>&mdash; no back, mid-section.</li>
         </ul>
       </div>
 

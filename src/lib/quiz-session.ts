@@ -18,9 +18,12 @@ export interface QuizSession {
   items: QuizItem[];
 }
 
-// Default length of a presented reading. Below the bank (60) so the seeded
-// draw can be stratified and leave variety between sessions.
-export const DEFAULT_SESSION_LENGTH = 50;
+// Default length of a presented reading. A short, four-chamber cast — the
+// scorer averages per dimension, so a tight draw keeps almost all of the
+// signal while making the whole reading a few-minute sitting instead of a
+// half-hour one. Well below the bank (60) so the seeded draw stays stratified
+// and varies between sessions (and re-takes).
+export const DEFAULT_SESSION_LENGTH = 16;
 
 // Alphabet shared with the Mirror. 30 chars, no 0/O/1/I/l — survives being
 // read aloud. Used for the seed prefix only; responses use a 32-char alphabet
@@ -48,15 +51,22 @@ const SECTION_TARGETS: Array<{
   prefix: string; // id prefix matching quiz-questions.ts
   count: number;
 }> = [
-  // Calibration mixes stage / stability / belonging so the opening doesn't
-  // feel like 22 of one kind in a row.
-  { section: "calibration", prefix: "cal-stage-", count: 10 },
-  { section: "calibration", prefix: "cal-stab-", count: 6 },
-  { section: "calibration", prefix: "cal-bel-", count: 6 },
-  { section: "relational-affect", prefix: "aff-", count: 8 },
-  { section: "relational-affect", prefix: "stn-", count: 8 },
-  { section: "narrative", prefix: "nar-", count: 6 },
-  { section: "shadow", prefix: "shd-", count: 6 },
+  // Four short chambers, ~16 items total. Ground carries the three continuous
+  // axes the radar draws (stage / stability / belonging), so it gets the most
+  // items — two each — to keep those axes out of single-point noise. The
+  // later chambers are lighter: affect and stance are reinforced downstream by
+  // the shadow items, which also score onto them.
+  //   Ground   6  (stage 2, stability 2, belonging 2)
+  //   Weather  4  (affect 2, stance 2)
+  //   Story    3  (narrative 3)
+  //   Shadow   3  (shadow 3 — reinforces affect + stance)
+  { section: "calibration", prefix: "cal-stage-", count: 2 },
+  { section: "calibration", prefix: "cal-stab-", count: 2 },
+  { section: "calibration", prefix: "cal-bel-", count: 2 },
+  { section: "relational-affect", prefix: "aff-", count: 2 },
+  { section: "relational-affect", prefix: "stn-", count: 2 },
+  { section: "narrative", prefix: "nar-", count: 3 },
+  { section: "shadow", prefix: "shd-", count: 3 },
 ];
 
 export const SECTION_ORDER: QuizSection[] = [

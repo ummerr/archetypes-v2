@@ -9,6 +9,14 @@ interface Props {
   sectionLabel?: string;
   onContinue: () => void;
   onBack?: () => void;
+  // The forming-reading panel (radar + constellation), assembled from answers
+  // so far. When present the threshold becomes a payoff, not just a breath:
+  // the visual leads, a tuned line names what's forming, and the ceremonial
+  // aphorism steps down to a quiet invitation onward.
+  visual?: ReactNode;
+  // A second-person line drawn from the partial reading. Shown as the primary
+  // serif line when `visual` is present.
+  subline?: string;
 }
 
 function Kbd({ children }: { children: ReactNode }) {
@@ -28,8 +36,11 @@ export default function ThresholdPage({
   sectionLabel,
   onContinue,
   onBack,
+  visual,
+  subline,
 }: Props) {
   const reduced = useReducedMotion() ?? false;
+  const forming = !!visual;
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -66,21 +77,34 @@ export default function ThresholdPage({
         </motion.p>
       )}
 
-      <motion.p
-        className="font-serif italic text-h2 md:text-[2.25rem] leading-snug text-text-primary max-w-2xl"
-        initial={reduced ? false : { opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, delay: 0.5, ease: [0.19, 1, 0.22, 1] }}
-      >
-        &ldquo;{aphorism}&rdquo;
-      </motion.p>
+      {forming && <div className="mb-9">{visual}</div>}
 
-      {/* Hair-rule that draws in under the aphorism */}
+      {forming && subline ? (
+        <motion.p
+          className="font-serif italic text-h3 md:text-[1.75rem] leading-snug text-text-primary max-w-2xl"
+          initial={reduced ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
+        >
+          {subline}
+        </motion.p>
+      ) : (
+        <motion.p
+          className="font-serif italic text-h2 md:text-[2.25rem] leading-snug text-text-primary max-w-2xl"
+          initial={reduced ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.5, ease: [0.19, 1, 0.22, 1] }}
+        >
+          &ldquo;{aphorism}&rdquo;
+        </motion.p>
+      )}
+
+      {/* Hair-rule that draws in under the line */}
       <svg
         viewBox="0 0 200 2"
         width="200"
         height="2"
-        className="mt-12 mb-10 text-gold block"
+        className={`${forming ? "mt-8 mb-7" : "mt-12 mb-10"} text-gold block`}
         aria-hidden
       >
         <motion.line
@@ -97,6 +121,19 @@ export default function ThresholdPage({
         />
       </svg>
 
+      {/* When forming, the ceremonial aphorism steps down to a quiet breath
+          above the button — the invitation to cross into the next chamber. */}
+      {forming && (
+        <motion.p
+          className="font-serif italic text-body text-text-secondary/70 max-w-md mb-7"
+          initial={reduced ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.0, delay: 1.3 }}
+        >
+          {aphorism}
+        </motion.p>
+      )}
+
       <motion.button
         type="button"
         onClick={onContinue}
@@ -105,7 +142,7 @@ export default function ThresholdPage({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 1.6 }}
       >
-        Continue &rarr;
+        {forming ? "Into the next chamber →" : "Continue →"}
       </motion.button>
 
       <motion.div

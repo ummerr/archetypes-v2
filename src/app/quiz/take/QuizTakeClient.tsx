@@ -7,6 +7,7 @@ import QuestionLikert from "@/components/quiz/QuestionLikert";
 import QuestionForcedChoice from "@/components/quiz/QuestionForcedChoice";
 import QuestionScenario from "@/components/quiz/QuestionScenario";
 import ThresholdPage from "@/components/quiz/ThresholdPage";
+import FormingReading, { formingLine } from "@/components/quiz/FormingReading";
 import {
   createSession,
   encodeResultPath,
@@ -156,6 +157,17 @@ function toRoman(n: number): string {
   }
   return out;
 }
+
+// A threshold sits *before* the named section. The chambers already answered
+// when it shows determine how much of the reading has formed:
+//   before relational-affect → Ground answered   → level 1
+//   before narrative         → Weather answered   → level 2
+//   before shadow            → Story answered     → level 3
+const FORMING_LEVEL: Partial<Record<QuizSection, 1 | 2 | 3>> = {
+  "relational-affect": 1,
+  narrative: 2,
+  shadow: 3,
+};
 
 type Phase = "running" | "complete";
 
@@ -406,17 +418,43 @@ export default function QuizTakeClient() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.7 }}
             >
-              <ThresholdPage
-                aphorism={SECTION_APHORISMS[step.section]}
-                sectionLabel={SECTION_LABELS[step.section]}
-                onContinue={() => {
-                  // Crossing a threshold commits the prior section — undo
-                  // the last in-section answer should not survive the rite.
-                  clearUndo();
-                  advance();
-                }}
-                onBack={stepIdx > 0 ? stepBackToLastThreshold : undefined}
-              />
+              {(() => {
+                // The forming reading: classify what's been answered so far and
+                // hand the threshold a live glimpse of the picture assembling.
+                const level = FORMING_LEVEL[step.section];
+                const answeredList = session.items
+                  .map((item) => responses[item.id])
+                  .filter((r): r is QuizResponse => !!r);
+                const partial =
+                  level && answeredList.length > 0
+                    ? classifyVector(
+                        responsesToVector(answeredList, session.items),
+                      )
+                    : null;
+                return (
+                  <ThresholdPage
+                    aphorism={SECTION_APHORISMS[step.section]}
+                    sectionLabel={SECTION_LABELS[step.section]}
+                    visual={
+                      partial && level ? (
+                        <FormingReading classification={partial} level={level} />
+                      ) : undefined
+                    }
+                    subline={
+                      partial && level
+                        ? formingLine(partial, level)
+                        : undefined
+                    }
+                    onContinue={() => {
+                      // Crossing a threshold commits the prior section — undo
+                      // the last in-section answer should not survive the rite.
+                      clearUndo();
+                      advance();
+                    }}
+                    onBack={stepIdx > 0 ? stepBackToLastThreshold : undefined}
+                  />
+                );
+              })()}
             </motion.div>
           ) : (
             <motion.div
@@ -849,8 +887,9 @@ function QuizComplete({
           <span className="relative z-10">Open the Full Reading &rarr;</span>
         </Link>
         <p className="font-serif italic text-body-sm text-muted/75 max-w-sm">
-          The constellation, the system spread, the shadow, and the developmental
-          edge &mdash; through {systemName} and five other lenses.
+          The sky you watched fill &mdash; now named, and read in full: the
+          constellation, the system spread, the shadow, and the developmental
+          edge, through {systemName} and five other lenses.
         </p>
       </motion.div>
 
