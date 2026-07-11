@@ -29,6 +29,7 @@ const SYSTEMS: SystemId[] = [
   "mbti",
   "heros-journey",
   "tarot",
+  "astrology",
 ];
 
 let cache: ExemplarRecord[] | undefined;

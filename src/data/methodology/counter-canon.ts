@@ -24,10 +24,16 @@ export const COUNTER_CANON_ENTRIES: CounterCanonEntry[] = [
     body:
       "Names the focused avoidance of race in Jungian literature. Introduces the Racial Complex as a category the canon never supplied. Cited on the Jungian about page as primary, not adjunct.",
   },
+  {
+    heading: "Liz Greene - psychological astrology (Saturn, 1976; The Astrology of Fate, 1984)",
+    body:
+      "Where KWML addresses the mature masculine by declaration, the zodiac is formally gender-balanced - six diurnal signs, six nocturnal, an alternation older than Ptolemy - and its leading modern theorist is a woman with a doctorate in psychology. Greene's reading of the signs as stations of a mythic journey is the closest thing astrology has to a Pearson-Marr, and it runs female-led. A useful counterweight to the masculine coding elsewhere on this site - though built on a system whose empirical claims have failed.",
+  },
 ];
 
 export const COUNTER_CANON_HONEST: string[] = [
   "Moore & Gillette restricted KWML to mature men by their own declaration; gender-neutral readings of the book erase the authors' stated scope.",
   "Campbell's Jungian credentials are contested (Segal, Rensma, IAJS) and documented antisemitism in his private papers (Gill 1989, Segal 1992) complicates any uncomplicated reception.",
   "The Pearson-Marr twelve-archetype wheel was commercially adapted into OCA/PMAI after 2001; The Drum (2025) has called the branded wheel pseudoscience when marketed as Jungian.",
+  "The tropical zodiac is one regional dialect, not a universal grammar: precession has pulled its signs ~24° off the constellations, Vedic astrology reads them siderally, and the Chinese zodiac shares nothing with it but the number twelve. Treating the Western signs as archetypally universal repeats exactly the error this atlas warns against.",
 ];

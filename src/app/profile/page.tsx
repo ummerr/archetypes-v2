@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   ...buildPageMetadata({
     title: "Your Profile",
     description:
-      "Build a persistent archetypal profile across six systems. Stored in your browser — never sent anywhere.",
+      "Build a persistent archetypal profile across seven systems. Stored in your browser — never sent anywhere.",
     path: "/profile",
   }),
   robots: { index: false, follow: true },

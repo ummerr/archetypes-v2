@@ -5,7 +5,7 @@ import IndexView from "./IndexView";
 export const metadata = buildPageMetadata({
   title: "All Archetypes — Index",
   description:
-    "Seventy-five archetypes across six systems - Jungian, Enneagram, KWML, Myers-Briggs, Hero's Journey, and Tarot. Browse, group, and search the whole field.",
+    "Eighty-seven archetypes across seven systems - Jungian, Enneagram, KWML, Myers-Briggs, Hero's Journey, Tarot, and Astrology. Browse, group, and search the whole field.",
   path: "/archetypes",
 });
 

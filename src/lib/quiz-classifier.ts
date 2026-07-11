@@ -26,6 +26,7 @@ const SYSTEM_IDS: SystemId[] = [
   "mbti",
   "heros-journey",
   "tarot",
+  "astrology",
 ];
 
 const STAGE_ORDER: Stage[] = STAGES;

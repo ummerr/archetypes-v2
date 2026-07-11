@@ -148,7 +148,7 @@ export default async function ClusterPage({
       })()}
 
       <p className="font-mono text-label tracking-kicker uppercase text-gold/80 mt-4 mb-3">
-        Archetypes across six systems
+        Archetypes across seven systems
       </p>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {cluster.archetypes.map((entry) => {

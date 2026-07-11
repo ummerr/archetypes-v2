@@ -1,123 +1,93 @@
-# KWML Archetype Explorer
+# Maps of the Inner World
 
-An interactive site for exploring the archetypes of the mature masculine from *King, Warrior, Magician, Lover* by Robert Moore & Douglas Gillette (1990).
+A comparative hermeneutic atlas of archetype systems. It sets **seven** vocabularies for the psyche side by side, maps the resonances between them, and — this is the point — grades every cross-system claim with a citation, a dissent, and a confidence tier. It does not argue that these traditions describe one universal psyche; it argues that reading them together is sometimes more illuminating than reading any one alone.
 
-Starting with Boy and Man Psychology archetypes and their positive/negative poles, with a vision to scale toward archetype maps, tarot decks, and more.
+Live at [archetypes.ummerr.com](https://archetypes.ummerr.com).
 
-## Overview
+## The seven systems
 
-The framework maps the masculine psyche into two tiers -- **Boy Psychology** (immature) and **Man Psychology** (mature) -- with 4 archetypes each. Every archetype has a healthy fullness pole and two shadow poles (active/inflated and passive/deflated), forming Moore's bipolar shadow system.
+| System | Framework | Count | Shadow grammar |
+|---|---|---|---|
+| **Jungian** | Pearson & Marr — twelve heroic archetypes | 12 | unipolar trap |
+| **Enneagram** | Riso-Hudson — nine motivational types | 9 | passion / virtue |
+| **KWML** | Moore & Gillette — the mature masculine | 8 | bipolar (active/passive) |
+| **Myers-Briggs** | Sixteen cognitive patterns | 16 | stack inversion |
+| **Hero's Journey** | Campbell / Vogler — the monomyth | 8 | dramatic mask |
+| **Tarot** | The Major Arcana | 22 | card reversal |
+| **Astrology** | The tropical zodiac | 12 | polarity (opposite sign) |
 
-**Boy Psychology &rarr; Man Psychology:**
+**87 archetypes** in total, drawn together into **20 thematic clusters** by **170 grounded mappings**.
 
-| Boy | Man | Energy |
-|---|---|---|
-| Divine Child | King | Wonder &rarr; Sovereign ordering & blessing |
-| Precocious Child | Magician | Curiosity &rarr; Deep knowledge & transformation |
-| Oedipal Child | Lover | Warmth &rarr; Passionate embodiment & connection |
-| Hero | Warrior | Courage &rarr; Disciplined, purposeful action |
+## The stance
 
-8 archetypes &times; 3 poles each = **24 psychological positions** to explore.
+The map is **weak-hermeneutic**. Apparent convergence between systems is treated as *shared intellectual descent, not proof of a universal psyche* — Jung is upstream of most of it, and downstream readers agreeing is not independent corroboration. Every mapping carries one of five confidence tiers (`canonical` / `strong` / `moderate` / `speculative` / `contested`), a primary-source or scholarly citation, and any dissent kept openly in view.
 
-## Features
+Astrology is held to a deliberately different standard: it is the one system here that makes a falsifiable claim about the sky, that claim has failed every controlled test, and so it is read strictly as *projected psychology* — entering the map through the Golden Dawn's tarot correspondences and the Greene/Rudhyar reading, always tiered and always dissented. See `/astrology/about`.
 
-- **Radial quadrant map** -- Home page with King (top), Warrior (left), Lover (right), Magician (bottom) arranged around a central "Self" node with animated SVG connecting lines
-- **8 archetype detail pages** -- Full descriptions, key characteristics, access markers, and evolution arrows linking boy/man counterparts
-- **Interactive SVG shadow triangles** -- Click to explore the fullness (apex), active shadow (bottom-left), and passive shadow (bottom-right) for each archetype
-- **Sovereign Gold design system** -- Dark warm-black base, archetype-mapped accent colors (gold, crimson, emerald, rose), film grain texture, ambient glow effects
-- **Fully static** -- All pages pre-rendered at build time via `generateStaticParams`
+The full account of how the map was built — an eleven-mission research pipeline, adversarial review, the counter-canon and shadow-structure corrections — lives at `/about/methodology` and in `research/00-pipeline.md`.
 
-## Tech Stack
+## Surfaces
 
-- [Next.js 16](https://nextjs.org/) (App Router, TypeScript)
-- [Tailwind CSS 4](https://tailwindcss.com/)
-- [Framer Motion](https://www.framer.com/motion/) for page transitions and SVG animations
-- [Cormorant Garamond](https://fonts.google.com/specimen/Cormorant+Garamond) + [Inter](https://fonts.google.com/specimen/Inter) via `next/font`
-
-## Getting Started
-
-```bash
-# Install dependencies
-npm install
-
-# Start dev server
-npm run dev
-
-# Production build
-npm run build
-npm start
-```
-
-Open [http://localhost:3000](http://localhost:3000) to explore.
-
-## Project Structure
-
-```
-src/
-  app/
-    page.tsx                    # Home -- radial quadrant map
-    about/page.tsx              # Framework overview
-    archetype/[slug]/page.tsx   # Dynamic archetype detail (8 pages)
-    layout.tsx                  # Root layout, fonts, nav/footer
-    globals.css                 # Tailwind theme, noise texture, glow utilities
-  components/
-    QuadrantMap.tsx             # Radial map with SVG lines and center node
-    ShadowTriangle.tsx          # Interactive SVG triangle (fullness + shadows)
-    EvolutionArrow.tsx          # Boy-to-Man visual connector
-    NavBar.tsx                  # Fixed top nav with blur backdrop
-    Footer.tsx                  # Attribution footer
-    PageTransition.tsx          # Framer Motion fade/slide wrapper
-  data/
-    archetypes.ts               # All 8 archetypes, colors, family groups, lookups
-  types/
-    archetype.ts                # TypeScript type definitions
-  lib/
-    utils.ts                    # Color utilities
-```
-
-## Routes
-
-| Route | Page |
-|---|---|
-| `/` | Radial quadrant map |
-| `/about` | Framework overview |
-| `/archetype/the-king` | King detail |
-| `/archetype/the-warrior` | Warrior detail |
-| `/archetype/the-magician` | Magician detail |
-| `/archetype/the-lover` | Lover detail |
-| `/archetype/the-divine-child` | Divine Child detail |
-| `/archetype/the-hero` | Hero detail |
-| `/archetype/the-precocious-child` | Precocious Child detail |
-| `/archetype/the-oedipal-child` | Oedipal Child detail |
+- **Per-system pages** — `/<system>`, `/<system>/about`, `/<system>/archetype/[slug]`, each with a bespoke visual dialect (see `DESIGN.md`).
+- **Atlas** — `/atlas` — the cross-system resonance constellation, cluster pages, contested-mapping debates, and shared exemplars.
+- **Reading** — `/quiz` — a ~30-minute cast that places you across all seven systems from a single vector; nothing is stored, the reading lives in its URL.
+- **Mirror** — `/mirror` — a twelve-choice cross-system snapshot.
+- **Today** — `/today` — a daily archetype draw for the collective.
+- **Index** — `/archetypes` — every figure across every system, filterable.
+- **About** — methodology, bibliography, counter-canon, and the six theories of shadow the map refuses to flatten.
 
 ## Design
 
-**Palette** -- Sovereign Gold + Deep Archive
+Each system speaks its own visual **dialect** grounded in what the system is *for* — KWML's platonic solids, Jungian organic forms, Enneagram instruments, MBTI cognitive geometry, Tarot arcana, Hero's Journey myth-lines, and Astrology's constellation figures — while sharing one grammar (stroke primacy, one accent per archetype, a 5.5–6s breath, four motion primitives). Iconography parity across every surface is enforced by the `design-audit` skill. The full constitution is in `DESIGN.md`.
 
-| Role | Color | Hex |
-|---|---|---|
-| Background | Warm black | `#08080A` |
-| Surface | Dark surface | `#111113` |
-| Text | Off-white | `#EDEDEC` |
-| Gold (King) | Sovereign gold | `#D4AF37` |
-| Crimson (Warrior) | Deep red | `#C0392B` |
-| Emerald (Magician) | Forest green | `#1B9E6B` |
-| Rose (Lover) | Warm rose | `#D4828F` |
+**Typography** — Cormorant Garamond (serif), Supreme (sans), Space Mono (mono). **Palette** — warm-black canvas `#06060A`, gold accent `#D4AF37`, per-system and per-cluster accent hues.
 
-**Typography** -- Cormorant Garamond for serif headlines, Inter for sans body text.
+## Tech stack
 
-## Deploy
+- [Next.js 16](https://nextjs.org/) (App Router, TypeScript), [React 19](https://react.dev/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [three.js](https://threejs.org/) + [React Three Fiber](https://r3f.docs.pmnd.rs/) for the 3D totems; [Framer Motion](https://www.framer.com/motion/) for transitions
+- [d3-force](https://d3js.org/d3-force) for the constellation layout; [Satori](https://github.com/vercel/satori) (`next/og`) for share cards
 
-Static export works with any host. For Vercel:
+## Getting started
 
 ```bash
-npm run build
-# Deploy .next output to Vercel, Netlify, or any static host
+npm install
+npm run dev        # dev server at http://localhost:3000
+npm run build      # runs prebuild (feature vectors + constellation layout), then next build
+npm start
+```
+
+## Build pipeline
+
+`prebuild` regenerates two committed artifacts from the research corpus before every build:
+
+```bash
+node scripts/build-feature-vectors.mjs       # research/08 → src/data/feature-vectors.json (quiz scoring)
+node scripts/build-constellation-layout.mjs  # grounded-resonance-map.json → constellation-layout.json (atlas geometry)
+```
+
+The `research/` directory (gitignored except its docs) holds the source; the checked-in artifacts are the source of truth on deploy.
+
+## Project structure
+
+```
+src/
+  app/            # routes: per-system trees, /atlas, /quiz, /mirror, /today, /about, /api
+  components/     # per-system totems + detail clients, viz/, resonance/, atlas/, quiz/, shared/
+  data/           # per-system archetype data, grounded-resonance-map.json, systems registry
+  lib/            # resonance, quiz scoring/classifier, OG rendering, motion primitives
+  types/          # per-system archetype type definitions
+research/         # the eleven-mission grounding pipeline (docs committed, outputs gitignored)
+scripts/          # build-time artifact generators + quiz verifiers
+DESIGN.md         # the iconography constitution
 ```
 
 ## Research
 
-See [KWML-Research.md](./KWML-Research.md) for the comprehensive research document covering all archetypes, shadow systems, Jungian foundations, and structural mappings.
+- `research/00-pipeline.md` — the grounding protocol.
+- `KWML-Research.md` — the original KWML source document.
+- `/about/bibliography` — the full cited corpus across all systems.
 
 ## License
 

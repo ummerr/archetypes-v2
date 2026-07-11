@@ -6,6 +6,7 @@ import { getTarotBySlug } from "@/data/tarot/archetypes";
 import { getEnneagramBySlug } from "@/data/enneagram/archetypes";
 import { getMbtiBySlug } from "@/data/mbti/archetypes";
 import { getHeroJourneyBySlug } from "@/data/herosjourney/archetypes";
+import { getAstrologyBySlug } from "@/data/astrology/archetypes";
 import { getFunction } from "@/data/mbti/functions";
 
 interface Pole {
@@ -74,6 +75,14 @@ function polesFor(system: SystemId, slug: string, accent: string): Pole[] | null
       return [
         { label: "Gift", title: h.gift.replace(/[.?!]+$/, ""), color: accent },
         { label: "Shadow", title: h.shadowPole, color: CRIMSON },
+      ];
+    }
+    case "astrology": {
+      const z = getAstrologyBySlug(slug);
+      if (!z) return null;
+      return [
+        { label: "Gift", title: z.gift.replace(/[.?!]+$/, ""), color: accent },
+        { label: "Opposite", title: z.oppositeSign, color: CRIMSON },
       ];
     }
   }

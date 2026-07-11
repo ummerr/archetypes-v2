@@ -5,6 +5,7 @@ import { getTarotBySlug } from "@/data/tarot/archetypes";
 import { getEnneagramBySlug } from "@/data/enneagram/archetypes";
 import { getMbtiBySlug } from "@/data/mbti/archetypes";
 import { getHeroJourneyBySlug } from "@/data/herosjourney/archetypes";
+import { getAstrologyBySlug } from "@/data/astrology/archetypes";
 import { getFunction } from "@/data/mbti/functions";
 
 export type QuestionFragment =
@@ -129,6 +130,22 @@ function heroJourney(slug: string): ReflectiveQuestion | null {
   };
 }
 
+function astrology(slug: string): ReflectiveQuestion | null {
+  const z = getAstrologyBySlug(slug);
+  if (!z) return null;
+  return {
+    fragments: [
+      t("Where is your "),
+      a(z.name),
+      t(" in fullness — its gift, "),
+      a(z.gift),
+      t(" — and where are you fleeing into the disowned half across the wheel, "),
+      a(z.oppositeSign),
+      t("?"),
+    ],
+  };
+}
+
 export function reflectiveQuestion(system: SystemId, slug: string): ReflectiveQuestion {
   const q =
     system === "kwml"
@@ -143,6 +160,8 @@ export function reflectiveQuestion(system: SystemId, slug: string): ReflectiveQu
               ? mbti(slug)
               : system === "heros-journey"
                 ? heroJourney(slug)
-                : null;
+                : system === "astrology"
+                  ? astrology(slug)
+                  : null;
   return q ?? FALLBACK;
 }

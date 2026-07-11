@@ -14,30 +14,12 @@ import {
   type MirrorSession,
 } from "@/lib/mirror-session";
 import { loadOgFonts } from "@/lib/og-card";
+import { mirrorClusterColor } from "@/lib/cluster-colors";
 
 // Force the handler to run on the Node runtime so it has access to the
 // shared `decodeResult` / `sessionFromSeed` utilities (they use crypto in
 // a way the edge runtime sometimes treats differently).
 export const runtime = "nodejs";
-
-// Cluster palette mirrors the live result constellation so shared
-// previews feel continuous with the page they point to.
-const CLUSTER_COLOR: Record<MirrorClusterId, string> = {
-  sovereign: "#E0C065",
-  warrior: "#D6614A",
-  "sage-magician": "#9B87C4",
-  lover: "#E08597",
-  innocent: "#EADBA8",
-  explorer: "#5DB8A0",
-  rebel: "#B64558",
-  creator: "#E89B4F",
-  jester: "#F0C555",
-  caregiver: "#8AB876",
-  everyman: "#C3A07D",
-  "death-rebirth": "#7E5BA0",
-  teacher: "#7FA2CC",
-  "liminal-territory": "#ADA0C6",
-};
 
 const LAYOUT_ORDER: MirrorClusterId[] = [
   "sovereign",
@@ -373,7 +355,7 @@ export async function GET(req: NextRequest) {
   const dominantLabels = dominant.map((id) => CLUSTER_INTERPRETATIONS[id].short);
   const name = readingName(dominant);
   const primaryColor =
-    dominant.length > 0 ? CLUSTER_COLOR[dominant[0]] : "#D4AF37";
+    dominant.length > 0 ? mirrorClusterColor(dominant[0]) : "#D4AF37";
 
   const { fonts, serif, serifItalic, sans, mono } = await loadOgFonts();
 
@@ -466,7 +448,7 @@ export async function GET(req: NextRequest) {
               >
                 {name.parts.length > 0 ? (
                   name.parts.flatMap((p, i) => {
-                    const color = CLUSTER_COLOR[p.clusterId];
+                    const color = mirrorClusterColor(p.clusterId);
                     const word = (
                       <div
                         key={`${p.clusterId}-${i}`}
@@ -535,7 +517,7 @@ export async function GET(req: NextRequest) {
                   }}
                 >
                   {dominantLabels.flatMap((label, i) => {
-                    const color = CLUSTER_COLOR[dominant[i]];
+                    const color = mirrorClusterColor(dominant[i]);
                     const segment = (
                       <div
                         key={`label-${dominant[i]}`}
@@ -685,7 +667,7 @@ export async function GET(req: NextRequest) {
               )}
               {/* Nodes */}
               {positions.map((p) => {
-                const color = CLUSTER_COLOR[p.id];
+                const color = mirrorClusterColor(p.id);
                 const isDominant = dominant.includes(p.id);
                 const radius = p.score === 0 ? 2.2 : isDominant ? 7 : 4;
                 return (

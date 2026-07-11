@@ -27,7 +27,7 @@ export default function AtlasInteractive(props: Props) {
         onHighlightCluster={setHighlight}
       />
       <div>
-        <SectionHeading kicker="Nine figures six traditions keep drawing">
+        <SectionHeading kicker="Nine figures seven traditions keep drawing">
           What Survives Translation
         </SectionHeading>
         <ClusterGrid onHoverCluster={setHighlight} />

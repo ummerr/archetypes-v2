@@ -27,6 +27,8 @@ function shadowLineFor(match: PerSystemMatch, name: string): string {
       return `In the monomyth, ${name}'s shadow is the mirrored figure — the same geometry lit from the opposite side, a reminder that the threshold cuts both ways.`;
     case "reversal":
       return `In the tarot grammar, ${name}'s shadow is the card reversed — the same image read backwards, the light returning through the wrong door.`;
+    case "polarity":
+      return `In the zodiac, ${name}'s shadow is the opposite sign across the wheel — the axis the sign forgets it belongs to, the half it left behind to become itself.`;
   }
 }
 
@@ -37,6 +39,7 @@ const SYSTEM_ORDER: SystemId[] = [
   "mbti",
   "heros-journey",
   "tarot",
+  "astrology",
 ];
 
 export default function ShadowReading({ classification }: Props) {

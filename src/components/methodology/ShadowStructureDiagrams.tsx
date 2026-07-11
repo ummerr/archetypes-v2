@@ -1,6 +1,12 @@
 import type { ReactNode } from "react";
 
-type Variant = "kwml" | "tarot" | "enneagram" | "jungian" | "heros-journey";
+type Variant =
+  | "kwml"
+  | "tarot"
+  | "enneagram"
+  | "jungian"
+  | "heros-journey"
+  | "astrology";
 
 interface ShadowStructureDiagramProps {
   variant: Variant;
@@ -13,6 +19,7 @@ const TINT: Record<Variant, string> = {
   enneagram: "#1B9E6B",
   jungian: "#8C8A82",
   "heros-journey": "#C0392B",
+  astrology: "#7C8CB0",
 };
 
 const SHAPE_LABEL: Record<Variant, string> = {
@@ -21,6 +28,7 @@ const SHAPE_LABEL: Record<Variant, string> = {
   enneagram: "transit",
   jungian: "unipolar",
   "heros-journey": "mask",
+  astrology: "polarity",
 };
 
 function Node({
@@ -412,6 +420,43 @@ function HerosJourneyDiagram() {
   );
 }
 
+function AstrologyDiagram() {
+  const tint = TINT.astrology;
+  return (
+    <DiagramFrame
+      variant="astrology"
+      caption="The zodiac locates a sign's shadow across the wheel, in the sign it opposes — Aries in Libra, Cancer in Capricorn. The disowned half is both the shadow and the completion."
+    >
+      <text
+        x={200}
+        y={28}
+        textAnchor="middle"
+        className="font-mono"
+        fontSize={8}
+        letterSpacing={1.4}
+        fill={`${tint}aa`}
+      >
+        SHADOW IS THE OPPOSITE POLE
+      </text>
+      <Node x={92} y={100} label="Aries" sub="the sign" tint={tint} tone="full" />
+      <Arrow x1={140} y1={100} x2={260} y2={100} tint={tint} label="opposes / completes" dashed />
+      <Node x={308} y={100} label="Libra" sub="its shadow" tint={tint} tone="ghost" />
+      <circle cx={200} cy={100} r={2.5} fill={`${tint}cc`} />
+      <text
+        x={200}
+        y={150}
+        textAnchor="middle"
+        className="font-serif italic"
+        fontSize={10}
+        fill="currentColor"
+        opacity={0.55}
+      >
+        one axis, over-developed at one end
+      </text>
+    </DiagramFrame>
+  );
+}
+
 export default function ShadowStructureDiagram({
   variant,
   className,
@@ -428,6 +473,8 @@ export default function ShadowStructureDiagram({
         return <JungianDiagram />;
       case "heros-journey":
         return <HerosJourneyDiagram />;
+      case "astrology":
+        return <AstrologyDiagram />;
     }
   })();
   return <div className={className}>{content}</div>;
@@ -439,6 +486,7 @@ const MINI_ORDER: { variant: Variant; label: string; shape: string }[] = [
   { variant: "enneagram", label: "Enneagram", shape: "transit" },
   { variant: "jungian", label: "Pearson", shape: "unipolar" },
   { variant: "heros-journey", label: "Hero's Journey", shape: "mask" },
+  { variant: "astrology", label: "Astrology", shape: "polarity" },
 ];
 
 function MiniShape({ variant }: { variant: Variant }) {
@@ -527,6 +575,15 @@ function MiniShape({ variant }: { variant: Variant }) {
           {dot(62, 20, 5, false)}
         </svg>
       );
+    case "astrology":
+      return (
+        <svg viewBox="0 0 80 40" className="w-full h-auto">
+          <line x1={20} y1={20} x2={60} y2={20} stroke={stroke} strokeWidth={1} strokeDasharray="3 2" />
+          {dot(16, 20, 5)}
+          <circle cx={40} cy={20} r={1.5} fill={stroke} />
+          {dot(64, 20, 5, false)}
+        </svg>
+      );
   }
 }
 
@@ -534,10 +591,10 @@ export function ShadowShapeOverview() {
   return (
     <figure
       role="img"
-      aria-label="Five different shadow shapes across five traditions"
+      aria-label="Six different shadow shapes across six traditions"
       className="my-10"
     >
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
         {MINI_ORDER.map(({ variant, label, shape }) => (
           <div
             key={variant}

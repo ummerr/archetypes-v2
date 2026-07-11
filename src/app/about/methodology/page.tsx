@@ -36,19 +36,19 @@ export default function MethodologyPage() {
         </p>
         <p className="font-serif text-2xl md:text-3xl leading-display text-text-primary font-medium tracking-tight mb-10">
           Most archetype sites pick a tradition and sell certainty.{" "}
-          <span className="text-gold italic">This one holds six in the same room</span>{" "}
+          <span className="text-gold italic">This one holds seven in the same room</span>{" "}
           and keeps the receipts.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-x-12 md:gap-y-10">
           <div>
             <p className="font-serif text-xl md:text-2xl text-text-primary font-medium mb-3 leading-snug">
-              Six traditions, cross-read
+              Seven traditions, cross-read
             </p>
             <p className="text-text-secondary text-body leading-relaxed font-light">
-              Jung, Enneagram, KWML, tarot, Hero&apos;s Journey, MBTI — held
-              side by side, so you can see where they rhyme, where they
-              diverge, and where the overlap is too loose to claim.
+              Jung, Enneagram, KWML, tarot, Hero&apos;s Journey, MBTI, and the
+              zodiac — held side by side, so you can see where they rhyme, where
+              they diverge, and where the overlap is too loose to claim.
             </p>
           </div>
           <div>
@@ -56,7 +56,7 @@ export default function MethodologyPage() {
               Every tie sourced or flagged
             </p>
             <p className="text-text-secondary text-body leading-relaxed font-light">
-              147 mappings across 20 clusters — each cited to its author, or
+              170 mappings across 20 clusters — each cited to its author, or
               named explicitly as inference, with a confidence tier you can
               weigh.
             </p>
@@ -92,23 +92,28 @@ export default function MethodologyPage() {
       <h2 className="font-serif text-2xl font-medium mt-12 mb-3">What the map is</h2>
       <p>{STANCE_NOTE}</p>
       <p className="mt-4">
-        This site is a <em>comparative hermeneutic atlas</em>. It sets six archetypal vocabularies
+        This site is a <em>comparative hermeneutic atlas</em>. It sets seven archetypal vocabularies
         side by side - Jungian (Pearson-Marr), Enneagram (Riso-Hudson), KWML (Moore &amp; Gillette),
-        Myers-Briggs, Hero&apos;s Journey (Campbell / Vogler), and Tarot (Major Arcana) - and maps
-        resonances between them. It does not claim that these six traditions describe the same
-        underlying psyche. It claims only that reading them together is sometimes more illuminating
-        than reading any one alone.
+        Myers-Briggs, Hero&apos;s Journey (Campbell / Vogler), Tarot (Major Arcana), and the
+        Astrological zodiac - and maps resonances between them. It does not claim that these
+        traditions describe the same underlying psyche. It claims only that reading them together is
+        sometimes more illuminating than reading any one alone. The zodiac is held to a different
+        standard than the other six: it is the one system here that makes a claim about the sky, that
+        claim has failed every controlled test, and so it is read strictly as projected psychology -
+        entering the map late, through the Golden Dawn&apos;s tarot bridge, always tiered and always
+        dissented. See its <a href="/astrology/about" className="underline decoration-gold/50 underline-offset-4">about page</a>.
       </p>
 
       <h2 className="font-serif text-2xl font-medium mt-12 mb-3">The problem we started with</h2>
       <p>
         The first version of this map was hand-coded from general reading. Every cluster felt
-        obvious, which is itself a warning: when six traditions seem to converge effortlessly on
+        obvious, which is itself a warning: when seven traditions seem to converge effortlessly on
         twenty tidy themes, what you are likely seeing is not convergence but shared intellectual
         descent. Jung is upstream of most of it. Campbell read Jung; Pearson built on Campbell;
         Moore &amp; Gillette cite Jung; Riso and Hudson borrowed structure from Ichazo who borrowed
-        from Gurdjieff; Jungian Tarot is a twentieth-century overlay. Agreement between downstream
-        readers of the same source is not independent corroboration.
+        from Gurdjieff; Jungian Tarot is a twentieth-century overlay; and psychological astrology is
+        the same overlay again - Rudhyar and Greene grafting Jung onto the zodiac in the 1930s-70s.
+        Agreement between downstream readers of the same source is not independent corroboration.
       </p>
       <p className="mt-4">
         The pipeline below was designed to test the hand-coded map against primary literature,
@@ -211,7 +216,7 @@ export default function MethodologyPage() {
 
       <h2 className="font-serif text-2xl font-medium mt-12 mb-3">What the map does not claim</h2>
       <p>
-        The strong form of the project - that these six traditions co-describe the universal
+        The strong form of the project - that these seven traditions co-describe the universal
         structure of psyche - fails. Convergence is partly shared intellectual descent, not
         independent corroboration. We do not claim to have discovered an underlying grammar. We
         claim only to have aligned vocabularies carefully enough that a reader can recognise the
@@ -276,7 +281,7 @@ export default function MethodologyPage() {
 
       <h2 className="font-serif text-2xl font-medium mt-16 mb-3">Per-system critical profiles</h2>
       <p>
-        Each of the six traditions has its own page summarising its lineage, what it actually maps,
+        Each of the seven traditions has its own page summarising its lineage, what it actually maps,
         its empirical status, and the blind spot it carries into this atlas.
       </p>
       <ul className="mt-4 grid gap-y-2 gap-x-6 sm:grid-cols-2">

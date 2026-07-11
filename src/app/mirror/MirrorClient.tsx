@@ -37,6 +37,7 @@ import {
 import ConfidenceBadge from "@/components/shared/ConfidenceBadge";
 import HermeneuticCaveat from "@/components/shared/HermeneuticCaveat";
 import { breath } from "@/lib/motion-primitives";
+import { CLUSTER_COLORS as CLUSTER_COLOR } from "@/lib/cluster-colors";
 
 const TIER_WEIGHT: Record<ConfidenceTier, number> = {
   canonical: 0,
@@ -81,26 +82,6 @@ function computeMaxOfferings(
   }
   return counts;
 }
-
-// Per-cluster thematic hues. Each energy gets its own color so the
-// constellation reads as a field of distinct archetypal tones rather
-// than a single gold glyph. Tuned to sit quietly on the dark canvas.
-const CLUSTER_COLOR: Record<MirrorClusterId, string> = {
-  sovereign: "#E0C065",
-  warrior: "#D6614A",
-  "sage-magician": "#9B87C4",
-  lover: "#E08597",
-  innocent: "#EADBA8",
-  explorer: "#5DB8A0",
-  rebel: "#B64558",
-  creator: "#E89B4F",
-  jester: "#F0C555",
-  caregiver: "#8AB876",
-  everyman: "#C3A07D",
-  "death-rebirth": "#7E5BA0",
-  teacher: "#7FA2CC",
-  "liminal-territory": "#ADA0C6",
-};
 
 type Phase = "intro" | "sort" | "result";
 

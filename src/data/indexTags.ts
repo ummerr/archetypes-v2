@@ -149,6 +149,20 @@ export const INDEX_TAGS: Record<Key, IndexTagSet> = {
   "tarot:the-sun": { age: "adult", valence: "light", introversion: "outward" },
   "tarot:judgement": { age: "elder", valence: "bright", introversion: "mixed" },
   "tarot:the-world": { age: "elder", valence: "bright", introversion: "mixed" },
+
+  // ── Astrology ──────────────────────────────────────────
+  "astrology:aries": { age: "adolescent", valence: "bright", introversion: "outward" },
+  "astrology:taurus": { age: "adult", valence: "light", introversion: "inward" },
+  "astrology:gemini": { age: "adolescent", valence: "bright", introversion: "outward" },
+  "astrology:cancer": { age: "adult", valence: "light", introversion: "inward" },
+  "astrology:leo": { age: "adult", valence: "bright", introversion: "outward" },
+  "astrology:virgo": { age: "adult", valence: "mixed", introversion: "inward" },
+  "astrology:libra": { age: "adult", valence: "bright", introversion: "outward" },
+  "astrology:scorpio": { age: "adult", valence: "shadow", introversion: "inward" },
+  "astrology:sagittarius": { age: "adolescent", valence: "bright", introversion: "outward" },
+  "astrology:capricorn": { age: "elder", valence: "mixed", introversion: "inward" },
+  "astrology:aquarius": { age: "adult", valence: "mixed", introversion: "outward" },
+  "astrology:pisces": { age: "adult", valence: "mixed", introversion: "inward" },
 };
 
 export function tagsFor(systemId: string, slug: string): IndexTagSet {

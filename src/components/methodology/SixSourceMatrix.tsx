@@ -49,13 +49,20 @@ const SYSTEMS: SystemCard[] = [
     scholarship: "Quenk on inferior function; Beebe's eight-function model",
     critique: "Pittenger and ongoing psychometric reliability critiques",
   },
+  {
+    system: "Astrology",
+    mission: "12",
+    primary: "Rudhyar, Astrology of Personality (1936); Greene, Saturn (1976); Tarnas, Prometheus the Awakener (1995)",
+    scholarship: "Golden Dawn tarot bridge; Jung on projection (Barbault letter, 1954); Arroyo on the four elements",
+    critique: "Carlson double-blind (Nature 1985); Dean & Kelly time-twins (2003); Adorno; precession / tropical-sidereal split",
+  },
 ];
 
 export default function SixSourceMatrix() {
   return (
     <figure
       role="img"
-      aria-label="Each of six traditions triangulated through primary sources, scholarship, and cultural critique"
+      aria-label="Each of seven traditions triangulated through primary sources, scholarship, and cultural critique"
       className="my-10"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

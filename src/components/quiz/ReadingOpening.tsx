@@ -46,7 +46,7 @@ export function composeOpening(
   const narrativeRoom = NARRATIVE_PHRASE[axisSummary.narrative.dominant] ?? "the room you are in";
 
   const line = `This reading finds you ${stageWeather}, with ${affectWeather}, standing in ${narrativeRoom}.`;
-  const tail = `Of the six traditions, ${systemName} fits the closest — not as a verdict, but as the lens that holds your present with the least strain.`;
+  const tail = `Of the seven traditions, ${systemName} fits the closest — not as a verdict, but as the lens that holds your present with the least strain.`;
 
   return { line, tail };
 }

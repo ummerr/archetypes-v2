@@ -1,5 +1,6 @@
 import type { SystemId } from "@/data/resonance";
 import ArcanaGlyph from "@/components/tarot/ArcanaGlyph";
+import { asterismFor } from "@/lib/zodiac-asterisms";
 
 const S = 200;
 const HJ_S = 200;
@@ -193,6 +194,35 @@ function mbtiCode(code: string, color: string): TotemJsx {
   );
 }
 
+function astroConstellation(slug: string, color: string): TotemJsx | null {
+  const asterism = asterismFor(slug);
+  if (!asterism) return null;
+  const pad = 34;
+  const span = S - 2 * pad;
+  const px = (n: number) => pad + n * span;
+  const pts = asterism.points.map((s) => ({ x: px(s.x), y: px(s.y), m: s.m }));
+  return (
+    <svg width={S} height={S} viewBox={`0 0 ${S} ${S}`} fill="none">
+      {asterism.edges.map(([a, b], i) => (
+        <line
+          key={`e${i}`}
+          x1={pts[a].x}
+          y1={pts[a].y}
+          x2={pts[b].x}
+          y2={pts[b].y}
+          stroke={color}
+          strokeWidth={2}
+          strokeLinecap="round"
+          opacity={0.4}
+        />
+      ))}
+      {pts.map((s, i) => (
+        <circle key={`s${i}`} cx={s.x} cy={s.y} r={4 + s.m * 5} fill={color} opacity={0.55 + s.m * 0.4} />
+      ))}
+    </svg>
+  );
+}
+
 export function ogTotem(
   system: SystemId,
   slug: string,
@@ -200,6 +230,8 @@ export function ogTotem(
   opts?: { symbol?: string; mbtiCode?: string; kwmlFamily?: string },
 ): TotemJsx | null {
   switch (system) {
+    case "astrology":
+      return astroConstellation(slug, accent);
     case "heros-journey":
       return hjIcons[slug]?.(accent) ?? null;
     case "kwml":

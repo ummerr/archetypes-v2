@@ -7,6 +7,7 @@ import { ALL_ARCHETYPES as ALL_KWML } from "@/data/kwml/archetypes";
 import { ALL_TAROT } from "@/data/tarot/archetypes";
 import { ALL_HEROSJOURNEY } from "@/data/herosjourney/archetypes";
 import { ALL_MBTI } from "@/data/mbti/archetypes";
+import { ALL_ASTROLOGY } from "@/data/astrology/archetypes";
 import { CLUSTERS } from "@/data/resonance";
 import { getContestedEntries, debateSlugFor } from "@/lib/resonance";
 import { META_DEBATES } from "@/data/debates";
@@ -20,6 +21,7 @@ const SYSTEM_SLUGS: Record<string, SlugRecord[]> = {
   tarot: ALL_TAROT,
   "heros-journey": ALL_HEROSJOURNEY,
   mbti: ALL_MBTI,
+  astrology: ALL_ASTROLOGY,
 };
 
 const SYSTEMS_WITH_ABOUT = new Set([
@@ -29,6 +31,7 @@ const SYSTEMS_WITH_ABOUT = new Set([
   "tarot",
   "heros-journey",
   "mbti",
+  "astrology",
 ]);
 
 export default function sitemap(): MetadataRoute.Sitemap {

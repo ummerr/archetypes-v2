@@ -5,6 +5,7 @@ import { ALL_ARCHETYPES as ALL_KWML } from "./kwml/archetypes";
 import { ALL_HEROSJOURNEY } from "./herosjourney/archetypes";
 import { ALL_TAROT } from "./tarot/archetypes";
 import { ALL_MBTI } from "./mbti/archetypes";
+import { ALL_ASTROLOGY } from "./astrology/archetypes";
 
 export type NavLink = {
   label: string;
@@ -50,6 +51,8 @@ export function archetypesForSystem(systemId: string): NavLink[] {
       return ALL_TAROT.map((a) => ({ label: `${a.numeral} · ${a.name}`, href: `/tarot/archetype/${a.slug}` }));
     case "mbti":
       return ALL_MBTI.map((a) => ({ label: `${a.code} · ${a.nickname}`, href: `/mbti/archetype/${a.slug}` }));
+    case "astrology":
+      return ALL_ASTROLOGY.map((a) => ({ label: `${a.glyph} ${a.name}`, href: `/astrology/archetype/${a.slug}` }));
     default:
       return [];
   }
@@ -71,7 +74,7 @@ export const ATLAS_LINKS: NavLink[] = [
 export const PRACTICE_LINKS: NavLink[] = [
   { label: "Today", href: "/today", desc: "A daily archetype for the collective" },
   { label: "Mirror", href: "/mirror", desc: "A cross-system snapshot in twelve choices" },
-  { label: "Reading", href: "/quiz", desc: "A longer reading across all six systems" },
+  { label: "Reading", href: "/quiz", desc: "A longer reading across all seven systems" },
   { label: "Profile", href: "/profile", desc: "Build a cross-system reflection", soon: true },
 ];
 

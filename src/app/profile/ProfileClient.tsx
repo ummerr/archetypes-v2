@@ -10,6 +10,7 @@ import { ALL_ARCHETYPES as ALL_KWML } from "@/data/kwml/archetypes";
 import { ALL_TAROT } from "@/data/tarot/archetypes";
 import { ALL_HEROSJOURNEY } from "@/data/herosjourney/archetypes";
 import { ALL_MBTI } from "@/data/mbti/archetypes";
+import { ALL_ASTROLOGY } from "@/data/astrology/archetypes";
 import { archetypeDisplayName, systemAccent } from "@/lib/resonance";
 import {
   clustersForArchetype,
@@ -32,6 +33,7 @@ const OPTIONS: Record<SystemId, { slug: string; label: string }[]> = {
   tarot: ALL_TAROT.map((a) => ({ slug: a.slug, label: a.name })),
   "heros-journey": ALL_HEROSJOURNEY.map((a) => ({ slug: a.slug, label: a.name })),
   mbti: ALL_MBTI.map((a) => ({ slug: a.slug, label: `${a.code} — ${a.nickname}` })),
+  astrology: ALL_ASTROLOGY.map((a) => ({ slug: a.slug, label: `${a.glyph} ${a.name}` })),
 };
 
 interface PickAxes {

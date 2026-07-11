@@ -4,41 +4,15 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import type { ClusterMatch } from "@/lib/quiz-types";
 import { CLUSTER_AXES } from "@/data/atlas-lens-axes";
+import { CLUSTER_COLORS, CLUSTER_COLOR_FALLBACK } from "@/lib/cluster-colors";
 
 interface Props {
   clusters: ClusterMatch[];
   take?: number;
 }
 
-// The 14-cluster color set used across Mirror and the constellation scaffold.
-// Pulled into this file directly rather than imported from MirrorClient to
-// avoid crossing a "use client" boundary inside the Reading; these hues are
-// canonical site tokens in practice, not per-component state.
-const CLUSTER_COLOR: Record<string, string> = {
-  sovereign: "#E0C065",
-  warrior: "#D6614A",
-  "sage-magician": "#9B87C4",
-  lover: "#E08597",
-  innocent: "#EADBA8",
-  explorer: "#5DB8A0",
-  rebel: "#B64558",
-  creator: "#E89B4F",
-  jester: "#F0C555",
-  caregiver: "#8AB876",
-  everyman: "#C3A07D",
-  "death-rebirth": "#7E5BA0",
-  teacher: "#7FA2CC",
-  "liminal-territory": "#ADA0C6",
-  antagonists: "#8a4a5a",
-  shapeshifter: "#9a7ac9",
-  "threshold-guardian": "#7a5a4a",
-  herald: "#c9b884",
-  integration: "#e6d47a",
-  "boy-hero": "#e6944a",
-};
-
 function colorFor(id: string): string {
-  return CLUSTER_COLOR[id] ?? CLUSTER_AXES[id]?.motifColor ?? "#c6a355";
+  return CLUSTER_COLORS[id] ?? CLUSTER_AXES[id]?.motifColor ?? CLUSTER_COLOR_FALLBACK;
 }
 
 // Strip the theme of its subtitle after em-dash or hyphen — the clean phrase

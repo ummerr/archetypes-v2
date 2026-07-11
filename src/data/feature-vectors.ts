@@ -20,7 +20,8 @@ export type ShadowStructure =
   | "mirror"
   | "passion-virtue"
   | "stack-inversion"
-  | "reversal";
+  | "reversal"
+  | "polarity";
 
 export interface FeatureVector {
   stability_risk: number;

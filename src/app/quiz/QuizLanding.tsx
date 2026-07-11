@@ -72,7 +72,7 @@ export default function QuizLanding() {
 
       <div className="space-y-5 max-w-prose mb-8">
         <p className="font-serif text-body-lg text-text-secondary/90 leading-article">
-          Six traditions on one page, cast for you. The Mirror was a glimpse;
+          Seven traditions on one page, cast for you. The Mirror was a glimpse;
           this takes about half an hour and goes several rooms deeper &mdash;
           five axes, six vocabularies, a confidence tier for every mapping.
         </p>

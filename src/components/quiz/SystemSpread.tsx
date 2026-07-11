@@ -37,7 +37,7 @@ export default function SystemSpread({ classification }: Props) {
     <section className="mb-20">
       <div className="mb-10">
         <p className="font-mono text-kicker tracking-display uppercase text-gold/80 mb-1">
-          Six traditions
+          Seven traditions
         </p>
         <h2 className="font-serif text-h2 leading-display">
           Where each vocabulary lands

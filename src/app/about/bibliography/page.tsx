@@ -22,6 +22,10 @@ const PRIMARY: Entry[] = [
   { text: "Jung, C. G. - Psychological Types (1921); Archetypes and the Collective Unconscious (CW 9i, 1959)", href: "https://en.wikipedia.org/wiki/Psychological_Types" },
   { text: "Myers, Isabel Briggs - Gifts Differing (1980)", href: "https://en.wikipedia.org/wiki/Gifts_Differing" },
   { text: "Waite, Arthur Edward - The Pictorial Key to the Tarot (1910)", href: "https://en.wikipedia.org/wiki/The_Pictorial_Key_to_the_Tarot" },
+  { text: "Rudhyar, Dane - The Astrology of Personality (1936)", href: "https://en.wikipedia.org/wiki/Dane_Rudhyar" },
+  { text: "Greene, Liz - Saturn: A New Look at an Old Devil (1976); The Astrology of Fate (1984)", href: "https://en.wikipedia.org/wiki/Liz_Greene" },
+  { text: "Tarnas, Richard - Prometheus the Awakener (1995); Cosmos and Psyche (2006)", href: "https://en.wikipedia.org/wiki/Richard_Tarnas" },
+  { text: "Golden Dawn - Book T (c. 1888); Crowley, Aleister - The Book of Thoth (1944) — zodiac / Major Arcana correspondences", href: "https://en.wikipedia.org/wiki/Hermetic_Order_of_the_Golden_Dawn" },
 ];
 
 const COUNTER_CANON: Entry[] = [
@@ -40,6 +44,8 @@ const SECONDARY: Entry[] = [
   { text: "Stein, Murray - Jung's Map of the Soul (1998)" },
   { text: "Johnson, Robert - He, She, We (1974–1983)", href: "https://en.wikipedia.org/wiki/Robert_A._Johnson_(psychotherapist)" },
   { text: "Hillman, James - The Soul's Code (1996)", href: "https://en.wikipedia.org/wiki/James_Hillman" },
+  { text: "Arroyo, Stephen - Astrology, Psychology and the Four Elements (1975)", href: "https://en.wikipedia.org/wiki/Stephen_Arroyo" },
+  { text: "Rossi, Safron & Le Grice, Keiron (eds.) - Jung on Astrology (2017)", href: "https://www.routledge.com/Jung-on-Astrology/Jung-Rossi-Le-Grice/p/book/9781138289147" },
 ];
 
 const CRITICAL: Entry[] = [
@@ -51,6 +57,10 @@ const CRITICAL: Entry[] = [
   { text: "Toelken, Barre - The Dynamics of Folklore (1979)", href: "https://en.wikipedia.org/wiki/Barre_Toelken" },
   { text: "The Drum (2025) - on PMAI and 'Jungian' marketing" },
   { text: "Stromberg, Peter - critiques of MBTI psychometric claims" },
+  { text: "Carlson, Shawn - A double-blind test of astrology (Nature 318, 1985)", href: "https://www.nature.com/articles/318419a0" },
+  { text: "Dean, Geoffrey & Kelly, Ivan - Is Astrology Relevant to Consciousness and Psi? (J. Consciousness Studies, 2003)", href: "https://philpapers.org/rec/DEAIAR" },
+  { text: "Adorno, Theodor - The Stars Down to Earth (1974)", href: "https://en.wikipedia.org/wiki/The_Stars_Down_to_Earth" },
+  { text: "Bok, Jerome & Kurtz - Objections to Astrology (The Humanist, 1975); the Gauquelin 'Mars effect' dispute", href: "https://en.wikipedia.org/wiki/Mars_effect" },
 ];
 
 function List({ heading, items }: { heading: string; items: Entry[] }) {

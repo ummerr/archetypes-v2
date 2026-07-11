@@ -6,7 +6,8 @@ export type SystemId =
   | "enneagram"
   | "mbti"
   | "heros-journey"
-  | "tarot";
+  | "tarot"
+  | "astrology";
 
 export type ConfidenceTier =
   | "canonical"

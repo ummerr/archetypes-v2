@@ -12,6 +12,7 @@ import { getEnneagramBySlug } from "@/data/enneagram/archetypes";
 import { getMbtiBySlug } from "@/data/mbti/archetypes";
 import { getHeroJourneyBySlug } from "@/data/herosjourney/archetypes";
 import { getTarotBySlug } from "@/data/tarot/archetypes";
+import { getAstrologyBySlug } from "@/data/astrology/archetypes";
 
 export function getClustersForArchetype(system: SystemId, slug: string): ThematicCluster[] {
   return CLUSTERS.filter((c) => c.archetypes.some((a) => a.system === system && a.slug === slug));
@@ -98,6 +99,8 @@ export function archetypeDisplayName(system: SystemId, slug: string): string | u
       return getHeroJourneyBySlug(slug)?.name;
     case "tarot":
       return getTarotBySlug(slug)?.name;
+    case "astrology":
+      return getAstrologyBySlug(slug)?.name;
   }
 }
 

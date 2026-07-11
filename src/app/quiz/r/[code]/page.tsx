@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { absoluteUrl, buildPageMetadata } from "@/lib/site";
-import { decodeResultPath } from "@/lib/quiz-session";
+import { decodeResultPath, readingNumberFor } from "@/lib/quiz-session";
 import { responsesToVector } from "@/lib/quiz-scoring";
 import { classifyVector } from "@/lib/quiz-classifier";
 import { archetypeDisplayName, systemAccent } from "@/lib/resonance";
@@ -14,18 +14,6 @@ interface PageProps {
 
 // Infinite slug space → dynamic rendering, no generateStaticParams.
 export const dynamic = "force-dynamic";
-
-function readingNumberFor(slug: string): string {
-  // A stable 4-digit "No" derived from the slug. Not load-bearing — the
-  // artefact feel wants a signed number, not a perfect hash. fnv-1a 32-bit,
-  // clipped to 4 digits and zero-padded.
-  let h = 2166136261 >>> 0;
-  for (let i = 0; i < slug.length; i++) {
-    h ^= slug.charCodeAt(i);
-    h = Math.imul(h, 16777619) >>> 0;
-  }
-  return String(h % 10000).padStart(4, "0");
-}
 
 export async function generateMetadata(
   { params }: PageProps,
@@ -54,9 +42,9 @@ export async function generateMetadata(
     ...buildPageMetadata({
       title,
       description:
-        "A cross-system reading in six traditions. Nothing stored, nothing sent — the reading lives in its URL.",
+        "A cross-system reading in seven traditions. Nothing stored, nothing sent — the reading lives in its URL.",
       path: `/quiz/r/${code}`,
-      ogImage: absoluteUrl("/api/og/mirror"),
+      ogImage: absoluteUrl(`/api/og/reading?r=${encodeURIComponent(code)}`),
     }),
     robots: { index: false, follow: true },
   };
@@ -77,9 +65,14 @@ export default async function ReadingPage({ params }: PageProps) {
   const vector = responsesToVector(decoded.responses, decoded.session.items);
   const classification = classifyVector(vector);
   const readingNo = readingNumberFor(code);
+  const today = new Date().toISOString().slice(0, 10);
+  const readingUrl = absoluteUrl(`/quiz/r/${code}`);
 
   return (
-    <article className="mx-auto px-6 md:px-10 py-14 md:py-20 max-w-5xl">
+    <article className="reading-artefact mx-auto px-6 md:px-10 py-14 md:py-20 max-w-5xl">
+      <p className="reading-print-header">
+        {readingUrl} · {today}
+      </p>
       <QuizReadingClient classification={classification} readingNo={readingNo} />
       <div className="sr-only">
         <Link href="/quiz">Cast another reading</Link>

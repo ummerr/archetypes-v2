@@ -54,14 +54,14 @@ export default function Home() {
                 Archetypal Systems
               </p>
               <h1 className="font-serif text-[2rem] sm:text-5xl md:text-6xl leading-display font-medium text-text-primary tracking-tight mb-4 md:mb-5">
-                Six traditions keep circling the same{" "}
+                Seven traditions keep circling the same{" "}
                 <span className={light ? "text-text-primary italic" : "text-gold glow-text-subtle animate-flicker italic"}>
                   figures
                 </span>
                 .
               </h1>
               <p className="text-text-secondary text-body md:text-lg leading-relaxed max-w-xl font-light">
-                147 mappings across 20 clusters — every one carrying its
+                170 mappings across 20 clusters — every one carrying its
                 citations, dissent, and confidence tier.
               </p>
               <div className="mt-6 md:mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -76,12 +76,6 @@ export default function Home() {
                   className="font-mono text-label tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
                 >
                   Or see the whole map →
-                </Link>
-                <Link
-                  href="/mirror"
-                  className="font-mono text-label tracking-kicker uppercase text-text-secondary hover:text-gold transition-colors"
-                >
-                  Or take the 1-min mirror →
                 </Link>
               </div>
             </div>
@@ -238,81 +232,76 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Mirror CTA */}
+          {/* Two ways to cast — paired doors */}
           <div className="max-w-6xl mx-auto mt-16 md:mt-20">
-            <Link
-              href="/mirror"
-              className="group block relative overflow-hidden rounded-sm transition-all duration-500"
-              style={{
-                background: `linear-gradient(215deg, ${light ? "#7F3A480C" : "#D4828F0A"} 0%, var(--color-bg) 55%, var(--color-bg) 100%)`,
-                border: `1px solid ${light ? "#7F3A4830" : "#D4828F22"}`,
-              }}
-            >
-              <div
-                className="absolute top-0 bottom-0 left-0 w-px opacity-60 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: `linear-gradient(180deg, transparent, ${light ? "#7F3A4870" : "#D4828F60"}, transparent)`,
-                }}
-              />
-              <div className="grid md:grid-cols-[1fr_1.1fr] gap-8 md:gap-14 p-6 sm:p-8 md:p-12 items-center">
-                <div>
-                  <p className="font-serif italic text-text-secondary text-body md:text-lg mb-4 md:mb-5">
-                    Right now I&rsquo;m more pulled toward&hellip;
-                  </p>
-                  <div className="grid grid-cols-2 gap-3 md:gap-4">
-                    <div
-                      className="relative rounded-sm p-4 md:p-5 transition-all duration-300 group-hover:-rotate-1 group-hover:-translate-y-0.5"
-                      style={{
-                        background: light ? "#7F3A480C" : "#D4828F0A",
-                        border: `1px solid ${light ? "#7F3A4838" : "#D4828F28"}`,
-                      }}
-                    >
-                      <span className="font-mono text-kicker tracking-kicker uppercase text-rose/80">A</span>
-                      <p className="font-serif text-base md:text-lg text-text-primary mt-2 leading-snug">
-                        holding the center for others
-                      </p>
-                    </div>
-                    <div
-                      className="relative rounded-sm p-4 md:p-5 transition-all duration-300 group-hover:rotate-1 group-hover:-translate-y-0.5"
-                      style={{
-                        background: light ? "#7F3A480C" : "#D4828F0A",
-                        border: `1px solid ${light ? "#7F3A4838" : "#D4828F28"}`,
-                      }}
-                    >
-                      <span className="font-mono text-kicker tracking-kicker uppercase text-rose/80">B</span>
-                      <p className="font-serif text-base md:text-lg text-text-primary mt-2 leading-snug">
-                        cutting through to what needs doing
-                      </p>
-                    </div>
-                  </div>
-                  <p className="font-mono text-label tracking-label uppercase text-muted mt-3 md:mt-4 text-center">
-                    one of eleven
-                  </p>
-                </div>
-                <div>
-                  <p className="font-mono text-kicker tracking-display text-rose/90 uppercase mb-3 md:mb-4">
-                    Mirror · 11 choices · ~1 min
-                  </p>
-                  <h2 className="font-serif text-h2 sm:text-3xl md:text-5xl leading-display font-medium text-text-primary tracking-tight mb-4 md:mb-5">
-                    This or that.{" "}
-                    <span className={light ? "text-text-primary italic" : "text-rose glow-text-subtle italic"}>
-                      Eleven times.
-                    </span>
-                  </h2>
-                  <p className="text-text-secondary text-body md:text-lg leading-relaxed font-light mb-5 md:mb-6 max-w-xl">
-                    A forced-choice sorter that draws a cross-system snapshot of
-                    what you&rsquo;re navigating right now. No sign-in, nothing
-                    stored — a mirror to try on, not a verdict to carry.
-                  </p>
-                  <span className="inline-flex items-center gap-2 font-mono text-label tracking-kicker uppercase text-rose group-hover:translate-x-0.5 transition-transform">
-                    Step into the Mirror
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                      <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+            <p className="font-mono text-kicker tracking-display uppercase text-muted text-center mb-6 md:mb-8">
+              <span className="inline-block w-6 h-px bg-current align-middle mr-3" />
+              Two ways to cast
+              <span className="inline-block w-6 h-px bg-current align-middle ml-3" />
+            </p>
+            <div className="grid md:grid-cols-2 border-y border-surface-light/25">
+              <Link
+                href="/mirror"
+                className="group relative block p-6 sm:p-8 md:p-12 transition-colors duration-500 hover:bg-rose/[0.04] border-b md:border-b-0 md:border-r border-surface-light/25"
+              >
+                <div
+                  className="absolute top-0 bottom-0 left-0 w-px opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: `linear-gradient(180deg, transparent, ${light ? "#7F3A4870" : "#D4828F60"}, transparent)`,
+                  }}
+                />
+                <p className="font-mono text-kicker tracking-display text-rose/90 uppercase mb-3 md:mb-4">
+                  The Mirror · A quick sort
+                </p>
+                <h2 className="font-serif text-h2 md:text-4xl leading-display font-medium text-text-primary tracking-tight mb-4">
+                  Eleven times.{" "}
+                  <span className={light ? "text-text-primary italic" : "text-rose glow-text-subtle italic"}>
+                    This or that.
                   </span>
-                </div>
-              </div>
-            </Link>
+                </h2>
+                <p className="font-serif italic text-body text-text-secondary/80 leading-article mb-5 max-w-prose">
+                  A cross-system snapshot of what you&rsquo;re navigating right
+                  now. About a minute, nothing stored.
+                </p>
+                <span className="inline-flex items-center gap-2 font-mono text-label tracking-kicker uppercase text-rose group-hover:translate-x-0.5 transition-transform">
+                  Step into the Mirror
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+              </Link>
+
+              <Link
+                href="/quiz"
+                className="group relative block p-6 sm:p-8 md:p-12 transition-colors duration-500 hover:bg-gold/[0.04]"
+              >
+                <div
+                  className="absolute top-0 bottom-0 left-0 w-px opacity-0 md:opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: `linear-gradient(180deg, transparent, ${light ? "#8A6A2070" : "#D4AF3760"}, transparent)`,
+                  }}
+                />
+                <p className="font-mono text-kicker tracking-display text-gold/90 uppercase mb-3 md:mb-4">
+                  The Reading · A full cast
+                </p>
+                <h2 className="font-serif text-h2 md:text-4xl leading-display font-medium text-text-primary tracking-tight mb-4">
+                  Fifteen minutes.{" "}
+                  <span className={light ? "text-text-primary italic" : "text-gold glow-text-subtle italic"}>
+                    Six vocabularies.
+                  </span>
+                </h2>
+                <p className="font-serif italic text-body text-text-secondary/80 leading-article mb-5 max-w-prose">
+                  An editorial cast that signs itself and lives in its URL —
+                  cluster constellation, per-system spread, nothing stored.
+                </p>
+                <span className="inline-flex items-center gap-2 font-mono text-label tracking-kicker uppercase text-gold group-hover:translate-x-0.5 transition-transform">
+                  Cast the Reading
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+              </Link>
+            </div>
           </div>
 
           {/* Atlas feature */}

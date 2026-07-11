@@ -9,6 +9,7 @@ import { ALL_ARCHETYPES as ALL_KWML, FAMILIES } from "./kwml/archetypes";
 import { ALL_MBTI, TEMPERAMENT_GROUPS } from "./mbti/archetypes";
 import { ALL_HEROSJOURNEY } from "./herosjourney/archetypes";
 import { ALL_TAROT, TAROT_PHASES } from "./tarot/archetypes";
+import { ALL_ASTROLOGY, ZODIAC_ELEMENTS } from "./astrology/archetypes";
 
 export type IndexSystemId =
   | "jungian"
@@ -16,7 +17,8 @@ export type IndexSystemId =
   | "kwml"
   | "mbti"
   | "heros-journey"
-  | "tarot";
+  | "tarot"
+  | "astrology";
 
 export interface IndexEntry {
   systemId: IndexSystemId;
@@ -50,6 +52,9 @@ const mbtiTempMap = Object.fromEntries(
   TEMPERAMENT_GROUPS.map((t) => [t.id, t])
 );
 const tarotPhaseMap = Object.fromEntries(TAROT_PHASES.map((p) => [p.id, p]));
+const zodiacElementMap = Object.fromEntries(
+  ZODIAC_ELEMENTS.map((e) => [e.id, e])
+);
 
 function titleCase(slug: string): string {
   return slug
@@ -175,6 +180,25 @@ const tarotEntries: IndexEntry[] = ALL_TAROT.map((a) => {
   };
 });
 
+const astrologyEntries: IndexEntry[] = ALL_ASTROLOGY.map((a) => {
+  const element = zodiacElementMap[a.element];
+  const { name: systemName, accent } = systemMeta("astrology");
+  return {
+    systemId: "astrology",
+    systemName,
+    systemAccent: accent,
+    slug: a.slug,
+    href: `/astrology/archetype/${a.slug}`,
+    name: a.name,
+    sortName: a.name,
+    motto: a.motto,
+    symbol: a.glyph,
+    accentColor: a.accentColor,
+    innerGroup: { id: `astrology-${element.id}`, label: element.label, color: element.color },
+    tags: tagsFor("astrology", a.slug),
+  };
+});
+
 export const ALL_INDEX_ENTRIES: IndexEntry[] = [
   ...jungianEntries,
   ...enneagramEntries,
@@ -182,6 +206,7 @@ export const ALL_INDEX_ENTRIES: IndexEntry[] = [
   ...mbtiEntries,
   ...hjEntries,
   ...tarotEntries,
+  ...astrologyEntries,
 ];
 
 export const SYSTEM_ORDER: IndexSystemId[] = [
@@ -191,4 +216,5 @@ export const SYSTEM_ORDER: IndexSystemId[] = [
   "mbti",
   "heros-journey",
   "tarot",
+  "astrology",
 ];

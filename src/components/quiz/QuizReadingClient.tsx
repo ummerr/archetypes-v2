@@ -96,6 +96,12 @@ export default function QuizReadingClient({ classification, readingNo }: Props) 
               Cast another reading &rarr;
             </Link>
             <Link
+              href="/mirror"
+              className="font-mono text-kicker tracking-kicker uppercase text-muted/70 hover:text-gold transition-colors"
+            >
+              Cast the mirror sort &rarr;
+            </Link>
+            <Link
               href="/about/methodology"
               className="font-mono text-kicker tracking-kicker uppercase text-muted/70 hover:text-gold transition-colors"
             >

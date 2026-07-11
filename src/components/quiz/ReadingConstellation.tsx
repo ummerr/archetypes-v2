@@ -6,40 +6,15 @@ import { motion, useReducedMotion } from "framer-motion";
 import layoutData from "@/data/constellation-layout.json";
 import type { ClusterMatch } from "@/lib/quiz-types";
 import { CLUSTER_AXES } from "@/data/atlas-lens-axes";
+import { CLUSTER_COLORS, CLUSTER_COLOR_FALLBACK } from "@/lib/cluster-colors";
 
 interface Props {
   clusters: ClusterMatch[];
   primaryClusterId?: string;
 }
 
-// Per-cluster hues — kept in lockstep with ClusterResonance and the Mirror
-// scaffold. Duplicated here rather than imported to keep the Reading's
-// centerpiece self-contained.
-const CLUSTER_COLOR: Record<string, string> = {
-  sovereign: "#E0C065",
-  warrior: "#D6614A",
-  "sage-magician": "#9B87C4",
-  lover: "#E08597",
-  innocent: "#EADBA8",
-  explorer: "#5DB8A0",
-  rebel: "#B64558",
-  creator: "#E89B4F",
-  jester: "#F0C555",
-  caregiver: "#8AB876",
-  everyman: "#C3A07D",
-  "death-rebirth": "#7E5BA0",
-  teacher: "#7FA2CC",
-  "liminal-territory": "#ADA0C6",
-  antagonists: "#8a4a5a",
-  shapeshifter: "#9a7ac9",
-  "threshold-guardian": "#7a5a4a",
-  herald: "#c9b884",
-  integration: "#e6d47a",
-  "boy-hero": "#e6944a",
-};
-
 function colorFor(id: string): string {
-  return CLUSTER_COLOR[id] ?? CLUSTER_AXES[id]?.motifColor ?? "#c6a355";
+  return CLUSTER_COLORS[id] ?? CLUSTER_AXES[id]?.motifColor ?? CLUSTER_COLOR_FALLBACK;
 }
 
 function shortTheme(theme: string): string {
@@ -266,9 +241,7 @@ export default function ReadingConstellation({
                     strokeWidth={isPrimary ? 1.3 : 0.6}
                   />
 
-                  <title>
-                    {n.theme} · {Math.round(n.strength * 100)}%
-                  </title>
+                  <title>{`${n.theme} · ${Math.round(n.strength * 100)}%`}</title>
 
                   {labelVisible && (
                     <text
@@ -330,9 +303,7 @@ export default function ReadingConstellation({
                 stroke="var(--color-bg)"
                 strokeWidth={1}
               />
-              <title>
-                Your centroid — drawn from your strongest three resonances.
-              </title>
+              <title>Your centroid — drawn from your strongest three resonances.</title>
             </motion.g>
           )}
         </svg>

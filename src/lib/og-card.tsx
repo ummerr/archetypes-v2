@@ -333,6 +333,7 @@ const SYSTEM_DOTS = [
   "#5B7A99", // mbti
   "#B85C38", // heros-journey
   "#8C3A5E", // tarot
+  "#7C8CB0", // astrology
 ];
 
 export async function renderHomepageOgCard(opts?: { format?: OgFormat }) {
@@ -434,7 +435,7 @@ export async function renderHomepageOgCard(opts?: { format?: OgFormat }) {
               display: "flex",
             }}
           >
-            Six traditions keep circling the same figures.
+            Seven traditions keep circling the same figures.
           </div>
 
           {/* Tagline */}
@@ -451,7 +452,7 @@ export async function renderHomepageOgCard(opts?: { format?: OgFormat }) {
               display: "flex",
             }}
           >
-            147 mappings across 20 clusters — every one carrying its citations, dissent, and confidence tier.
+            170 mappings across 20 clusters — every one carrying its citations, dissent, and confidence tier.
           </div>
 
           {/* System dots */}

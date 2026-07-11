@@ -418,3 +418,96 @@ h1, h2, h3, h4, h5, h6 {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* ─── Reading: print-only header (URL + date) ────── */
+.reading-print-header { display: none; }
+
+/* ─── Print stylesheet — scoped to the Reading ────────────────────────
+   The Reading page sets class "reading-artefact" on its <article>. These
+   rules transform the editorial dark page into an ink-economical document.
+   ────────────────────────────────────────────────────────────────────── */
+@media print {
+  @page { margin: 14mm 16mm; }
+
+  /* Page-wide: flatten the dark canvas + decorative overlays */
+  body, body.noise {
+    background: #ffffff !important;
+    color: #111 !important;
+  }
+  body.noise::before,
+  body.crt-overlay::after { display: none !important; }
+
+  /* Site chrome — hide NavBar (fixed), its spacer, and the global Footer */
+  body:has(.reading-artefact) nav.fixed,
+  body:has(.reading-artefact) > nav,
+  body:has(.reading-artefact) > div[aria-hidden],
+  body:has(.reading-artefact) > footer,
+  body:has(.reading-artefact) main > :not(.reading-artefact) { display: none !important; }
+
+  /* Route-scoped resets */
+  .reading-artefact {
+    color: #111 !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .reading-artefact a { color: #111 !important; text-decoration: none !important; }
+
+  /* Hide the banner caveat (its <aside>) and the reading's footer nav. The
+     footnote is a <p>, so it survives — the caveat of last resort. */
+  .reading-artefact aside,
+  .reading-artefact footer nav { display: none !important; }
+
+  /* Reveal the print-only header (URL + date in top-right) */
+  .reading-print-header {
+    display: block !important;
+    font-family: var(--font-mono), monospace;
+    font-size: 9pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #555 !important;
+    text-align: right;
+    margin: 0 0 12mm 0;
+  }
+
+  /* Kill every animation and transition inside the article */
+  .reading-artefact *,
+  .reading-artefact *::before,
+  .reading-artefact *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Flatten dark decorative backgrounds (constellation wrapper, radar bg).
+     Inline styles lose to !important. */
+  .reading-artefact svg { background: none !important; }
+  .reading-artefact figure > div {
+    background: #fafaf7 !important;
+    border-color: #dcdad3 !important;
+  }
+
+  /* Ink economy — force deep ink on body copy and headings */
+  .reading-artefact h1,
+  .reading-artefact h2,
+  .reading-artefact h3,
+  .reading-artefact p,
+  .reading-artefact li,
+  .reading-artefact span { color: #111 !important; text-shadow: none !important; }
+  .reading-artefact em,
+  .reading-artefact i { color: #333 !important; }
+
+  /* Page breaks: each major section (h2) starts on its own page so a
+     SystemSpread card won't split awkwardly. The opening <h1> lives before
+     the first h2, so page 1 is the opening spread. */
+  .reading-artefact h2 {
+    break-before: page;
+    page-break-before: always;
+  }
+  /* Keep each section's heading with its opening paragraph */
+  .reading-artefact h2,
+  .reading-artefact h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+}
+

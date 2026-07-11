@@ -8,6 +8,7 @@ import { ALL_ENNEAGRAM } from "@/data/enneagram/archetypes";
 import { ALL_HEROSJOURNEY } from "@/data/herosjourney/archetypes";
 import { ALL_TAROT } from "@/data/tarot/archetypes";
 import { ALL_MBTI } from "@/data/mbti/archetypes";
+import { ALL_ASTROLOGY } from "@/data/astrology/archetypes";
 import { systemAccent } from "@/lib/resonance";
 import type { SystemId } from "@/data/resonance";
 
@@ -56,6 +57,11 @@ function lookup(system: SystemId, slug: string): Card | null {
       const a = ALL_MBTI.find((x) => x.slug === slug);
       if (!a) return null;
       return { eyebrow: `MBTI · ${a.code}`, title: a.nickname, subtitle: truncate(a.description, 180), accent: fallback, mbtiCode: a.code, motto: a.motto };
+    }
+    case "astrology": {
+      const a = ALL_ASTROLOGY.find((x) => x.slug === slug);
+      if (!a) return null;
+      return { eyebrow: `Zodiac · ${a.dates}`, title: a.name, subtitle: truncate(a.description, 180), accent: a.accentColor ?? fallback, symbol: a.glyph, motto: a.motto };
     }
     default:
       return null;

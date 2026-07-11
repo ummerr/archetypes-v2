@@ -35,4 +35,10 @@ export const SHADOW_MODELS: ShadowModel[] = [
     body:
       "Campbell / Vogler's Shadow is a character role in the monomyth - the antagonist who mirrors the hero. It is a function in the drama, not a structural feature of the psyche. That was the category error the old Shadow cluster committed: equating a dramatic mask with KWML's grammar of dysfunction and Tarot's event-symbol.",
   },
+  {
+    id: "astrology",
+    heading: "Astrology - polarity across the opposing sign",
+    body:
+      "The zodiac locates a sign's shadow not inside it but across the wheel, in the sign it opposes: Aries in Libra, Taurus in Scorpio, Cancer in Capricorn. Each sign over-develops one half of an axis and disowns the other, so its completion and its shadow are the same absent pole. The grammar is spatial rather than developmental - and, unlike the others, it rests on a system whose empirical claims have not survived testing, so read the axis as a figure of psychological one-sidedness, not a fact about the sky.",
+  },
 ];

@@ -5,6 +5,7 @@ import { KWML_EXEMPLARS } from "@/data/kwml/exemplars";
 import { MBTI_EXEMPLARS } from "@/data/mbti/exemplars";
 import { HEROSJOURNEY_EXEMPLARS } from "@/data/herosjourney/exemplars";
 import { TAROT_EXEMPLARS } from "@/data/tarot/exemplars";
+import { ASTROLOGY_EXEMPLARS } from "@/data/astrology/exemplars";
 import type { ExemplarSet, ExemplarCultural, ExemplarHistorical } from "@/components/shared/ExemplarsTabs";
 
 const REGISTRY: Record<SystemId, Record<string, ExemplarSet>> = {
@@ -14,6 +15,7 @@ const REGISTRY: Record<SystemId, Record<string, ExemplarSet>> = {
   mbti: MBTI_EXEMPLARS,
   "heros-journey": HEROSJOURNEY_EXEMPLARS,
   tarot: TAROT_EXEMPLARS,
+  astrology: ASTROLOGY_EXEMPLARS,
 };
 
 export type AnyExemplar =

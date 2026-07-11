@@ -18,7 +18,8 @@ export type ShadowGrammar =
   | "passion-virtue"
   | "stack-inversion"
   | "mirror"
-  | "reversal";
+  | "reversal"
+  | "polarity";
 
 // A discrete archetype position in feature-vectors.json.
 export interface ArchetypeFeatureVector {

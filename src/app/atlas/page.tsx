@@ -106,7 +106,7 @@ export default function AtlasPage() {
             Four Lenses · One Atlas
           </p>
           <p className="font-serif italic text-xs text-text-secondary/70">
-            {layout.nodes.length} archetypes · {layout.edges.length} resonances · six traditions
+            {layout.nodes.length} archetypes · {layout.edges.length} resonances · seven traditions
           </p>
         </div>
         <AtlasInteractive
@@ -227,11 +227,11 @@ export default function AtlasPage() {
                 The Exemplars →
               </p>
               <p className="font-mono text-kicker tracking-label uppercase text-text-secondary/60">
-                {exemplarCount} across six traditions
+                {exemplarCount} across seven traditions
               </p>
             </div>
             <p className="font-serif text-body-sm italic text-text-secondary/80 leading-relaxed">
-              The exemplars the six traditions read. A cross-system view of who gets tagged where
+              The exemplars the seven traditions read. A cross-system view of who gets tagged where
               — and what surviving translation looks like in practice. Sorted by the number of
               traditions that claim them, with the most-read exemplars kept on top.
             </p>

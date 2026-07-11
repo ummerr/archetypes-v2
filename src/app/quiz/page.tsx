@@ -6,7 +6,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
     title: "The Reading",
     description:
-      "About thirty minutes, six traditions, one cross-archetype cast. The depth successor to the Mirror — nothing stored, nothing sent.",
+      "About thirty minutes, seven traditions, one cross-archetype cast. The depth successor to the Mirror — nothing stored, nothing sent.",
     path: "/quiz",
     ogImage: absoluteUrl("/api/og/mirror"),
   });

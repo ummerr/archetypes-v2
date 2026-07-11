@@ -89,6 +89,7 @@ export default function ResonanceNetwork({
     mbti: [],
     "heros-journey": [],
     tarot: [],
+    astrology: [],
   };
   for (const n of neighbors) bySystem[n.system].push(n);
 

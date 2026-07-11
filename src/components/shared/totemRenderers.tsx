@@ -17,6 +17,7 @@ import ArcanaGlyph from "@/components/tarot/ArcanaGlyph";
 import { HeroJourneyArchetypeIcon } from "@/components/HeroJourneyArchetypeIcon";
 import JungianSilhouette from "@/components/JungianSilhouette";
 import EnneagramSilhouette from "@/components/EnneagramSilhouette";
+import AstrologyConstellation from "@/components/AstrologyConstellation";
 import type { JungianArchetype } from "@/types/jungian";
 import type { EnneagramArchetype } from "@/types/enneagram";
 import { registerTotem } from "@/data/totem-registry";
@@ -200,6 +201,23 @@ function EnneagramRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boo
   );
 }
 
+function AstrologyRenderer({ entry, hovered }: { entry: IndexEntry; hovered: boolean }) {
+  return (
+    <MotifShell
+      label={`${entry.name} — ${entry.systemName}`}
+      color={entry.accentColor}
+      hovered={hovered}
+    >
+      <AstrologyConstellation
+        slug={entry.slug}
+        color={entry.accentColor}
+        size={36}
+        glyph={entry.symbol}
+      />
+    </MotifShell>
+  );
+}
+
 registerTotem("mbti", (entry, hovered) => <MbtiRenderer entry={entry} hovered={hovered} />);
 registerTotem("kwml", (entry, hovered) => <KwmlRenderer entry={entry} hovered={hovered} />);
 registerTotem("heros-journey", (entry, hovered) => (
@@ -211,4 +229,7 @@ registerTotem("jungian", (entry, hovered) => (
 ));
 registerTotem("enneagram", (entry, hovered) => (
   <EnneagramRenderer entry={entry} hovered={hovered} />
+));
+registerTotem("astrology", (entry, hovered) => (
+  <AstrologyRenderer entry={entry} hovered={hovered} />
 ));

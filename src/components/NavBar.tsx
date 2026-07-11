@@ -569,7 +569,7 @@ function RootSheet({
         />
         <SheetGroupRow
           label="Systems"
-          caption="Six traditions"
+          caption="Seven traditions"
           active={inSystems}
           onClick={() => onSelect("systems")}
           leading="02"
@@ -613,7 +613,7 @@ function SubSheet({
 }) {
   const heading =
     section === "systems"
-      ? "Six Systems"
+      ? "Seven Systems"
       : section === "atlas"
         ? "Atlas"
         : section === "practice"

@@ -7,7 +7,7 @@ import ExemplarIndexClient from "./ExemplarIndexClient";
 export const metadata: Metadata = buildPageMetadata({
   title: "Exemplars",
   description:
-    "The exemplars the six traditions read. A cross-system view of who gets tagged where — and what surviving translation looks like in practice.",
+    "The exemplars the seven traditions read. A cross-system view of who gets tagged where — and what surviving translation looks like in practice.",
   path: "/atlas/exemplars",
 });
 

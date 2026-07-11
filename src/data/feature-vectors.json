@@ -686,6 +686,116 @@
         "narrative_position": "return",
         "relational_stance": "balanced"
       }
+    },
+    "astrology": {
+      "aries": {
+        "stability_risk": -0.6,
+        "belonging_independence": -0.2,
+        "developmental_stage": "striving",
+        "shadow_structure": "polarity",
+        "affect_center": "anger",
+        "narrative_position": "departure",
+        "relational_stance": "against"
+      },
+      "taurus": {
+        "stability_risk": 0.8,
+        "belonging_independence": 0.3,
+        "developmental_stage": "striving",
+        "shadow_structure": "polarity",
+        "affect_center": "desire",
+        "narrative_position": "initiation",
+        "relational_stance": "toward"
+      },
+      "gemini": {
+        "stability_risk": -0.3,
+        "belonging_independence": 0,
+        "developmental_stage": "pre-initiation",
+        "shadow_structure": "polarity",
+        "affect_center": "fear",
+        "narrative_position": "liminal",
+        "relational_stance": "away"
+      },
+      "cancer": {
+        "stability_risk": 0.4,
+        "belonging_independence": 0.7,
+        "developmental_stage": "integrating",
+        "shadow_structure": "polarity",
+        "affect_center": "shame",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "leo": {
+        "stability_risk": 0.5,
+        "belonging_independence": 0.2,
+        "developmental_stage": "integrated",
+        "shadow_structure": "polarity",
+        "affect_center": "anger",
+        "narrative_position": "initiation",
+        "relational_stance": "toward"
+      },
+      "virgo": {
+        "stability_risk": 0.5,
+        "belonging_independence": -0.1,
+        "developmental_stage": "integrating",
+        "shadow_structure": "polarity",
+        "affect_center": "desire",
+        "narrative_position": "liminal",
+        "relational_stance": "away"
+      },
+      "libra": {
+        "stability_risk": 0.3,
+        "belonging_independence": 0.6,
+        "developmental_stage": "integrating",
+        "shadow_structure": "polarity",
+        "affect_center": "fear",
+        "narrative_position": "departure",
+        "relational_stance": "toward"
+      },
+      "scorpio": {
+        "stability_risk": -0.2,
+        "belonging_independence": -0.2,
+        "developmental_stage": "liminal",
+        "shadow_structure": "polarity",
+        "affect_center": "shame",
+        "narrative_position": "initiation",
+        "relational_stance": "against"
+      },
+      "sagittarius": {
+        "stability_risk": -0.7,
+        "belonging_independence": -0.5,
+        "developmental_stage": "striving",
+        "shadow_structure": "polarity",
+        "affect_center": "anger",
+        "narrative_position": "liminal",
+        "relational_stance": "away"
+      },
+      "capricorn": {
+        "stability_risk": 0.7,
+        "belonging_independence": -0.3,
+        "developmental_stage": "integrated",
+        "shadow_structure": "polarity",
+        "affect_center": "desire",
+        "narrative_position": "return",
+        "relational_stance": "against"
+      },
+      "aquarius": {
+        "stability_risk": -0.4,
+        "belonging_independence": 0,
+        "developmental_stage": "liminal",
+        "shadow_structure": "polarity",
+        "affect_center": "fear",
+        "narrative_position": "initiation",
+        "relational_stance": "away"
+      },
+      "pisces": {
+        "stability_risk": -0.3,
+        "belonging_independence": 0.4,
+        "developmental_stage": "liminal",
+        "shadow_structure": "polarity",
+        "affect_center": "shame",
+        "narrative_position": "return",
+        "relational_stance": "toward"
+      }
     }
   }
 }
