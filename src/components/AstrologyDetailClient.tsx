@@ -12,6 +12,7 @@ import ArchetypeRadar from "@/components/viz/ArchetypeRadar";
 import ResonanceNetwork from "@/components/viz/ResonanceNetwork";
 import ExemplarsTabs from "@/components/shared/ExemplarsTabs";
 import { getAstrologyExemplars } from "@/data/astrology/exemplars";
+import AstrologyDailyCard from "@/components/AstrologyDailyCard";
 import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
 
 const AstrologyTotemCanvas = dynamic(
@@ -135,6 +136,11 @@ export default function AstrologyDetailClient({
           </p>
 
           <CrossSystemResonanceInline system="astrology" slug={archetype.slug} />
+        </div>
+
+        {/* Daily reading */}
+        <div className="mb-16 animate-slide-up delay-150">
+          <AstrologyDailyCard slug={archetype.slug} color={color} glyph={archetype.glyph} />
         </div>
 
         {/* Fields grid */}

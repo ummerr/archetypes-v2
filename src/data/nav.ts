@@ -26,6 +26,7 @@ export type NavSystem = {
 const SPECIALS: Record<string, NavLink[]> = {
   jungian: [{ label: "Journey", href: "/jungian/journey", desc: "Three-ring spiral arc" }],
   kwml: [{ label: "Boy Within", href: "/kwml/boy-within-man", desc: "Nested triangles" }],
+  astrology: [{ label: "Today", href: "/astrology/today", desc: "A daily reading for every sign" }],
 };
 
 export const NAV_SYSTEMS: NavSystem[] = SYSTEMS.filter((s) => s.status === "live" && s.href).map((s) => ({

@@ -73,6 +73,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   });
 
+  urls.push({
+    url: absoluteUrl("/astrology/today"),
+    lastModified,
+    changeFrequency: "daily",
+    priority: 0.6,
+  });
+
   // Atlas + atlas subpages
   urls.push(
     { url: absoluteUrl("/atlas"), lastModified, changeFrequency: "weekly", priority: 0.9 },

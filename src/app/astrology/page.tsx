@@ -7,6 +7,7 @@ import { ZODIAC_ELEMENTS, getAstrologyByElement } from "@/data/astrology/archety
 import { useTheme } from "@/components/ThemeProvider";
 import { ZodiacArchetype } from "@/types/astrology";
 import CanvasSkeleton from "@/components/shared/CanvasSkeleton";
+import ZodiacWheel from "@/components/ZodiacWheel";
 
 const AstrologyTotemCanvas = dynamic(
   () => import("@/components/AstrologyTotemCanvas"),
@@ -45,6 +46,21 @@ export default function AstrologyHome() {
               </Link>
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* The wheel */}
+      <div className="px-6 pb-10">
+        <div className="max-w-[520px] mx-auto animate-slide-up" style={{ animationDelay: "150ms" }}>
+          <ZodiacWheel />
+        </div>
+        <div className="text-center mt-6 animate-slide-up" style={{ animationDelay: "250ms" }}>
+          <Link
+            href="/astrology/today"
+            className="inline-flex items-center gap-2 font-mono text-label tracking-kicker uppercase text-gold hover:opacity-80 transition-opacity"
+          >
+            ☾ Today&apos;s reading for every sign →
+          </Link>
         </div>
       </div>
 
